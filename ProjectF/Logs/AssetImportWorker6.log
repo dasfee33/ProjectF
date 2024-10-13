@@ -1,0 +1,447 @@
+Using pre-set license
+Built from '2022.3/staging' branch; Version is '2022.3.26f1 (ec6cd8118806) revision 15494360'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22631) 64bit Core' Language: 'ko' Physical Memory: 16309 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity 2022.3.26f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker6
+-projectPath
+C:/Users/ê¹€ì˜ìƒ/Desktop/ProjectF/ProjectF
+-logFile
+Logs/AssetImportWorker6.log
+-srvPort
+64743
+Successfully changed project path to: C:/Users/ê¹€ì˜ìƒ/Desktop/ProjectF/ProjectF
+C:/Users/ê¹€ì˜ìƒ/Desktop/ProjectF/ProjectF
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [38760] Host "[IP] 180.233.243.79 [Port] 0 [Flags] 2 [Guid] 2934087922 [EditorId] 2934087922 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-CCU0VGS) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [38760] Host "[IP] 180.233.243.79 [Port] 0 [Flags] 2 [Guid] 2934087922 [EditorId] 2934087922 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-CCU0VGS) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+[Physics::Module] Initialized MultithreadedJobDispatcher with 23 workers.
+Refreshing native plugins compatible for Editor in 31.90 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.26f1 (ec6cd8118806)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity 2022.3.26f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/ê¹€ì˜ìƒ/Desktop/ProjectF/ProjectF/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 (ID=0x2487)
+    Vendor:   NVIDIA
+    VRAM:     12124 MB
+    Driver:   31.0.15.3623
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity 2022.3.26f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity 2022.3.26f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity 2022.3.26f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56896
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity 2022.3.26f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007591 seconds.
+- Loaded All Assemblies, in  0.297 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.223 seconds
+Domain Reload Profiling: 518ms
+	BeginReloadAssembly (104ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (51ms)
+	LoadAllAssembliesAndSetupDomain (105ms)
+		LoadAssemblies (103ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (102ms)
+			TypeCache.Refresh (100ms)
+				TypeCache.ScanAssembly (91ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (223ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (177ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (8ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (117ms)
+			ProcessInitializeOnLoadMethodAttributes (44ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.693 seconds
+Refreshing native plugins compatible for Editor in 13.33 ms, found 4 plugins.
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+- Finished resetting the current domain, in  0.753 seconds
+Domain Reload Profiling: 1434ms
+	BeginReloadAssembly (131ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (21ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (40ms)
+	LoadAllAssembliesAndSetupDomain (473ms)
+		LoadAssemblies (410ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (141ms)
+			TypeCache.Refresh (116ms)
+				TypeCache.ScanAssembly (104ms)
+			ScanForSourceGeneratedMonoScriptInfo (20ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (753ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (621ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (113ms)
+			ProcessInitializeOnLoadAttributes (451ms)
+			ProcessInitializeOnLoadMethodAttributes (35ms)
+			AfterProcessingInitializeOnLoad (10ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (10ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 11.94 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4944 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 78 unused Assets / (68.2 KB). Loaded Objects now: 5400.
+Memory consumption went from 176.4 MB to 176.3 MB.
+Total: 3.420000 ms (FindLiveObjects: 0.290200 ms CreateObjectMapping: 0.113000 ms MarkObjects: 2.897700 ms  DeleteObjects: 0.118200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 32984.977404 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/animated grass-2.png
+  artifactKey: Guid(a4b50531812e6734d98bf16b16a20b26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/animated grass-2.png using Guid(a4b50531812e6734d98bf16b16a20b26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c613661a628faf1ddf5f1b3fe1e8146') in 0.086122 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.008124 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 1-3.png
+  artifactKey: Guid(15cf07a875755894d9ff11bcd0434178) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 1-3.png using Guid(15cf07a875755894d9ff11bcd0434178) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '447faad37a5d4a88895f20240f3599e4') in 0.070599 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/coin-d.png
+  artifactKey: Guid(0cdae79dc71f1854ab3baf6501ca8ea8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/coin-d.png using Guid(0cdae79dc71f1854ab3baf6501ca8ea8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec2e22551319c7c69c5ca90fc94f2b86') in 0.041041 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 1-1.png
+  artifactKey: Guid(5ab84fdd6c0666142841af41e06d9ce0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 1-1.png using Guid(5ab84fdd6c0666142841af41e06d9ce0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be8ad0156719787121dab176cd5f9c02') in 0.084996 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/Animated Tree1.png
+  artifactKey: Guid(4a9fa7c7c1d44be4483c7f5717bd750f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/Animated Tree1.png using Guid(4a9fa7c7c1d44be4483c7f5717bd750f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa4ec1dccc776000940834abcaafda5a') in 0.051431 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/BlacksmithSign.prefab
+  artifactKey: Guid(e1691890db2016245ac6bbbfc6747d14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/BlacksmithSign.prefab using Guid(e1691890db2016245ac6bbbfc6747d14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6eefcc041a7d6833f9db39d736479b8b') in 0.038772 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 27
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/ChestLevel2.prefab
+  artifactKey: Guid(2cecdd78fea987448a0f57bac44ce786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/ChestLevel2.prefab using Guid(2cecdd78fea987448a0f57bac44ce786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c006d11c86a3b9250e9bc435950b5c8') in 0.043465 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 55
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/grass2.prefab
+  artifactKey: Guid(1e96c69635ea7f94db4254a05731307d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/grass2.prefab using Guid(1e96c69635ea7f94db4254a05731307d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9399dc941da3a7a699e03f83327d2593') in 0.019962 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 27
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Campfire2-2.prefab
+  artifactKey: Guid(5f1f3387f0df30c47aefd99e1ca79dd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Campfire2-2.prefab using Guid(5f1f3387f0df30c47aefd99e1ca79dd2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ecc2d30e68d00533a24e19c5cdaf0b4f') in 0.020039 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/BlacksmithWaterDeposit.prefab
+  artifactKey: Guid(8bbe4ac99717c0740a97ce8b16304bea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/BlacksmithWaterDeposit.prefab using Guid(8bbe4ac99717c0740a97ce8b16304bea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd047bc207d4a263273047ce68d8cae1b') in 0.026448 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Door2.prefab
+  artifactKey: Guid(500386b762c26944b812f2f775688d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Door2.prefab using Guid(500386b762c26944b812f2f775688d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f63ec78ad46ea159fb9ef2bd1da7fba4') in 0.030918 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 24
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/grass1.prefab
+  artifactKey: Guid(fa23fa29c2ccdb74aa667570d2bfd5b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/grass1.prefab using Guid(fa23fa29c2ccdb74aa667570d2bfd5b8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '185301e0dd6d8959071fe7d53a3db5c8') in 0.022104 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 27
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Campfire1-1.prefab
+  artifactKey: Guid(7e56ba5ab47119b4a84f2f64792e37aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/Campfire1-1.prefab using Guid(7e56ba5ab47119b4a84f2f64792e37aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3280c8760e378f288413b11fb3f257d2') in 0.022020 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/campfire1-3.prefab
+  artifactKey: Guid(6efc6076b82285549a8ebae0fe519f97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/campfire1-3.prefab using Guid(6efc6076b82285549a8ebae0fe519f97) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ff50e985db00d7785c8263a4ca17a71') in 0.021452 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 19
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/ForgeChimneySmokes.prefab
+  artifactKey: Guid(fcce96d95b7cd714d9dca5d30e1bc916) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/prefab/ForgeChimneySmokes.prefab using Guid(fcce96d95b7cd714d9dca5d30e1bc916) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16ee40220dcd10f3ef8e153270f2cfc8') in 0.062921 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 94
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 2-2.png
+  artifactKey: Guid(e4ad0c46a61e4df41a23451e3a07c49d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 2-2.png using Guid(e4ad0c46a61e4df41a23451e3a07c49d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13f949d9eb9bb92cc1aceab5eda71730') in 0.024171 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/Animated Tree2.png
+  artifactKey: Guid(76f10e4ba842a5f4aa18b7587af977c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/Animated Tree2.png using Guid(76f10e4ba842a5f4aa18b7587af977c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9c60b34350a429670cfd27137545a0a') in 0.020085 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 2-3.png
+  artifactKey: Guid(ccb72deeb81f78a488e08cfebd036763) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Props/animated/campfire 2-3.png using Guid(ccb72deeb81f78a488e08cfebd036763) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6960df9e3db57a9940d89b58e19ef55') in 0.022184 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.071744 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/Animated water tiles (full tile).png
+  artifactKey: Guid(7b9fed6b3ef890c4eb1eebaef3f236b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/Animated water tiles (full tile).png using Guid(7b9fed6b3ef890c4eb1eebaef3f236b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '501d97ae493b8da42ed4a03274a5646c') in 0.019116 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/gravel to dirt1.png
+  artifactKey: Guid(b70ef2a20006601409415b7c4fa8e727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/gravel to dirt1.png using Guid(b70ef2a20006601409415b7c4fa8e727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '158160de3be84c2e9861340499e69748') in 0.039830 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000014 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt1 to grass transp.png
+  artifactKey: Guid(01efa3b70d98edc4581e4360a4b7e2ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt1 to grass transp.png using Guid(01efa3b70d98edc4581e4360a4b7e2ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71c7bce61f3676c8cace07d2bd2ef7bc') in 0.037050 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass2 to transp.png
+  artifactKey: Guid(929633922d444884ea350adb41f63ea2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass2 to transp.png using Guid(929633922d444884ea350adb41f63ea2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69bf06bcb225adb10e15bcdeb33934e3') in 0.039593 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/fences and half-sized walls.png
+  artifactKey: Guid(4db40038c6c3c9b43a57ff43b2cabc7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/fences and half-sized walls.png using Guid(4db40038c6c3c9b43a57ff43b2cabc7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de0d63de2090053931cbb78951f27bd8') in 0.152155 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 126
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass transp.png
+  artifactKey: Guid(30bdb20c7b97bbd4aae5b2cfb0ee932a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass transp.png using Guid(30bdb20c7b97bbd4aae5b2cfb0ee932a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '676c62e8de0355e9fb31f1c37e5c0631') in 0.043554 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to dirt1.png
+  artifactKey: Guid(5f5bb165ab06daf42b893c1170262ca9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to dirt1.png using Guid(5f5bb165ab06daf42b893c1170262ca9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad7b9d7766d2309c5f9a860db76bb14a') in 0.045108 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass2.png
+  artifactKey: Guid(401e75d0f2581c34b9559ea0699456ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass2.png using Guid(401e75d0f2581c34b9559ea0699456ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f552503fac0be630c3625f1f1fdec5b7') in 0.038887 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass1 to grass2(subtle transition).png
+  artifactKey: Guid(01ef50d5c74d0624b912f7b41f4f5181) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass1 to grass2(subtle transition).png using Guid(01ef50d5c74d0624b912f7b41f4f5181) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '307290593503d88272f1a5a4a1dac2b2') in 0.036529 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass1 to transp.png
+  artifactKey: Guid(c202e267433fa5f47b12bdf73c419a16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass1 to transp.png using Guid(c202e267433fa5f47b12bdf73c419a16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3406ebab29d5c533ff2eb50d9014052b') in 0.037835 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt1 to grass1.png
+  artifactKey: Guid(73ce8cd58bf04734d8318e65bd324975) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt1 to grass1.png using Guid(73ce8cd58bf04734d8318e65bd324975) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24b07c4b5eece52f60320c0a2c8553d4') in 0.035852 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000013 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass1.png
+  artifactKey: Guid(433b90b96e993604ab641cb14ab59742) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/dirt2 to grass1.png using Guid(433b90b96e993604ab641cb14ab59742) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '375934e9b66da1a6d3acf42f752d34f0') in 0.036137 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass2 to grass1(subtle transition).png
+  artifactKey: Guid(9307945f779a5bc48871e0a85dc91c3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/grass2 to grass1(subtle transition).png using Guid(9307945f779a5bc48871e0a85dc91c3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17c3cd791087680bc922d37befed1eba') in 0.035017 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/auto tile guide.png
+  artifactKey: Guid(9810853bf2d24a3468533e1f251a4e18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Assets/RafaelMatos/ERW-Grass Land V1.5.1/Tilesets/auto tile guide.png using Guid(9810853bf2d24a3468533e1f251a4e18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a927159ee75e1001517545c17a06eb8f') in 0.039749 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 24
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: ½º·¹µå Á¾·á ¶Ç´Â ÀÀ¿ë ÇÁ·Î±×·¥ ¿äÃ» ¶§¹®¿¡ I/O ÀÛ¾÷ÀÌ Ãë¼ÒµÇ¾ú½À´Ï´Ù.
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
