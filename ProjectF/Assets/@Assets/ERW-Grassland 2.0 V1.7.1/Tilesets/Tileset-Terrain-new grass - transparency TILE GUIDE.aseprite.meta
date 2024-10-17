@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2faeb8082e6b877418059c8e333e25b5
+guid: 88d15a93ef913fa428d91f5f35d9845a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: wall1-3tiles tall-ramps
+  - name: Tileset-Terrain-new grass - transparency TILE GUIDE
     originalName: 
-    pivot: {x: 0.48, y: 0}
+    pivot: {x: 0.7236842, y: -0.2857143}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 400
-      height: 192
-    spriteID: 46b4a664e5b2ca04ea19ddf9c271c14a
+      width: 1216
+      height: 1792
+    spriteID: 6977d6ac04c19b447b4668a6da99cdfa
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +144,24 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 830824295
-    name: wall1-3tiles tall-ramps
+    guid: -1366159878
+    name: Tileset-Terrain-new grass - transparency TILE GUIDE
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: wall1-3tiles tall-ramps
+    - name: Tileset-Terrain-new grass - transparency TILE GUIDE
       frameIndex: 0
       cellRect:
-        x: 16
-        y: 0
-        width: 400
-        height: 192
-      spriteId: 46b4a664e5b2ca04ea19ddf9c271c14a
+        x: 0
+        y: 512
+        width: 1216
+        height: 1792
+      spriteId: 6977d6ac04c19b447b4668a6da99cdfa
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 416, y: 224}
+  canvasSize: {x: 1760, y: 2304}
