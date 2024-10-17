@@ -10,4 +10,19 @@ public static class Define
     TitleScene,
     GameScene,
   }
+
+  public enum FUIEvent
+  {
+    Click,
+    PointerDown,
+    PointerUp,
+    Drag,
+  }
+
+  public enum FSound
+  {
+    Bgm,
+    Effect,
+    Max,
+  }
 }

@@ -44,7 +44,6 @@ public class UI_Base : InitBase
     UnityEngine.Object[] objects = null;
     if (_objects.TryGetValue(typeof(T), out objects) == false)
       return null;
-
     return objects[idx] as T;
   }
 
@@ -55,25 +54,25 @@ public class UI_Base : InitBase
   protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
   protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
 
-  public static void BindEvent(GameObject go, Action<PointerEventData> action = null, Define.UIEvents type = Define.UIEvents.Click)
+  public static void BindEvent(GameObject go, Action<PointerEventData> action = null, Define.FUIEvent type = Define.FUIEvent.Click)
   {
     UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
 
     switch (type)
     {
-      case Define.UIEvents.Click:
+      case Define.FUIEvent.Click:
         evt.OnClickHandler -= action;
         evt.OnClickHandler += action;
         break;
-      case Define.UIEvents.PointerDown:
+      case Define.FUIEvent.PointerDown:
         evt.OnPointerDownHandler -= action;
         evt.OnPointerDownHandler += action;
         break;
-      case Define.UIEvents.PointerUp:
+      case Define.FUIEvent.PointerUp:
         evt.OnPointerUpHandler -= action;
         evt.OnPointerUpHandler += action;
         break;
-      case Define.UIEvents.Drag:
+      case Define.FUIEvent.Drag:
         evt.OnDragHandler -= action;
         evt.OnDragHandler += action;
         break;

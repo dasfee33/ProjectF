@@ -10,22 +10,7 @@ public class TitleScene : BaseScene
 
     SceneType = Define.FScene.TitleScene;
 
-    StartLoadAssets();
-
     return true;
-  }
-
-  private void StartLoadAssets()
-  {
-    Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
-    {
-      Debug.Log($"{key} {count}/{totalCount}");
-
-      if(count == totalCount)
-      {
-        //Managers.Scene.LoadScene(//TODO)
-      }
-    });
   }
     
 }
