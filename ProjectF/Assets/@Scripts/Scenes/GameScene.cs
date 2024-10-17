@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class GameScene : BaseScene
 {
@@ -14,7 +15,11 @@ public class GameScene : BaseScene
     map.transform.position = Vector3.zero;
     map.name = "@BaseMap";
 
-    Managers.Resource.Instantiate("Warrior");
+    Player warrior = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 0));
+    //warrior.CreatureState = FCreatureState.Move;
+
+    CameraController camera = Camera.main.gameObject.GetOrAddComponent<CameraController>();
+    camera.Target = warrior;
 
     return true;
   }

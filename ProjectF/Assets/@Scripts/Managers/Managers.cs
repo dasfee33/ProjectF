@@ -22,6 +22,14 @@ public class Managers : MonoBehaviour
   public static FSceneManager Scene { get { return Instance?._scene; } }
   public static UIManager UI { get { return Instance?._ui; } }
 
+  #endregion
+
+  #region Contents
+  private GameManager _game = new GameManager();
+  private ObjectManager _object = new ObjectManager();
+
+  public static GameManager Game { get { return Instance?._game; } }
+  public static ObjectManager Object { get { return Instance?._object; } }
 
   #endregion
 

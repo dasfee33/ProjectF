@@ -401,6 +401,8 @@
 "Assets/@Scripts/Controllers/Creature/Npc.cs"
 "Assets/@Scripts/Controllers/Creature/Player.cs"
 "Assets/@Scripts/Data/Data.Contents.cs"
+"Assets/@Scripts/Managers/Contents/GameManager.cs"
+"Assets/@Scripts/Managers/Contents/ObjectManager.cs"
 "Assets/@Scripts/Managers/Core/DataManager.cs"
 "Assets/@Scripts/Managers/Core/FSceneManager.cs"
 "Assets/@Scripts/Managers/Core/PoolManager.cs"
