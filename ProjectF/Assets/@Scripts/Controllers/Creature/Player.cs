@@ -60,15 +60,40 @@ public class Player : Creature
     }
   }
 
+  FCreatureMoveState creatureMoveState = FCreatureMoveState.None;
+  public FCreatureMoveState CreatureMoveState
+  {
+    get { return creatureMoveState; }
+    set
+    {
+      creatureMoveState = value;
+    }
+  }
+
   public override bool Init()
   {
     if (base.Init() == false)
       return false;
 
+
     CreatureType = FCreatureType.WARRIOR;
     CreatureState = FCreatureState.Idle;
     Speed = 3.0f;
     previousPos = transform.position;
+
+    //TEST
+    jobToggleDic["Cook"] = 10;
+    jobToggleDic["Deco"] = 20;
+    jobToggleDic["Toggle"] = 30;
+
+    foreach(string jobtoggle in jobToggleDic.Keys)
+    {
+      if(JobDic.TryGetValue(jobtoggle, out int value))
+      {
+        value += jobToggleDic[jobtoggle];
+        JobDic[jobtoggle] = value;
+      }
+    }
 
     StartCoroutine(CoUpdateAI());
 

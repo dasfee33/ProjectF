@@ -41,6 +41,7 @@ public static class Define
     Npc,
   }
 
+  // 캐릭터 기본 상태
   public enum FCreatureState
   {
     None,
@@ -48,6 +49,67 @@ public static class Define
     Move,
     Skill,
     Dead,
+  }
+
+  // 캐릭터 세부 상태
+  public enum FCreatureMoveState
+  {
+    None,
+    Job,
+    Hungry,
+    Tremble, //떨림
+    Act,
+    //TODO
+
+  }
+
+  //TEMP
+  public enum FJob
+  {
+    None,
+    Attack,
+    Rescue,
+    Toggle,
+    Medic,
+    Array,
+    Cook,
+    Deco,
+    Research,
+    Machine,
+    Plant,
+    Breed,
+    Make,
+    Dig,
+    Supply,
+    Store,
+    //TODO,
+  }
+}
+
+public class JobPriority
+{
+  public int H { get; set; }
+  public Define.FJob Job { get; set; }
+
+  public JobPriority(int h, Define.FJob job)
+  {
+    H = h;
+    Job = job;
+  }
+
+  public void JobPlus(int a)
+  {
+    H += a;
+  }
+
+  public void JobMinus(int a)
+  {
+    H -= a;
+  }
+
+  public int JobScore()
+  {
+    return H;
   }
 }
 
