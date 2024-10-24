@@ -84,6 +84,25 @@ public static class Define
     Store,
     //TODO,
   }
+
+  public enum FFindPathResults
+  {
+    Fail_LerpCell,
+    Fail_NoPath,
+    Fail_MoveTo,
+    Success,
+  }
+
+  public enum FCellCollisionTypes
+  {
+    None,
+    SemiWall,
+    Wall,
+  }
+
+  public const char MAP_TOOL_WALL = '0';
+  public const char MAP_TOOL_NONE = '1';
+  public const char MAP_TOOL_SEMI_WALL = '2';
 }
 
 public class JobPriority
@@ -111,6 +130,7 @@ public class JobPriority
   {
     return H;
   }
+
 }
 
 public static class AnimName
@@ -124,3 +144,7 @@ public static class AnimName
   public const string WARRIOR_COMBOATTACK = "warrior full combo atk";
   
 }
+
+
+  
+

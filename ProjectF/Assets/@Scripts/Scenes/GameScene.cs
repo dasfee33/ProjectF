@@ -11,11 +11,10 @@ public class GameScene : BaseScene
 
     SceneType = Define.FScene.GameScene;
 
-    GameObject map = Managers.Resource.Instantiate("BaseMap");
-    map.transform.position = Vector3.zero;
-    map.name = "@BaseMap";
+    Managers.Map.LoadMap("BaseMap");
 
-    Player warrior = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 0));
+    Player warrior = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 1));
+    Player warrior2 = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 0));
     //warrior.CreatureState = FCreatureState.Move;
 
     CameraController camera = Camera.main.gameObject.GetOrAddComponent<CameraController>();

@@ -17,6 +17,8 @@ public class BaseObject : InitBase
   public Vector3 previousPos = Vector3.zero;
   public Vector3 currentPos = Vector3.zero;
 
+  protected FJob job = FJob.None;
+
   public override bool Init()
   {
     if (base.Init() == false) return false;
@@ -25,6 +27,9 @@ public class BaseObject : InitBase
     Collider = this.GetComponent<CapsuleCollider2D>();
     SpriteRenderer = this.GetComponent<SpriteRenderer>();
     Animator = this.GetComponent<Animator>();
+
+    //TEMP
+    SpriteRenderer.sortingOrder = 20;
 
     return true;
   }
@@ -70,5 +75,56 @@ public class BaseObject : InitBase
     else if (dir.x > 0) LookLeft = false;
   }
 
+  #endregion
+
+  #region Map
+  public bool LerpCellPosCompleted { get; protected set; }
+
+  Vector3Int _cellPos;
+  public Vector3Int CellPos
+  {
+    get { return _cellPos; }
+    protected set
+    { 
+      _cellPos = value;
+      LerpCellPosCompleted = false;
+    }
+  }
+
+  public void SetCellPos(Vector3Int cellPos, bool forceMove = false)
+  {
+    CellPos = cellPos;
+    LerpCellPosCompleted = false;
+
+    if (forceMove)
+    {
+      transform.position = Managers.Map.Cell2World(CellPos);
+      LerpCellPosCompleted = true;
+    }
+  }
+
+  public void LerpToCellPos(float moveSpeed)
+  {
+    if (LerpCellPosCompleted)
+      return;
+
+    Vector3 destPos = Managers.Map.Cell2World(CellPos);
+    Vector3 dir = destPos - transform.position;
+
+    if (dir.x < 0)
+      LookLeft = true;
+    else
+      LookLeft = false;
+
+    if (dir.magnitude < 0.01f)
+    {
+      transform.position = destPos;
+      LerpCellPosCompleted = true;
+      return;
+    }
+
+    float moveDist = Mathf.Min(dir.magnitude, moveSpeed * Time.deltaTime);
+    transform.position += dir.normalized * moveDist;
+  }
   #endregion
 }

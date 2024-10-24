@@ -119,6 +119,7 @@ public class Creature : BaseObject
     {
       target = (FJob)job;
     }
+    if (dic.Value <= 0) target = FJob.None;
 
     return target;
   }

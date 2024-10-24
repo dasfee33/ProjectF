@@ -5,34 +5,6 @@ using static Define;
 
 public class Player : Creature
 {
-  //private Vector2 _moveDir = Vector2.zero;
-
-  //public override bool Init()
-  //{
-  //  if (base.Init() == false) return false;
-
-  //  CreatureType = FCreatureType.WARRIOR;
-  //  CreatureState = FCreatureState.Idle;
-  //  Speed = 2.0f;
-
-  //  Managers.Game.OnMoveDirChanged -= HandleOnMoveDirChanged;
-  //  Managers.Game.OnMoveDirChanged += HandleOnMoveDirChanged;
-
-
-  //  return true;
-  //}
-
-  //private void Update()
-  //{
-  //  transform.TranslateEx((_moveDir + Vector2.right) * Time.deltaTime * Speed);
-
-  //}
-
-  //private void HandleOnMoveDirChanged(Vector2 dir)
-  //{
-  //  _moveDir = dir;
-  //}
-
   public override FCreatureState CreatureState
   {
     get { return base.CreatureState; }
@@ -81,6 +53,10 @@ public class Player : Creature
     Speed = 3.0f;
     previousPos = transform.position;
 
+    //Map
+    Collider.isTrigger = false;
+    RigidBody.simulated = false;
+
     //TEST
     jobToggleDic["Cook"] = 10;
     jobToggleDic["Deco"] = 20;
@@ -102,8 +78,9 @@ public class Player : Creature
 
   #region AI
   public float SearchDistance { get; private set; } = 8.0f;
-  public float AttackDistance { get; private set; } = 4.0f;
-  Creature _target;
+  public float ActionDistance { get; private set; } = 1.0f;
+  //Creature _target;
+  BaseObject _target;
   Vector3 _destPos;
   Vector3 _initPos;
 
@@ -122,12 +99,30 @@ public class Player : Creature
         return;
       }
     }
+
+    //Job selection
+    {
+      job = SelectJob();
+      if(job != FJob.None)
+      {
+        //TEMP
+        _target = GameObject.Find(System.Enum.GetName(typeof(FJob), job)).GetOrAddComponent<BaseObject>();
+        CreatureMoveState = FCreatureMoveState.Job;
+        CreatureState = FCreatureState.Move;
+      }
+
+    }
     //CreatureState = FCreatureState.Move;
   }
 
   protected override void UpdateMove()
   {
     Debug.Log("Move");
+
+    if(CreatureMoveState == FCreatureMoveState.Job)
+    {
+      
+    }
 
     if (_target == null)
     {
@@ -144,31 +139,34 @@ public class Player : Creature
     else
     {
       //// Chase
-      //Vector3 dir = (_target.transform.position - transform.position);
-      //float distToTargetSqr = dir.sqrMagnitude;
-      //float attackDistanceSqr = AttackDistance * AttackDistance;
+      Vector3 dir = (_target.transform.position - transform.position);
+      float distToTargetSqr = dir.sqrMagnitude;
+      float attackDistanceSqr = ActionDistance * ActionDistance;
 
-      //if (distToTargetSqr < attackDistanceSqr)
-      //{
-      //  // 공격 범위 이내로 들어왔으면 공격.
-      //  CreatureState = ECreatureState.Skill;
-      //  StartWait(2.0f);
-      //}
-      //else
-      //{
-      //  // 공격 범위 밖이라면 추적.
-      //  float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * Speed);
-      //  transform.TranslateEx(dir.normalized * moveDist);
+      if (distToTargetSqr < attackDistanceSqr)
+      {
+        // 범위 내로 들어왔으면 작업
+        JobDic[System.Enum.GetName(typeof(FJob), job)] = 0;
+        _target = null;
+        CreatureState = FCreatureState.Idle;
+        CreatureMoveState = FCreatureMoveState.None;
+        StartWait(2.0f);
+      }
+      else
+      {
+        // 범위 밖이라면 추적.
+        float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * Speed);
+        transform.TranslateEx(dir.normalized * moveDist);
 
-      //  // 너무 멀어지면 포기.
-      //  float searchDistanceSqr = SearchDistance * SearchDistance;
-      //  if (distToTargetSqr > searchDistanceSqr)
-      //  {
-      //    _destPos = _initPos;
-      //    _target = null;
-      //    CreatureState = ECreatureState.Move;
-      //  }
-      //}
+        // 너무 멀어지면 포기.
+        //float searchDistanceSqr = SearchDistance * SearchDistance;
+        //if (distToTargetSqr > searchDistanceSqr)
+        //{
+        //  _destPos = _initPos;
+        //  _target = null;
+        //  CreatureState = ECreatureState.Move;
+        //}
+      }
     }
   }
 
