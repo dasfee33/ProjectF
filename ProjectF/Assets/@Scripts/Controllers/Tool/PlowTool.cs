@@ -2,14 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlowTool : InitBase
+public class PlowTool : ToolBase
 {
-  public override bool Init()
-  {
-    if (base.Init() == false) return false;
-
-    return true;
-  }
-
+  
+  
   
 }
