@@ -28,10 +28,12 @@ public class Managers : MonoBehaviour
   private GameManager _game = new GameManager();
   private ObjectManager _object = new ObjectManager();
   private MapManager _map = new MapManager();
+  private ToolManager _tool = new ToolManager();
 
   public static GameManager Game { get { return Instance?._game; } }
   public static ObjectManager Object { get { return Instance?._object; } }
-  public static MapManager Map { get { return Instance?._map; } } 
+  public static MapManager Map { get { return Instance?._map; } }
+  public static ToolManager Tool { get { return Instance?._tool; } }
 
   #endregion
 
