@@ -17,6 +17,7 @@ public class BaseObject : InitBase
   public Vector3 previousPos = Vector3.zero;
   public Vector3 currentPos = Vector3.zero;
 
+  [SerializeField]
   protected FJob job = FJob.None;
 
   public override bool Init()
