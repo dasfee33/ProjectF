@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartitionManager : InitBase
+public class PartitionManager
 {
-  public PartitionerLayer plowChangeLayer;
 
-  private Partitioner partitioner;
-
-  public override bool Init()
+  public PartitionerLayer CreateMask(string name, List<PartitionerLayer> layers)
   {
-    if (base.Init() == false) return false;
+    if(layers == null)
+    {
+      Debug.LogError($"not exist Partition");
+      return null;
+    }
 
-    CreateMask();
+    foreach (PartitionerLayer layer in layers)
+    {
+      if (layer.name == name)
+        return layer;
+    }
 
-    return true;
-  }
+    PartitionerLayer mask = new PartitionerLayer(name, layers.Count);
+    layers.Add(mask);
 
-  public void CreateMask()
-  {
-    //this.plowChangeLayer = partio
+    return mask;
   }
 
 }

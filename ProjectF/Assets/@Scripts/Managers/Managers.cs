@@ -29,11 +29,13 @@ public class Managers : MonoBehaviour
   private ObjectManager _object = new ObjectManager();
   private MapManager _map = new MapManager();
   private ToolManager _tool = new ToolManager();
+  private PartitionManager _partition = new PartitionManager();
 
   public static GameManager Game { get { return Instance?._game; } }
   public static ObjectManager Object { get { return Instance?._object; } }
   public static MapManager Map { get { return Instance?._map; } }
   public static ToolManager Tool { get { return Instance?._tool; } }
+  public static PartitionManager Partition { get { return Instance?._partition; } }
 
   #endregion
 
