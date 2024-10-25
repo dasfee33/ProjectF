@@ -17,8 +17,9 @@ public class GameScene : BaseScene
     Player warrior2 = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 0));
     //warrior.CreatureState = FCreatureState.Move;
 
-    CameraController camera = Camera.main.gameObject.GetOrAddComponent<CameraController>();
-    camera.transform.position = new Vector3(0, 0, -2);
+    CameraController camera = Camera.main.GetComponent<CameraController>();
+    camera.virtualCam.Follow = warrior.transform;
+    //camera.transform.position = new Vector3(0, 0, -2);
 
     return true;
   }

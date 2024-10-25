@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static Define;
 
 public class MapManager
@@ -35,7 +36,9 @@ public class MapManager
     CellGrid = map.GetComponent<Grid>();
 
     ParseCollisionData(map, mapName);
-
+    
+    CameraController cam = Camera.main.GetComponent<CameraController>();
+    cam.confinerCam.m_BoundingShape2D = MakeMapCollisionBorder(map);
   }
 
   public void DestroyMap()
@@ -46,7 +49,39 @@ public class MapManager
       Managers.Resource.Destroy(Map);
   }
 
-  void ParseCollisionData(GameObject map, string mapName, string tilemap = "Tilemap_Collision")
+  private PolygonCollider2D MakeMapCollisionBorder(GameObject map)
+  {
+    Tilemap tilemap = map.transform.GetChild(0).GetComponent<Tilemap>();
+    PolygonCollider2D collider;
+    if (tilemap == null) return null;
+
+    Vector3Int size = tilemap.size;
+    Vector3 cellSize = tilemap.cellSize;
+
+    float width = size.x * cellSize.x;
+    float height = size.y * cellSize.y;
+
+    GameObject go = GameObject.Find("MapBorder");
+    if (go == null)
+    {
+      go = new GameObject { name = $"MapBorder" };
+      collider = go.GetOrAddComponent<PolygonCollider2D>();
+      Vector2[] points = new Vector2[4];
+
+      points[0] = new Vector2(-width / 2, height / 2); //좌상
+      points[1] = new Vector2(-width / 2, -height / 2); //좌하
+      points[2] = new Vector2(width / 2, -height / 2); //우하
+      points[3] = new Vector2(width / 2, height / 2); //우상
+      
+      collider.points = points;
+    }
+    else collider = go.GetComponent<PolygonCollider2D>();
+    collider.isTrigger = true;
+
+    return collider;
+  }
+
+  private void ParseCollisionData(GameObject map, string mapName, string tilemap = "Tilemap_Collision")
   {
     GameObject collision = Util.FindChild(map, tilemap, true);
     if (collision != null)
