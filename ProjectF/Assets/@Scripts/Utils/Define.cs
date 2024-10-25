@@ -19,6 +19,12 @@ public static class Define
     Drag,
   }
 
+  public enum FTool
+  {
+    Plow,
+
+  }
+
   public enum FSound
   {
     Bgm,
@@ -76,7 +82,7 @@ public static class Define
     Deco,
     Research,
     Machine,
-    Plant,
+    Plow,
     Breed,
     Make,
     Dig,

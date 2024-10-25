@@ -18,7 +18,7 @@ public class GameScene : BaseScene
     //warrior.CreatureState = FCreatureState.Move;
 
     CameraController camera = Camera.main.gameObject.GetOrAddComponent<CameraController>();
-    camera.Target = warrior;
+    camera.transform.position = new Vector3(0, 0, -2);
 
     return true;
   }

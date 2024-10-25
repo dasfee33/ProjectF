@@ -1,29 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using static Define;
 
-public class ToolBase : InitBase, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler,IDragHandler
+public class ToolBase : InitBase
 {
+  public GameObject[] ToolList;
+  private Grid grid;
 
-  public void OnPointerClick(PointerEventData eventData)
+  public override bool Init()
   {
-    
+    if (base.Init() == false) return false;
+
+    grid = this.GetComponent<Grid>();
+
+    return true;
   }
 
-  public void OnPointerDown(PointerEventData eventData)
+  private void resetTool()
   {
-    Vector3 worldPos = eventData.pressEventCamera.ScreenToWorldPoint(eventData.position);
-
-    //Vector3Int cellPos = Grid.WorldToCell(worldPos);
+    foreach (GameObject tool in ToolList)
+      tool.SetActive(false);
   }
 
-  public void OnPointerUp(PointerEventData eventData)
+  private void Update()
   {
-  }
-
-  public void OnDrag(PointerEventData eventData)
-  {
-
+    //TEMP
+    if(Input.GetKeyDown(KeyCode.F))
+    {
+      resetTool();
+      GameObject go = ToolList[(int)FTool.Plow];
+      go.SetActive(true);
+      go.GetComponent<PlowTool>().grid = this.grid;
+    }
   }
 }
