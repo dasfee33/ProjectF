@@ -12,6 +12,7 @@ public class GameScene : BaseScene
     SceneType = Define.FScene.GameScene;
 
     Managers.Map.LoadMap("BaseMap");
+    Managers.RandomSeedGenerate.GenerateMaps();
 
     Warrior warrior = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
     Warrior warrior2 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");

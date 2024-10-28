@@ -56,9 +56,9 @@ public class Warrior : Creature
     RigidBody.simulated = false;
 
     //TEST
-    AddJobPriority(FJob.Cook, 10);
-    AddJobPriority(FJob.Logging, 20);
-    AddJobPriority(FJob.Toggle, 30);
+    SetOrAddJobPriority(FJob.Cook, 10);
+    SetOrAddJobPriority(FJob.Logging, 20);
+    SetOrAddJobPriority(FJob.Toggle, 30);
 
     StartCoroutine(CoUpdateAI());
 
@@ -126,7 +126,7 @@ public class Warrior : Creature
 
         if (LerpCellPosCompleted)
         {
-          AddJobPriority(job, 0);
+          SetOrAddJobPriority(job, 0, true);
           CreatureMoveState = FCreatureMoveState.None;
           CreatureState = FCreatureState.Idle;
           Target = null;

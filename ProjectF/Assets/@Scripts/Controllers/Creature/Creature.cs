@@ -52,10 +52,14 @@ public class Creature : BaseObject
     return true;
   }
 
-  public void AddJobPriority(FJob job, int p)
+  public void SetOrAddJobPriority(FJob job, int p, bool set = false)
   {
-    if (JobDic.TryGetValue(job, out var value))
-      JobDic[job] += p;
+    if (set) JobDic[job] = p;
+    else
+    {
+      if (JobDic.TryGetValue(job, out var value))
+        JobDic[job] += p;
+    }
   }
 
   public int GetJobPriority(FJob job)

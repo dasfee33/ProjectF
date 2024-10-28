@@ -11,6 +11,7 @@ public class MapManager
   public GameObject Map { get; private set; }
   public string MapName { get; private set; }
   public Grid CellGrid { get; private set; }
+  public Tilemap tilemap { get; private set; }
 
   Dictionary<Vector3Int, BaseObject> _cells = new Dictionary<Vector3Int, BaseObject>();
 
@@ -52,7 +53,7 @@ public class MapManager
 
   private PolygonCollider2D MakeMapCollisionBorder(GameObject map)
   {
-    Tilemap tilemap = map.transform.GetChild(0).GetComponent<Tilemap>();
+    tilemap = map.transform.GetChild(0).GetComponent<Tilemap>();
     PolygonCollider2D collider;
     if (tilemap == null) return null;
 
@@ -152,6 +153,23 @@ public class MapManager
     return GetObject(cellPos);
   }
 
+  public BaseObject NearGetObject(Vector3 worldPos, int depth = 1)
+  {
+    BaseObject obj = null;
+    Vector3Int cellPos = World2Cell(worldPos);
+
+    for(int x = -depth; x <= depth; x++)
+    {
+      for(int y = -depth; y <= depth; y++)
+      {
+        if (x == 0 && y == 0) continue;
+        obj = GetObject(cellPos + new Vector3Int(x, y));
+        if (obj != null) return obj;
+      }
+    }
+    return obj;
+  }
+
   private void RemoveObject(BaseObject obj)
   {
     int extraCells = 0;
@@ -173,7 +191,7 @@ public class MapManager
     }
   }
 
-  private void AddObject(BaseObject obj, Vector3Int cellPos)
+  public void AddObject(BaseObject obj, Vector3Int cellPos)
   {
     int extraCells = 0;
     if (obj != null)
@@ -192,6 +210,12 @@ public class MapManager
         _cells[newCellPos] = obj;
       }
     }
+  }
+
+  public FCellCollisionTypes GetTileCollisionType(Vector3Int cellPos)
+  {
+    var result = _collision[cellPos.x, cellPos.y];
+    return result;
   }
 
   public bool CanGo(Vector3 worldPos, bool ignoreObjects = false, bool ignoreSemiWall = false)

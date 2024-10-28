@@ -53,6 +53,8 @@ public class ObjectManager
       Env env = obj as Env;
       Envs.Add(env);
       Workables.Add(obj);
+
+      env.SetInfo(dataID);
     }
     //TODO
 

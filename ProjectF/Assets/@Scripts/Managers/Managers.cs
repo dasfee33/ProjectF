@@ -30,12 +30,14 @@ public class Managers : MonoBehaviour
   private MapManager _map = new MapManager();
   private ToolManager _tool = new ToolManager();
   private PartitionManager _partition = new PartitionManager();
+  private RandomSeedGenerate _randomSeedGenerate = new RandomSeedGenerate();
 
   public static GameManager Game { get { return Instance?._game; } }
   public static ObjectManager Object { get { return Instance?._object; } }
   public static MapManager Map { get { return Instance?._map; } }
   public static ToolManager Tool { get { return Instance?._tool; } }
   public static PartitionManager Partition { get { return Instance?._partition; } }
+  public static RandomSeedGenerate RandomSeedGenerate { get { return Instance?._randomSeedGenerate; } }
 
   #endregion
 
