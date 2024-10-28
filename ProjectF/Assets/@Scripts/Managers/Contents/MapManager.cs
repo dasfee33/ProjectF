@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -122,7 +123,7 @@ public class MapManager
 
   public bool MoveTo(Creature obj, Vector3Int cellPos, bool forceMove = false)
   {
-    if (CanGo(obj, cellPos) == false)
+    if (CanGo(cellPos) == false)
       return false;
 
     RemoveObject(obj);
@@ -151,40 +152,51 @@ public class MapManager
     return GetObject(cellPos);
   }
 
-  private bool RemoveObject(BaseObject obj)
+  private void RemoveObject(BaseObject obj)
   {
-    BaseObject prev = GetObject(obj.CellPos);
+    int extraCells = 0;
+    if (obj != null)
+      extraCells = obj.ExtraCells;
 
-    if(prev != obj)
+    Vector3Int cellPos = obj.CellPos;
+
+    for (int dx = -extraCells; dx <= extraCells; dx++)
     {
-      return false;
-    }
+      for (int dy = -extraCells; dy <= extraCells; dy++)
+      {
+        Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
+        BaseObject prev = GetObject(newCellPos);
 
-    _cells[obj.CellPos] = null;
-    return true;
+        if (prev == obj)
+          _cells[newCellPos] = null;
+      }
+    }
   }
 
-  private bool AddObject(BaseObject obj, Vector3Int cellPos)
+  private void AddObject(BaseObject obj, Vector3Int cellPos)
   {
-    if (CanGo(cellPos) == false)
-    {
-      Debug.LogWarning($"AddObject Failed : {obj.name}");
-      return false;
-    }
+    int extraCells = 0;
+    if (obj != null)
+      extraCells = obj.ExtraCells;
 
-    BaseObject prev = GetObject(cellPos);
-    if(prev != null)
+    for (int dx = -extraCells; dx <= extraCells; dx++)
     {
-      Debug.LogWarning($"AddObject Failed : Another Object");
-    }
+      for (int dy = -extraCells; dy <= extraCells; dy++)
+      {
+        Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
 
-    _cells[cellPos] = obj;
-    return true;
+        BaseObject prev = GetObject(newCellPos);
+        if (prev != null && prev != obj)
+          Debug.LogWarning($"AddObject {obj}");
+
+        _cells[newCellPos] = obj;
+      }
+    }
   }
 
-  public bool CanGo(BaseObject self, Vector3 worldPos, bool ignoreObjects = false, bool ignoreSemiWall = false)
+  public bool CanGo(Vector3 worldPos, bool ignoreObjects = false, bool ignoreSemiWall = false)
   {
-    return CanGo(self, World2Cell(worldPos), ignoreObjects, ignoreSemiWall);
+    return CanGo(World2Cell(worldPos), ignoreObjects, ignoreSemiWall);
   }
 
   public bool CanGo(Vector3Int cellPos, bool ignoreObjects = false, bool ignoreSemiWall = false)
@@ -194,7 +206,7 @@ public class MapManager
     if (cellPos.y < MinY || cellPos.y > MaxY)
       return false;
 
-    if(ignoreObjects == false)
+    if (ignoreObjects == false)
     {
       BaseObject obj = GetObject(cellPos);
       if (obj != null)
@@ -216,6 +228,121 @@ public class MapManager
   public void ClearObjects()
   {
     _cells.Clear();
+  }
+
+  #endregion
+
+  #region A* PathFinding
+  public struct PQNode : IComparable<PQNode>
+  {
+    public int H; // Heuristic
+    public Vector3Int CellPos;
+    public int Depth;
+
+    public int CompareTo(PQNode other)
+    {
+      if (H == other.H)
+        return 0;
+      return H < other.H ? 1 : -1;
+    }
+  }
+
+  List<Vector3Int> _delta = new List<Vector3Int>()
+    {
+        new Vector3Int(0, 1, 0), // U
+		new Vector3Int(1, 1, 0), // UR
+		new Vector3Int(1, 0, 0), // R
+		new Vector3Int(1, -1, 0), // DR
+		new Vector3Int(0, -1, 0), // D
+		new Vector3Int(-1, -1, 0), // LD
+		new Vector3Int(-1, 0, 0), // L
+		new Vector3Int(-1, 1, 0), // LU
+	};
+
+  public List<Vector3Int> FindPath(BaseObject self, Vector3Int startCellPos, Vector3Int destCellPos, int maxDepth = 10)
+  {
+    Dictionary<Vector3Int, int> best = new Dictionary<Vector3Int, int>();
+    Dictionary<Vector3Int, Vector3Int> parent = new Dictionary<Vector3Int, Vector3Int>();
+
+    PriorityQueue<PQNode> pq = new PriorityQueue<PQNode>(); // OpenList
+
+    Vector3Int pos = startCellPos;
+    Vector3Int dest = destCellPos;
+
+    Vector3Int closestCellPos = startCellPos;
+    int closestH = (dest - pos).sqrMagnitude;
+
+    {
+      int h = (dest - pos).sqrMagnitude;
+      pq.Push(new PQNode() { H = h, CellPos = pos, Depth = 1 });
+      parent[pos] = pos;
+      best[pos] = h;
+    }
+
+    while (pq.Count > 0)
+    {
+      PQNode node = pq.Pop();
+      pos = node.CellPos;
+
+      if (pos == dest)
+        break;
+
+      if (node.Depth >= maxDepth)
+        break;
+
+      foreach (Vector3Int delta in _delta)
+      {
+        Vector3Int next = pos + delta;
+
+        if (CanGo(next) == false)
+          continue;
+
+        int h = (dest - next).sqrMagnitude;
+
+        if (best.ContainsKey(next) == false)
+          best[next] = int.MaxValue;
+
+        if (best[next] <= h)
+          continue;
+
+        best[next] = h;
+
+        pq.Push(new PQNode() { H = h, CellPos = next, Depth = node.Depth + 1 });
+        parent[next] = pos;
+
+        if (closestH > h)
+        {
+          closestH = h;
+          closestCellPos = next;
+        }
+      }
+    }
+
+    if (parent.ContainsKey(dest) == false)
+      return CalcCellPathFromParent(parent, closestCellPos);
+
+    return CalcCellPathFromParent(parent, dest);
+  }
+
+  List<Vector3Int> CalcCellPathFromParent(Dictionary<Vector3Int, Vector3Int> parent, Vector3Int dest)
+  {
+    List<Vector3Int> cells = new List<Vector3Int>();
+
+    if (parent.ContainsKey(dest) == false)
+      return cells;
+
+    Vector3Int now = dest;
+
+    while (parent[now] != now)
+    {
+      cells.Add(now);
+      now = parent[now];
+    }
+
+    cells.Add(now);
+    cells.Reverse();
+
+    return cells;
   }
 
   #endregion

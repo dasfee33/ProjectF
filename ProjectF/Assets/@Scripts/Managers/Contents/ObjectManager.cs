@@ -5,6 +5,9 @@ using static Define;
 public class ObjectManager
 {
   public List<Creature> Creatures { get; } = new List<Creature> ();
+  public List<Env> Envs { get; } = new List<Env> ();
+
+  public List<BaseObject> Workables { get; } = new List<BaseObject>();
 
   public Transform GetRootTransform(string name)
   {
@@ -17,11 +20,14 @@ public class ObjectManager
   }
 
   public Transform CreatureRoot { get { return GetRootTransform("@Creatures"); } }
+  public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
 
-  public T Spawn<T>(string name, Vector3 position) where T : BaseObject
+  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null) where T : BaseObject
   {
-    GameObject go = Managers.Resource.Instantiate(name);
-    go.name = name;
+    if(string.IsNullOrEmpty(prefabName)) prefabName = typeof(T).Name;
+
+    GameObject go = Managers.Resource.Instantiate(prefabName);
+    go.name = prefabName;
     go.transform.position = position;
 
     BaseObject obj = go.GetComponent<BaseObject>();
@@ -34,10 +40,19 @@ public class ObjectManager
       {
         case FCreatureType.WARRIOR:
           obj.transform.parent = CreatureRoot;
-          Player warrior = creature as Player;
+          Warrior warrior = creature as Warrior;
           Creatures.Add(warrior);
           break;
       }
+
+      creature.SetInfo(dataID);
+    }
+    else if(obj.ObjectType == FObjectType.Env)
+    {
+      obj.transform.parent = EnvRoot;
+      Env env = obj as Env;
+      Envs.Add(env);
+      Workables.Add(obj);
     }
     //TODO
 
@@ -49,16 +64,21 @@ public class ObjectManager
   {
     FObjectType objectType = obj.ObjectType;
 
-    if(obj.ObjectType != FObjectType.Creature)
+    if(obj.ObjectType == FObjectType.Creature)
     {
       Creature creature = obj as Creature;
       switch(creature.CreatureType)
       {
         case FCreatureType.WARRIOR:
-          Player warrior = creature as Player;
+          Warrior warrior = creature as Warrior;
           Creatures.Remove(warrior);
           break;
       }
+    }
+    else if(obj.ObjectType == FObjectType.Env)
+    {
+      Env env = obj as Env;
+      Envs.Remove(env);
     }
     //TODO
 

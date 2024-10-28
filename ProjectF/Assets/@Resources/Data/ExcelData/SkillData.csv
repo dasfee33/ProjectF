@@ -1,0 +1,4 @@
+﻿DataID,Name,DescriptionTextID,Label,AnimName,CoolTime,DamageMultiflier
+50000,워리어평타1,기본공격1,Skill,warrior single swing1,0,0
+50001,워리어평타2,기본공격2,Skill,warrior single swing3,0,0
+50002,워리어콤보1,콤보공격1,Skill,warrior full combo atk,0,0

@@ -1,0 +1,31 @@
+{
+  "skills": [
+    {
+      "DataId": 50000,
+      "Name": "워리어평타1",
+      "DescriptionTextID": "기본공격1",
+      "Label": "Skill",
+      "AnimName": "warrior single swing1",
+      "CoolTime": 0.0,
+      "DamageMultiflier": 0.0
+    },
+    {
+      "DataId": 50001,
+      "Name": "워리어평타2",
+      "DescriptionTextID": "기본공격2",
+      "Label": "Skill",
+      "AnimName": "warrior single swing3",
+      "CoolTime": 0.0,
+      "DamageMultiflier": 0.0
+    },
+    {
+      "DataId": 50002,
+      "Name": "워리어콤보1",
+      "DescriptionTextID": "콤보공격1",
+      "Label": "Skill",
+      "AnimName": "warrior full combo atk",
+      "CoolTime": 0.0,
+      "DamageMultiflier": 0.0
+    }
+  ]
+}

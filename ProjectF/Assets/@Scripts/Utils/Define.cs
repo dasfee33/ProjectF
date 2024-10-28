@@ -37,7 +37,13 @@ public static class Define
     None,
     Creature,
     Projectile,
-    Prop,
+    Env,
+  }
+
+  public enum FEnvType
+  {
+    None,
+    Tree,
   }
 
   public enum FCreatureType
@@ -54,6 +60,14 @@ public static class Define
     Idle,
     Move,
     Skill,
+    Dead,
+  }
+
+  public enum FEnvState
+  {
+    None,
+    Idle,
+    Hurt,
     Dead,
   }
 
@@ -86,6 +100,7 @@ public static class Define
     Breed,
     Make,
     Dig,
+    Logging,
     Supply,
     Store,
     //TODO,
@@ -109,6 +124,11 @@ public static class Define
   public const char MAP_TOOL_WALL = '0';
   public const char MAP_TOOL_NONE = '1';
   public const char MAP_TOOL_SEMI_WALL = '2';
+
+  public const int CREATURE_WARRIOR_DATAID = 1;
+  public const int ENV_TREE_NORMAL1 = 100000;
+  public const int ENV_TREE_NORMAL2 = 100001;
+
 }
 
 public class JobPriority
@@ -148,9 +168,10 @@ public static class AnimName
   public const string WARRIOR_SWING1 = "warrior single swing1";
   public const string WARRIOR_SWING3 = "warrior single swing3";
   public const string WARRIOR_COMBOATTACK = "warrior full combo atk";
-  
+
 }
 
 
-  
+
+
 

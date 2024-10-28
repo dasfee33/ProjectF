@@ -5,6 +5,8 @@ using static Define;
 
 public class BaseObject : InitBase
 {
+  public int ExtraCells { get; set; } = 0;
+
   public FObjectType ObjectType { get; protected set; } = FObjectType.None;
   public Rigidbody2D RigidBody { get; private set; }
   public CapsuleCollider2D Collider { get; private set; }
@@ -14,11 +16,15 @@ public class BaseObject : InitBase
   public float ColliderRadius { get { return Collider != null ? Collider.size.y : 0.0f; } }
   public Vector3 CenterPosition { get { return transform.position + Vector3.up * ColliderRadius; } }
 
-  public Vector3 previousPos = Vector3.zero;
-  public Vector3 currentPos = Vector3.zero;
+  protected Vector3 previousPos = Vector3.zero;
+  protected Vector3 currentPos = Vector3.zero;
+
+  public int dataTemplateID { get; set; }
 
   [SerializeField]
   protected FJob job = FJob.None;
+  [SerializeField]
+  protected FJob workableJob = FJob.None;
 
   public override bool Init()
   {
@@ -47,7 +53,7 @@ public class BaseObject : InitBase
     }
   }
 
-  protected virtual void UpdateAnimation(FCreatureType type) { }
+  protected virtual void UpdateAnimation() { }
 
   public void PlayAnimation(string anim)
   {
@@ -127,5 +133,18 @@ public class BaseObject : InitBase
     float moveDist = Mathf.Min(dir.magnitude, moveSpeed * Time.deltaTime);
     transform.position += dir.normalized * moveDist;
   }
+  #endregion
+
+  #region Battle
+  public virtual void OnDamaged(BaseObject attacker)
+  {
+
+  }
+
+  public virtual void OnDead(BaseObject attacker)
+  {
+
+  }
+
   #endregion
 }

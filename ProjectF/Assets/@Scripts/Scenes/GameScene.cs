@@ -13,8 +13,14 @@ public class GameScene : BaseScene
 
     Managers.Map.LoadMap("BaseMap");
 
-    Player warrior = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 1));
-    Player warrior2 = Managers.Object.Spawn<Player>("Warrior", new Vector2(-5, 0));
+    Warrior warrior = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+    Warrior warrior2 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+
+    Env env1 = Managers.Object.Spawn<Env>(new Vector3(-1, 0), ENV_TREE_NORMAL1, "Tree1");
+    Env env2 = Managers.Object.Spawn<Env>(new Vector3(1, 0), ENV_TREE_NORMAL2, "Tree2");
+
+    Managers.Map.MoveTo(warrior, new Vector3Int(-5, 1), true);
+    Managers.Map.MoveTo(warrior2, new Vector3Int(-5, 0), true);
     //warrior.CreatureState = FCreatureState.Move;
 
     CameraController camera = Camera.main.GetComponent<CameraController>();

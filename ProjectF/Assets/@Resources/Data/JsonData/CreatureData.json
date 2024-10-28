@@ -1,0 +1,21 @@
+{
+  "creatures": [
+    {
+      "DataId": 1,
+      "Name": "warrior",
+      "DescriptionTextID": "something",
+      "Label": "player",
+      "maxHp": 100.0,
+      "Speed": 1.0,
+      "Idle": "warrior idle",
+      "Move": "warrior run",
+      "Hurt": "warrior hurt",
+      "Dead": "warrior death",
+      "SkillList": [
+        50000,
+        50001,
+        50002
+      ]
+    }
+  ]
+}

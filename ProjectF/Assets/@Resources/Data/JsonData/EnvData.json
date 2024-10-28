@@ -1,0 +1,24 @@
+{
+  "envs": [
+    {
+      "DataId": 100000,
+      "Name": "tree_normal1",
+      "DescriptionTextID": "일반나무1",
+      "Label": "Env",
+      "maxHp": 100.0,
+      "RegenTime": 50.0,
+      "Idle": "tree1",
+      "type": "Tree"
+    },
+    {
+      "DataId": 100001,
+      "Name": "tree_normal2",
+      "DescriptionTextID": "일반나무2",
+      "Label": "Env",
+      "maxHp": 150.0,
+      "RegenTime": 100.0,
+      "Idle": "tree2",
+      "type": "Tree"
+    }
+  ]
+}

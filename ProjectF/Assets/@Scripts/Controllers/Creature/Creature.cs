@@ -7,13 +7,18 @@ using static Define;
 
 public class Creature : BaseObject
 {
+  public BaseObject Target { get; protected set; }
+  public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
 
-  private string[] jobNames = Enum.GetNames(typeof(FJob));
+  public Dictionary<FJob, int> JobDic = new Dictionary<FJob, int>();
 
-  public Dictionary<string, int> JobDic = new Dictionary<string, int>();
-  public Dictionary<string, int> jobToggleDic = new Dictionary<string, int>();
+  public Data.CreatureData CreatureData { get; protected set; }
+
+  #region Stats
+  public float maxHp { get; set; }
+  #endregion
 
   protected FCreatureState creatureState = FCreatureState.None;
   public virtual FCreatureState CreatureState
@@ -24,7 +29,7 @@ public class Creature : BaseObject
       if (creatureState != value)
       {
         creatureState = value;
-        UpdateAnimation(CreatureType);
+        UpdateAnimation();
       }
     }
   }
@@ -34,41 +39,65 @@ public class Creature : BaseObject
     if (base.Init() == false) return false;
 
     ObjectType = FObjectType.Creature;
-    foreach(string job in jobNames)
+
+    var jobLength = Enum.GetValues(typeof(FJob)).Length;
+    for(int i = 0; i < jobLength; i++)
     {
-      JobDic.Add(job, 0);
+      JobDic.Add((FJob)i, 0);
     }
-    foreach(string job in jobNames)
-    {
-      jobToggleDic.Add(job, 0);
-    }
+
+    //FIXME
+    //StartCoroutine(CoLerpToCellPos());
 
     return true;
   }
 
-  protected override void UpdateAnimation(FCreatureType type)
+  public void AddJobPriority(FJob job, int p)
   {
-    switch(type)
-    {
-      case FCreatureType.WARRIOR:
-        PlayWarriorAnimation();
-        break;
-      default: break;
-    }
+    if (JobDic.TryGetValue(job, out var value))
+      JobDic[job] += p;
   }
 
-  private void PlayWarriorAnimation()
+  public int GetJobPriority(FJob job)
+  {
+    if (JobDic.TryGetValue(job, out var value))
+      return value;
+    return -1;
+  }
+
+  public virtual void SetInfo(int dataID)
+  {
+    dataTemplateID = dataID;
+    CreatureData = Managers.Data.CreatureDic[dataID];
+
+    gameObject.name = $"{CreatureData.DataId}_{CreatureData.Name}";
+
+    maxHp = CreatureData.maxHp;
+    //TODO
+
+    CreatureState = FCreatureState.Idle;
+
+    foreach(int skillID in CreatureData.SkillList)
+    {
+      Skills.Add(Managers.Data.SkillDic[skillID]);
+    }
+
+    StartCoroutine(CoLerpToCellPos());
+
+  }
+
+  protected override void UpdateAnimation()
   {
     switch(CreatureState)
     {
       case FCreatureState.Idle:
-        PlayAnimation(AnimName.WARRIOR_IDLE);
+        PlayAnimation(CreatureData.Idle);
         break;
       case FCreatureState.Move:
-        PlayAnimation(AnimName.WARRIOR_RUN);
+        PlayAnimation(CreatureData.Move);
         break;
       case FCreatureState.Dead:
-        PlayAnimation(AnimName.WARRIOR_DEATH);
+        PlayAnimation(CreatureData.Dead);
         break;
       default: break;
     }
@@ -115,10 +144,8 @@ public class Creature : BaseObject
 
     var dic = JobDic.Aggregate((a, b) => a.Value > b.Value ? a : b);
 
-    if(Enum.TryParse(typeof(FJob), dic.Key, out var job))
-    {
-      target = (FJob)job;
-    }
+    target = dic.Key;
+    
     if (dic.Value <= 0) target = FJob.None;
 
     return target;
@@ -145,6 +172,83 @@ public class Creature : BaseObject
     if (_coWait != null)
       StopCoroutine(_coWait);
     _coWait = null;
+  }
+  #endregion
+
+  #region Map
+  // 일하는 목표 우선순위 외에도 자기 자신만의 작업큐를 들고있어야함
+  // 그리고 그걸 일정 프레임? 다끝났을때? 마다 리프레쉬하면서 몇개(10개정도?)까지만 들고있어야하는. 일종의 jobQueue가 있어야함
+  //public BaseObject SearchJob(float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+  //{
+  //  BaseObject target = null;
+
+  //  foreach(BaseObject obj in objs)
+  //  {
+
+  //  }
+  //}
+
+  public FFindPathResults FindPathAndMoveToCellPos(Vector3 destWorldPos, int maxDepth, bool forceMoveCloser = false)
+  {
+    Vector3Int destCellPos = Managers.Map.World2Cell(destWorldPos);
+    return FindPathAndMoveToCellPos(destCellPos, maxDepth, forceMoveCloser);
+  }
+
+  public FFindPathResults FindPathAndMoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
+  {
+    if (LerpCellPosCompleted == false)
+      return FFindPathResults.Fail_LerpCell;
+
+    // A*
+    List<Vector3Int> path = Managers.Map.FindPath(this, CellPos, destCellPos, maxDepth);
+    if (path.Count < 2)
+      return FFindPathResults.Fail_NoPath;
+
+    if (forceMoveCloser)
+    {
+      Vector3Int diff1 = CellPos - destCellPos;
+      Vector3Int diff2 = path[1] - destCellPos;
+      if (diff1.sqrMagnitude <= diff2.sqrMagnitude)
+        return FFindPathResults.Fail_NoPath;
+    }
+
+    Vector3Int dirCellPos = path[1] - CellPos;
+    //Vector3Int dirCellPos = destCellPos - CellPos;
+    Vector3Int nextPos = CellPos + dirCellPos;
+
+    if (Managers.Map.MoveTo(this, nextPos) == false)
+      return FFindPathResults.Fail_MoveTo;
+
+    return FFindPathResults.Success;
+  }
+
+  public bool MoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
+  {
+    if (LerpCellPosCompleted == false)
+      return false;
+
+    return Managers.Map.MoveTo(this, destCellPos);
+  }
+
+  protected IEnumerator CoLerpToCellPos()
+  {
+    while (true)
+    {
+      Warrior player = this as Warrior;
+      //if (player != null)
+      //{
+      //  float div = 5;
+      //  Vector3 campPos = Managers.Object.Camp.Destination.transform.position;
+      //  Vector3Int campCellPos = Managers.Map.World2Cell(campPos);
+      //  float ratio = Math.Max(1, (CellPos - campCellPos).magnitude / div);
+
+      //  LerpToCellPos(CreatureData.MoveSpeed * ratio);
+      //}
+      //else
+      LerpToCellPos(CreatureData.Speed);
+
+      yield return null;
+    }
   }
   #endregion
 
