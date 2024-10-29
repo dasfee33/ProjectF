@@ -37,8 +37,8 @@ public class RandomSeedGenerate
       {
         noiseArr[x, y] = Mathf.PerlinNoise
         (
-          x * Map.cellSize.x + seed,
-          y * Map.cellSize.y + seed
+          x * 0.1f/*Map.cellSize.x*/ + seed,
+          y * 0.1f/*Map.cellSize.y*/ + seed
         );
       }
     }
@@ -59,36 +59,40 @@ public class RandomSeedGenerate
   {
     Vector3Int point = Vector3Int.zero;
 
-    for(int x = 0; x < width; x++)
+    for(int y = height; y >= 0; y--)
     {
-      for(int y = 0; y < height; y++)
+      for(int x = 0; x <= width; x++)
       {
-        FCellCollisionTypes cellType = Managers.Map.GetTileCollisionType(new Vector3Int(x, y));
-        if (cellType == FCellCollisionTypes.Wall || cellType == FCellCollisionTypes.SemiWall) continue;
+        var cellPos = new Vector3Int(x, y, 0);
         int X = x - width / 2;
         int Y = y - height / 2;
+        FCellCollisionTypes cellType = Managers.Map.GetTileObjCollisionType(new Vector3Int(x, y));
         if (X <= -width / 2 || X >= width / 2) continue;
         if (Y <= -height / 2 || Y >= height / 2) continue;
-        point.Set(x - width / 2, y - height / 2, 0);
+        if (cellType == FCellCollisionTypes.Wall || cellType == FCellCollisionTypes.SemiWall) continue;
+        
+        point.Set(X, -Y, 0);
+
         var pos = Managers.Map.Cell2World(point);
-        BaseObject bo = GetBiomObject(pos, noiseArr[x, y]);
-        Managers.Map.AddObject(bo, point);
+        
+        BaseObject bo = GetBiomObject(pos, cellPos, noiseArr[x, y]);
+        Managers.Map.AddObject(bo, cellPos);
       }
     }
   }
 
-  private BaseObject GetBiomObject(Vector3 pos, float noiseValue)
+  private BaseObject GetBiomObject(Vector3 pos, Vector3Int cellPos, float noiseValue)
   {
-    BaseObject bo = Managers.Map.NearGetObject(pos, 2);
+    BaseObject bo = Managers.Map.NearGetObject(pos, cellPos);
     if (bo != null)
       return null;
 
     switch(noiseValue)
     {
-      case <= 0.2f:
+      case <= 0.3f:
         bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL1, "Tree1");
         break;
-      case <= 0.25f:
+      case <= 0.4f:
         bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL2, "Tree2");
         break;
     }

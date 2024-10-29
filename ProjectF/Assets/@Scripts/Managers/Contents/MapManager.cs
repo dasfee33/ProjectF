@@ -24,6 +24,10 @@ public class MapManager
   public Vector3 Cell2World(Vector3Int cellPos) { return CellGrid.CellToWorld(cellPos); }
 
   FCellCollisionTypes[,] _collision;
+  FCellCollisionTypes[,] _collision_obj;
+
+  public FCellCollisionTypes[,] Collision { get { return _collision; } private set { _collision = value; } }
+  public FCellCollisionTypes[,] Collision_obj { get { return _collision_obj; } private set { _collision_obj = value; } }
 
   public void LoadMap(string mapName)
   {
@@ -37,7 +41,8 @@ public class MapManager
     MapName = mapName;
     CellGrid = map.GetComponent<Grid>();
 
-    ParseCollisionData(map, mapName);
+    _collision = ParseCollisionData(map, mapName);
+    _collision_obj = ParseCollisionData(map, mapName, "Tilemap_Collision_Obj");
     
     CameraController cam = Camera.main.GetComponent<CameraController>();
     cam.confinerCam.m_BoundingShape2D = MakeMapCollisionBorder(map);
@@ -83,13 +88,25 @@ public class MapManager
     return collider;
   }
 
-  private void ParseCollisionData(GameObject map, string mapName, string tilemap = "Tilemap_Collision")
+  private FCellCollisionTypes[,] ParseCollisionData(GameObject map, string mapName, string tilemap = "Tilemap_Collision")
   {
     GameObject collision = Util.FindChild(map, tilemap, true);
     if (collision != null)
       collision.SetActive(false);
 
-    TextAsset txt = Managers.Resource.Load<TextAsset>($"{mapName}Collision");
+    string mapDataAsset = $"{mapName}Collision";
+    if(tilemap != default)
+    {
+      switch(tilemap)
+      {
+        case "Tilemap_Collision_Obj":
+          mapDataAsset = $"{mapName}Collision_Obj";
+          break;
+        //TODO ADD
+      }
+    }
+
+    TextAsset txt = Managers.Resource.Load<TextAsset>(mapDataAsset);
     StringReader reader = new StringReader(txt.text);
 
     MinX = int.Parse(reader.ReadLine());
@@ -99,7 +116,7 @@ public class MapManager
 
     int xCount = MaxX - MinX + 1;
     int yCount = MaxY - MinY + 1;
-    _collision = new FCellCollisionTypes[xCount, yCount];
+    FCellCollisionTypes[,] collisionArray = new FCellCollisionTypes[xCount, yCount];
 
     for (int y = 0; y < yCount; y++)
     {
@@ -109,17 +126,19 @@ public class MapManager
         switch (line[x])
         {
           case Define.MAP_TOOL_WALL:
-            _collision[x, y] = FCellCollisionTypes.Wall;
+            collisionArray[x, y] = FCellCollisionTypes.Wall;
             break;
           case Define.MAP_TOOL_NONE:
-            _collision[x, y] = FCellCollisionTypes.None;
+            collisionArray[x, y] = FCellCollisionTypes.None;
             break;
           case Define.MAP_TOOL_SEMI_WALL:
-            _collision[x, y] = FCellCollisionTypes.SemiWall;
+            collisionArray[x, y] = FCellCollisionTypes.SemiWall;
             break;
         }
       }
     }
+
+    return collisionArray;
   }
 
   public bool MoveTo(Creature obj, Vector3Int cellPos, bool forceMove = false)
@@ -153,11 +172,11 @@ public class MapManager
     return GetObject(cellPos);
   }
 
-  public BaseObject NearGetObject(Vector3 worldPos, int depth = 1)
+  public BaseObject NearGetObject(Vector3 worldPos, Vector3Int cellPos, int depth = 1)
   {
     BaseObject obj = null;
-    Vector3Int cellPos = World2Cell(worldPos);
-
+    //Vector3Int cellPos = World2Cell(worldPos) + value;
+    
     for(int x = -depth; x <= depth; x++)
     {
       for(int y = -depth; y <= depth; y++)
@@ -196,6 +215,7 @@ public class MapManager
     int extraCells = 0;
     if (obj != null)
       extraCells = obj.ExtraCells;
+    else return;
 
     for (int dx = -extraCells; dx <= extraCells; dx++)
     {
@@ -215,6 +235,11 @@ public class MapManager
   public FCellCollisionTypes GetTileCollisionType(Vector3Int cellPos)
   {
     var result = _collision[cellPos.x, cellPos.y];
+    return result;
+  }
+  public FCellCollisionTypes GetTileObjCollisionType(Vector3Int cellPos)
+  {
+    var result = _collision_obj[cellPos.x, cellPos.y];
     return result;
   }
 

@@ -87,6 +87,10 @@ public static class Define
   public enum FJob
   {
     None,
+    Hungry, // 식욕
+    Sleepy, // 수면욕
+    Excretion, // 배설욕
+    Mood, //기분
     Attack,
     Rescue,
     Toggle,

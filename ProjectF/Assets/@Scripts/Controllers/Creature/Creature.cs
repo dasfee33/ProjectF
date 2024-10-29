@@ -142,7 +142,7 @@ public class Creature : BaseObject
   protected virtual void UpdateSkill() { }
   protected virtual void UpdateDead() { }
 
-  protected FJob SelectJob(/*Func<BaseObject, bool> func = null*/)
+  public FJob SelectJob(/*Func<BaseObject, bool> func = null*/)
   {
     FJob target = FJob.None;
 
