@@ -119,6 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05100e46beeb4644099edb5305a06776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousPos: {x: 0, y: 0, z: 0}
-  currentPos: {x: 0, y: 0, z: 0}
   job: 0
+  workableJob: 0
+  onWork: 0

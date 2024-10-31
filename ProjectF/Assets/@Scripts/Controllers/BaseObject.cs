@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,10 +22,12 @@ public class BaseObject : InitBase
 
   public int dataTemplateID { get; set; }
 
-  [SerializeField]
-  protected FJob job = FJob.None;
-  [SerializeField]
-  protected FJob workableJob = FJob.None;
+  public FJob job = FJob.None;
+  public FJob workableJob = FJob.None;
+
+  public Creature Worker;
+
+  public bool onWork = false;
 
   public override bool Init()
   {
@@ -59,7 +62,7 @@ public class BaseObject : InitBase
   {
     if (Animator == null) return;
 
-    Animator.Play(anim);
+    Animator.Play(anim, -1);
   }
 
   public void Flip(bool flag)
@@ -80,6 +83,14 @@ public class BaseObject : InitBase
 
     if (dir.x < 0) LookLeft = true;
     else if (dir.x > 0) LookLeft = false;
+  }
+
+  #endregion
+
+  #region Misc
+  public bool IsValid(BaseObject bo)
+  {
+    return bo.IsValid();
   }
 
   #endregion
@@ -142,6 +153,11 @@ public class BaseObject : InitBase
   }
 
   public virtual void OnDead(BaseObject attacker)
+  {
+
+  }
+
+  public virtual void OnAnimEventHandler()
   {
 
   }

@@ -81,6 +81,7 @@ public class ObjectManager
     {
       Env env = obj as Env;
       Envs.Remove(env);
+      Workables.Remove(obj);
     }
     //TODO
 

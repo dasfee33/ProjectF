@@ -1,57 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Define;
-
-public struct PQJob : IComparable<PQJob>
-{
-  public Vector3Int pos;
-  public FJob job;
-  public int value;
-
-  public int CompareTo(PQJob other)
-  {
-    if (value == other.value)
-      return 0;
-    return value < other.value ? 1 : -1;
-  }
-}
 
 public class JobSystem : InitBase
 {
   public Creature Owner { get; protected set; }
   public FJob Job { get; protected set; }
 
-  private KeyValuePair<FJob, int> jobChangePair;
-
-  public event Action<KeyValuePair<FJob, int>> jobChanged;
-  public KeyValuePair<FJob, int> JobChanged
-  {
-    get { return jobChangePair; }
-    set
-    {
-      if(!jobChangePair.Equals(value))
-      {
-        jobChangePair = value;
-        jobChanged?.Invoke(value);
-      }
-    }
-  }
-
-  private Dictionary<FJob, int> OwnerJobDic;
-  private PriorityQueue<PQJob> pqj = new PriorityQueue<PQJob>();
   private int jobCount = 10;
+  private Dictionary<FJob, float> jobDict = new Dictionary<FJob, float>();
+
+  public BaseObject target;
+
+  public KeyValuePair<FJob, float> CurrentJob
+  {
+    get
+    {
+      foreach(var job in jobDict)
+      {
+        target = Owner.FindClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
+
+        if (target != null)
+          return job;
+      }
+
+      return new KeyValuePair<FJob, float>(FJob.None, 0);
+    }
+    
+  }
 
   public override bool Init()
   {
     if (base.Init() == false) return false;
     Owner = this.GetComponent<Creature>();
-    OwnerJobDic = Owner.JobDic;
 
-    jobChanged -= JobListRefresh;
-    jobChanged += JobListRefresh;
+    Owner.jobChanged -= RefreshJobList;
+    Owner.jobChanged += RefreshJobList;
 
+    Owner.JobDic = DescendingDIct(Owner.JobDic);
     MakeJobList();
 
     return true;
@@ -59,22 +48,33 @@ public class JobSystem : InitBase
 
   private void MakeJobList()
   {
-    for (int i = 0; i < jobCount; i++)
+    jobDict = GetSelectJobList(jobCount);
+  }
+
+  private void RefreshJobList(KeyValuePair<FJob, float> job)
+  {
+    if (jobDict.ContainsKey(job.Key))
     {
-      {
-        FJob job = Owner.SelectJob();
-        //pqj.Push(new PQJob() { key = job, value = OwnerJobDic[job] });
-      }
+      jobDict[job.Key] = job.Value;
+      jobDict = DescendingDIct(jobDict);
+    }
+    else
+    {
+      jobDict.Add(job.Key, job.Value);
+      jobDict = DescendingDIct(jobDict);
+      jobDict.Remove(jobDict.Last().Key);
     }
   }
 
-  private void JobListRefresh(KeyValuePair<FJob, int> job)
+  private Dictionary<FJob, float> DescendingDIct(Dictionary<FJob, float> dict)
   {
-    pqj.Push(new PQJob());
+    return dict.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
   }
 
-  private void SearchTarget()
+  public Dictionary<FJob, float> GetSelectJobList(int count)
   {
-
+    var sortDict = Owner.JobDic.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value); 
+    return sortDict;
   }
+
 }

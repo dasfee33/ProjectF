@@ -79,6 +79,7 @@ public static class Define
     Hungry,
     Tremble, //떨림
     Act,
+    CollectEnv,
     //TODO
 
   }

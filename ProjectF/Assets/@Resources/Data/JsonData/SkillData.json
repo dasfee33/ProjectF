@@ -6,8 +6,8 @@
       "DescriptionTextID": "기본공격1",
       "Label": "Skill",
       "AnimName": "warrior single swing1",
-      "CoolTime": 0.0,
-      "DamageMultiflier": 0.0
+      "CoolTime": 2.0,
+      "DamageMultiflier": 30.0
     },
     {
       "DataId": 50001,
@@ -15,8 +15,8 @@
       "DescriptionTextID": "기본공격2",
       "Label": "Skill",
       "AnimName": "warrior single swing3",
-      "CoolTime": 0.0,
-      "DamageMultiflier": 0.0
+      "CoolTime": 2.0,
+      "DamageMultiflier": 50.0
     },
     {
       "DataId": 50002,
@@ -24,8 +24,8 @@
       "DescriptionTextID": "콤보공격1",
       "Label": "Skill",
       "AnimName": "warrior full combo atk",
-      "CoolTime": 0.0,
-      "DamageMultiflier": 0.0
+      "CoolTime": 5.0,
+      "DamageMultiflier": 150.0
     }
   ]
 }

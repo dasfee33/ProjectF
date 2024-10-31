@@ -12,12 +12,26 @@ public class Creature : BaseObject
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
 
-  public Dictionary<FJob, int> JobDic = new Dictionary<FJob, int>();
+  public Dictionary<FJob, float> JobDic = new Dictionary<FJob, float>();
+
+  public event Action<KeyValuePair<FJob, float>> jobChanged;
+  private KeyValuePair<FJob, float> jobChangedPair;
+  public KeyValuePair<FJob, float> JobChanged
+  {
+    get { return jobChangedPair; }
+    set
+    {
+      jobChangedPair = value;
+      jobChanged?.Invoke(jobChangedPair);
+    }
+  }
 
   public Data.CreatureData CreatureData { get; protected set; }
+  protected JobSystem jobSystem;
 
   #region Stats
   public float maxHp { get; set; }
+  public float Atk { get; set; }
   #endregion
 
   protected FCreatureState creatureState = FCreatureState.None;
@@ -39,6 +53,7 @@ public class Creature : BaseObject
     if (base.Init() == false) return false;
 
     ObjectType = FObjectType.Creature;
+    jobSystem = this.GetComponent<JobSystem>();
 
     var jobLength = Enum.GetValues(typeof(FJob)).Length;
     for(int i = 0; i < jobLength; i++)
@@ -48,11 +63,12 @@ public class Creature : BaseObject
 
     //FIXME
     //StartCoroutine(CoLerpToCellPos());
+    
 
     return true;
   }
 
-  public void SetOrAddJobPriority(FJob job, int p, bool set = false)
+  public void SetOrAddJobPriority(FJob job, float p, bool set = false)
   {
     if (set) JobDic[job] = p;
     else
@@ -60,9 +76,11 @@ public class Creature : BaseObject
       if (JobDic.TryGetValue(job, out var value))
         JobDic[job] += p;
     }
+
+    JobChanged = new KeyValuePair<FJob, float>(job, JobDic[job]);
   }
 
-  public int GetJobPriority(FJob job)
+  public float GetJobPriority(FJob job)
   {
     if (JobDic.TryGetValue(job, out var value))
       return value;
@@ -103,6 +121,9 @@ public class Creature : BaseObject
       case FCreatureState.Dead:
         PlayAnimation(CreatureData.Dead);
         break;
+      case FCreatureState.Skill:
+        PlayAnimation(Skills[0].AnimName);
+        break;
       default: break;
     }
   }
@@ -137,23 +158,28 @@ public class Creature : BaseObject
     }
   }
 
+  protected IEnumerator CoUpdateState()
+  {
+    while(true)
+    {
+      UpdateState();
+      UpdateMood();
+      yield return new WaitForSeconds(3f);
+    }
+  }
+
   protected virtual void UpdateIdle() { }
   protected virtual void UpdateMove() { }
   protected virtual void UpdateSkill() { }
   protected virtual void UpdateDead() { }
+  protected virtual void UpdateState() { }
+  protected virtual void UpdateMood() { }
 
-  public FJob SelectJob(/*Func<BaseObject, bool> func = null*/)
+  public FJob SelectJob(/*Func<BaseObjenct, bool> func = null*/)
   {
-    FJob target = FJob.None;
-
-    var dic = JobDic.Aggregate((a, b) => a.Value > b.Value ? a : b);
-
-    target = dic.Key;
-    
-    if (dic.Value <= 0) target = FJob.None;
-
-    return target;
+    return jobSystem.CurrentJob.Key;
   }
+
   #endregion
 
   #region Wait
@@ -256,4 +282,36 @@ public class Creature : BaseObject
   }
   #endregion
 
+  #region Map
+  public BaseObject FindClosestInRange(FJob job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+  { 
+    BaseObject target = null;
+    float bestDistanceSqr = float.MaxValue;
+    float searchDistanceSqr = range * range;
+
+    foreach (BaseObject obj in objs)
+    {
+      if (obj.workableJob != job) continue;
+      Vector3 dir = obj.transform.position - transform.position;
+      float distToTargetSqr = dir.sqrMagnitude;
+
+      // 서치 범위보다 멀리 있으면 스킵.
+      if (distToTargetSqr > searchDistanceSqr)
+        continue;
+
+      // 이미 더 좋은 후보를 찾았으면 스킵.
+      if (distToTargetSqr > bestDistanceSqr)
+        continue;
+
+      // 추가 조건
+      if (func != null && func.Invoke(obj) == false)
+        continue;
+
+      target = obj;
+      bestDistanceSqr = distToTargetSqr;
+    }
+
+    return target;
+  }
+  #endregion
 }

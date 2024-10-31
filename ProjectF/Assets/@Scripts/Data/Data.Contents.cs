@@ -111,6 +111,8 @@ namespace Data
 
     public string Idle;
     public string type;
+    public string Hurt;
+    public string Dead;
   }
 
   [Serializable]

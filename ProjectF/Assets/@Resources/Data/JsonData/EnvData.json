@@ -8,7 +8,9 @@
       "maxHp": 100.0,
       "RegenTime": 50.0,
       "Idle": "tree1",
-      "type": "Tree"
+      "type": "Tree",
+      "Hurt": "treeHurt1",
+      "Dead": "treeDead1"
     },
     {
       "DataId": 100001,
@@ -18,7 +20,9 @@
       "maxHp": 150.0,
       "RegenTime": 100.0,
       "Idle": "tree2",
-      "type": "Tree"
+      "type": "Tree",
+      "Hurt": "treeHurt2",
+      "Dead": "treeDead2"
     }
   ]
 }

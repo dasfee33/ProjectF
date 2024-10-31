@@ -282,7 +282,7 @@ public class MapManager
   #endregion
 
   #region A* PathFinding
-  public struct PQNode : IComparable<PQNode>
+  public struct PQNode : IComparable<PQNode>, IEquatable<PQNode>
   {
     public int H; // Heuristic
     public Vector3Int CellPos;
@@ -293,6 +293,11 @@ public class MapManager
       if (H == other.H)
         return 0;
       return H < other.H ? 1 : -1;
+    }
+
+    public bool Equals(PQNode other)
+    {
+      return CellPos == other.CellPos;
     }
   }
 

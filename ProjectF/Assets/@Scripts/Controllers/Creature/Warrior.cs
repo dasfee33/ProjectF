@@ -22,7 +22,7 @@ public class Warrior : Creature
             UpdateAITick = 0.0f;
             break;
           case FCreatureState.Skill:
-            UpdateAITick = 0.0f;
+            UpdateAITick = Skills[0].CoolTime;
             break;
           case FCreatureState.Dead:
             UpdateAITick = 1.0f;
@@ -56,18 +56,22 @@ public class Warrior : Creature
     RigidBody.simulated = false;
 
     //TEST
-    SetOrAddJobPriority(FJob.Cook, 10);
+    //SetOrAddJobPriority(FJob.Cook, 10);
     SetOrAddJobPriority(FJob.Logging, 20);
-    SetOrAddJobPriority(FJob.Toggle, 30);
+    //SetOrAddJobPriority(FJob.Toggle, 30);
+
+    //jobSystem += jobChanged
 
     StartCoroutine(CoUpdateAI());
+    StartCoroutine(CoUpdateState());
 
     return true;
   }
 
   #region AI
   public float SearchDistance { get; private set; } = 8.0f;
-  public float ActionDistance { get; private set; } = 1.0f;
+  public float MinActionDistance { get; private set; } = 2f;
+  //public float MaxActionDistance { get; private set; } = 1f;
 
   Vector3 _destPos;
   Vector3 _initPos;
@@ -82,6 +86,7 @@ public class Warrior : Creature
       int rand = Random.Range(0, 100);
       if (rand <= patrolPercent)
       {
+        if (CreatureState == FCreatureState.Skill) return;
         _destPos = _initPos + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2));
         CreatureState = FCreatureState.Move;
         return;
@@ -91,14 +96,12 @@ public class Warrior : Creature
     //Job selection
     {
       job = SelectJob();
+      Target = jobSystem.target;
       if(job != FJob.None)
       {
-        //TEMP
-        //TODO SEARCH
-        Target = GameObject.Find(System.Enum.GetName(typeof(FJob), job)).GetOrAddComponent<BaseObject>();
         CreatureMoveState = FCreatureMoveState.Job;
-        CreatureState = FCreatureState.Move;
       }
+      CreatureState = FCreatureState.Move;
 
     }
     //CreatureState = FCreatureState.Move;
@@ -110,10 +113,20 @@ public class Warrior : Creature
 
     if (Target.IsValid() == false)
     {
+      //일하러 가고 잇는데 일이 끝났거나 없어진 경우 => 다시 서치
+      if(onWork)
+      {
+        Target = null;
+        CreatureMoveState = FCreatureMoveState.None;
+        CreatureState = FCreatureState.Idle;
+        onWork = false;
+      }
       FindPathAndMoveToCellPos(_destPos, 3);
-
       if(LerpCellPosCompleted)
       {
+        Target = null;
+        //StartWait(2.0f);
+        CreatureMoveState = FCreatureMoveState.None;
         CreatureState = FCreatureState.Idle;
         return;
       }
@@ -123,69 +136,85 @@ public class Warrior : Creature
       if (CreatureMoveState == FCreatureMoveState.Job)
       {
         FFindPathResults result = FindPathAndMoveToCellPos(Target.transform.position, 100);
+        onWork = true;
 
-        if (LerpCellPosCompleted)
+        if (Target.ObjectType == FObjectType.Env)
         {
-          SetOrAddJobPriority(job, 0, true);
-          CreatureMoveState = FCreatureMoveState.None;
-          CreatureState = FCreatureState.Idle;
-          Target = null;
+          if (LerpCellPosCompleted)
+          {
+            //StartWait(2.0f);
+            ChaseOrAttackTarget(MinActionDistance);//, MaxActionDistance);
+            
+            //Managers.Object.Despawn(Target);
+            if(Target.IsValid() == false)
+            {
+              onWork = false;
+              Target = null;
+              
+              CreatureMoveState = FCreatureMoveState.None;
+              CreatureState = FCreatureState.Idle;
 
-          StartWait(2.0f);
-          return;
+            }
+            return;
+          }
         }
         return;
       }
     }
-
-    
-
-    //if (_target == null)
-    //{
-    //  // Patrol or Return
-    //  Vector3 dir = (_destPos - transform.position);
-    //  float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * Speed);
-    //  transform.TranslateEx(dir.normalized * moveDist);
-
-    //  if (dir.sqrMagnitude <= 0.01f)
-    //  {
-    //    CreatureState = FCreatureState.Idle;
-    //  }
-    //}
-    //else
-    //{
-    //  //// Chase
-    //  Vector3 dir = (_target.transform.position - transform.position);
-    //  float distToTargetSqr = dir.sqrMagnitude;
-    //  float attackDistanceSqr = ActionDistance * ActionDistance;
-
-    //  if (distToTargetSqr < attackDistanceSqr)
-    //  {
-    //    // 범위 내로 들어왔으면 작업
-    //    JobDic[System.Enum.GetName(typeof(FJob), job)] = 0;
-    //    _target = null;
-    //    CreatureState = FCreatureState.Idle;
-    //    CreatureMoveState = FCreatureMoveState.None;
-    //    StartWait(2.0f);
-    //  }
-    //  else
-    //  {
-    //    // 범위 밖이라면 추적.
-    //    float moveDist = Mathf.Min(dir.magnitude, Time.deltaTime * Speed);
-    //    transform.TranslateEx(dir.normalized * moveDist);
-
-    //    // 너무 멀어지면 포기.
-    //    //float searchDistanceSqr = SearchDistance * SearchDistance;
-    //    //if (distToTargetSqr > searchDistanceSqr)
-    //    //{
-    //    //  _destPos = _initPos;
-    //    //  _target = null;
-    //    //  CreatureState = ECreatureState.Move;
-    //    //}
-    //  }
-    //}
   }
 
+  void ChaseOrAttackTarget(float minAttackRange)/*, float maxAttackRange, float chaseRange)*/
+  {
+    Vector3 dir = (Target.transform.position - transform.position);
+    float distToTargetSqr = dir.sqrMagnitude;
+    float minattackDistanceSqr = minAttackRange * minAttackRange;
+    //float maxattackDistanceSqr = maxAttackRange * maxAttackRange;
+
+    if (distToTargetSqr <= minattackDistanceSqr)
+    {
+      // 공격 범위 이내로 들어왔다면 공격.
+      CreatureState = FCreatureState.Skill;
+      Target.Worker = this;
+      return;
+    }
+    else
+    {
+      //// 공격 범위 밖이라면 추적.
+      //SetRigidBodyVelocity(dir.normalized * MoveSpeed);
+
+      //// 너무 멀어지면 포기.
+      //float searchDistanceSqr = chaseRange * chaseRange;
+      //if (distToTargetSqr > searchDistanceSqr)
+      //{
+      //  _target = null;
+      //  HeroMoveState = EHeroMoveState.None;
+      //  CreatureState = ECreatureState.Move;
+      //}
+      return;
+    }
+  }
+
+  protected override void UpdateState()
+  {
+    SetOrAddJobPriority(FJob.Hungry, 10f);
+    SetOrAddJobPriority(FJob.Sleepy, 10f);
+    SetOrAddJobPriority(FJob.Excretion, 10f);
+  }
+
+  public override void OnAnimEventHandler()
+  {
+    if (Target.IsValid() == false) return;
+
+    Target.OnDamaged(this);
+  }
+
+  public void OnAnimIsEnd()
+  {
+    //if (CreatureState != FCreatureState.Move) return;  
+
+    CreatureState = FCreatureState.Idle;
+
+  }
 
   #endregion
 }
