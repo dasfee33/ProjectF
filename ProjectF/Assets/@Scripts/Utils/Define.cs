@@ -126,6 +126,20 @@ public static class Define
     Wall,
   }
 
+  //safe area 대응 
+  public enum FSetUISafeArea
+  {
+    None = 0,
+    All = Vertical | Horizontal,
+    Vertical = Top | Bottom,
+    Horizontal = Left | Right,
+
+    Top = 0x01,
+    Bottom = 0x02,
+    Left = 0x04,
+    Right = 0x08,
+  }
+
   public const char MAP_TOOL_WALL = '0';
   public const char MAP_TOOL_NONE = '1';
   public const char MAP_TOOL_SEMI_WALL = '2';

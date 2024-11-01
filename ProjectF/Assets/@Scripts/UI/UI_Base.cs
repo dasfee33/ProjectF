@@ -4,14 +4,45 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_Base : InitBase
 {
   protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+  protected RectTransform rect;
+  protected Canvas canvas;
 
-  private void Awake()
+  public override bool Init()
   {
-    Init();
+    if (base.Init() == false) return false;
+
+    rect = this.GetComponent<RectTransform>();
+    canvas = this.GetComponentInParent<Canvas>();
+
+    SetSafeArea(FSetUISafeArea.All);
+
+    return true;
+  }
+
+  protected virtual void SetSafeArea(FSetUISafeArea type)
+  {
+    var safeArea = Screen.safeArea;
+    var width = Screen.width;
+    var height = Screen.height;
+
+    float canvasScaleFactor = canvas.scaleFactor;
+
+    rect.anchorMin = new Vector2
+    (
+      type.HasFlag(FSetUISafeArea.Left) ? (safeArea.xMin / width) / canvasScaleFactor : 0f,
+      type.HasFlag(FSetUISafeArea.Bottom) ? (safeArea.yMin / height) / canvasScaleFactor : 0f
+    );
+
+    rect.anchorMax = new Vector2
+    (
+      type.HasFlag(FSetUISafeArea.Right) ? (safeArea.xMax / width) / canvasScaleFactor : 1f,
+      type.HasFlag(FSetUISafeArea.Top) ? (safeArea.yMax / height) / canvasScaleFactor : 1f
+    );
   }
 
   protected void Bind<T>(Type type) where T : UnityEngine.Object

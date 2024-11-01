@@ -26,8 +26,19 @@ public class Creature : BaseObject
     }
   }
 
+  float DistToTargetSqr
+  {
+    get
+    {
+      Vector3 dir = (Target.transform.position - transform.position);
+      float distToTarget = Math.Max(0, dir.magnitude - Target.ExtraCells * 1f - ExtraCells * 1f); // TEMP
+      return distToTarget * distToTarget;
+    }
+  }
+
   public Data.CreatureData CreatureData { get; protected set; }
   protected JobSystem jobSystem;
+  protected float oneMoveMagnititue;
 
   #region Stats
   public float maxHp { get; set; }
@@ -52,6 +63,7 @@ public class Creature : BaseObject
   {
     if (base.Init() == false) return false;
 
+    oneMoveMagnititue = Managers.Map.CellGrid.cellSize.x;
     ObjectType = FObjectType.Creature;
     jobSystem = this.GetComponent<JobSystem>();
 
@@ -229,6 +241,8 @@ public class Creature : BaseObject
     if (LerpCellPosCompleted == false)
       return FFindPathResults.Fail_LerpCell;
 
+    if (CreatureState != FCreatureState.Move) return FFindPathResults.Success;
+
     // A*
     List<Vector3Int> path = Managers.Map.FindPath(this, CellPos, destCellPos, maxDepth);
     if (path.Count < 2)
@@ -264,7 +278,7 @@ public class Creature : BaseObject
   {
     while (true)
     {
-      Warrior player = this as Warrior;
+      //Warrior player = this as Warrior;
       //if (player != null)
       //{
       //  float div = 5;
@@ -312,6 +326,34 @@ public class Creature : BaseObject
     }
 
     return target;
+  }
+
+  protected void ChaseOrAttackTarget(float chaseRange, float attackRange)
+  {
+    float distToTargetSqr = DistToTargetSqr;
+    float attackDistanceSqr = attackRange * attackRange;
+
+    if (distToTargetSqr <= attackDistanceSqr)
+    {
+      // 공격 범위 이내로 들어왔다면 공격.
+      CreatureState = FCreatureState.Skill;
+      //skill.DoSkill();
+      return;
+    }
+    else
+    {
+      // 공격 범위 밖이라면 추적.
+      FindPathAndMoveToCellPos(Target.transform.position, 100);
+
+      // 너무 멀어지면 포기.
+      //float searchDistanceSqr = chaseRange * chaseRange;
+      //if (distToTargetSqr > searchDistanceSqr)
+      //{
+      //  Target = null;
+      //  CreatureState = FCreatureState.Move;
+      //}
+      return;
+    }
   }
   #endregion
 }

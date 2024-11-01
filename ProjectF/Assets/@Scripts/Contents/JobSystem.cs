@@ -22,9 +22,14 @@ public class JobSystem : InitBase
       foreach(var job in jobDict)
       {
         target = Owner.FindClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
-
+        
         if (target != null)
+        {
+          //작업자가 이미 있는데 그게 내가 아니라면 
+          if (target.Worker != null && target.Worker != Owner) continue;
+          target.Worker = Owner;
           return job;
+        }
       }
 
       return new KeyValuePair<FJob, float>(FJob.None, 0);

@@ -70,11 +70,11 @@ public class Warrior : Creature
 
   #region AI
   public float SearchDistance { get; private set; } = 8.0f;
-  public float MinActionDistance { get; private set; } = 2f;
+  public float MinActionDistance { get; private set; } = 0.32f;
   //public float MaxActionDistance { get; private set; } = 1f;
 
   Vector3 _destPos;
-  Vector3 _initPos;
+  //Vector3 _initPos;
 
   protected override void UpdateIdle()
   {
@@ -87,7 +87,7 @@ public class Warrior : Creature
       if (rand <= patrolPercent)
       {
         if (CreatureState == FCreatureState.Skill) return;
-        _destPos = _initPos + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2));
+        _destPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
         CreatureState = FCreatureState.Move;
         return;
       }
@@ -100,8 +100,8 @@ public class Warrior : Creature
       if(job != FJob.None)
       {
         CreatureMoveState = FCreatureMoveState.Job;
+        CreatureState = FCreatureState.Move;
       }
-      CreatureState = FCreatureState.Move;
 
     }
     //CreatureState = FCreatureState.Move;
@@ -114,14 +114,15 @@ public class Warrior : Creature
     if (Target.IsValid() == false)
     {
       //일하러 가고 잇는데 일이 끝났거나 없어진 경우 => 다시 서치
-      if(onWork)
-      {
-        Target = null;
-        CreatureMoveState = FCreatureMoveState.None;
-        CreatureState = FCreatureState.Idle;
-        onWork = false;
-      }
+      //if(onWork)
+      //{
+      //  Target = null;
+      //  CreatureMoveState = FCreatureMoveState.None;
+      //  CreatureState = FCreatureState.Idle;
+      //  onWork = false;
+      //}
       FindPathAndMoveToCellPos(_destPos, 3);
+
       if(LerpCellPosCompleted)
       {
         Target = null;
@@ -135,61 +136,43 @@ public class Warrior : Creature
     {
       if (CreatureMoveState == FCreatureMoveState.Job)
       {
-        FFindPathResults result = FindPathAndMoveToCellPos(Target.transform.position, 100);
         onWork = true;
 
         if (Target.ObjectType == FObjectType.Env)
         {
-          if (LerpCellPosCompleted)
-          {
-            //StartWait(2.0f);
-            ChaseOrAttackTarget(MinActionDistance);//, MaxActionDistance);
-            
-            //Managers.Object.Despawn(Target);
-            if(Target.IsValid() == false)
-            {
-              onWork = false;
-              Target = null;
-              
-              CreatureMoveState = FCreatureMoveState.None;
-              CreatureState = FCreatureState.Idle;
+          ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
 
-            }
-            return;
+          if (Target.IsValid() == false)
+          {
+            onWork = false;
+            Target = null;
+
+            CreatureMoveState = FCreatureMoveState.None;
+            CreatureState = FCreatureState.Idle;
           }
+
+          //if (LerpCellPosCompleted)
+          //{
+          //  //StartWait(2.0f);
+          //  //Managers.Object.Despawn(Target);
+          //  if(Target.IsValid() == false)
+          //  {
+             
+          //  }
+
+          //  return;
+          //}
         }
         return;
       }
     }
   }
 
-  void ChaseOrAttackTarget(float minAttackRange)/*, float maxAttackRange, float chaseRange)*/
+  protected override void UpdateSkill()
   {
-    Vector3 dir = (Target.transform.position - transform.position);
-    float distToTargetSqr = dir.sqrMagnitude;
-    float minattackDistanceSqr = minAttackRange * minAttackRange;
-    //float maxattackDistanceSqr = maxAttackRange * maxAttackRange;
-
-    if (distToTargetSqr <= minattackDistanceSqr)
+    if (Target.IsValid() == false)
     {
-      // 공격 범위 이내로 들어왔다면 공격.
-      CreatureState = FCreatureState.Skill;
-      Target.Worker = this;
-      return;
-    }
-    else
-    {
-      //// 공격 범위 밖이라면 추적.
-      //SetRigidBodyVelocity(dir.normalized * MoveSpeed);
-
-      //// 너무 멀어지면 포기.
-      //float searchDistanceSqr = chaseRange * chaseRange;
-      //if (distToTargetSqr > searchDistanceSqr)
-      //{
-      //  _target = null;
-      //  HeroMoveState = EHeroMoveState.None;
-      //  CreatureState = ECreatureState.Move;
-      //}
+      CreatureState = FCreatureState.Move;
       return;
     }
   }
