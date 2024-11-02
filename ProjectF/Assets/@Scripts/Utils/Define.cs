@@ -38,6 +38,7 @@ public static class Define
     Creature,
     Projectile,
     Env,
+    ItemHolder,
   }
 
   public enum FEnvType
@@ -110,6 +111,33 @@ public static class Define
     Supply,
     Store,
     //TODO,
+  }
+
+  public enum FItemGrade
+  {
+    None,
+    Normal,
+    Rare,
+    Epic,
+    Legendary,
+  }
+
+  public enum FItemGroupType
+  {
+    None,
+    Equipment,
+    Consumable,
+  }
+
+  public enum FItemType
+  {
+    None,
+    Architecture,
+  }
+
+  public enum FItemSubType
+  {
+    None,
   }
 
   public enum FFindPathResults

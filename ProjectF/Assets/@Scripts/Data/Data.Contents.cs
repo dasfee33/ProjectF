@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 namespace Data
 {
@@ -113,6 +114,9 @@ namespace Data
     public string type;
     public string Hurt;
     public string Dead;
+
+    public int DropItemid;
+    public int Supplyitemid;
   }
 
   [Serializable]
@@ -128,6 +132,160 @@ namespace Data
       return dict;
     }
 
+  }
+
+  #endregion
+
+  #region Item
+  [Serializable]
+  public class ItemData
+  {
+    public int DataId;
+    public string Name;
+    public string DescirptionTextID;
+    public string Label;
+    public string type;
+
+    public FItemGroupType ItemGroupType;
+    public FItemType ItemType;
+    public FItemSubType ItemSubType;
+    public FItemGrade ItemGrade;
+
+    public int maxStack;
+  }
+
+  [Serializable]
+  public class EquipmentItemData : ItemData
+  {
+    public int Damage;
+    public int Defence;
+    public int Speed;
+  }
+
+  [Serializable]
+  public class ConsumableItemData : ItemData
+  {
+    public double Value;
+    public double CoolTIme;
+    public FJob SupplyJob;
+  }
+
+  [Serializable]
+  public class ItemDataLoader<T> : ILoader<int, T> where T : ItemData
+  {
+    public List<T> items = new List<T>();
+
+    public Dictionary<int, T> MakeDict()
+    {
+      Dictionary<int, T> dict = new Dictionary<int, T>();
+      foreach (T item in items)
+        dict.Add(item.DataId, item);
+
+      return dict;
+    }
+  }
+
+  #endregion
+
+  #region DropTable
+  
+  public class RewardData
+  {
+    public int itemTemplateId;
+    public int Probability;
+  }
+
+  [Serializable]
+  public class DropTableData_Internal
+  {
+    public int DataId;
+    public int RewardExp;
+    public int Prob1;
+    public int Item1;
+    public int Prob2;
+    public int Item2;
+    public int Prob3;
+    public int Item3;
+    public int Prob4;
+    public int Item4;
+    public int Prob5;
+    public int Item5;
+  }
+
+
+  [Serializable]
+  public class DropTableData
+  {
+    public int DataId;
+    public int RewardExp;
+    public List<RewardData> Rewards = new List<RewardData>();
+  }
+
+  [Serializable]
+  public class DropTableDataLoader : ILoader<int, DropTableData>
+  {
+    public List<DropTableData_Internal> dropTables = new List<DropTableData_Internal>();
+
+    public Dictionary<int, DropTableData> MakeDict()
+    {
+      Dictionary<int, DropTableData> dict = new Dictionary<int, DropTableData> ();
+      foreach(DropTableData_Internal tempData in dropTables)
+      {
+        DropTableData data = new DropTableData()
+        {
+          DataId = tempData.DataId,
+          RewardExp = tempData.RewardExp,
+        };
+
+        if(tempData.Item1 > 0)
+        {
+          data.Rewards.Add(new RewardData()
+          {
+            itemTemplateId = tempData.Item1,
+            Probability = tempData.Prob1,
+          });
+        }
+
+        if (tempData.Item2 > 0)
+        {
+          data.Rewards.Add(new RewardData()
+          {
+            itemTemplateId = tempData.Item2,
+            Probability = tempData.Prob2,
+          });
+        }
+
+        if (tempData.Item3 > 0)
+        {
+          data.Rewards.Add(new RewardData()
+          {
+            itemTemplateId = tempData.Item3,
+            Probability = tempData.Prob3,
+          });
+        }
+
+        if (tempData.Item4 > 0)
+        {
+          data.Rewards.Add(new RewardData()
+          {
+            itemTemplateId = tempData.Item4,
+            Probability = tempData.Prob4,
+          });
+        }
+
+        if (tempData.Item5 > 0)
+        {
+          data.Rewards.Add(new RewardData()
+          {
+            itemTemplateId = tempData.Item5,
+            Probability = tempData.Prob5,
+          });
+        }
+
+        dict.Add(data.DataId, data);
+      }
+      return dict;
+    }
   }
 
   #endregion

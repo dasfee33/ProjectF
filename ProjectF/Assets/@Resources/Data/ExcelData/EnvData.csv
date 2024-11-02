@@ -1,4 +1,4 @@
-﻿DataID,Name,DescriptionTextID,Label,maxHp,RegenTime,Idle,Type,Hurt,Dead
-100000,tree_normal1,일반나무1,Env,100,50,tree1,Tree,treeHurt1,treeDead1
-100001,tree_normal2,일반나무2,Env,150,100,tree2,Tree,treeHurt2,treeDead2
-100002,chest_normal,일반상자,Env,0,0,,Chest,,
+﻿DataID,Name,DescriptionTextID,Label,maxHp,RegenTime,Idle,Type,Hurt,Dead,DropItemid,Supplyitemid
+100000,tree_normal1,일반나무1,Env,100,50,tree1,Tree,treeHurt1,treeDead1,400000,-1
+100001,tree_normal2,일반나무2,Env,150,100,tree2,Tree,treeHurt2,treeDead2,400000,-1
+100002,chest_normal,일반상자,Env,-1,0,cabin chest idle,Chest,cabin chest opening,,-1,-1

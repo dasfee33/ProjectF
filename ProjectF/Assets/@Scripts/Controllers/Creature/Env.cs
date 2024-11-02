@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using static Define;
+using Data;
 
 public class Env : BaseObject
 {
-  private Data.EnvData data;
+  private EnvData data;
 
   private FEnvState envState = FEnvState.Idle;
   public FEnvState EnvState
@@ -99,6 +100,7 @@ public class Env : BaseObject
     //TODO
     float finalDamage = attacker.GetComponent<Creature>().Skills[0].DamageMultiflier;
     EnvState = FEnvState.Hurt;
+    if (maxHp < 0) return;
 
     Hp = Mathf.Clamp(Hp - finalDamage, 0, maxHp);
     if (Hp <= 0)
@@ -111,7 +113,48 @@ public class Env : BaseObject
   {
     base.OnDead(attacker);
 
+    int dropItemId = data.DropItemid;
+    RewardData rewardData = GetRandomReward();
+    if(rewardData != null)
+    {
+      //TEMP
+      Vector3 rand = new Vector3(transform.position.x + UnityEngine.Random.Range(-2, -5) * 0.1f, transform.position.y);
+      Vector3 rand2 = new Vector3(transform.position.x + UnityEngine.Random.Range(2, 5) * 0.1f, transform.position.y);
+      Vector3 dropPos = UnityEngine.Random.value < 0.5 ? rand : rand2;
+
+      var itemHolder = Managers.Object.Spawn<ItemHolder>(transform.position, dropItemId);
+      itemHolder.Owner = this;
+      itemHolder.SetInfo(0, rewardData.itemTemplateId, dropPos);
+    }
+
     EnvState = FEnvState.Dead;
+  }
+
+  private RewardData GetRandomReward()
+  {
+    if (data == null)
+      return null;
+
+    if (Managers.Data.DropDic.TryGetValue(data.DataId, out DropTableData dropTableData) == false)
+      return null;
+
+    if (dropTableData.Rewards.Count <= 0)
+      return null;
+
+    int sum = 0;
+    int randomValue = UnityEngine.Random.Range(0, 100);
+
+    foreach (RewardData item in dropTableData.Rewards)
+    {
+      sum += item.Probability;
+
+      if (randomValue <= sum)
+      {
+        return item;
+      }
+    }
+
+    return null;
   }
 
   public void OnDespawn()

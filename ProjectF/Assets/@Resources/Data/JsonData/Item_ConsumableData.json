@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": 16,
+      "DataId": 400000,
+      "Name": "wood log 11",
+      "DescirptionTextID": "구하기 쉬운 일반 목재",
+      "Label": "Material",
+      "type": "Wood",
+      "ItemGroupType": 2,
+      "ItemType": 1,
+      "ItemSubType": 0,
+      "ItemGrade": 1,
+      "maxStack": 99
+    }
+  ]
+}

@@ -10,7 +10,9 @@
       "Idle": "tree1",
       "type": "Tree",
       "Hurt": "treeHurt1",
-      "Dead": "treeDead1"
+      "Dead": "treeDead1",
+      "DropItemid": 400000,
+      "Supplyitemid": -1
     },
     {
       "DataId": 100001,
@@ -22,19 +24,23 @@
       "Idle": "tree2",
       "type": "Tree",
       "Hurt": "treeHurt2",
-      "Dead": "treeDead2"
+      "Dead": "treeDead2",
+      "DropItemid": 400000,
+      "Supplyitemid": -1
     },
     {
       "DataId": 100002,
       "Name": "chest_normal",
       "DescriptionTextID": "일반상자",
       "Label": "Env",
-      "maxHp": 0.0,
+      "maxHp": -1.0,
       "RegenTime": 0.0,
-      "Idle": null,
+      "Idle": "cabin chest idle",
       "type": "Chest",
-      "Hurt": null,
-      "Dead": null
+      "Hurt": "cabin chest opening",
+      "Dead": null,
+      "DropItemid": -1,
+      "Supplyitemid": -1
     }
   ]
 }

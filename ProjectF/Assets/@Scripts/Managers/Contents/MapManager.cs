@@ -279,6 +279,12 @@ public class MapManager
     _cells.Clear();
   }
 
+  public void ClearObject(Vector3Int cellPos)
+  {
+    if (_cells.ContainsKey(cellPos) &&_cells[cellPos] == null)
+      _cells.Remove(cellPos);
+  }
+
   #endregion
 
   #region A* PathFinding

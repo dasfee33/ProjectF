@@ -70,7 +70,7 @@ public class Warrior : Creature
 
   #region AI
   public float SearchDistance { get; private set; } = 8.0f;
-  public float MinActionDistance { get; private set; } = 0.32f;
+  public float MinActionDistance { get; private set; } = 0.4f;
   //public float MaxActionDistance { get; private set; } = 1f;
 
   Vector3 _destPos;
@@ -170,6 +170,10 @@ public class Warrior : Creature
 
   protected override void UpdateSkill()
   {
+    var dir = (Target.transform.position - this.transform.position).normalized;
+    if (dir.x < 0) LookLeft = true;
+    else LookLeft = false; 
+
     if (Target.IsValid() == false)
     {
       CreatureState = FCreatureState.Move;

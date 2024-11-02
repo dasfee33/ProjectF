@@ -14,6 +14,8 @@ public class Creature : BaseObject
 
   public Dictionary<FJob, float> JobDic = new Dictionary<FJob, float>();
 
+  public KeyValuePair<FJob, float> CurrentJob => new KeyValuePair<FJob, float>(job, GetJobPriority(job));
+
   public event Action<KeyValuePair<FJob, float>> jobChanged;
   private KeyValuePair<FJob, float> jobChangedPair;
   public KeyValuePair<FJob, float> JobChanged

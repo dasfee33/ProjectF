@@ -19,6 +19,10 @@ public class JobSystem : InitBase
   {
     get
     {
+      if (Owner.Target != null)
+      {
+        return Owner.CurrentJob;
+      }
       foreach(var job in jobDict)
       {
         target = Owner.FindClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
@@ -44,7 +48,6 @@ public class JobSystem : InitBase
 
     Owner.jobChanged -= RefreshJobList;
     Owner.jobChanged += RefreshJobList;
-
     Owner.JobDic = DescendingDIct(Owner.JobDic);
     MakeJobList();
 
