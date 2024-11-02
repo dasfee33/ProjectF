@@ -23,6 +23,18 @@
       "type": "Tree",
       "Hurt": "treeHurt2",
       "Dead": "treeDead2"
+    },
+    {
+      "DataId": 100002,
+      "Name": "chest_normal",
+      "DescriptionTextID": "일반상자",
+      "Label": "Env",
+      "maxHp": 0.0,
+      "RegenTime": 0.0,
+      "Idle": null,
+      "type": "Chest",
+      "Hurt": null,
+      "Dead": null
     }
   ]
 }

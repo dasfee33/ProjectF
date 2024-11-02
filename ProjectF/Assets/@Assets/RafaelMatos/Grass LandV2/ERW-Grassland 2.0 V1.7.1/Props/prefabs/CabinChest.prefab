@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3264894994393240006}
   - component: {fileID: 3264894994393240001}
   - component: {fileID: 3264894994393240000}
+  - component: {fileID: -8082942250477435602}
   m_Layer: 0
   m_Name: CabinChest
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 685410612, guid: f1f0a8f82a37b3a4e8c05f648e0d84c0, type: 3}
+  m_Sprite: {fileID: -909535834, guid: f1f0a8f82a37b3a4e8c05f648e0d84c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,3 +107,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8082942250477435602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264894994393240003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05100e46beeb4644099edb5305a06776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  job: 0
+  workableJob: 0
+  Worker: {fileID: 0}
+  onWork: 0

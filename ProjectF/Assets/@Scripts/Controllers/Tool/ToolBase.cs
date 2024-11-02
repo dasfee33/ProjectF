@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static Define;
 
 public class ToolBase : InitBase
 {
+  public GameObject[] ToolLayerList;
   public GameObject[] ToolList;
   private Grid grid;
 
@@ -19,7 +21,7 @@ public class ToolBase : InitBase
 
   private void resetTool()
   {
-    foreach (GameObject tool in ToolList)
+    foreach (GameObject tool in ToolLayerList)
       tool.SetActive(false);
   }
 
@@ -29,9 +31,22 @@ public class ToolBase : InitBase
     if(Input.GetKeyDown(KeyCode.F))
     {
       resetTool();
-      GameObject go = ToolList[(int)FTool.Plow];
+      GameObject go = ToolLayerList[(int)FTool.Plow];
       go.SetActive(true);
-      go.GetComponent<PlowTool>().grid = this.grid;
+      PlowTool plow = go.GetComponent<PlowTool>();
+      plow.grid = this.grid;
+      plow.tilemap = ToolList[(int)FTool.Plow].GetComponent<Tilemap>();
+
+    }
+
+    if (Input.GetKeyDown(KeyCode.G))
+    {
+      resetTool();
+      GameObject go = ToolLayerList[(int)FTool.Build];
+      go.SetActive(true);
+      BuildTool build = go.GetComponent<BuildTool>();
+      build.grid = this.grid;
+      build.tilemap = ToolList[(int)FTool.Build].GetComponent<Tilemap>();
     }
   }
 }

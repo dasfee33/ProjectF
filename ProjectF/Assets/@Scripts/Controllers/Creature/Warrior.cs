@@ -182,6 +182,7 @@ public class Warrior : Creature
     SetOrAddJobPriority(FJob.Hungry, 10f);
     SetOrAddJobPriority(FJob.Sleepy, 10f);
     SetOrAddJobPriority(FJob.Excretion, 10f);
+    SetOrAddJobPriority(FJob.Store, 10f);
   }
 
   public override void OnAnimEventHandler()

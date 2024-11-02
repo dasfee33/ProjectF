@@ -7,7 +7,7 @@ using static Define;
 public class PlowTool : MonoBehaviour
 {
   public Grid grid;
-  private Tilemap tilemap;
+  public Tilemap tilemap;
   private Tile tile;
 
   private Vector3Int startCellPos;
@@ -22,7 +22,7 @@ public class PlowTool : MonoBehaviour
 
   private void Awake()
   {
-    tilemap = this.GetComponent<Tilemap>();
+    //FIXME
     if (tile == null) tile = Managers.Resource.Load<Tile>("TestTile");
 
     SetTag(tag);

@@ -5,7 +5,6 @@ using static Define;
 public class Env : BaseObject
 {
   private Data.EnvData data;
-  private bool deadFlag = false;
 
   private FEnvState envState = FEnvState.Idle;
   public FEnvState EnvState
@@ -64,6 +63,9 @@ public class Env : BaseObject
     {
       case FEnvType.Tree:
         workableJob = FJob.Logging;
+        break;
+      case FEnvType.Chest:
+        workableJob = FJob.Store;
         break;
       //TODO;
     }

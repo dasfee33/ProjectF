@@ -34,14 +34,14 @@ public class UI_Base : InitBase
 
     rect.anchorMin = new Vector2
     (
-      type.HasFlag(FSetUISafeArea.Left) ? (safeArea.xMin / width) / canvasScaleFactor : 0f,
-      type.HasFlag(FSetUISafeArea.Bottom) ? (safeArea.yMin / height) / canvasScaleFactor : 0f
+      type.HasFlag(FSetUISafeArea.Left) ? (safeArea.xMin / width) /*/ canvasScaleFactor*/ : 0f,
+      type.HasFlag(FSetUISafeArea.Bottom) ? (safeArea.yMin / height) /*/ canvasScaleFactor*/ : 0f
     );
 
     rect.anchorMax = new Vector2
     (
-      type.HasFlag(FSetUISafeArea.Right) ? (safeArea.xMax / width) / canvasScaleFactor : 1f,
-      type.HasFlag(FSetUISafeArea.Top) ? (safeArea.yMax / height) / canvasScaleFactor : 1f
+      type.HasFlag(FSetUISafeArea.Right) ? (safeArea.xMax / width) /*/ canvasScaleFactor*/ : 1f,
+      type.HasFlag(FSetUISafeArea.Top) ? (safeArea.yMax / height) /*/ canvasScaleFactor*/ : 1f
     );
   }
 

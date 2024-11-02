@@ -22,7 +22,7 @@ public static class Define
   public enum FTool
   {
     Plow,
-
+    Build,
   }
 
   public enum FSound
@@ -44,6 +44,7 @@ public static class Define
   {
     None,
     Tree,
+    Chest,
   }
 
   public enum FCreatureType
@@ -147,6 +148,7 @@ public static class Define
   public const int CREATURE_WARRIOR_DATAID = 1;
   public const int ENV_TREE_NORMAL1 = 100000;
   public const int ENV_TREE_NORMAL2 = 100001;
+  public const int ENV_CHEST_NORMAL = 100002;
 
 }
 
