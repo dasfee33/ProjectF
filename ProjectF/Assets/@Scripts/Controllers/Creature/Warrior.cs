@@ -48,7 +48,7 @@ public class Warrior : Creature
       return false;
 
 
-    CreatureType = FCreatureType.WARRIOR;
+    CreatureType = FCreatureType.Warrior;
     previousPos = transform.position;
 
     //Map
@@ -86,7 +86,7 @@ public class Warrior : Creature
       int rand = Random.Range(0, 100);
       if (rand <= patrolPercent)
       {
-        if (CreatureState == FCreatureState.Skill) return;
+        if (CreatureState == FCreatureState.Skill || CreatureMoveState == FCreatureMoveState.Job) return;
         _destPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
         CreatureState = FCreatureState.Move;
         return;
@@ -96,13 +96,19 @@ public class Warrior : Creature
     //Job selection
     {
       job = SelectJob();
-      Target = jobSystem.target;
-      if(job != FJob.None)
+      if(job is FJob and not FJob.None)
       {
+        Target = jobSystem.target;
         CreatureMoveState = FCreatureMoveState.Job;
         CreatureState = FCreatureState.Move;
       }
-
+      else if(job is FPersonalJob and not FPersonalJob.None)
+      {
+        Target = ppSystem.target;
+        if (Target.onWorkSomeOne) return;
+        CreatureMoveState = FCreatureMoveState.Job;
+        CreatureState = FCreatureState.Move;
+      }
     }
     //CreatureState = FCreatureState.Move;
   }
@@ -138,33 +144,22 @@ public class Warrior : Creature
       {
         onWork = true;
 
-        if (Target.ObjectType == FObjectType.Env)
+        //FIXME
+        if (Target.onWorkSomeOne) { CreatureState = FCreatureState.Idle; return; }
+
+        ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
+
+        if (Target.IsValid() == false)
         {
-          ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
+          onWork = false;
+          Target = null;
 
-          if (Target.IsValid() == false)
-          {
-            onWork = false;
-            Target = null;
-
-            CreatureMoveState = FCreatureMoveState.None;
-            CreatureState = FCreatureState.Idle;
-          }
-
-          //if (LerpCellPosCompleted)
-          //{
-          //  //StartWait(2.0f);
-          //  //Managers.Object.Despawn(Target);
-          //  if(Target.IsValid() == false)
-          //  {
-             
-          //  }
-
-          //  return;
-          //}
+          CreatureMoveState = FCreatureMoveState.None;
+          CreatureState = FCreatureState.Idle;
         }
         return;
       }
+      
     }
   }
 
@@ -183,9 +178,6 @@ public class Warrior : Creature
 
   protected override void UpdateState()
   {
-    SetOrAddJobPriority(FJob.Hungry, 10f);
-    SetOrAddJobPriority(FJob.Sleepy, 10f);
-    SetOrAddJobPriority(FJob.Excretion, 10f);
     SetOrAddJobPriority(FJob.Store, 10f);
   }
 

@@ -8,6 +8,7 @@ using Data;
 public class BaseObject : InitBase
 {
   public int ExtraCells { get; set; } = 0;
+  public ItemHolder droppedItem;
 
   public FObjectType ObjectType { get; protected set; } = FObjectType.None;
   public Rigidbody2D RigidBody { get; private set; }
@@ -23,12 +24,13 @@ public class BaseObject : InitBase
 
   public int dataTemplateID { get; set; }
 
-  public FJob job = FJob.None;
-  public FJob workableJob = FJob.None;
+  public Enum job;
+  public Enum workableJob;
 
   public Creature Worker;
 
   public bool onWork = false;
+  public bool onWorkSomeOne = false;
 
   public override bool Init()
   {
@@ -38,6 +40,7 @@ public class BaseObject : InitBase
     Collider = this.GetComponent<CapsuleCollider2D>();
     SpriteRenderer = this.GetComponent<SpriteRenderer>();
     Animator = this.GetComponent<Animator>();
+    if(Animator == null) Animator = this.GetComponentInChildren<Animator>();
 
     //TEMP
     SpriteRenderer.sortingOrder = 20;

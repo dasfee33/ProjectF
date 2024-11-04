@@ -31,6 +31,7 @@ public class Managers : MonoBehaviour
   private ToolManager _tool = new ToolManager();
   private PartitionManager _partition = new PartitionManager();
   private RandomSeedGenerate _randomSeedGenerate = new RandomSeedGenerate();
+  private GameDayManager _gameDay = new GameDayManager();
 
   public static GameManager Game { get { return Instance?._game; } }
   public static ObjectManager Object { get { return Instance?._object; } }
@@ -38,6 +39,7 @@ public class Managers : MonoBehaviour
   public static ToolManager Tool { get { return Instance?._tool; } }
   public static PartitionManager Partition { get { return Instance?._partition; } }
   public static RandomSeedGenerate RandomSeedGenerate { get { return Instance?._randomSeedGenerate; } }
+  public static GameDayManager GameDay { get { return Instance?._gameDay; } }
 
   #endregion
 
@@ -57,4 +59,10 @@ public class Managers : MonoBehaviour
       s_instance = go.GetComponent<Managers>();
     }
   }
+
+  private void Start()
+  {
+    StartCoroutine(Instance?._gameDay.coDay());
+  }
+
 }

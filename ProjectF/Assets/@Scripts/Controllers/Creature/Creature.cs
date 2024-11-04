@@ -7,14 +7,15 @@ using static Define;
 
 public class Creature : BaseObject
 {
-  public BaseObject Target { get; protected set; }
+  public BaseObject Target { get; set; }
   public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
 
   public Dictionary<FJob, float> JobDic = new Dictionary<FJob, float>();
+  public Dictionary<FPersonalJob, float> PersonalDic = new Dictionary<FPersonalJob, float>();
 
-  public KeyValuePair<FJob, float> CurrentJob => new KeyValuePair<FJob, float>(job, GetJobPriority(job));
+  public KeyValuePair<Enum, float> CurrentJob => new KeyValuePair<Enum, float>(job, GetJobPriority(job));
 
   public event Action<KeyValuePair<FJob, float>> jobChanged;
   private KeyValuePair<FJob, float> jobChangedPair;
@@ -25,6 +26,18 @@ public class Creature : BaseObject
     {
       jobChangedPair = value;
       jobChanged?.Invoke(jobChangedPair);
+    }
+  }
+
+  public event Action<KeyValuePair<FPersonalJob, float>> pjobChanged;
+  private KeyValuePair<FPersonalJob, float> pjobChangedPair;
+  public KeyValuePair<FPersonalJob, float> PJobChanged
+  {
+    get { return pjobChangedPair; }
+    set
+    {
+      pjobChangedPair = value;
+      pjobChanged?.Invoke(pjobChangedPair);
     }
   }
 
@@ -39,12 +52,14 @@ public class Creature : BaseObject
   }
 
   public Data.CreatureData CreatureData { get; protected set; }
-  protected JobSystem jobSystem;
+  public JobSystem jobSystem;
+  public PersonalPrioritySystem ppSystem;
   protected float oneMoveMagnititue;
 
   #region Stats
   public float maxHp { get; set; }
   public float Atk { get; set; }
+  public float Calories { get; set; } = 10000f;
   #endregion
 
   protected FCreatureState creatureState = FCreatureState.None;
@@ -68,12 +83,14 @@ public class Creature : BaseObject
     oneMoveMagnititue = Managers.Map.CellGrid.cellSize.x;
     ObjectType = FObjectType.Creature;
     jobSystem = this.GetComponent<JobSystem>();
+    ppSystem = this.GetComponent<PersonalPrioritySystem>();
 
     var jobLength = Enum.GetValues(typeof(FJob)).Length;
-    for(int i = 0; i < jobLength; i++)
-    {
-      JobDic.Add((FJob)i, 0);
-    }
+    var personalLength = Enum.GetValues(typeof(FPersonalJob)).Length;
+
+    for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, 0);
+    for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, 0);
+
 
     //FIXME
     //StartCoroutine(CoLerpToCellPos());
@@ -82,22 +99,44 @@ public class Creature : BaseObject
     return true;
   }
 
-  public void SetOrAddJobPriority(FJob job, float p, bool set = false)
+  public void SetOrAddJobPriority(Enum job, float p, bool set = false)
   {
-    if (set) JobDic[job] = p;
-    else
+    if (job is FJob)
     {
-      if (JobDic.TryGetValue(job, out var value))
-        JobDic[job] += p;
+      FJob tmpJob = (FJob)job;
+      if (set) JobDic[tmpJob] = p;
+      else
+      {
+        if (JobDic.TryGetValue(tmpJob, out var value))
+          JobDic[tmpJob] += p;
+      }
+      JobChanged = new KeyValuePair<FJob, float>(tmpJob, JobDic[tmpJob]);
     }
-
-    JobChanged = new KeyValuePair<FJob, float>(job, JobDic[job]);
+    else if(job is FPersonalJob)
+    {
+      FPersonalJob tmpJob = (FPersonalJob)job;
+      if (set) PersonalDic[tmpJob] = p;
+      else
+      {
+        if (PersonalDic.TryGetValue(tmpJob, out var value))
+          PersonalDic[tmpJob] += p;
+      }
+      PJobChanged = new KeyValuePair<FPersonalJob, float>(tmpJob, PersonalDic[tmpJob]);
+    }
   }
 
-  public float GetJobPriority(FJob job)
+  public float GetJobPriority(Enum job)
   {
-    if (JobDic.TryGetValue(job, out var value))
-      return value;
+    if(job is FJob)
+    {
+      if (JobDic.TryGetValue((FJob)job, out var value))
+        return value;
+    }
+    else if(job is FPersonalJob)
+    {
+      if (PersonalDic.TryGetValue((FPersonalJob)job, out var value))
+        return value;
+    }
     return -1;
   }
 
@@ -189,8 +228,18 @@ public class Creature : BaseObject
   protected virtual void UpdateState() { }
   protected virtual void UpdateMood() { }
 
-  public FJob SelectJob(/*Func<BaseObjenct, bool> func = null*/)
+  public Enum SelectJob(/*Func<BaseObjenct, bool> func = null*/)
   {
+    if (ppSystem.CurrentPersonalJob.Key is not FPersonalJob.None)
+    {
+      if (job is FPersonalJob && Target != null)
+        return job;
+      else return ppSystem.CurrentPersonalJob.Key;
+    }
+
+    if (job is FJob && Target != null)
+      return job;
+
     return jobSystem.CurrentJob.Key;
   }
 
@@ -299,7 +348,7 @@ public class Creature : BaseObject
   #endregion
 
   #region Map
-  public BaseObject FindClosestInRange(FJob job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+  public BaseObject FindClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null) where T : Enum
   { 
     BaseObject target = null;
     float bestDistanceSqr = float.MaxValue;
@@ -307,7 +356,7 @@ public class Creature : BaseObject
 
     foreach (BaseObject obj in objs)
     {
-      if (obj.workableJob != job) continue;
+      if (!obj.workableJob.Equals(job)) continue;
       Vector3 dir = obj.transform.position - transform.position;
       float distToTargetSqr = dir.sqrMagnitude;
 
@@ -330,6 +379,38 @@ public class Creature : BaseObject
     return target;
   }
 
+  public List<BaseObject> FindsClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null) where T : Enum
+  {
+    List<BaseObject> target = new List<BaseObject>(); 
+    Dictionary<BaseObject, float> targetdic = new Dictionary<BaseObject, float>();
+    float searchDistanceSqr = range * range;
+
+    foreach (BaseObject obj in objs)
+    {
+      if (!obj.workableJob.Equals(job)) continue;
+      Vector3 dir = obj.transform.position - transform.position;
+      float distToTargetSqr = dir.sqrMagnitude;
+
+      // 서치 범위보다 멀리 있으면 스킵.
+      if (distToTargetSqr > searchDistanceSqr)
+        continue;
+
+      // 추가 조건
+      if (func != null && func.Invoke(obj) == false)
+        continue;
+
+      targetdic.Add(obj, distToTargetSqr);
+    }
+
+    targetdic = targetdic.OrderBy(pair => pair.Value).Take(10).ToDictionary(x => x.Key, x => x.Value);
+    foreach(var dic in targetdic)
+    {
+      target.Add(dic.Key);
+    }
+
+    return target;
+  }
+
   protected void ChaseOrAttackTarget(float chaseRange, float attackRange)
   {
     float distToTargetSqr = DistToTargetSqr;
@@ -337,6 +418,7 @@ public class Creature : BaseObject
 
     if (distToTargetSqr <= attackDistanceSqr)
     {
+
       // 공격 범위 이내로 들어왔다면 공격.
       CreatureState = FCreatureState.Skill;
       //skill.DoSkill();

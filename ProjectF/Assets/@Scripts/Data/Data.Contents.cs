@@ -136,6 +136,41 @@ namespace Data
 
   #endregion
 
+  #region Structure
+  [Serializable]
+  public class StructureData
+  {
+    public int DataId;
+    public string Name;
+    public string DescriptionTextID;
+    public string Label;
+    public string type;
+
+    public float maxHp;
+    public float WorkTime;
+
+    public string Idle;
+    public string WorkStart;
+    public string Work;
+    public string WorkEnd;
+  }
+
+  [Serializable]
+  public class StructureDataLoader : ILoader<int, StructureData>
+  {
+    public List<StructureData> structures = new List<StructureData>();
+
+    public Dictionary<int, StructureData> MakeDict()
+    {
+      Dictionary<int, StructureData> dict = new Dictionary<int, StructureData> ();
+      foreach (StructureData structure in structures)
+        dict.Add(structure.DataId, structure);
+      return dict;
+    }
+  }
+
+  #endregion
+
   #region Item
   [Serializable]
   public class ItemData

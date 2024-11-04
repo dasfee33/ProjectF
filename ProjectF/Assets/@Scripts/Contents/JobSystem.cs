@@ -14,28 +14,28 @@ public class JobSystem : InitBase
   private Dictionary<FJob, float> jobDict = new Dictionary<FJob, float>();
 
   public BaseObject target;
+  public List<BaseObject> targets = new List<BaseObject>();
 
   public KeyValuePair<FJob, float> CurrentJob
   {
     get
     {
-      if (Owner.Target != null)
-      {
-        return Owner.CurrentJob;
-      }
       foreach(var job in jobDict)
       {
-        target = Owner.FindClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
-        
-        if (target != null)
+        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
+
+        foreach(var t in targets)
         {
-          //작업자가 이미 있는데 그게 내가 아니라면 
-          if (target.Worker != null && target.Worker != Owner) continue;
-          target.Worker = Owner;
-          return job;
+          if (targets != null)
+          {
+            //작업자가 이미 있는데 그게 내가 아니라면 
+            if (t.Worker != null && t.Worker != Owner) continue;
+            target = t;
+            target.Worker = Owner;
+            return job;
+          }
         }
       }
-
       return new KeyValuePair<FJob, float>(FJob.None, 0);
     }
     
@@ -79,7 +79,7 @@ public class JobSystem : InitBase
     return dict.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
   }
 
-  public Dictionary<FJob, float> GetSelectJobList(int count)
+  private Dictionary<FJob, float> GetSelectJobList(int count)
   {
     var sortDict = Owner.JobDic.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value); 
     return sortDict;

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public static class Define
 {
+  public enum FCurrentTime
+  {
+    Dawn,
+    Day,
+    BeforeSunset,
+    Night,
+  }
+
   public enum FScene
   {
     UnKnown,
@@ -38,6 +46,7 @@ public static class Define
     Creature,
     Projectile,
     Env,
+    Structure,
     ItemHolder,
   }
 
@@ -45,13 +54,22 @@ public static class Define
   {
     None,
     Tree,
+    
+  }
+
+  public enum FStructureType
+  {
+    None,
+    Toilet,
+    Bed,
+    EatingTable,
     Chest,
   }
 
   public enum FCreatureType
   {
     None,
-    WARRIOR,
+    Warrior,
     Npc,
   }
 
@@ -73,6 +91,15 @@ public static class Define
     Dead,
   }
 
+  public enum FStructureState
+  {
+    None,
+    Idle,
+    WorkStart,
+    Work,
+    WorkEnd,
+  }
+
   // 캐릭터 세부 상태
   public enum FCreatureMoveState
   {
@@ -87,13 +114,17 @@ public static class Define
   }
 
   //TEMP
-  public enum FJob
+  public enum FPersonalJob
   {
     None,
     Hungry, // 식욕
     Sleepy, // 수면욕
     Excretion, // 배설욕
-    Mood, //기분
+  }
+
+  public enum FJob
+  {
+    None,
     Attack,
     Rescue,
     Toggle,
@@ -177,6 +208,8 @@ public static class Define
   public const int ENV_TREE_NORMAL1 = 100000;
   public const int ENV_TREE_NORMAL2 = 100001;
   public const int ENV_CHEST_NORMAL = 100002;
+
+  public const int STRUCTURE_TOILET_NORMAL = 100;
 
 }
 

@@ -44,19 +44,16 @@ public class ItemHolder : BaseObject
 
   private void Arrived()
   {
-    //떨어진 곳에 같은 아이템이 있는 경우 스택을 증가시킴 / 아니면 생성
-    var posObj = Managers.Map.GetObject(dropPos);
-    if (posObj != null && posObj.dataTemplateID == this.dataTemplateID)
+    //이미 어떤 아이템이 드랍될 경우 그 위치로 떨어지게 하고 스택 증가 
+    if (Owner.droppedItem != null)
     {
-      var posObjItemHolder = posObj.GetComponent<ItemHolder>();
-      if (posObjItemHolder.guid == guid) return;
-
-      if(posObjItemHolder.stack < posObjItemHolder.data.maxStack)
+      if (Owner.droppedItem.stack < Owner.droppedItem.data.maxStack)
       {
-        posObjItemHolder.stack++;
-        Managers.Object.Despawn(this, ownerPos);
+        Owner.droppedItem.stack++;
+        Managers.Object.Despawn(this);
       }
     }
+    else Owner.droppedItem = this;
 
     //currentSprite.DOFade(0, 3f).OnComplete(() =>
     //{

@@ -6,6 +6,7 @@ public class ObjectManager
 {
   public List<Creature> Creatures { get; } = new List<Creature> ();
   public List<Env> Envs { get; } = new List<Env> ();
+  public List<Structure> Structures { get; } = new List<Structure> ();
   public List<ItemHolder> ItemHolders { get; } = new List<ItemHolder> (); 
 
   public List<BaseObject> Workables { get; } = new List<BaseObject>();
@@ -23,8 +24,9 @@ public class ObjectManager
   public Transform CreatureRoot { get { return GetRootTransform("@Creatures"); } }
   public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
   public Transform ItemHolderRoot { get { return GetRootTransform("@ItemHolders"); } }
+  public Transform StructureRoot { get { return GetRootTransform("@Structures"); } }
 
-  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null) where T : BaseObject
+  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true) where T : BaseObject
   {
     if(string.IsNullOrEmpty(prefabName)) prefabName = typeof(T).Name;
 
@@ -41,7 +43,7 @@ public class ObjectManager
 
       switch(creature.CreatureType)
       {
-        case FCreatureType.WARRIOR:
+        case FCreatureType.Warrior:
           obj.transform.parent = CreatureRoot;
           Warrior warrior = creature as Warrior;
           Creatures.Add(warrior);
@@ -66,11 +68,20 @@ public class ObjectManager
       ItemHolders.Add(itemholder);
 
     }
+    else if (obj.ObjectType == FObjectType.Structure)
+    {
+      obj.transform.parent = StructureRoot;
+      Structure structure = obj as Structure;
+      Structures.Add(structure);
+      Workables.Add(obj);
+
+      structure.SetInfo(dataID);
+    }
     //TODO
 
     //FIXME
     //if(obj.ObjectType != FObjectType.ItemHolder)
-    Managers.Map.AddObject(obj, cellPos);
+    if (addToCell) Managers.Map.AddObject(obj, cellPos);
 
     return obj as T;
   }
@@ -85,7 +96,7 @@ public class ObjectManager
       Creature creature = obj as Creature;
       switch(creature.CreatureType)
       {
-        case FCreatureType.WARRIOR:
+        case FCreatureType.Warrior:
           Warrior warrior = creature as Warrior;
           Creatures.Remove(warrior);
           break;
@@ -102,10 +113,17 @@ public class ObjectManager
       ItemHolder itemHolder = obj as ItemHolder;
       ItemHolders.Remove(itemHolder);
     }
+    else if (obj.ObjectType == FObjectType.Structure)
+    {
+      Structure structure = obj as Structure;
+      Structures.Remove(structure);
+      Workables.Remove(obj);
+    }
     //TODO
 
     //if (obj.ObjectType != FObjectType.ItemHolder)
-    Managers.Map.ClearObject(cellPos);
+    var bo = Managers.Map.GetObject(cellPos);
+    if(bo == obj) Managers.Map.ClearObject(cellPos);
 
     Managers.Resource.Destroy(obj.gameObject);
   }
@@ -120,7 +138,7 @@ public class ObjectManager
       Creature creature = obj as Creature;
       switch (creature.CreatureType)
       {
-        case FCreatureType.WARRIOR:
+        case FCreatureType.Warrior:
           Warrior warrior = creature as Warrior;
           Creatures.Remove(warrior);
           break;
@@ -137,10 +155,17 @@ public class ObjectManager
       ItemHolder itemHolder = obj as ItemHolder;
       ItemHolders.Remove(itemHolder);
     }
+    else if (obj.ObjectType == FObjectType.Structure)
+    {
+      Structure structure = obj as Structure;
+      Structures.Remove(structure);
+      Workables.Remove(obj);
+    }
     //TODO
 
     //if (obj.ObjectType != FObjectType.ItemHolder)
-    Managers.Map.ClearObject(cellPos);
+    var bo = Managers.Map.GetObject(cellPos);
+    if(bo == obj) Managers.Map.ClearObject(cellPos);
 
     Managers.Resource.Destroy(obj.gameObject);
   }

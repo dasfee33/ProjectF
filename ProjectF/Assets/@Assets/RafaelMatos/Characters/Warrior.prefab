@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5766875896258538957}
   - component: {fileID: 6664620971283924696}
   - component: {fileID: 1635512678503743446}
+  - component: {fileID: 4818439071799415770}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -184,8 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9a7916758abe14eb13732d0210f613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  job: 0
-  workableJob: 0
+  droppedItem: {fileID: 0}
+  Worker: {fileID: 0}
+  onWork: 0
 --- !u!114 &1635512678503743446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +200,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e143f3e5884b44ab709fb3a5dc2bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+--- !u!114 &4818439071799415770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865690466472679962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3899207ede0df43b70dbe947c68935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}

@@ -1,0 +1,4 @@
+﻿DataId,Name,DescriptionTextID,Label,type,maxHp,WorkTime,Idle,WorkStart,Work,WorkEnd
+100,toilet_normal,그럭저럭 쓸만한 일반 화장실,Structure,Toilet,100,5,door1-closing,door1-opening,door1-closing,door1-opening
+101,table_normal,대충 분위기는 나는 식탁,Sturcture,EatingTable,100,5,,,,
+102,bed_normal,배게도 없는 허름한 침대,Structure,Bed,100,5,,,,
