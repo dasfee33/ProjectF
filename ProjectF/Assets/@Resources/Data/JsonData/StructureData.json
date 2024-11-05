@@ -2,8 +2,8 @@
   "structures": [
     {
       "DataId": 100,
-      "Name": "toilet_normal",
-      "DescriptionTextID": "그럭저럭 쓸만한 일반 화장실",
+      "Name": "Toilet",
+      "DescriptionTextID": "위생적이지 않은 화장실",
       "Label": "Structure",
       "type": "Toilet",
       "maxHp": 100.0,
@@ -11,12 +11,13 @@
       "Idle": "door1-closing",
       "WorkStart": "door1-opening",
       "Work": "door1-closing",
-      "WorkEnd": "door1-opening"
+      "WorkEnd": "door1-opening",
+      "supplyItemid": -1
     },
     {
       "DataId": 101,
-      "Name": "table_normal",
-      "DescriptionTextID": "대충 분위기는 나는 식탁",
+      "Name": "EatingTable",
+      "DescriptionTextID": "끼니를 해결 할 수 있는 식탁",
       "Label": "Sturcture",
       "type": "EatingTable",
       "maxHp": 100.0,
@@ -24,12 +25,13 @@
       "Idle": null,
       "WorkStart": null,
       "Work": null,
-      "WorkEnd": null
+      "WorkEnd": null,
+      "supplyItemid": -1
     },
     {
       "DataId": 102,
-      "Name": "bed_normal",
-      "DescriptionTextID": "배게도 없는 허름한 침대",
+      "Name": "Bed1",
+      "DescriptionTextID": "잠을 떼울 수 있는 침대",
       "Label": "Structure",
       "type": "Bed",
       "maxHp": 100.0,
@@ -37,7 +39,22 @@
       "Idle": null,
       "WorkStart": null,
       "Work": null,
-      "WorkEnd": null
+      "WorkEnd": null,
+      "supplyItemid": -1
+    },
+    {
+      "DataId": 103,
+      "Name": "Chest_normal",
+      "DescriptionTextID": "나무로 만든 상자",
+      "Label": "Structure",
+      "type": "Chest",
+      "maxHp": 100.0,
+      "WorkTime": 1.0,
+      "Idle": "cabin chest idle",
+      "WorkStart": "cabin chest opening",
+      "Work": "cabin chest idle",
+      "WorkEnd": "cabin chest idle",
+      "supplyItemid": 0
     }
   ]
 }

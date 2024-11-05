@@ -15,6 +15,7 @@ public class JobSystem : InitBase
 
   public BaseObject target;
   public List<BaseObject> targets = new List<BaseObject>();
+  public List<BaseObject> supplyTargets;
 
   public KeyValuePair<FJob, float> CurrentJob
   {
@@ -22,7 +23,7 @@ public class JobSystem : InitBase
     {
       foreach(var job in jobDict)
       {
-        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
+        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid); 
 
         foreach(var t in targets)
         {
@@ -39,6 +40,35 @@ public class JobSystem : InitBase
       return new KeyValuePair<FJob, float>(FJob.None, 0);
     }
     
+  }
+
+  public BaseObject CurrentRootJob
+  {
+    get
+    {
+      if(supplyTargets.All(item => item == null))
+      {
+        if(supplyTargets.Count <= 0)
+          supplyTargets = Owner.FindsClosestInRange(FJob.Supply, 10f, Managers.Object.ItemHolders, func: Owner.IsValid);
+      }
+        
+
+      foreach (var t in supplyTargets)
+      {
+        if (t == null) continue;
+        var itemHolder = t.GetComponent<ItemHolder>();
+        if (itemHolder.stack <= 0) continue;
+
+        if (supplyTargets != null)
+        {
+          //작업자가 이미 있는데 그게 내가 아니라면 
+          if (t.Worker != null && t.Worker != Owner) continue;
+          t.Worker = Owner;
+          return t;
+        }
+      }
+      return null;
+    }
   }
 
   public override bool Init()

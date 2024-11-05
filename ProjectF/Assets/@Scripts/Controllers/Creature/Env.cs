@@ -122,8 +122,8 @@ public class Env : BaseObject
       //TEMP
       if (droppedItem == null)
       {
-        Vector3 rand = new Vector3(transform.position.x + UnityEngine.Random.Range(-2, -5) * 0.1f, transform.position.y);
-        Vector3 rand2 = new Vector3(transform.position.x + UnityEngine.Random.Range(2, 5) * 0.1f, transform.position.y);
+        Vector3 rand = new Vector3(transform.position.x + UnityEngine.Random.Range(-2f, -5f) * 0.1f, transform.position.y);
+        Vector3 rand2 = new Vector3(transform.position.x + UnityEngine.Random.Range(2f, 5f) * 0.1f, transform.position.y);
         dropPos = UnityEngine.Random.value < 0.5 ? rand : rand2;        
       }
       dropItem = Managers.Object.Spawn<ItemHolder>(transform.position, dropItemId, addToCell: false);

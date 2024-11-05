@@ -3,7 +3,7 @@
     {
       "DataId": 100000,
       "Name": "tree_normal1",
-      "DescriptionTextID": "일반나무1",
+      "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 100.0,
       "RegenTime": 50.0,
@@ -17,7 +17,7 @@
     {
       "DataId": 100001,
       "Name": "tree_normal2",
-      "DescriptionTextID": "일반나무2",
+      "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 150.0,
       "RegenTime": 100.0,
@@ -26,20 +26,6 @@
       "Hurt": "treeHurt2",
       "Dead": "treeDead2",
       "DropItemid": 400000,
-      "Supplyitemid": -1
-    },
-    {
-      "DataId": 100002,
-      "Name": "chest_normal",
-      "DescriptionTextID": "일반상자",
-      "Label": "Env",
-      "maxHp": -1.0,
-      "RegenTime": 0.0,
-      "Idle": "cabin chest idle",
-      "type": "Chest",
-      "Hurt": "cabin chest opening",
-      "Dead": null,
-      "DropItemid": -1,
       "Supplyitemid": -1
     }
   ]

@@ -21,7 +21,7 @@ public class BuildTool : MonoBehaviour
 
   private void Awake()
   {
-    if (BuildObject == null) BuildObject = Managers.Object.Spawn<Env>(Vector3.zero, ENV_CHEST_NORMAL, "CabinChest").gameObject;
+    if (BuildObject == null) BuildObject = Managers.Object.Spawn<Structure>(Vector3.zero, STRUCTURE_CHEST_NORMAL, "Chest_normal").gameObject;
     BuildObjectSprite = BuildObject.GetComponent<SpriteRenderer>();
 
     SetTag(tag);

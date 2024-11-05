@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 62f9f0ed00a2b9d4a811a46cbd51d1cf
   m_SerializeEntries:
   - m_GUID: 4d762bb604b57e242bcceb1b3dec5bbd
-    m_Address: wood log 11
+    m_Address: wood_normal
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

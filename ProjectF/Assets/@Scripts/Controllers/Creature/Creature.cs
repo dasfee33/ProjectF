@@ -8,6 +8,8 @@ using static Define;
 public class Creature : BaseObject
 {
   public BaseObject Target { get; set; }
+  public List<BaseObject> SupplyTargets { get; set; } = new List<BaseObject>();
+  public List<BaseObject> SupplyStorage { get; set; } = new List<BaseObject>(); 
   public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
@@ -41,14 +43,15 @@ public class Creature : BaseObject
     }
   }
 
-  float DistToTargetSqr
+  float DistToTargetSqr(BaseObject target = null)
   {
-    get
-    {
-      Vector3 dir = (Target.transform.position - transform.position);
-      float distToTarget = Math.Max(0, dir.magnitude - Target.ExtraCells * 1f - ExtraCells * 1f); // TEMP
-      return distToTarget * distToTarget;
-    }
+    BaseObject _target = null;
+    if (target == null) _target = Target;
+    else _target = target;
+
+    Vector3 dir = (_target.transform.position - transform.position);
+    float distToTarget = Math.Max(0, dir.magnitude - _target.ExtraCells * 1f - ExtraCells * 1f); // TEMP
+    return distToTarget * distToTarget;
   }
 
   public Data.CreatureData CreatureData { get; protected set; }
@@ -56,10 +59,22 @@ public class Creature : BaseObject
   public PersonalPrioritySystem ppSystem;
   protected float oneMoveMagnititue;
 
+  
+  public FJobPhase jobPhase = FJobPhase.None;
+  protected BaseObject supplyTarget;
+
   #region Stats
-  public float maxHp { get; set; }
-  public float Atk { get; set; }
-  public float Calories { get; set; } = 10000f;
+  [SerializeField] private float _maxHp;
+  [SerializeField] private float _Atk;
+  [SerializeField] private float _Calories = 10000f;
+  [SerializeField] private float _SupplyCapacity;
+  [SerializeField] private float _CurrentSupply;
+
+  public float maxHp { get { return _maxHp; } set { _maxHp = value; } }
+  public float Atk { get { return _Atk; } set { _Atk = value; } }
+  public float Calories { get { return _Calories; } set { _Calories = value; } }
+  public float SupplyCapacity { get { return _SupplyCapacity; } set { _SupplyCapacity = value; } }
+  public float CurrentSupply { get { return _CurrentSupply; } set { _CurrentSupply = value; } }
   #endregion
 
   protected FCreatureState creatureState = FCreatureState.None;
@@ -148,6 +163,7 @@ public class Creature : BaseObject
     gameObject.name = $"{CreatureData.DataId}_{CreatureData.Name}";
 
     maxHp = CreatureData.maxHp;
+    SupplyCapacity = CreatureData.supplyCap;
     //TODO
 
     CreatureState = FCreatureState.Idle;
@@ -411,15 +427,20 @@ public class Creature : BaseObject
     return target;
   }
 
-  protected void ChaseOrAttackTarget(float chaseRange, float attackRange)
+  protected void ChaseOrAttackTarget(float chaseRange, float attackRange, BaseObject target = null)
   {
-    float distToTargetSqr = DistToTargetSqr;
+    BaseObject chaseTarget = null;
+    if (target == null) chaseTarget = Target;
+    else chaseTarget = target;
+
+    float distToTargetSqr = DistToTargetSqr(chaseTarget);
     float attackDistanceSqr = attackRange * attackRange;
 
     if (distToTargetSqr <= attackDistanceSqr)
     {
 
       // 공격 범위 이내로 들어왔다면 공격.
+     
       CreatureState = FCreatureState.Skill;
       //skill.DoSkill();
       return;
@@ -427,8 +448,12 @@ public class Creature : BaseObject
     else
     {
       // 공격 범위 밖이라면 추적.
-      FindPathAndMoveToCellPos(Target.transform.position, 100);
-
+      FFindPathResults result = FindPathAndMoveToCellPos(chaseTarget.transform.position, 100);
+      if(result == FFindPathResults.Fail_NoPath)
+      {
+        CreatureState = FCreatureState.Skill;
+        //CreatureState = FCreatureState.Move;
+      }
       // 너무 멀어지면 포기.
       //float searchDistanceSqr = chaseRange * chaseRange;
       //if (distToTargetSqr > searchDistanceSqr)
@@ -439,5 +464,29 @@ public class Creature : BaseObject
       return;
     }
   }
+
+  //protected void ChaseOrStoreTarget()
+  //{
+  //  if (jobPhase is JobPhase.On) return;
+
+  //  if(SupplyTargets.Count <= 0) SupplyTargets = FindsClosestInRange(FJob.Supply, 10f, Managers.Object.ItemHolders, func: IsValid);
+  //  if (SupplyTargets.Count <= 0) { jobPhase = JobPhase.Done; return; }
+  //  if (jobPhase is JobPhase.Start) jobPhase = JobPhase.On;
+
+  //  foreach (var target in SupplyTargets)
+  //  {
+  //    if (this.CurrentSupply >= this.SupplyCapacity)
+  //    {
+  //      jobPhase = JobPhase.Done;
+  //      return;
+  //    }
+
+  //    ChaseOrAttackTarget(target, 100, 1.2f);
+  //  }
+
+  //  //jobPhase = JobPhase.Done;
+  //  return;
+
+  //}
   #endregion
 }

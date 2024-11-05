@@ -1,2 +1,2 @@
-﻿DataId,Name,DescriptionTextId,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Value,CoolTime,SupplyJob
-400000,wood log 11,구하기 쉬운 일반 목재,Material,Wood,Consumable,Architecture,None,Normal,99,0,0,Make
+﻿DataId,Name,DescriptionTextId,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Value,CoolTime,SupplyJob
+400000,wood_normal,구하기 쉬운 일반 목재,Material,Wood,Consumable,Architecture,None,Normal,99,10,0,0,Make

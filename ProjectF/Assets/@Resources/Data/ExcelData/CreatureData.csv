@@ -1,2 +1,2 @@
-DataId,Name,DescriptionTextID,Label,MaxHp,Speed,Idle,Move,Hurt,Dead,Skill
-1,warrior,something,player,100,1,warrior idle,warrior run,warrior hurt,warrior death,50000&50001&50002
+﻿DataId,Name,DescriptionTextID,Label,MaxHp,Speed,Idle,Move,Hurt,Dead,Skill,supplyCap
+1,warrior,something,player,100,1,warrior idle,warrior run,warrior hurt,warrior death,50000&50001&50002,200

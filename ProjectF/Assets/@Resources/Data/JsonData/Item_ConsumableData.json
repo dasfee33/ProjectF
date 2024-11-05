@@ -5,7 +5,7 @@
       "CoolTIme": 0.0,
       "SupplyJob": 12,
       "DataId": 400000,
-      "Name": "wood log 11",
+      "Name": "wood_normal",
       "DescirptionTextID": "구하기 쉬운 일반 목재",
       "Label": "Material",
       "type": "Wood",
@@ -13,7 +13,8 @@
       "ItemType": 1,
       "ItemSubType": 0,
       "ItemGrade": 1,
-      "maxStack": 99
+      "maxStack": 99,
+      "Mass": 10.0
     }
   ]
 }

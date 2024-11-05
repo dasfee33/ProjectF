@@ -50,6 +50,8 @@ namespace Data
     public string Dead;
     public List<int> SkillList = new List<int>();
 
+    public float supplyCap;
+
   }
 
   [Serializable]
@@ -153,6 +155,8 @@ namespace Data
     public string WorkStart;
     public string Work;
     public string WorkEnd;
+
+    public int supplyItemid;
   }
 
   [Serializable]
@@ -187,6 +191,7 @@ namespace Data
     public FItemGrade ItemGrade;
 
     public int maxStack;
+    public float Mass;
   }
 
   [Serializable]

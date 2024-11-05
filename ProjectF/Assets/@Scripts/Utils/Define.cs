@@ -33,6 +33,14 @@ public static class Define
     Build,
   }
 
+  public enum FJobPhase
+  {
+    None,
+    Start,
+    On,
+    Done,
+  }
+
   public enum FSound
   {
     Bgm,
@@ -207,9 +215,10 @@ public static class Define
   public const int CREATURE_WARRIOR_DATAID = 1;
   public const int ENV_TREE_NORMAL1 = 100000;
   public const int ENV_TREE_NORMAL2 = 100001;
-  public const int ENV_CHEST_NORMAL = 100002;
+  
 
   public const int STRUCTURE_TOILET_NORMAL = 100;
+  public const int STRUCTURE_CHEST_NORMAL = 103;
 
 }
 

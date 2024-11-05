@@ -70,7 +70,7 @@ public class Warrior : Creature
 
   #region AI
   public float SearchDistance { get; private set; } = 8.0f;
-  public float MinActionDistance { get; private set; } = 0.4f;
+  public float MinActionDistance { get; private set; } = 0.5f;
   //public float MaxActionDistance { get; private set; } = 1f;
 
   Vector3 _destPos;
@@ -147,7 +147,19 @@ public class Warrior : Creature
         //FIXME
         if (Target.onWorkSomeOne) { CreatureState = FCreatureState.Idle; return; }
 
-        ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
+        if (job is FJob.Store)
+        {
+          supplyTarget = jobSystem.CurrentRootJob;
+          if (supplyTarget != null && CurrentSupply < SupplyCapacity)
+          {
+            ChaseOrAttackTarget(100, MinActionDistance, supplyTarget);
+          }
+          else
+          {
+            if(CurrentSupply > 0) ChaseOrAttackTarget(100, MinActionDistance);
+          }
+        }
+        else ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
 
         if (Target.IsValid() == false)
         {
@@ -178,12 +190,20 @@ public class Warrior : Creature
 
   protected override void UpdateState()
   {
-    SetOrAddJobPriority(FJob.Store, 10f);
+    SetOrAddJobPriority(FJob.Store, 1f);
   }
 
   public override void OnAnimEventHandler()
   {
     if (Target.IsValid() == false) return;
+    if(job is FJob.Store)
+    {
+      if (supplyTarget != null && CurrentSupply < SupplyCapacity)
+      {
+        supplyTarget.OnDamaged(this);
+        return;
+      }
+    }
 
     Target.OnDamaged(this);
   }

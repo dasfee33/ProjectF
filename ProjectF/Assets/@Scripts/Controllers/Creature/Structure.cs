@@ -4,12 +4,16 @@ using static Define;
 using Data;
 using System.Collections;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class Structure : BaseObject
 {
   private Vector3 dropPos;
   private StructureData data;
   private FStructureState structureState = FStructureState.Idle;
+
+  public List<BaseObject> Storage = new List<BaseObject>();
+
   public FStructureState StructureState
   {
     get { return structureState; }
@@ -34,7 +38,7 @@ public class Structure : BaseObject
   public float Hp { get; set; }
   public float maxHp { get; set; }
   public float workTime { get; set; }
-
+  public float supplyItemid { get; set; }
   #endregion
 
   public override bool Init()
@@ -57,7 +61,7 @@ public class Structure : BaseObject
     workTime = data.WorkTime;
     if (Enum.TryParse(data.type, out FStructureType result))
       StructureType = result;
-
+    supplyItemid = data.supplyItemid;
   }
 
   private void UpdateJob()
@@ -95,6 +99,7 @@ public class Structure : BaseObject
         break;
       case FStructureState.WorkEnd:
         PlayAnimation(data.WorkEnd);
+        ResetState();
         break;
 
     }
@@ -111,7 +116,7 @@ public class Structure : BaseObject
     //TODO
     //float finalDamage = attacker.GetComponent<Creature>().Skills[0].DamageMultiflier;
     StructureState = FStructureState.WorkStart;
-    // hp 가 없는 일반 환경사물 (ex 상자)
+    // hp 가 없는 일반 환경사물 (ex 상자)g
     if (maxHp < 0) return;
 
     //Hp = Mathf.Clamp(Hp - finalDamage, 0, maxHp);
@@ -138,35 +143,57 @@ public class Structure : BaseObject
 
   public void OnAnimIsEnd()
   {
-    if (StructureState == FStructureState.Idle) return;
-
     if(StructureState == FStructureState.WorkStart)
     {
       StructureState = FStructureState.Work;
       if (Worker != null)
       {
-        Worker.SpriteRenderer.DOFade(0, 1f).OnComplete(() =>
+        if (StructureType == FStructureType.Toilet)
         {
-          onWorkSomeOne = true;
-        });
+          Worker.SpriteRenderer.DOFade(0, 1f).OnComplete(() => { onWorkSomeOne = true; });
+        }
+        else onWorkSomeOne = true;
       }
 
       StartCoroutine(Working());
     }
     else if(StructureState == FStructureState.WorkEnd)
     {
-      StructureState = FStructureState.Idle;
-      if (Worker != null)
+      if(StructureType == FStructureType.Toilet)
       {
         Worker.SpriteRenderer.DOFade(1, 1f);
+        Worker.ppSystem.target = null;
         Worker.SetOrAddJobPriority(workableJob, 0, true);
         Worker.Target = null;
-        Worker.ppSystem.target = null;
+        onWorkSomeOne = false;
+        Worker = null;
+        StructureState = FStructureState.Idle;
+      }
+    }
+  }
+
+  private void ResetState()
+  {
+    if (StructureType == FStructureType.Toilet) return;
+
+    StructureState = FStructureState.Idle;
+    if (Worker != null)
+    {
+      if(StructureType == FStructureType.Chest)
+      {
+        Storage.AddRange(Worker.SupplyStorage);
+        Worker.SupplyStorage.Clear();
+        Worker.CurrentSupply = 0;
+        Worker.jobSystem.supplyTargets.Clear();
+        Worker.jobSystem.target = null;
+        Worker.SetOrAddJobPriority(workableJob, 0, true);
+        Worker.Target = null;
         onWorkSomeOne = false;
         Worker = null;
       }
+      
+
     }
-    
   }
 
   private IEnumerator Working()

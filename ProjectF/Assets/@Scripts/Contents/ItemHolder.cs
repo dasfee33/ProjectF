@@ -14,8 +14,10 @@ public class ItemHolder : BaseObject
   private Vector3 ownerPos;
   public Guid guid { get; set; }
 
+  public int maxStack;
   public int stack;
-
+  public float defaultMass;
+  public float mass;
 
   public override bool Init()
   {
@@ -24,6 +26,8 @@ public class ItemHolder : BaseObject
     guid = Guid.NewGuid();
 
     ObjectType = FObjectType.ItemHolder;
+    //FIXME
+    workableJob = FJob.Supply;
     currentSprite = gameObject.GetOrAddComponent<SpriteRenderer>();
     parabolaMotion = gameObject.GetOrAddComponent<ParabolaMotion>();
 
@@ -38,8 +42,16 @@ public class ItemHolder : BaseObject
     data = Managers.Data.ItemDic[itemDataId];
     currentSprite.sprite = Managers.Resource.Load<Sprite>($"{data.Name}");
     currentSprite.sortingOrder = 19;
-    parabolaMotion.SetInfo(0, transform.position, pos, endCallback: Arrived);
-    
+    maxStack = data.maxStack;
+    defaultMass = data.Mass;
+    parabolaMotion.SetInfo(0, transform.position, dropPos, endCallback: Arrived);
+
+  }
+
+  public void RefreshStack(int a)
+  {
+    stack += a;
+    mass = (defaultMass * stack);
   }
 
   private void Arrived()
@@ -49,11 +61,16 @@ public class ItemHolder : BaseObject
     {
       if (Owner.droppedItem.stack < Owner.droppedItem.data.maxStack)
       {
-        Owner.droppedItem.stack++;
+        Owner.droppedItem.RefreshStack(1);
         Managers.Object.Despawn(this);
       }
     }
-    else Owner.droppedItem = this;
+    else
+    {
+      Owner.droppedItem = this;
+      stack += 1;
+      mass = (defaultMass * stack);
+    }
 
     //currentSprite.DOFade(0, 3f).OnComplete(() =>
     //{
@@ -64,5 +81,40 @@ public class ItemHolder : BaseObject
 
     //  Managers.Object.Despawn(this);
     //});
+  }
+
+  public override void OnDamaged(BaseObject attacker)
+  {
+    var attackOwner = attacker as Creature;
+    if(attackOwner.SupplyCapacity > attackOwner.CurrentSupply)
+    {
+      attackOwner.CurrentSupply += mass;
+      //인벤토리 할때 같이 
+      //if (attackOwner.SupplyStorage.Count > 0)
+      //{
+      //  foreach (var item in attackOwner.SupplyStorage)
+      //  {
+      //    if (item.dataTemplateID == this.dataTemplateID)
+      //    {
+      //      var itemHolder = item.GetComponent<ItemHolder>();
+      //      int availSpace = itemHolder.maxStack - itemHolder.stack;
+
+      //      if (this.stack <= availSpace)
+      //      {
+      //        itemHolder.stack += this.stack;
+      //      }
+      //      else
+      //      {
+      //        itemHolder.stack = maxStack;
+      //        itemHolder.stack = this.stack - availSpace;
+      //        attackOwner.SupplyStorage.Add(itemHolder);
+      //      }
+      //    }
+      //  }
+      //}
+      //else attackOwner.SupplyStorage.Add(this);
+    }
+
+    Managers.Object.Despawn(this);
   }
 }
