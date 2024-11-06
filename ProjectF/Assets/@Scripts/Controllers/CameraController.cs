@@ -25,6 +25,7 @@ public class CameraController : InitBase
     confinerCam = cam.GetComponentInChildren<CinemachineConfiner2D>();
 
     virtualCam.m_Lens.OrthographicSize = 3.4f;
+    //virtualCam.m_Lens.OrthographicSize = 5.5f;
 
     return true;
   }

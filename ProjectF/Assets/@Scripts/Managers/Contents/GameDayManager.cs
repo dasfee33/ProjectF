@@ -12,7 +12,7 @@ public class GameDayManager
   private int period = 0;
   public int Period { get { return period; } }
 
-  private float day = 300;
+  public float day = 300;
   private float hour = 0;
 
   private WaitForSeconds oneSec = new WaitForSeconds(1f);

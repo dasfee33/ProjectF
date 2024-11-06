@@ -23,7 +23,7 @@ public class PlowTool : MonoBehaviour
   private void Awake()
   {
     //FIXME
-    if (tile == null) tile = Managers.Resource.Load<Tile>("TestTile");
+    if (tile == null) tile = Managers.Resource.Load<Tile>("plowToolTile");
 
     SetTag(tag);
   }
@@ -108,6 +108,18 @@ public class PlowTool : MonoBehaviour
   {
     if (tilemap.GetTile(pos) == null)
     {
+      //현재 타일의 좌표를 월드로 바꾸고 월드맵의 컬리젼 셀좌표로 바꿈
+      var worldPos = tilemap.CellToWorld(pos);
+      var tileCollision = Managers.Map.GetTileCollisionType(worldPos);
+      var other = Managers.Map.GetObject(worldPos);
+      if (tileCollision == FCellCollisionTypes.Wall || tileCollision == FCellCollisionTypes.SemiWall || other != null)
+      {
+        tile.color = Color.red;
+      }
+      else
+      {
+        tile.color = Color.white;
+      }
       tilemap.SetTile(pos, tile);
       areaTiles.Add(pos);
     }
@@ -132,6 +144,7 @@ public class PlowTool : MonoBehaviour
 
   private IEnumerator GenerateTile()
   {
+    tile.color = Color.white;
     Queue<Vector3Int> queue = new Queue<Vector3Int>();
     HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
 
@@ -154,6 +167,11 @@ public class PlowTool : MonoBehaviour
       // 현재 위치가 드래그 영역 내인지 확인
       if (current.x >= minX && current.x <= maxX && current.y >= minY && current.y <= maxY)
       {
+        var worldPos = tilemap.CellToWorld(current);
+        var colType = Managers.Map.GetTileCollisionType(worldPos);
+        var other = Managers.Map.GetObject(worldPos);
+        if (colType == FCellCollisionTypes.SemiWall || colType == FCellCollisionTypes.Wall || other != null)
+          continue;
         // 현재 위치에 타일 설정
         if (tilemap.GetTile(current) == null)
         {

@@ -232,6 +232,15 @@ public class MapManager
     }
   }
 
+  public FCellCollisionTypes GetTileCollisionType(Vector3 worldPos)
+  {
+
+    var pos = World2Cell(worldPos);
+    
+    var result = _collision[pos.x + tilemap.size.x / 2 + 1, (-pos.y) + tilemap.size.y / 2 + 1];
+    return result;
+  }
+
   public FCellCollisionTypes GetTileCollisionType(Vector3Int cellPos)
   {
     var result = _collision[cellPos.x, cellPos.y];

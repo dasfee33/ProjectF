@@ -440,7 +440,6 @@ public class Creature : BaseObject
     {
 
       // 공격 범위 이내로 들어왔다면 공격.
-     
       CreatureState = FCreatureState.Skill;
       //skill.DoSkill();
       return;
@@ -451,8 +450,14 @@ public class Creature : BaseObject
       FFindPathResults result = FindPathAndMoveToCellPos(chaseTarget.transform.position, 100);
       if(result == FFindPathResults.Fail_NoPath)
       {
+        chaseTarget = null;
         CreatureState = FCreatureState.Skill;
         //CreatureState = FCreatureState.Move;
+      }
+      else if(result == FFindPathResults.Fail_MoveTo)
+      {
+        chaseTarget = null;
+        CreatureState = FCreatureState.Move;
       }
       // 너무 멀어지면 포기.
       //float searchDistanceSqr = chaseRange * chaseRange;

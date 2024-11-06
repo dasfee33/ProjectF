@@ -86,7 +86,6 @@ public class RandomSeedGenerate
     BaseObject bo = Managers.Map.NearGetObject(pos, cellPos);
     if (bo != null)
       return null;
-
     switch(noiseValue)
     {
       case <= 0.3f:
@@ -96,6 +95,7 @@ public class RandomSeedGenerate
         bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL2, "Tree2");
         break;
     }
+    
 
     return bo;
   }

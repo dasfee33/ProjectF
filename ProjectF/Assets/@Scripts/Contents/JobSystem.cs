@@ -61,8 +61,10 @@ public class JobSystem : InitBase
 
         if (supplyTargets != null)
         {
-          //작업자가 이미 있는데 그게 내가 아니라면 
+          if (t.Worker != Owner.Target.Worker) t.Worker = null;
+          //작업자가 이미 있는데 그게 내가 아니라면 포기? 
           if (t.Worker != null && t.Worker != Owner) continue;
+          target = t;
           t.Worker = Owner;
           return t;
         }

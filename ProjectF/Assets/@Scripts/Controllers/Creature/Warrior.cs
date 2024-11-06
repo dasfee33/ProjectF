@@ -86,7 +86,7 @@ public class Warrior : Creature
       int rand = Random.Range(0, 100);
       if (rand <= patrolPercent)
       {
-        if (CreatureState == FCreatureState.Skill || CreatureMoveState == FCreatureMoveState.Job) return;
+        if (CreatureState == FCreatureState.Skill/* || CreatureMoveState == FCreatureMoveState.Job*/) return;
         _destPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
         CreatureState = FCreatureState.Move;
         return;
@@ -156,7 +156,19 @@ public class Warrior : Creature
           }
           else
           {
-            if(CurrentSupply > 0) ChaseOrAttackTarget(100, MinActionDistance);
+            //들고 있는게 있어야 함 .. 없는데 이쪽으로 넘어오면 욕구 취소로 다음사람에게 넘김?
+            if (CurrentSupply > 0) ChaseOrAttackTarget(100, MinActionDistance);
+            else
+            {
+              //FIXME
+              //SetOrAddJobPriority(job, 0, true);
+              //
+              onWork = false;
+              Target = null;
+
+              CreatureMoveState = FCreatureMoveState.None;
+              CreatureState = FCreatureState.Idle;
+            }
           }
         }
         else ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
