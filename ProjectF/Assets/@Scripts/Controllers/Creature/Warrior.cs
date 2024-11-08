@@ -62,7 +62,7 @@ public class Warrior : Creature
 
     //jobSystem += jobChanged
 
-    StartCoroutine(CoUpdateAI());
+    _coai = StartCoroutine(CoUpdateAI());
     StartCoroutine(CoUpdateState());
 
     return true;
@@ -161,8 +161,7 @@ public class Warrior : Creature
             else
             {
               //FIXME
-              //SetOrAddJobPriority(job, 0, true);
-              //
+              SetOrAddJobPriority(job, 0, true);
               onWork = false;
               Target = null;
 
@@ -171,6 +170,11 @@ public class Warrior : Creature
             }
           }
         }
+        //else if(job is FPersonalJob.Sleepy)
+        //{
+        //  if (_coai != null) StopCoroutine(_coai);
+        //  SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
+        //}
         else ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
 
         if (Target.IsValid() == false)
@@ -189,9 +193,9 @@ public class Warrior : Creature
 
   protected override void UpdateSkill()
   {
-    var dir = (Target.transform.position - this.transform.position).normalized;
-    if (dir.x < 0) LookLeft = true;
-    else LookLeft = false; 
+    //var dir = (Target.transform.position - this.transform.position).normalized;
+    //if (dir.x < 0) LookLeft = true;
+    //else LookLeft = false; 
 
     if (Target.IsValid() == false)
     {
@@ -202,6 +206,8 @@ public class Warrior : Creature
 
   protected override void UpdateState()
   {
+    if (Managers.GameDay.currentTime >= FCurrentTime.BeforeSunset)
+      SetOrAddJobPriority(FPersonalJob.Sleepy, 5f);
     SetOrAddJobPriority(FJob.Store, 1f);
   }
 

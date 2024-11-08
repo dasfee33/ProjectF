@@ -69,6 +69,10 @@ public class BaseObject : InitBase
     Animator.Play(anim, -1);
   }
 
+  public void StopAnimation() => Animator.enabled = false;
+
+  public void StartAnimation() => Animator.enabled = true;
+
   public void Flip(bool flag)
   {
     if (SpriteRenderer == null) return;

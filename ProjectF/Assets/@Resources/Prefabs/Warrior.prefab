@@ -188,6 +188,15 @@ MonoBehaviour:
   droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
+  onWorkSomeOne: 0
+  jobSystem: {fileID: 0}
+  ppSystem: {fileID: 0}
+  jobPhase: 0
+  _maxHp: 0
+  _Atk: 0
+  _Calories: 10000
+  _SupplyCapacity: 0
+  _CurrentSupply: 0
 --- !u!114 &1635512678503743446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  targets: []
+  supplyTargets: []
 --- !u!114 &4818439071799415770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,3 +225,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  targets: []

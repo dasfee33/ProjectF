@@ -263,6 +263,24 @@ public class Creature : BaseObject
 
   #region Wait
   protected Coroutine _coWait;
+  public Coroutine _coai;
+
+  public void RestartCo()
+  {
+    if (_coai != null)
+    {
+      _coai = StartCoroutine(CoUpdateAI());
+    }
+  }
+
+  public void CancelCo()
+  {
+    if (_coai != null)
+    {
+      StopCoroutine(_coai);
+      
+    }
+  }
 
   protected void StartWait(float seconds)
   {
@@ -438,6 +456,15 @@ public class Creature : BaseObject
 
     if (distToTargetSqr <= attackDistanceSqr)
     {
+      if(job is FPersonalJob.Sleepy)
+      {
+        LerpCellPosCompleted = true;
+        if (_coai != null) { CancelCo(); StopAnimation(); }
+        SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
+        this.transform.position = chaseTarget.transform.position;
+        chaseTarget.OnDamaged(this);
+        return;
+      }
 
       // 공격 범위 이내로 들어왔다면 공격.
       CreatureState = FCreatureState.Skill;

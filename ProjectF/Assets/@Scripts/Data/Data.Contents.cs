@@ -147,6 +147,7 @@ namespace Data
     public string DescriptionTextID;
     public string Label;
     public string type;
+    public string subType;
 
     public float maxHp;
     public float WorkTime;

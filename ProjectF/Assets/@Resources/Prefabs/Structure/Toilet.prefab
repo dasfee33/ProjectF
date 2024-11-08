@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8359157325095095131}
   - component: {fileID: 8658043550507998669}
   - component: {fileID: 3363301179222700552}
-  - component: {fileID: 2549570435693859866}
+  - component: {fileID: 4075983334706895406}
   m_Layer: 0
   m_Name: Toilet
   m_TagString: Untagged
@@ -110,7 +110,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2549570435693859866
+--- !u!114 &4075983334706895406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,13 +119,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 213364169568507058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 403064aaf8659cd43acaaf17ff4051b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0969640e97964884d8667ea71b9aeed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
   onWorkSomeOne: 0
+  spriteRenderer: {fileID: 0}
+  Storage: []
 --- !u!1 &1910510718642538526
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Managers : MonoBehaviour
 {
@@ -48,20 +49,32 @@ public class Managers : MonoBehaviour
     if(s_instance == null)
     {
       GameObject go = GameObject.Find("@Managers");
+      GameObject go2 = GameObject.Find("@GameDayLight");
       if(go == null)
       {
         go = new GameObject { name = "@Managers" };
         go.AddComponent<Managers>();
       }
+      if(go2 == null)
+      {
+        go2 = new GameObject { name = "@GameDayLight" };
+        go2.AddComponent<Light2D>();
+      }
 
       DontDestroyOnLoad(go);
+      DontDestroyOnLoad(go2);
 
       s_instance = go.GetComponent<Managers>();
     }
   }
 
+  private static Light2D gameDayLight;
+  public static Light2D GameDayLight { get { return gameDayLight; } }
+
   private void Start()
   {
+    gameDayLight = GameObject.Find("@GameDayLight").GetComponent<Light2D>();
+    gameDayLight.lightType = Light2D.LightType.Global;
     StartCoroutine(Instance?._gameDay.coDay());
   }
 

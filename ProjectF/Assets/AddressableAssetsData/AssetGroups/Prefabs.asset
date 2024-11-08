@@ -23,12 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ecc505ce3f2b19b488244bba2c63b7cf
-    m_Address: Bed1
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce6305e7f7c814f4eb69159c82e295d3
     m_Address: Toilet
     m_ReadOnly: 0
@@ -37,6 +31,18 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33d8e4fdf90fd424fa6a18df9f8a043d
     m_Address: EatingTable
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae63f04e8d711da4f9b3472a2bd8efd3
+    m_Address: Chest_normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32cf3cdfa0ecc4f47a45408f157a7b7d
+    m_Address: Bed1
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

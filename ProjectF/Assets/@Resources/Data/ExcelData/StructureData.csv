@@ -1,5 +1,5 @@
-DataId,Name,DescriptionTextID,Label,type,maxHp,WorkTime,Idle,WorkStart,Work,WorkEnd,SupplyItemid
-100,Toilet,위생적이지 않은 화장실,Structure,Toilet,100,5,door1-closing,door1-opening,door1-closing,door1-opening,-1
-101,EatingTable,끼니를 해결 할 수 있는 식탁,Sturcture,EatingTable,100,5,,,,,-1
-102,Bed1,잠을 떼울 수 있는 침대,Structure,Bed,100,5,,,,,-1
-103,Chest_normal,나무로 만든 상자,Structure,Chest,100,1,cabin chest idle,cabin chest opening,cabin chest idle,cabin chest idle,0
+﻿DataId,Name,DescriptionTextID,Label,type,subType,maxHp,WorkTime,Idle,WorkStart,Work,WorkEnd,SupplyItemid
+100,Toilet,위생적이지 않은 화장실,Structure,Pipe,Toilet,100,5,door1-closing,door1-opening,door1-closing,door1-opening,-1
+101,EatingTable,끼니를 해결 할 수 있는 식탁,Structure,Furniture,EatingTable,100,5,,,,,-1
+102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,100,5,,,,,-1
+103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,100,1,cabin chest idle,cabin chest opening,cabin chest idle,cabin chest idle,0

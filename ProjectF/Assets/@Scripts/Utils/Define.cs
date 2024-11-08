@@ -68,10 +68,21 @@ public static class Define
   public enum FStructureType
   {
     None,
+    Pipe,
+    Furniture,
+    Base,
+    Electronic,
+    Station,
+  }
+
+  public enum FStructureSubType
+  {
+    None,
     Toilet,
-    Bed,
     EatingTable,
-    Chest,
+    Storage,
+    Bed,
+
   }
 
   public enum FCreatureType
@@ -219,7 +230,7 @@ public static class Define
 
   public const int STRUCTURE_TOILET_NORMAL = 100;
   public const int STRUCTURE_CHEST_NORMAL = 103;
-
+  public const int STRUCTURE_BED_NORMAL = 102;
 }
 
 public class JobPriority
@@ -260,6 +271,13 @@ public static class AnimName
   public const string WARRIOR_SWING3 = "warrior single swing3";
   public const string WARRIOR_COMBOATTACK = "warrior full combo atk";
 
+}
+
+public static class COLOR
+{
+  public static Vector4 DAY = new Vector4(1, 1, 1, 1);
+  public static Vector4 BEFORESUNSET = new Vector4(0.9f, 0.6f, 0.1f, 1);
+  public static Vector4 NIGHT = new Vector4(0.5f, 0.4f, 0.4f);
 }
 
 
