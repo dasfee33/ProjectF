@@ -19,8 +19,8 @@ public class RandomSeedGenerate
   private float[,] GenerateNoise()
   {
     seed = Random.Range(0, 1000);
-    float max = float.MaxValue;
-    float min = float.MinValue;
+    //float max = float.MaxValue;
+    //float min = float.MinValue;
 
     if (Map == null)
     {

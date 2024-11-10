@@ -10,8 +10,13 @@ public class UI_Game : UI_Scene
 {
   enum Buttons
   {
-    Image,
-    Image2
+    Fast,
+    Slow,
+
+    Base,
+    Furniture,
+    Pipe,
+    Electronic,
   }
   enum Images
   {
@@ -24,7 +29,8 @@ public class UI_Game : UI_Scene
 
   private Image PeriodMoon;
   private TextMeshProUGUI PeriodText;
-  private float rotationSpeed; 
+  private float rotationSpeed;
+  private UI_BuildPopup build;
 
   public override bool Init()
   {
@@ -36,8 +42,13 @@ public class UI_Game : UI_Scene
     BindImages(typeof(Images));
     BindTexts(typeof(Texts));
 
-    GetButton((int)Buttons.Image).gameObject.BindEvent(Test, FUIEvent.Click);
-    GetButton((int)Buttons.Image2).gameObject.BindEvent(Test2, FUIEvent.Click);
+    GetButton((int)Buttons.Fast).gameObject.BindEvent(Test, FUIEvent.Click);
+    GetButton((int)Buttons.Slow).gameObject.BindEvent(Test2, FUIEvent.Click);
+
+    GetButton((int)Buttons.Base).gameObject.BindEvent(ClickBase, FUIEvent.Click);
+    GetButton((int)Buttons.Furniture).gameObject.BindEvent(ClickFurniture, FUIEvent.Click);
+    GetButton((int)Buttons.Pipe).gameObject.BindEvent(ClickPipe, FUIEvent.Click);
+    GetButton((int)Buttons.Electronic).gameObject.BindEvent(ClickElectronic, FUIEvent.Click);
 
     PeriodMoon = GetImage((int)Images.PeriodMoon);
     PeriodText = GetText((int)Texts.PeriodText);
@@ -53,6 +64,32 @@ public class UI_Game : UI_Scene
   public void Test2(PointerEventData evt)
   {
     Time.timeScale /= 2;
+  }
+
+  private void ClickBase(PointerEventData evt)
+  {
+    if(build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    build.Refresh();
+  }
+
+  private void ClickFurniture(PointerEventData evt)
+  {
+    if (build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    build.Refresh();
+
+  }
+
+  private void ClickPipe(PointerEventData evt)
+  {
+    if (build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    build.Refresh();
+
+  }
+
+  private void ClickElectronic(PointerEventData evt)
+  {
+    if (build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    build.Refresh();
   }
 
   private void Update()

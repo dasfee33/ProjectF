@@ -15,6 +15,7 @@ public class Managers : MonoBehaviour
   private SoundManager _sound = new SoundManager();
   private FSceneManager _scene = new FSceneManager();
   private UIManager _ui = new UIManager();
+  private InputManager _input = new InputManager();
 
   public static DataManager Data { get { return Instance?._data; } }
   public static PoolManager Pool { get { return Instance?._pool; } }
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
   public static SoundManager Sound { get { return Instance?._sound; } }
   public static FSceneManager Scene { get { return Instance?._scene; } }
   public static UIManager UI { get { return Instance?._ui; } }
+  public static InputManager FInput { get { return Instance?._input; } }
 
   #endregion
 
@@ -76,6 +78,68 @@ public class Managers : MonoBehaviour
     gameDayLight = GameObject.Find("@GameDayLight").GetComponent<Light2D>();
     gameDayLight.lightType = Light2D.LightType.Global;
     StartCoroutine(Instance?._gameDay.coDay());
+
+    
   }
 
+  #region Input
+  private void Update()
+  {
+    if (Input.touchCount > 0)
+    {
+      if (Input.touchCount == 1)
+      {
+        Touch touch = Input.GetTouch(0);
+
+        switch (touch.phase)
+        {
+          case TouchPhase.Began:
+            FInput.startPos = touch.position;
+            break;
+          case TouchPhase.Moved:
+            FInput.curPos = touch.position;
+            FInput.OnDrag?.Invoke(FInput.startPos, FInput.curPos, Vector3.Distance(FInput.startPos, FInput.curPos));
+            FInput.HandleDrag();
+            break;
+          case TouchPhase.Ended:
+            FInput.OnTouch?.Invoke(touch.position);
+            FInput.HandleClick();
+            break;
+        }
+      }
+    }
+    else if (Input.touchCount == 2)
+    {
+      Touch touch1 = Input.GetTouch(0);
+      Touch touch2 = Input.GetTouch(1);
+
+      if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
+      {
+        FInput.curDistance = Vector3.Distance(touch1.position, touch2.position);
+
+        if (FInput.startDistance <= 0f)
+        {
+          FInput.startDistance = FInput.curDistance;
+        }
+        else
+        {
+          float diff = FInput.curDistance - FInput.startDistance;
+          if (diff > 0)
+          {
+            FInput.ZoonIn?.Invoke();
+            FInput.HandleZoomIn();
+          }
+          else if (diff < 0)
+          {
+            FInput.ZoomOut?.Invoke();
+            FInput.HandleZoomOut();
+          }
+        }
+      }
+
+      if (touch1.phase == TouchPhase.Ended && touch2.phase == TouchPhase.Ended)
+        FInput.startDistance = 0f;
+    }
+  }
+  #endregion
 }

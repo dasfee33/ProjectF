@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Define;
-using UnityEngine.Rendering.Universal;
 
 public class GameDayManager
 {

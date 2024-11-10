@@ -11,6 +11,12 @@ public class ObjectManager
 
   public List<BaseObject> Workables { get; } = new List<BaseObject>();
 
+  public List<Structure> Pipes { get; } = new List<Structure> ();
+  public List<Structure> Furnitures { get; } = new List<Structure> ();
+  public List<Structure> Bases { get; } = new List<Structure> ();
+  public List<Structure> Electronincs { get; } = new List<Structure> ();
+  public List<Structure> Stations { get; } = new List<Structure> ();
+
   public Transform GetRootTransform(string name)
   {
     GameObject root = GameObject.Find (name);
@@ -74,6 +80,25 @@ public class ObjectManager
       Structure structure = obj as Structure;
       Structures.Add(structure);
       Workables.Add(obj);
+
+      if(structure.StructureType == FStructureType.Pipe)
+      {
+        Pipes.Add(structure);
+      }
+      else if(structure.StructureType == FStructureType.Furniture)
+      {
+        Furnitures.Add(structure);
+      }
+      else if(structure.StructureType == FStructureType.Electronic)
+      {
+        Electronincs.Add(structure);
+      }
+      else if(structure.StructureType == FStructureType.Base)
+      {
+        Bases.Add(structure);
+      }
+
+
 
       structure.SetInfo(dataID);
     }

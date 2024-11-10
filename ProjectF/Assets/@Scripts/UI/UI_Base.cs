@@ -19,7 +19,7 @@ public class UI_Base : InitBase
     rect = this.GetComponent<RectTransform>();
     canvas = this.GetComponentInParent<Canvas>();
 
-    SetSafeArea(FSetUISafeArea.All);
+    if(canvas != null) SetSafeArea(FSetUISafeArea.All);
 
     return true;
   }
@@ -30,7 +30,7 @@ public class UI_Base : InitBase
     var width = Screen.width;
     var height = Screen.height;
 
-    float canvasScaleFactor = canvas.scaleFactor;
+    //float canvasScaleFactor = canvas.scaleFactor;
 
     rect.anchorMin = new Vector2
     (
