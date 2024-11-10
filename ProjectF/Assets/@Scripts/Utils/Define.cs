@@ -4,6 +4,13 @@ using UnityEngine;
 
 public static class Define
 {
+  public enum FResearchType
+  {
+    None,
+    Basic,
+    //TODO
+  }
+
   public enum FCurrentTime
   {
     Dawn,
@@ -222,6 +229,8 @@ public static class Define
   public const char MAP_TOOL_WALL = '0';
   public const char MAP_TOOL_NONE = '1';
   public const char MAP_TOOL_SEMI_WALL = '2';
+
+  public const int RESEARCH_START = 4000;
 
   public const int CREATURE_WARRIOR_DATAID = 1;
   public const int ENV_TREE_NORMAL1 = 100000;

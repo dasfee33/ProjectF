@@ -18,8 +18,7 @@ public class UI_Base : InitBase
 
     rect = this.GetComponent<RectTransform>();
     canvas = this.GetComponentInParent<Canvas>();
-
-    if(canvas != null) SetSafeArea(FSetUISafeArea.All);
+    if (canvas == null) canvas = this.transform.root.GetComponent<Canvas>();
 
     return true;
   }

@@ -36,6 +36,8 @@ public class UI_Game : UI_Scene
   {
     if (base.Init() == false) return false;
 
+    SetSafeArea(FSetUISafeArea.All);
+
     rotationSpeed = 360 / Managers.GameDay.day;
 
     BindButtons(typeof(Buttons));

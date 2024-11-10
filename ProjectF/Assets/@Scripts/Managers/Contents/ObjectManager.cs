@@ -17,6 +17,12 @@ public class ObjectManager
   public List<Structure> Electronincs { get; } = new List<Structure> ();
   public List<Structure> Stations { get; } = new List<Structure> ();
 
+  public List<Sprite> PossPipes { get; } = new List<Sprite> ();
+  public List<Sprite> PossFurnitures { get; } = new List<Sprite> ();
+  public List<Sprite> PossBases { get; } = new List<Sprite> ();
+  public List<Sprite> PossElectronics { get; } = new List<Sprite> ();
+  public List<Sprite> PossStations { get; } = new List<Sprite> ();
+
   public Transform GetRootTransform(string name)
   {
     GameObject root = GameObject.Find (name);

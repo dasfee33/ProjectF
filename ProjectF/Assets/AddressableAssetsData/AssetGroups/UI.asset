@@ -29,6 +29,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b96f8581b23c3e24182a04e3208fe0fd
+    m_Address: UI_ResearchObjectItem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdb465fd35ed49d438c7fa8e505c6994
+    m_Address: UI_ResearchItemArea
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec6378dba37ecf146a36dd4e94c94b93
+    m_Address: UI_BuildPopup_Item
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f86c4713ecedb745b0cc0d7a7a6c6bc
+    m_Address: UI_Research
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:

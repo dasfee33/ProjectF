@@ -1,0 +1,20 @@
+{
+  "researches": [
+    {
+      "DataId": 4000,
+      "Name": "기본 건축",
+      "Type": 1,
+      "Before": null,
+      "After": null,
+      "BuildId": [
+        100,
+        101,
+        102,
+        103
+      ],
+      "Step1": 5.0,
+      "Step2": 0.0,
+      "Step3": 0.0
+    }
+  ]
+}

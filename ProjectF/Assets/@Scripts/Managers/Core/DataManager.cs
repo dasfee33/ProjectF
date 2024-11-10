@@ -22,6 +22,8 @@ public class DataManager
   public Dictionary<int, Data.DropTableData> DropDic { get; private set; } = new Dictionary<int, Data.DropTableData>();
   public Dictionary<int, Data.StructureData> StructDic { get; private set; } = new Dictionary<int, Data.StructureData>();
 
+  public Dictionary<int, Data.ResearchData> ResearchDic { get; private set; } = new Dictionary<int, Data.ResearchData>();
+
   public void Init()
   {
     TestDic = LoadJson<Data.TestDataLoader, int, Data.TestData>("TestData").MakeDict();
@@ -40,6 +42,7 @@ public class DataManager
 
     DropDic = LoadJson<Data.DropTableDataLoader, int, Data.DropTableData>("DropTableData").MakeDict();
     StructDic = LoadJson<Data.StructureDataLoader, int, Data.StructureData>("StructureData").MakeDict();
+    ResearchDic = LoadJson<Data.ResearchDataLoader, int, Data.ResearchData>("ResearchData").MakeDict();
   }
 
   private Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

@@ -148,6 +148,7 @@ namespace Data
     public string Label;
     public string type;
     public string subType;
+    public string Sprite;
 
     public float maxHp;
     public float WorkTime;
@@ -329,5 +330,38 @@ namespace Data
     }
   }
 
+  #endregion
+
+  #region Research
+  [Serializable]
+  public class ResearchData
+  {
+    public int DataId;
+    public string Name;
+
+    public FResearchType Type;
+
+    public List<int> Before;
+    public List<int> After;
+    public List<int> BuildId;
+
+    public float Step1;
+    public float Step2;
+    public float Step3;
+  }
+
+  [Serializable]
+  public class ResearchDataLoader : ILoader<int, ResearchData>
+  {
+    public List<ResearchData> researches = new List<ResearchData>();
+
+    public Dictionary<int, ResearchData> MakeDict()
+    {
+      Dictionary<int, ResearchData> dict = new Dictionary<int, ResearchData>();
+      foreach (ResearchData research in researches)
+        dict.Add(research.DataId, research);
+      return dict;
+    }
+  }
   #endregion
 }
