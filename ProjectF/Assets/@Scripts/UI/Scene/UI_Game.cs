@@ -17,6 +17,8 @@ public class UI_Game : UI_Scene
     Furniture,
     Pipe,
     Electronic,
+
+    Priority,
   }
   enum Images
   {
@@ -52,6 +54,9 @@ public class UI_Game : UI_Scene
     GetButton((int)Buttons.Pipe).gameObject.BindEvent(ClickPipe, FUIEvent.Click);
     GetButton((int)Buttons.Electronic).gameObject.BindEvent(ClickElectronic, FUIEvent.Click);
 
+    GetButton((int)Buttons.Priority).gameObject.BindEvent(ClickPriority, FUIEvent.Click);
+
+
     PeriodMoon = GetImage((int)Images.PeriodMoon);
     PeriodText = GetText((int)Texts.PeriodText);
 
@@ -70,7 +75,12 @@ public class UI_Game : UI_Scene
 
   private void ClickBase(PointerEventData evt)
   {
-    if(build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    if (build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+    else
+    {
+      if(build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      else build.gameObject.SetActive(true);
+    }
     build.Refresh();
   }
 
@@ -92,6 +102,11 @@ public class UI_Game : UI_Scene
   {
     if (build == null) build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
     build.Refresh();
+  }
+
+  private void ClickPriority(PointerEventData evt)
+  {
+    Managers.UI.ShowPopupUI<UI_PriorityPopup>("UI_PriorityPopup");
   }
 
   private void Update()

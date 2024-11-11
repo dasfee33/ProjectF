@@ -109,6 +109,7 @@ public class UIManager
       name = typeof(T).Name;
 
     GameObject go = Managers.Resource.Instantiate(name, parent, pooling);
+    if(go == null) { return null; }
     go.transform.SetParent(parent, false);
 
     return Util.GetOrAddComponent<T>(go);
@@ -133,6 +134,7 @@ public class UIManager
       name = typeof(T).Name;
 
     GameObject go = Managers.Resource.Instantiate(name);
+    if (go == null) { Debug.LogWarning($"SceneUI {name} is not Exist!!"); return null; }
     T sceneUI = Util.GetOrAddComponent<T>(go);
     _sceneUI = sceneUI;
 
@@ -147,6 +149,7 @@ public class UIManager
       name = typeof(T).Name;
 
     GameObject go = Managers.Resource.Instantiate(name);
+    if (go == null) { Debug.LogWarning($"PopupUI {name} is not Exist!!"); return null; }
     T popup = Util.GetOrAddComponent<T>(go);
     _popupStack.Push(popup);
 

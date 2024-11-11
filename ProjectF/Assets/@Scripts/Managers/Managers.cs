@@ -82,6 +82,8 @@ public class Managers : MonoBehaviour
     
   }
 
+  private bool isInputProcessed = false;
+
   #region Input
   private void Update()
   {
@@ -94,16 +96,28 @@ public class Managers : MonoBehaviour
         switch (touch.phase)
         {
           case TouchPhase.Began:
-            FInput.startPos = touch.position;
+            if (!isInputProcessed)
+            {
+              isInputProcessed = true;
+              FInput.startPos = touch.position;
+            }
             break;
           case TouchPhase.Moved:
-            FInput.curPos = touch.position;
-            FInput.OnDrag?.Invoke(FInput.startPos, FInput.curPos, Vector3.Distance(FInput.startPos, FInput.curPos));
-            FInput.HandleDrag();
+            if(isInputProcessed)
+            {
+              FInput.curPos = touch.position;
+              FInput.OnDrag?.Invoke(FInput.startPos, FInput.curPos, Vector3.Distance(FInput.startPos, FInput.curPos));
+              FInput.HandleDrag();
+            }
             break;
           case TouchPhase.Ended:
-            FInput.OnTouch?.Invoke(touch.position);
-            FInput.HandleClick();
+            if(isInputProcessed)
+            {
+              FInput.OnTouch?.Invoke(touch.position);
+              FInput.HandleClick();
+              isInputProcessed = false;
+            }
+            
             break;
         }
       }
@@ -138,7 +152,10 @@ public class Managers : MonoBehaviour
       }
 
       if (touch1.phase == TouchPhase.Ended && touch2.phase == TouchPhase.Ended)
+      {
         FInput.startDistance = 0f;
+      }
+       
     }
   }
   #endregion

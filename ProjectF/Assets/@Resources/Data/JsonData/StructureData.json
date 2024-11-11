@@ -63,6 +63,22 @@
       "Work": "cabin chest idle",
       "WorkEnd": "cabin chest idle",
       "supplyItemid": 0
+    },
+    {
+      "DataId": 104,
+      "Name": "Station1",
+      "DescriptionTextID": "초급 연구 스테이션",
+      "Label": "Structure",
+      "type": "Station",
+      "subType": "Station",
+      "Sprite": "Station1Sprite",
+      "maxHp": 100.0,
+      "WorkTime": 30.0,
+      "Idle": "shrine buff available",
+      "WorkStart": "shrine buff available",
+      "Work": "shrine getting buff",
+      "WorkEnd": "surine buff available",
+      "supplyItemid": -1
     }
   ]
 }

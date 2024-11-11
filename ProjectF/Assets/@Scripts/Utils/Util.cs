@@ -11,8 +11,13 @@ public static class Util
   {
     T component = go.GetComponent<T>();
     if (component == null)
-      component = go.AddComponent<T>();
-
+    {
+      component = go.GetComponentInChildren<T>();
+      if (component == null)
+      {
+        component = go.AddComponent<T>();
+      }
+    }
     return component;
   }
 

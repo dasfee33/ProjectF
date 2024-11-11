@@ -89,7 +89,7 @@ public static class Define
     EatingTable,
     Storage,
     Bed,
-
+    Station,
   }
 
   public enum FCreatureType
