@@ -17,11 +17,11 @@ public class ObjectManager
   public List<Structure> Electronincs { get; } = new List<Structure> ();
   public List<Structure> Stations { get; } = new List<Structure> ();
 
-  public List<Sprite> PossPipes { get; } = new List<Sprite> ();
-  public List<Sprite> PossFurnitures { get; } = new List<Sprite> ();
-  public List<Sprite> PossBases { get; } = new List<Sprite> ();
-  public List<Sprite> PossElectronics { get; } = new List<Sprite> ();
-  public List<Sprite> PossStations { get; } = new List<Sprite> ();
+  public List<int> PossPipes { get; } = new List<int>();
+  public List<int> PossFurnitures { get; } = new List<int>();
+  public List<int> PossBases { get; } = new List<int>();
+  public List<int> PossElectronics { get; } = new List<int>();
+  public List<int> PossStations { get; } = new List<int>();
 
   public Transform GetRootTransform(string name)
   {

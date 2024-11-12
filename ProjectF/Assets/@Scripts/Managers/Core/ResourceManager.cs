@@ -26,6 +26,8 @@ public class ResourceManager
     if (_resources.TryGetValue(key, out Object resource))
       return resource as T;
 
+    Debug.LogError($"Failed to load Prefab : {key}");
+
     return null;
   }
 

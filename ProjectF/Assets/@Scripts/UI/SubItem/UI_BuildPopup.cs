@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Define;
+using static Util;
 
 public class UI_BuildPopup : UI_Popup
 {
+  enum Objects
+  {
+    Content,
+  }
+
   enum Buttons
   {
     Exit,
@@ -19,29 +25,108 @@ public class UI_BuildPopup : UI_Popup
   {
     if (base.Init() == false) return false;
 
+    BindObjects(typeof(Objects));
     BindButtons(typeof(Buttons));
 
     GetButton((int)Buttons.Exit).gameObject.BindEvent(Exit);
 
-    Managers.FInput.OnTouch -= SelectAnother;
-    Managers.FInput.OnTouch += SelectAnother;
+    //Managers.FInput.OnTouch -= SelectAnother;
+    //Managers.FInput.OnTouch += SelectAnother;
+
+    //FIXME TEMP
+    if (Managers.Object.PossStations.Count <= 0)
+    {
+      Managers.Object.PossStations.Add(STRUCTURE_STATION_NORMAL);
+      Managers.Object.PossFurnitures.Add(STRUCTURE_BED_NORMAL);
+      Managers.Object.PossFurnitures.Add(STRUCTURE_CHEST_NORMAL);
+      Managers.Object.PossPipes.Add(STRUCTURE_TOILET_NORMAL);
+    }
+    
+     
 
     return true;
   }
 
-  public void Refresh()
+  public void Refresh(string name)
   {
+    if (string.IsNullOrEmpty(name)) return;
 
-  }
-
-  private void SelectAnother(Vector3 pos)
-  {
-    if (!this.gameObject.activeSelf && EventSystem.current.IsPointerOverGameObject() == false)
+    switch(name)
     {
-      Debug.Log($"{this.name} : another point clicked");
-      Exit();
+      case "Base":
+        foreach (var bases in Managers.Object.PossBases)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(bases);
+        }
+        break;
+      case "Furniture":
+        foreach (var furni in Managers.Object.PossFurnitures)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(furni);
+        }
+        break;
+      case "Pipe":
+        foreach (var pipe in Managers.Object.PossPipes)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(pipe);
+        }
+        break;
+      case "Electronic":
+        foreach (var electro in Managers.Object.PossElectronics)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(electro);
+        }
+        break;
+      case "Station":
+        foreach(var station in Managers.Object.PossStations)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(station);
+        }
+        break;
     }
   }
+
+  private void OnDisable()
+  {
+    ClearList();
+    
+  }
+
+  public void ClearList()
+  {
+    var obj = GetObject((int)Objects.Content);
+    var len = obj.transform.childCount;
+
+    for (int i = 0; i < len; i++)
+    {
+      Managers.Resource.Destroy(obj.transform.GetChild(i).gameObject);
+    }
+  }
+
+  //private void SelectAnother(Vector3 pos)
+  //{
+  //  //FIXME
+  //  if (!this.gameObject.activeSelf && EventSystem.current.IsPointerOverGameObject() == false)
+  //  {
+  //    Debug.Log($"{this.name} : another point clicked");
+  //    Exit();
+  //  }
+  //}
 
   private void Exit(PointerEventData evt = null)
   {

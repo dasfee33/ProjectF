@@ -10,7 +10,7 @@ public class Structure : BaseObject
 {
   private Vector3 dropPos;
   public SpriteRenderer spriteRenderer;
-  protected StructureData data;
+  public StructureData data;
 
   public List<BaseObject> Storage = new List<BaseObject>();
 

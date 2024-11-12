@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6203460866859716202}
   - component: {fileID: 6203460866859716203}
   - component: {fileID: 6203460866859716200}
+  - component: {fileID: 1032816863306424836}
   m_Layer: 0
-  m_Name: Shrine
+  m_Name: Station1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6203460866859716201}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6203460866859716203
 SpriteRenderer:
@@ -87,7 +88,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &6203460866859716200
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104,4 +105,38 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1032816863306424836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203460866859716201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e187526263ad5441925d7a57980bd70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItem: {fileID: 0}
+  Worker: {fileID: 0}
+  onWork: 0
+  onWorkSomeOne: 0
+  spriteRenderer: {fileID: 0}
+  data:
+    DataId: 0
+    Name: 
+    DescriptionTextID: 
+    Label: 
+    type: 
+    subType: 
+    Sprite: 
+    maxHp: 0
+    WorkTime: 0
+    Idle: 
+    WorkStart: 
+    Work: 
+    WorkEnd: 
+    supplyItemid: 0
+  Storage: []
