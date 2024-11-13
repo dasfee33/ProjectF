@@ -17,11 +17,11 @@
       "buildItemId": [
         400000
       ],
-      "buildItemCount": [
-        10
+      "buildItemMass": [
+        10.0
       ],
       "supplyItemid": null,
-      "supplyItemCount": null
+      "supplyItemMass": null
     },
     {
       "DataId": 101,
@@ -40,11 +40,11 @@
       "buildItemId": [
         400000
       ],
-      "buildItemCount": [
-        10
+      "buildItemMass": [
+        10.0
       ],
       "supplyItemid": null,
-      "supplyItemCount": null
+      "supplyItemMass": null
     },
     {
       "DataId": 102,
@@ -63,11 +63,11 @@
       "buildItemId": [
         400000
       ],
-      "buildItemCount": [
-        10
+      "buildItemMass": [
+        10.0
       ],
       "supplyItemid": null,
-      "supplyItemCount": null
+      "supplyItemMass": null
     },
     {
       "DataId": 103,
@@ -86,11 +86,11 @@
       "buildItemId": [
         400000
       ],
-      "buildItemCount": [
-        10
+      "buildItemMass": [
+        10.0
       ],
       "supplyItemid": null,
-      "supplyItemCount": null
+      "supplyItemMass": null
     },
     {
       "DataId": 104,
@@ -109,11 +109,11 @@
       "buildItemId": [
         400000
       ],
-      "buildItemCount": [
-        10
+      "buildItemMass": [
+        10.0
       ],
       "supplyItemid": null,
-      "supplyItemCount": null
+      "supplyItemMass": null
     }
   ]
 }

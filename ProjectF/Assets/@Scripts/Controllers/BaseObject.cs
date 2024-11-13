@@ -134,6 +134,10 @@ public class BaseObject : InitBase
     if (LerpCellPosCompleted)
       return;
 
+    Debug.Log($"현재 {name} 의 일은 {job} 입니다.");
+    Debug.Log($"현재 {name} 의 용무는 {workableJob} 입니다.");
+
+
     Vector3 destPos = Managers.Map.Cell2World(CellPos);
     Vector3 dir = destPos - transform.position;
 
