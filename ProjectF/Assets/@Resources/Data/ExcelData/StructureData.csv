@@ -1,6 +1,6 @@
-﻿DataId,Name,DescriptionTextID,Label,type,subType,sprite,maxHp,WorkTime,Idle,WorkStart,Work,WorkEnd,SupplyItemid
-100,Toilet,위생적이지 않은 화장실,Structure,Pipe,Toilet,toiletSprite,100,5,door1-closing,door1-opening,door1-closing,door1-opening,-1
-101,EatingTable,끼니를 해결 할 수 있는 식탁,Structure,Furniture,EatingTable,eatingTableSprite,100,5,,,,,-1
-102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,Bed1Sprite,100,5,,,,,-1
-103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,chest_normalSprite,100,1,cabin chest idle,cabin chest opening,cabin chest idle,cabin chest idle,0
-104,Station1,초급 연구 스테이션,Structure,Station,Station,Station1Sprite,100,30,shrine buff available,shrine buff available,shrine getting buff,surine buff available,-1
+DataId,Name,DescriptionTextID,Label,type,subType,Sprite,maxHp,WorkTime,Idle,WorkStart,Work,WorkEnd,buildItemId,buildItemCount,supplyItemid,supplyItemCount
+100,Toilet,위생적이지 않은 화장실,Structure,Pipe,Toilet,toiletSprite,100,5,door1-closing,door1-opening,door1-closing,door1-opening,400000,10,,
+101,EatingTable,끼니를 해결 할 수 있는 식탁,Structure,Furniture,EatingTable,eatingTableSprite,100,5,,,,,400000,10,,
+102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,Bed1Sprite,100,5,,,,,400000,10,,
+103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,chest_normalSprite,100,1,cabin chest idle,cabin chest opening,cabin chest idle,cabin chest idle,400000,10,,
+104,Station1,초급 연구 스테이션,Structure,Station,Station,Station1Sprite,100,30,shrine buff availabl,shrine buff available,shrine getting buf,surine buff available,400000,10,,

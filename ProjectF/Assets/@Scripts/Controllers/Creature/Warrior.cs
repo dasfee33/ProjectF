@@ -78,7 +78,6 @@ public class Warrior : Creature
 
   protected override void UpdateIdle()
   {
-    Debug.Log("Idle");
 
     // Patrol
     {
@@ -115,7 +114,6 @@ public class Warrior : Creature
 
   protected override void UpdateMove()
   {
-    Debug.Log("Move");
 
     if (Target.IsValid() == false)
     {

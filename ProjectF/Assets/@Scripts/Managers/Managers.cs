@@ -67,6 +67,8 @@ public class Managers : MonoBehaviour
       DontDestroyOnLoad(go2);
 
       s_instance = go.GetComponent<Managers>();
+
+      s_instance._input.Init();
     }
   }
 
@@ -82,81 +84,13 @@ public class Managers : MonoBehaviour
     
   }
 
-  private bool isInputProcessed = false;
-
-  #region Input
   private void Update()
   {
-    if (Input.touchCount > 0)
+    if(FInput.inputSystem.Touch.TouchPress.IsPressed())
     {
-      if (Input.touchCount == 1)
-      {
-        Touch touch = Input.GetTouch(0);
-
-        switch (touch.phase)
-        {
-          case TouchPhase.Began:
-            if (!isInputProcessed)
-            {
-              isInputProcessed = true;
-              FInput.startPos = touch.position;
-            }
-            break;
-          case TouchPhase.Moved:
-            if(isInputProcessed)
-            {
-              FInput.curPos = touch.position;
-              FInput.OnDrag?.Invoke(FInput.startPos, FInput.curPos, Vector3.Distance(FInput.startPos, FInput.curPos));
-              FInput.HandleDrag();
-            }
-            break;
-          case TouchPhase.Ended:
-            if(isInputProcessed)
-            {
-              FInput.OnTouch?.Invoke(touch.position);
-              FInput.HandleClick();
-              isInputProcessed = false;
-            }
-            
-            break;
-        }
-      }
-    }
-    else if (Input.touchCount == 2)
-    {
-      Touch touch1 = Input.GetTouch(0);
-      Touch touch2 = Input.GetTouch(1);
-
-      if (touch1.phase == TouchPhase.Moved && touch2.phase == TouchPhase.Moved)
-      {
-        FInput.curDistance = Vector3.Distance(touch1.position, touch2.position);
-
-        if (FInput.startDistance <= 0f)
-        {
-          FInput.startDistance = FInput.curDistance;
-        }
-        else
-        {
-          float diff = FInput.curDistance - FInput.startDistance;
-          if (diff > 0)
-          {
-            FInput.ZoonIn?.Invoke();
-            FInput.HandleZoomIn();
-          }
-          else if (diff < 0)
-          {
-            FInput.ZoomOut?.Invoke();
-            FInput.HandleZoomOut();
-          }
-        }
-      }
-
-      if (touch1.phase == TouchPhase.Ended && touch2.phase == TouchPhase.Ended)
-      {
-        FInput.startDistance = 0f;
-      }
-       
+      FInput.OnDragging(); 
     }
   }
-  #endregion
+
+  
 }

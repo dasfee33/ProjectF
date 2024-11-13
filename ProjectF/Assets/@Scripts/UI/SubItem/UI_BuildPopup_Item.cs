@@ -47,6 +47,12 @@ public class UI_BuildPopup_Item : UI_Base
 
   private void ClickedItem(PointerEventData evt)
   {
-    Managers.Object.Spawn<Structure>(Vector3.zero, objId, data.Name);
+    var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
+    if (toolBase == null) return;
+    toolBase.objData = data;
+    toolBase.isBuild = true;
+
   }
+
+  
 }

@@ -21,6 +21,8 @@ public class UI_BuildPopup : UI_Popup
     Vert,
   }
 
+  public string current;
+
   public override bool Init()
   {
     if (base.Init() == false) return false;
@@ -41,8 +43,6 @@ public class UI_BuildPopup : UI_Popup
       Managers.Object.PossFurnitures.Add(STRUCTURE_CHEST_NORMAL);
       Managers.Object.PossPipes.Add(STRUCTURE_TOILET_NORMAL);
     }
-    
-     
 
     return true;
   }
@@ -50,6 +50,12 @@ public class UI_BuildPopup : UI_Popup
   public void Refresh(string name)
   {
     if (string.IsNullOrEmpty(name)) return;
+    if (!name.Equals(current) || string.IsNullOrEmpty(current))
+    {
+      current = name;
+      ClearList();
+    }
+    else return;
 
     switch(name)
     {
@@ -99,12 +105,6 @@ public class UI_BuildPopup : UI_Popup
         }
         break;
     }
-  }
-
-  private void OnDisable()
-  {
-    ClearList();
-    
   }
 
   public void ClearList()

@@ -158,7 +158,11 @@ namespace Data
     public string Work;
     public string WorkEnd;
 
-    public int supplyItemid;
+    public List<int> buildItemId;
+    public List<int> buildItemCount;
+
+    public List<int> supplyItemid;
+    public List<int> supplyItemCount;
   }
 
   [Serializable]

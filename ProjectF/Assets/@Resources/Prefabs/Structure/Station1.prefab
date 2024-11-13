@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6203460866859716202}
   - component: {fileID: 6203460866859716203}
   - component: {fileID: 6203460866859716200}
-  - component: {fileID: 1032816863306424836}
+  - component: {fileID: 158691319570067411}
   m_Layer: 0
   m_Name: Station1
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1032816863306424836
+--- !u!114 &158691319570067411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,5 +138,8 @@ MonoBehaviour:
     WorkStart: 
     Work: 
     WorkEnd: 
-    supplyItemid: 0
+    buildItemId: 
+    buildItemCount: 
+    supplyItemid: 
+    supplyItemCount: 
   Storage: []

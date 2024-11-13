@@ -7,7 +7,8 @@ public class ObjectManager
   public List<Creature> Creatures { get; } = new List<Creature> ();
   public List<Env> Envs { get; } = new List<Env> ();
   public List<Structure> Structures { get; } = new List<Structure> ();
-  public List<ItemHolder> ItemHolders { get; } = new List<ItemHolder> (); 
+  public List<ItemHolder> ItemHolders { get; } = new List<ItemHolder> ();
+  public List<BuildObject> BuildObjects { get; } = new List<BuildObject> ();
 
   public List<BaseObject> Workables { get; } = new List<BaseObject>();
 
@@ -37,6 +38,7 @@ public class ObjectManager
   public Transform EnvRoot { get { return GetRootTransform("@Envs"); } }
   public Transform ItemHolderRoot { get { return GetRootTransform("@ItemHolders"); } }
   public Transform StructureRoot { get { return GetRootTransform("@Structures"); } }
+  public Transform BuildObjectRoot { get { return GetRootTransform("@BuildObjects"); } }
 
   public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true) where T : BaseObject
   {
@@ -44,16 +46,16 @@ public class ObjectManager
 
     GameObject go = Managers.Resource.Instantiate(prefabName);
     go.name = prefabName;
-    go.transform.position = position;
+    go.transform.position = position + new Vector3(0.16f, 0.16f);
 
     BaseObject obj = go.GetComponent<BaseObject>();
     var cellPos = Managers.Map.World2Cell(position);
 
-    if(obj.ObjectType == FObjectType.Creature)
+    if (obj.ObjectType == FObjectType.Creature)
     {
       Creature creature = go.GetComponent<Creature>();
 
-      switch(creature.CreatureType)
+      switch (creature.CreatureType)
       {
         case FCreatureType.Warrior:
           obj.transform.parent = CreatureRoot;
@@ -64,7 +66,7 @@ public class ObjectManager
 
       creature.SetInfo(dataID);
     }
-    else if(obj.ObjectType == FObjectType.Env)
+    else if (obj.ObjectType == FObjectType.Env)
     {
       obj.transform.parent = EnvRoot;
       Env env = obj as Env;
@@ -73,7 +75,7 @@ public class ObjectManager
 
       env.SetInfo(dataID);
     }
-    else if(obj.ObjectType == FObjectType.ItemHolder)
+    else if (obj.ObjectType == FObjectType.ItemHolder)
     {
       obj.transform.parent = ItemHolderRoot;
       ItemHolder itemholder = obj as ItemHolder;
@@ -87,19 +89,19 @@ public class ObjectManager
       Structures.Add(structure);
       Workables.Add(obj);
 
-      if(structure.StructureType == FStructureType.Pipe)
+      if (structure.StructureType == FStructureType.Pipe)
       {
         Pipes.Add(structure);
       }
-      else if(structure.StructureType == FStructureType.Furniture)
+      else if (structure.StructureType == FStructureType.Furniture)
       {
         Furnitures.Add(structure);
       }
-      else if(structure.StructureType == FStructureType.Electronic)
+      else if (structure.StructureType == FStructureType.Electronic)
       {
         Electronincs.Add(structure);
       }
-      else if(structure.StructureType == FStructureType.Base)
+      else if (structure.StructureType == FStructureType.Base)
       {
         Bases.Add(structure);
       }
@@ -107,6 +109,14 @@ public class ObjectManager
 
 
       structure.SetInfo(dataID);
+    }
+    else if (obj.ObjectType == FObjectType.BuildObject)
+    {
+      obj.transform.parent = BuildObjectRoot;
+      BuildObject build = obj as BuildObject;
+      BuildObjects.Add(build);
+
+      build.SetInfo(dataID, Managers.Data.StructDic[dataID].buildItemId, Managers.Data.StructDic[dataID].buildItemCount);
     }
     //TODO
 

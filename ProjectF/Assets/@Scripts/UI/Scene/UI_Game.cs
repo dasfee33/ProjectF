@@ -84,9 +84,9 @@ public class UI_Game : UI_Scene
     }
     else
     {
-      if (build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
       else build.gameObject.SetActive(true);
-      build = null;
+      build.Refresh(evt.pointerClick.name);
     }
   }
 
@@ -99,9 +99,9 @@ public class UI_Game : UI_Scene
     }
     else
     {
-      if (build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
       else build.gameObject.SetActive(true);
-      build = null;
+      build.Refresh(evt.pointerClick.name);
     }
 
   }
@@ -115,9 +115,9 @@ public class UI_Game : UI_Scene
     }
     else
     {
-      if (build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
       else build.gameObject.SetActive(true);
-      build = null;
+      build.Refresh(evt.pointerClick.name);
     }
 
   }
@@ -131,9 +131,9 @@ public class UI_Game : UI_Scene
     }
     else
     {
-      if (build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
       else build.gameObject.SetActive(true);
-      build = null;
+      build.Refresh(evt.pointerClick.name);
     }
   }
 
@@ -146,9 +146,9 @@ public class UI_Game : UI_Scene
     }
     else
     {
-      if (build.isActiveAndEnabled) build.gameObject.SetActive(false);
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
       else build.gameObject.SetActive(true);
-      build = null;
+      build.Refresh(evt.pointerClick.name);
     }
   }
 

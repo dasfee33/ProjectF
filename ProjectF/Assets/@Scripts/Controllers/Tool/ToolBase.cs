@@ -10,6 +10,11 @@ public class ToolBase : InitBase
   public GameObject[] ToolList;
   private Grid grid;
 
+  public bool isBuild = false;
+  public bool isPlow = false;
+
+  public Data.StructureData objData;
+
   public override bool Init()
   {
     if (base.Init() == false) return false;
@@ -39,14 +44,17 @@ public class ToolBase : InitBase
 
     }
 
-    if (Input.GetKeyDown(KeyCode.G))
+    if (isBuild)
     {
       resetTool();
       GameObject go = ToolLayerList[(int)FTool.Build];
       go.SetActive(true);
       BuildTool build = go.GetComponent<BuildTool>();
-      build.grid = this.grid;
-      build.tilemap = ToolList[(int)FTool.Build].GetComponent<Tilemap>();
+      build.parent = this;
+      //build.grid = this.grid;
+      //build.tilemap = ToolList[(int)FTool.Build].GetComponent<Tilemap>();
+      build.SetInfo();
+      isBuild = false;
     }
   }
 }

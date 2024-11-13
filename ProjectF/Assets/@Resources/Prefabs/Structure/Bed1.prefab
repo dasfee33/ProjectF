@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6777159018862623980}
   - component: {fileID: 393949428662309136}
-  - component: {fileID: 4570192141853676197}
+  - component: {fileID: -1188096589708051893}
   m_Layer: 0
   m_Name: Bed1
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4570192141853676197
+--- !u!114 &-1188096589708051893
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,4 +102,22 @@ MonoBehaviour:
   onWork: 0
   onWorkSomeOne: 0
   spriteRenderer: {fileID: 0}
+  data:
+    DataId: 0
+    Name: 
+    DescriptionTextID: 
+    Label: 
+    type: 
+    subType: 
+    Sprite: 
+    maxHp: 0
+    WorkTime: 0
+    Idle: 
+    WorkStart: 
+    Work: 
+    WorkEnd: 
+    buildItemId: 
+    buildItemCount: 
+    supplyItemid: 
+    supplyItemCount: 
   Storage: []

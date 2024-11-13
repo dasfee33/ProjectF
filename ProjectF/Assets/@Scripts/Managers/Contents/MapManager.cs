@@ -161,7 +161,6 @@ public class MapManager
 
   public BaseObject GetObject(Vector3Int cellPos)
   {
-
     _cells.TryGetValue(cellPos, out BaseObject value);
     return value;
   }

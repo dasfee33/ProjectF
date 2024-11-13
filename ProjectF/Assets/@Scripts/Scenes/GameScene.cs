@@ -20,8 +20,8 @@ public class GameScene : BaseScene
     //Warrior warrior4 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
     //Warrior warrior5 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
 
-    Structure toilet = Managers.Object.Spawn<Structure>(Vector3.zero, STRUCTURE_TOILET_NORMAL, "Toilet");
-    Structure toilet2 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.right, STRUCTURE_TOILET_NORMAL, "Toilet");
+    Structure toilet = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.right * 3, STRUCTURE_TOILET_NORMAL, "Toilet");
+    Structure toilet2 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.right * 4, STRUCTURE_TOILET_NORMAL, "Toilet");
     Structure bed1 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left, STRUCTURE_BED_NORMAL, "Bed1");
     Structure bed2 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left + new Vector3(-1, 0), STRUCTURE_BED_NORMAL, "Bed1");
     Structure bed3 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left + new Vector3(-2, 0), STRUCTURE_BED_NORMAL, "Bed1");

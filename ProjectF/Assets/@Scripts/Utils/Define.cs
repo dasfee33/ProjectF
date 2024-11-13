@@ -63,6 +63,7 @@ public static class Define
     Env,
     Structure,
     ItemHolder,
+    BuildObject,
   }
 
   public enum FEnvType
@@ -241,6 +242,8 @@ public static class Define
   public const int STRUCTURE_CHEST_NORMAL = 103;
   public const int STRUCTURE_BED_NORMAL = 102;
   public const int STRUCTURE_STATION_NORMAL = 104;
+
+  public const string STRUCTURE_BUILD = "_build";
 }
 
 public class JobPriority

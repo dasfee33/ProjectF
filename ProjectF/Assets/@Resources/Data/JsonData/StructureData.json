@@ -14,7 +14,14 @@
       "WorkStart": "door1-opening",
       "Work": "door1-closing",
       "WorkEnd": "door1-opening",
-      "supplyItemid": -1
+      "buildItemId": [
+        400000
+      ],
+      "buildItemCount": [
+        10
+      ],
+      "supplyItemid": null,
+      "supplyItemCount": null
     },
     {
       "DataId": 101,
@@ -30,7 +37,14 @@
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
-      "supplyItemid": -1
+      "buildItemId": [
+        400000
+      ],
+      "buildItemCount": [
+        10
+      ],
+      "supplyItemid": null,
+      "supplyItemCount": null
     },
     {
       "DataId": 102,
@@ -46,7 +60,14 @@
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
-      "supplyItemid": -1
+      "buildItemId": [
+        400000
+      ],
+      "buildItemCount": [
+        10
+      ],
+      "supplyItemid": null,
+      "supplyItemCount": null
     },
     {
       "DataId": 103,
@@ -62,7 +83,14 @@
       "WorkStart": "cabin chest opening",
       "Work": "cabin chest idle",
       "WorkEnd": "cabin chest idle",
-      "supplyItemid": 0
+      "buildItemId": [
+        400000
+      ],
+      "buildItemCount": [
+        10
+      ],
+      "supplyItemid": null,
+      "supplyItemCount": null
     },
     {
       "DataId": 104,
@@ -74,11 +102,18 @@
       "Sprite": "Station1Sprite",
       "maxHp": 100.0,
       "WorkTime": 30.0,
-      "Idle": "shrine buff available",
+      "Idle": "shrine buff availabl",
       "WorkStart": "shrine buff available",
-      "Work": "shrine getting buff",
+      "Work": "shrine getting buf",
       "WorkEnd": "surine buff available",
-      "supplyItemid": -1
+      "buildItemId": [
+        400000
+      ],
+      "buildItemCount": [
+        10
+      ],
+      "supplyItemid": null,
+      "supplyItemCount": null
     }
   ]
 }
