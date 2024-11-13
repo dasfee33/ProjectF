@@ -9,7 +9,9 @@ public class Creature : BaseObject
 {
   public BaseObject Target { get; set; }
   public List<BaseObject> SupplyTargets { get; set; } = new List<BaseObject>();
-  public List<BaseObject> SupplyStorage { get; set; } = new List<BaseObject>(); 
+  private Dictionary<int, float> ItemHaveList = new Dictionary<int, float>();
+
+  //public List<BaseObject> SupplyStorage { get; set; } = new List<BaseObject>(); 
   public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
@@ -113,6 +115,47 @@ public class Creature : BaseObject
 
     return true;
   }
+
+  #region Supply
+  public void AddHaveList(int dataID, float mass)
+  {
+    if (CurrentSupply + mass > SupplyCapacity) return;
+
+    if (ItemHaveList.ContainsKey(dataID))
+    {
+      ItemHaveList[dataID] += mass;
+    }
+    else ItemHaveList.Add(dataID, mass);
+  }
+
+  public bool SearchHaveList(int dataID)
+  {
+    if (ItemHaveList.ContainsKey(dataID)
+      && ItemHaveList[dataID] > 0)
+    return true;
+    return false;
+  }
+
+  public float SupplyFromHaveList(int dataID, float mass)
+  {
+    float result = 0;
+
+    if(ItemHaveList.ContainsKey(dataID))
+    {
+      if(ItemHaveList[dataID] - mass < 0)
+      {
+        result = ItemHaveList[dataID];
+        ItemHaveList.Remove(dataID);
+      }
+      else
+      {
+        ItemHaveList[dataID] -= mass;
+        result = mass;
+      }
+    }
+    return result;
+  }
+  #endregion
 
   public void SetOrAddJobPriority(Enum job, float p, bool set = false)
   {
@@ -465,6 +508,11 @@ public class Creature : BaseObject
         chaseTarget.OnDamaged(this);
         return;
       }
+      else if(job is FJob.Supply)
+      {
+        
+      }
+      
 
       // 공격 범위 이내로 들어왔다면 공격.
       CreatureState = FCreatureState.Skill;

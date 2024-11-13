@@ -12,6 +12,7 @@ public class MapManager
   public string MapName { get; private set; }
   public Grid CellGrid { get; private set; }
   public Tilemap tilemap { get; private set; }
+  public Vector3 LerpObjectPos { get; private set; }
 
   Dictionary<Vector3Int, BaseObject> _cells = new Dictionary<Vector3Int, BaseObject>();
 
@@ -40,6 +41,7 @@ public class MapManager
     Map = map;
     MapName = mapName;
     CellGrid = map.GetComponent<Grid>();
+    LerpObjectPos = new Vector3(CellGrid.cellSize.x / 2, CellGrid.cellSize.y / 2, 0);
 
     _collision = ParseCollisionData(map, mapName);
     _collision_obj = ParseCollisionData(map, mapName, "Tilemap_Collision_Obj");
@@ -167,6 +169,7 @@ public class MapManager
 
   public BaseObject GetObject(Vector3 worldPos)
   {
+    //worldPos -= LerpObjectPos;
     Vector3Int cellPos = World2Cell(worldPos);
     return GetObject(cellPos);
   }

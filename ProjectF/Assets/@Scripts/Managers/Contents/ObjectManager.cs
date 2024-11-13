@@ -46,7 +46,7 @@ public class ObjectManager
 
     GameObject go = Managers.Resource.Instantiate(prefabName);
     go.name = prefabName;
-    go.transform.position = position + new Vector3(0.16f, 0.16f);
+    go.transform.position = position + Managers.Map.LerpObjectPos;
 
     BaseObject obj = go.GetComponent<BaseObject>();
     var cellPos = Managers.Map.World2Cell(position);
@@ -115,8 +115,9 @@ public class ObjectManager
       obj.transform.parent = BuildObjectRoot;
       BuildObject build = obj as BuildObject;
       BuildObjects.Add(build);
+      Workables.Add(obj);
 
-      build.SetInfo(dataID, Managers.Data.StructDic[dataID].buildItemId, Managers.Data.StructDic[dataID].buildItemCount);
+      build.SetInfo(dataID, Managers.Data.StructDic[dataID].buildItemId, Managers.Data.StructDic[dataID].buildItemMass);
     }
     //TODO
 

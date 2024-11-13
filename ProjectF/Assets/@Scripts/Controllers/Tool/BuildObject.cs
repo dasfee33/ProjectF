@@ -6,9 +6,13 @@ using static Define;
 public class BuildObject : BaseObject
 {
   private List<int> buildItemList = new List<int>();
-  private List<int> buildItemCount = new List<int>();
+  private List<float> buildItemMass = new List<float>();
 
-  private Dictionary<int, int> buildList = new Dictionary<int, int>();
+  /// <summary>
+  /// key : dataID
+  /// value : mass
+  /// </summary>
+  public Dictionary<int, float> buildNeedList = new Dictionary<int, float>();
 
   private Grid grid;
   private Vector3 worldPos;
@@ -38,22 +42,54 @@ public class BuildObject : BaseObject
     return true;
   }
 
-  public void SetInfo(int id, List<int> a, List<int> b)
+  public void SetInfo(int id, List<int> a, List<float> b)
   {
     buildItemList = a;
-    buildItemCount = b;
+    buildItemMass = b;
 
-    if (buildItemList.Count != buildItemCount.Count) return;
+    if (buildItemList.Count != buildItemMass.Count) return;
 
     for(int i = 0; i < buildItemList.Count; i++)
     {
-      buildList.Add(buildItemList[i], buildItemCount[i]);
+      buildNeedList.Add(buildItemList[i], buildItemMass[i]);
     }
+
+    workableJob = FJob.Supply;
   }
 
+  public override void OnDamaged(BaseObject attacker)
+  {
+    var attackOwner = attacker as Creature;
+
+    foreach(var item in buildNeedList)
+    {
+      if (attackOwner.SearchHaveList(item.Key))
+      {
+        float result = attackOwner.SupplyFromHaveList(item.Key, item.Value);
+        buildNeedList[item.Key] -= result;
+      }
+    }
+
+    CheckBuildReady();
+  }
+
+  private bool CheckBuildReady()
+  {
+    foreach(var value in buildNeedList.Values)
+    {
+      if (value != 0) return false;
+    }
+
+    workableJob = FJob.Make;
+    return true;
+  }
+
+
+  #region Input
   private void StartTouch(Vector2 pos, float time)
   {
     worldPos = Camera.main.ScreenToWorldPoint(pos);
+    worldPos -= Managers.Map.LerpObjectPos;
     worldPos.z = 0f;
     if (Managers.Map.GetObject(worldPos) == this)
     {
@@ -66,11 +102,12 @@ public class BuildObject : BaseObject
   {
     if (!isMe) return;
     worldPos = Camera.main.ScreenToWorldPoint(pos);
+    worldPos -= Managers.Map.LerpObjectPos;
     worldPos.z = 0f;
 
     //Lerp Position
     cellPos = Managers.Map.World2Cell(worldPos);
-    cellWorldPos = Managers.Map.Cell2World(cellPos) + new Vector3(0.16f, 0.16f);
+    cellWorldPos = Managers.Map.Cell2World(cellPos) + Managers.Map.LerpObjectPos;
     this.transform.position = cellWorldPos;
   }
 
@@ -83,4 +120,5 @@ public class BuildObject : BaseObject
     Managers.Map.AddObject(this, cellPos);
     isMe = !isMe;
   }
+  #endregion
 }

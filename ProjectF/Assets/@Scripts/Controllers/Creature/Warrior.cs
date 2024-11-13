@@ -168,6 +168,36 @@ public class Warrior : Creature
             }
           }
         }
+        else if(job is FJob.Supply)
+        {
+          var targetScr = Target as BuildObject;
+          if(targetScr != null)
+          {
+            foreach(var item in targetScr.buildNeedList)
+            {
+              if(SearchHaveList(item.Key))
+              {
+                ChaseOrAttackTarget(100, MinActionDistance);
+              }
+              else
+              {
+                onWork = false;
+                Target = null;
+
+                CreatureMoveState = FCreatureMoveState.None;
+                CreatureState = FCreatureState.Idle;
+              }
+            }
+          }
+          else
+          {
+            onWork = false;
+            Target = null;
+
+            CreatureMoveState = FCreatureMoveState.None;
+            CreatureState = FCreatureState.Idle;
+          }
+        }
         //else if(job is FPersonalJob.Sleepy)
         //{
         //  if (_coai != null) StopCoroutine(_coai);
@@ -207,6 +237,9 @@ public class Warrior : Creature
     if (Managers.GameDay.currentTime >= FCurrentTime.BeforeSunset)
       SetOrAddJobPriority(FPersonalJob.Sleepy, 5f);
     SetOrAddJobPriority(FJob.Store, 1f);
+
+    //TEMP
+    SetOrAddJobPriority(FJob.Supply, 20f);
   }
 
   public override void OnAnimEventHandler()

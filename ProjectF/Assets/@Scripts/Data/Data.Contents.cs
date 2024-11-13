@@ -159,10 +159,10 @@ namespace Data
     public string WorkEnd;
 
     public List<int> buildItemId;
-    public List<int> buildItemCount;
+    public List<float> buildItemMass;
 
     public List<int> supplyItemid;
-    public List<int> supplyItemCount;
+    public List<float> supplyItemMass;
   }
 
   [Serializable]
