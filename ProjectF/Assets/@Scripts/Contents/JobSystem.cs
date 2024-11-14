@@ -11,19 +11,23 @@ public class JobSystem : InitBase
   public FJob Job { get; protected set; }
 
   private int jobCount = 10;
-  private Dictionary<FJob, float> jobDict = new Dictionary<FJob, float>();
+  private Dictionary<FJob, jobDicValue> jobDict = new Dictionary<FJob, jobDicValue>();
 
   public BaseObject target;
   public List<BaseObject> targets = new List<BaseObject>();
   public List<BaseObject> supplyTargets;
 
-  public KeyValuePair<FJob, float> CurrentJob
+  public KeyValuePair<FJob, jobDicValue> CurrentJob
   {
     get
     {
       foreach(var job in jobDict)
       {
-        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid); 
+        if (!job.Value.IsAble) continue;
+        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
+
+        if (targets.Count <= 0 || targets == null) Owner.SetJobIsAble(Job, false);
+        else Owner.SetJobIsAble(Job, true);
 
         foreach(var t in targets)
         {
@@ -37,7 +41,7 @@ public class JobSystem : InitBase
           }
         }
       }
-      return new KeyValuePair<FJob, float>(FJob.None, 0);
+      return new KeyValuePair<FJob, jobDicValue>(FJob.None, new jobDicValue(0, false));
     }
     
   }
@@ -91,7 +95,7 @@ public class JobSystem : InitBase
     jobDict = GetSelectJobList(jobCount);
   }
 
-  private void RefreshJobList(KeyValuePair<FJob, float> job)
+  private void RefreshJobList(KeyValuePair<FJob, jobDicValue> job)
   {
     if (jobDict.ContainsKey(job.Key))
     {
@@ -106,12 +110,12 @@ public class JobSystem : InitBase
     }
   }
 
-  private Dictionary<FJob, float> DescendingDIct(Dictionary<FJob, float> dict)
+  private Dictionary<FJob, jobDicValue> DescendingDIct(Dictionary<FJob, jobDicValue> dict)
   {
-    return dict.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+    return dict.OrderByDescending(pair => pair.Value.Priority).ToDictionary(pair => pair.Key, pair => pair.Value);
   }
 
-  private Dictionary<FJob, float> GetSelectJobList(int count)
+  private Dictionary<FJob, jobDicValue> GetSelectJobList(int count)
   {
     var sortDict = Owner.JobDic.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value); 
     return sortDict;

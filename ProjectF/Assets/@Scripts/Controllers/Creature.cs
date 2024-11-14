@@ -5,6 +5,32 @@ using System;
 using System.Linq;
 using static Define;
 
+#region UtilClass
+public class jobDicValue
+{
+  private float priority;
+  private bool isAble; 
+
+  public jobDicValue(float v1, bool v2)
+  {
+    this.priority = v1;
+    this.isAble = v2;
+  }
+
+  public float Priority
+  {
+    get { return priority; }
+    set { priority = value; }
+  }
+
+  public bool IsAble
+  {
+    get { return isAble; }
+    set { isAble = value; }
+  }
+}
+#endregion
+
 public class Creature : BaseObject
 {
   public BaseObject Target { get; set; }
@@ -16,14 +42,14 @@ public class Creature : BaseObject
   public float Speed { get; protected set; } = 1.0f;
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
 
-  public Dictionary<FJob, float> JobDic = new Dictionary<FJob, float>();
+  public Dictionary<FJob, jobDicValue> JobDic = new Dictionary<FJob, jobDicValue>();
   public Dictionary<FPersonalJob, float> PersonalDic = new Dictionary<FPersonalJob, float>();
 
   public KeyValuePair<Enum, float> CurrentJob => new KeyValuePair<Enum, float>(job, GetJobPriority(job));
 
-  public event Action<KeyValuePair<FJob, float>> jobChanged;
-  private KeyValuePair<FJob, float> jobChangedPair;
-  public KeyValuePair<FJob, float> JobChanged
+  public event Action<KeyValuePair<FJob, jobDicValue>> jobChanged;
+  private KeyValuePair<FJob, jobDicValue> jobChangedPair;
+  public KeyValuePair<FJob, jobDicValue> JobChanged
   {
     get { return jobChangedPair; }
     set
@@ -93,6 +119,16 @@ public class Creature : BaseObject
     }
   }
 
+  protected FCreatureMoveState creatureMoveState = FCreatureMoveState.None;
+  public virtual FCreatureMoveState CreatureMoveState
+  {
+    get { return creatureMoveState; }
+    set
+    {
+      creatureMoveState = value;
+    }
+  }
+
   public override bool Init()
   {
     if (base.Init() == false) return false;
@@ -104,8 +140,7 @@ public class Creature : BaseObject
 
     var jobLength = Enum.GetValues(typeof(FJob)).Length;
     var personalLength = Enum.GetValues(typeof(FPersonalJob)).Length;
-
-    for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, 0);
+    for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, new jobDicValue(0, true));
     for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, 0);
 
 
@@ -153,6 +188,7 @@ public class Creature : BaseObject
         result = mass;
       }
     }
+    CurrentSupply -= result;
     return result;
   }
   #endregion
@@ -162,13 +198,13 @@ public class Creature : BaseObject
     if (job is FJob)
     {
       FJob tmpJob = (FJob)job;
-      if (set) JobDic[tmpJob] = p;
+      if (set) JobDic[tmpJob].Priority = p;
       else
       {
         if (JobDic.TryGetValue(tmpJob, out var value))
-          JobDic[tmpJob] += p;
+          JobDic[tmpJob].Priority += p;
       }
-      JobChanged = new KeyValuePair<FJob, float>(tmpJob, JobDic[tmpJob]);
+      JobChanged = new KeyValuePair<FJob, jobDicValue>(tmpJob, JobDic[tmpJob]);
     }
     else if(job is FPersonalJob)
     {
@@ -183,12 +219,19 @@ public class Creature : BaseObject
     }
   }
 
+  public void SetJobIsAble(Enum job, bool set)
+  {
+    FJob tmpJob = (FJob)job;
+    if (JobDic.TryGetValue(tmpJob, out var value))
+      JobDic[tmpJob].IsAble = set;
+  }
+
   public float GetJobPriority(Enum job)
   {
     if(job is FJob)
     {
       if (JobDic.TryGetValue((FJob)job, out var value))
-        return value;
+        return value.Priority;
     }
     else if(job is FPersonalJob)
     {
@@ -234,7 +277,15 @@ public class Creature : BaseObject
         PlayAnimation(CreatureData.Dead);
         break;
       case FCreatureState.Skill:
-        PlayAnimation(Skills[0].AnimName);
+        switch(job)
+        {
+          case FJob.Supply:
+          case FJob.Store:
+          case FJob.Make:
+          case FJob.Research:
+            PlayAnimation(CreatureData.Job); break;
+          default: PlayAnimation(Skills[0].AnimName); break;
+        }
         break;
       default: break;
     }
@@ -525,14 +576,16 @@ public class Creature : BaseObject
       FFindPathResults result = FindPathAndMoveToCellPos(chaseTarget.transform.position, 100);
       if(result == FFindPathResults.Fail_NoPath)
       {
-        chaseTarget = null;
+
+        //chaseTarget = null;
         CreatureState = FCreatureState.Skill;
-        //CreatureState = FCreatureState.Move;
+        
       }
       else if(result == FFindPathResults.Fail_MoveTo)
       {
-        chaseTarget = null;
-        CreatureState = FCreatureState.Move;
+        ResetJob();
+        //chaseTarget = null;
+        //CreatureState = FCreatureState.Move;
       }
       // 너무 멀어지면 포기.
       //float searchDistanceSqr = chaseRange * chaseRange;
@@ -545,28 +598,86 @@ public class Creature : BaseObject
     }
   }
 
-  //protected void ChaseOrStoreTarget()
-  //{
-  //  if (jobPhase is JobPhase.On) return;
+  #endregion
 
-  //  if(SupplyTargets.Count <= 0) SupplyTargets = FindsClosestInRange(FJob.Supply, 10f, Managers.Object.ItemHolders, func: IsValid);
-  //  if (SupplyTargets.Count <= 0) { jobPhase = JobPhase.Done; return; }
-  //  if (jobPhase is JobPhase.Start) jobPhase = JobPhase.On;
+  #region Job
+  protected virtual void ResetJob()
+  {
+    onWork = false;
+    Target = null;
 
-  //  foreach (var target in SupplyTargets)
-  //  {
-  //    if (this.CurrentSupply >= this.SupplyCapacity)
-  //    {
-  //      jobPhase = JobPhase.Done;
-  //      return;
-  //    }
+    CreatureMoveState = FCreatureMoveState.None;
+    CreatureState = FCreatureState.Idle;
+  }
 
-  //    ChaseOrAttackTarget(target, 100, 1.2f);
-  //  }
+  protected virtual void JobMake(float distance)
+  {
+    var targetScr = Target as BuildObject;
+    if(targetScr != null)
+    {
+      if(supplyTarget != null)
+      {
+        ChaseOrAttackTarget(100, distance, supplyTarget);
+      }
+      else
+      {
+        ChaseOrAttackTarget(100, distance);
+      }
+    }
+  }
 
-  //  //jobPhase = JobPhase.Done;
-  //  return;
+  protected virtual void JobStore(float distance)
+  {
+    supplyTarget = jobSystem.CurrentRootJob;
+    if (supplyTarget != null && CurrentSupply < SupplyCapacity)
+    {
+      ChaseOrAttackTarget(100, distance, supplyTarget);
+    }
+    else
+    {
+      //들고 있는게 있어야 함 .. 없는데 이쪽으로 넘어오면 욕구 취소로 다음사람에게 넘김?
+      if (CurrentSupply > 0) ChaseOrAttackTarget(100, distance);
+      else
+      {
+        SetJobIsAble(job, false);
+        ResetJob();
+      }
+    }
+  }
 
-  //}
+  protected virtual void JobSupply(float distance)
+  {
+    var targetScr = Target as BuildObject;
+    if (targetScr != null)
+    {
+      foreach (var item in targetScr.buildNeedList)
+      {
+        if (SearchHaveList(item.Key))
+        {
+          ChaseOrAttackTarget(100, distance);
+        }
+        else
+        {
+          // 들고 있지 않다면 주변에서 찾아봄
+          // 1. 상자
+          // 상자를 서치해서 그 안에 있는 아이템을 가져옴 
+          // 2. 땅에 떨어진 것들
+          // 땅에 떨어진 루팅할 수잇는 아이템들 중에서 id가 같은것을 찾아봄
+
+          //2. 방법
+          supplyTarget = jobSystem.CurrentRootJob;
+          if(supplyTarget != null && CurrentSupply < SupplyCapacity && item.Key == supplyTarget.dataTemplateID)
+          {
+            ChaseOrAttackTarget(100, distance, supplyTarget);
+          }
+        }
+      }
+    }
+    else
+    {
+      ResetJob();
+    }
+  }
+
   #endregion
 }

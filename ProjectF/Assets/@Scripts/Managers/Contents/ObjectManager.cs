@@ -161,6 +161,12 @@ public class ObjectManager
       Structures.Remove(structure);
       Workables.Remove(obj);
     }
+    else if(obj.ObjectType == FObjectType.BuildObject)
+    {
+      BuildObject buildObject = obj as BuildObject;
+      BuildObjects.Remove(buildObject);
+      Workables.Remove(obj);
+    }
     //TODO
 
     //if (obj.ObjectType != FObjectType.ItemHolder)

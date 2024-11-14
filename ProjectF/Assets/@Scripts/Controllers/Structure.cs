@@ -131,6 +131,9 @@ public class Structure : BaseObject
       case FStructureSubType.Storage:
         workableJob = FJob.Store;
         break;
+      case FStructureSubType.Station:
+        workableJob = FJob.Research;
+        break;
         //TODO;
     }
   }

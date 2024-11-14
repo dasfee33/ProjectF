@@ -3,8 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class BuildObject : BaseObject
+public class BuildObject : Structure
 {
+  public override FStructureState StructureState
+  {
+    get { return base.StructureState; }
+    set
+    {
+      if (structureState != value)
+      {
+        base.StructureState = value;
+        switch (value)
+        {
+          case FStructureState.Idle:
+            UpdateAITick = 0f;
+            break;
+          case FStructureState.WorkStart:
+            //UpdateAITick = data.WorkTime;
+            UpdateAITick = 0.8f;
+            break;
+          case FStructureState.Work:
+            UpdateAITick = data.BuildTime;
+            break;
+          case FStructureState.WorkEnd:
+            UpdateAITick = 0f;
+            break;
+        }
+      }
+    }
+  }
+
   private List<int> buildItemList = new List<int>();
   private List<float> buildItemMass = new List<float>();
 
@@ -13,6 +41,7 @@ public class BuildObject : BaseObject
   /// value : mass
   /// </summary>
   public Dictionary<int, float> buildNeedList = new Dictionary<int, float>();
+  public Dictionary<int, float> curNeedList;
 
   private Grid grid;
   private Vector3 worldPos;
@@ -28,6 +57,9 @@ public class BuildObject : BaseObject
     if (base.Init() == false) return false;
 
     ObjectType = FObjectType.BuildObject;
+    StructureType = FStructureType.BuildObject;
+    StructureSubType = FStructureSubType.BuildObject;
+
     grid = Managers.Map.CellGrid;
     startCellPos = Managers.Map.CellGrid.WorldToCell(this.transform.position);
 
@@ -39,13 +71,18 @@ public class BuildObject : BaseObject
 
     Managers.FInput.endTouch -= EndTouch;
     Managers.FInput.endTouch += EndTouch;
+
+    StartCoroutine(CoUpdateAI());
     return true;
   }
 
   public void SetInfo(int id, List<int> a, List<float> b)
   {
+    dataTemplateID = id;
+    data = Managers.Data.StructDic[id];
     buildItemList = a;
     buildItemMass = b;
+    SpriteRenderer.sprite = Managers.Resource.Load<Sprite>(data.Sprite);
 
     if (buildItemList.Count != buildItemMass.Count) return;
 
@@ -54,11 +91,19 @@ public class BuildObject : BaseObject
       buildNeedList.Add(buildItemList[i], buildItemMass[i]);
     }
 
+    curNeedList = new Dictionary<int, float>(buildNeedList);
+
     workableJob = FJob.Supply;
   }
 
   public override void OnDamaged(BaseObject attacker)
   {
+    if(workableJob is FJob.Make)
+    {
+      base.OnDamaged(attacker);
+      return;
+    }
+
     var attackOwner = attacker as Creature;
 
     foreach(var item in buildNeedList)
@@ -66,22 +111,56 @@ public class BuildObject : BaseObject
       if (attackOwner.SearchHaveList(item.Key))
       {
         float result = attackOwner.SupplyFromHaveList(item.Key, item.Value);
-        buildNeedList[item.Key] -= result;
+        curNeedList[item.Key] -= result;
       }
     }
 
-    CheckBuildReady();
+    if(CheckBuildReady())
+    {
+      attackOwner.Target = null;
+    }
   }
 
   private bool CheckBuildReady()
   {
-    foreach(var value in buildNeedList.Values)
+    foreach(var value in curNeedList.Values)
     {
       if (value != 0) return false;
     }
-
     workableJob = FJob.Make;
     return true;
+  }
+
+  protected override void UpdateIdle()
+  {
+    onWorkSomeOne = false;
+  }
+
+  protected override void UpdateWorkStart()
+  {
+    if (workableJob is not FJob.Make) return;
+
+    onWorkSomeOne = true;
+    StructureState = FStructureState.Work;
+  }
+
+  protected override void UpdateOnWork()
+  {
+    if (onWorkSomeOne)
+    {
+      StructureState = FStructureState.WorkEnd;
+    }
+
+
+  }
+
+  protected override void UpdateWorkEnd()
+  {
+    Worker.Target = null;
+    Worker.jobSystem.supplyTargets.Clear();
+    Worker = null;
+    Managers.Object.Spawn<Structure>(this.transform.position - Managers.Map.LerpObjectPos, dataTemplateID, data.Name);
+    Managers.Object.Despawn(this);
   }
 
 

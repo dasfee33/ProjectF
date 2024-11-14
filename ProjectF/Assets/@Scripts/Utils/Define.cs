@@ -81,6 +81,7 @@ public static class Define
     Base,
     Electronic,
     Station,
+    BuildObject,
   }
 
   public enum FStructureSubType
@@ -91,6 +92,7 @@ public static class Define
     Storage,
     Bed,
     Station,
+    BuildObject,
   }
 
   public enum FCreatureType

@@ -49,6 +49,7 @@ namespace Data
     public string Hurt;
     public string Dead;
     public List<int> SkillList = new List<int>();
+    public string Job;
 
     public float supplyCap;
 
@@ -152,6 +153,7 @@ namespace Data
 
     public float maxHp;
     public float WorkTime;
+    public float BuildTime;
 
     public string Idle;
     public string WorkStart;

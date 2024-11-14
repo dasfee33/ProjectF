@@ -32,16 +32,6 @@ public class Warrior : Creature
     }
   }
 
-  FCreatureMoveState creatureMoveState = FCreatureMoveState.None;
-  public FCreatureMoveState CreatureMoveState
-  {
-    get { return creatureMoveState; }
-    set
-    {
-      creatureMoveState = value;
-    }
-  }
-
   public override bool Init()
   {
     if (base.Init() == false)
@@ -145,65 +135,13 @@ public class Warrior : Creature
         //FIXME
         if (Target.onWorkSomeOne) { CreatureState = FCreatureState.Idle; return; }
 
-        if (job is FJob.Store)
+        switch(job)
         {
-          supplyTarget = jobSystem.CurrentRootJob;
-          if (supplyTarget != null && CurrentSupply < SupplyCapacity)
-          {
-            ChaseOrAttackTarget(100, MinActionDistance, supplyTarget);
-          }
-          else
-          {
-            //들고 있는게 있어야 함 .. 없는데 이쪽으로 넘어오면 욕구 취소로 다음사람에게 넘김?
-            if (CurrentSupply > 0) ChaseOrAttackTarget(100, MinActionDistance);
-            else
-            {
-              //FIXME
-              SetOrAddJobPriority(job, 0, true);
-              onWork = false;
-              Target = null;
-
-              CreatureMoveState = FCreatureMoveState.None;
-              CreatureState = FCreatureState.Idle;
-            }
-          }
+          case FJob.Store: JobStore(MinActionDistance); break;
+          case FJob.Supply: JobSupply(MinActionDistance); break;
+          case FJob.Make: JobMake(MinActionDistance); break;
+          default: ChaseOrAttackTarget(100, MinActionDistance); break;
         }
-        else if(job is FJob.Supply)
-        {
-          var targetScr = Target as BuildObject;
-          if(targetScr != null)
-          {
-            foreach(var item in targetScr.buildNeedList)
-            {
-              if(SearchHaveList(item.Key))
-              {
-                ChaseOrAttackTarget(100, MinActionDistance);
-              }
-              else
-              {
-                onWork = false;
-                Target = null;
-
-                CreatureMoveState = FCreatureMoveState.None;
-                CreatureState = FCreatureState.Idle;
-              }
-            }
-          }
-          else
-          {
-            onWork = false;
-            Target = null;
-
-            CreatureMoveState = FCreatureMoveState.None;
-            CreatureState = FCreatureState.Idle;
-          }
-        }
-        //else if(job is FPersonalJob.Sleepy)
-        //{
-        //  if (_coai != null) StopCoroutine(_coai);
-        //  SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
-        //}
-        else ChaseOrAttackTarget(100, MinActionDistance);//, MaxActionDistance);
 
         if (Target.IsValid() == false)
         {
@@ -240,12 +178,14 @@ public class Warrior : Creature
 
     //TEMP
     SetOrAddJobPriority(FJob.Supply, 20f);
+    SetOrAddJobPriority(FJob.Make, 20f);
   }
 
   public override void OnAnimEventHandler()
   {
     if (Target.IsValid() == false) return;
-    if(job is FJob.Store)
+    
+    if(job is FJob.Store || job is FJob.Supply)
     {
       if (supplyTarget != null && CurrentSupply < SupplyCapacity)
       {
@@ -253,7 +193,7 @@ public class Warrior : Creature
         return;
       }
     }
-
+    
     Target.OnDamaged(this);
   }
 
