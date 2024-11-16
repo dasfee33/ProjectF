@@ -70,7 +70,6 @@ public static class Define
   {
     None,
     Tree,
-    
   }
 
   public enum FStructureType

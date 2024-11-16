@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class UI_PriorityPopupSelectJob : UI_Base
 {
+  public Creature _owner;
+  private FJob _thisJob;
 
   public enum Texts
   {
@@ -19,8 +22,10 @@ public class UI_PriorityPopupSelectJob : UI_Base
     return true;
   }
 
-  public void SetInfo(string jobName)
+  public void SetInfo(FJob job)
   {
-    GetText((int)Texts.JobName).text = jobName;
+    _thisJob = job;
+    GetText((int)Texts.JobName).text = job.ToString();
+
   }
 }

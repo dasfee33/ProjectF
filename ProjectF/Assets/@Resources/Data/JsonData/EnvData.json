@@ -2,7 +2,7 @@
   "envs": [
     {
       "DataId": 100000,
-      "Name": "tree_normal1",
+      "Name": "Tree1",
       "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 100.0,
@@ -16,7 +16,7 @@
     },
     {
       "DataId": 100001,
-      "Name": "tree_normal2",
+      "Name": "Tree2",
       "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 150.0,

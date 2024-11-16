@@ -143,7 +143,8 @@ public class Creature : BaseObject
     for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, new jobDicValue(0, true));
     for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, 0);
 
-
+    Managers.Game.onJobAbleChanged -= SetJobIsAble;
+    Managers.Game.onJobAbleChanged += SetJobIsAble;
     //FIXME
     //StartCoroutine(CoLerpToCellPos());
     
@@ -151,6 +152,7 @@ public class Creature : BaseObject
     return true;
   }
 
+  
   #region Supply
   public void AddHaveList(int dataID, float mass)
   {
@@ -604,6 +606,7 @@ public class Creature : BaseObject
   protected virtual void ResetJob()
   {
     onWork = false;
+    Target.Worker = null;
     Target = null;
 
     CreatureMoveState = FCreatureMoveState.None;
@@ -648,6 +651,14 @@ public class Creature : BaseObject
   protected virtual void JobSupply(float distance)
   {
     var targetScr = Target as BuildObject;
+    if (!targetScr.setFlag)
+    {
+      SetJobIsAble(job, false);
+      ResetJob();
+      return;
+    }
+    else SetJobIsAble(job, true);
+    
     if (targetScr != null)
     {
       foreach (var item in targetScr.buildNeedList)

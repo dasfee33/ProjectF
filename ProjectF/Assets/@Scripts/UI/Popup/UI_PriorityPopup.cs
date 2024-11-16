@@ -73,7 +73,7 @@ public class UI_PriorityPopup : UI_Popup
       var obj = Managers.Resource.Instantiate("SelectJob");
       obj.transform.SetParent(hori.transform, true);
       var objScr = obj.GetComponent<UI_PriorityPopupSelectJob>();
-      objScr.SetInfo(((FJob)i).ToString());
+      objScr.SetInfo((FJob)i);
     } 
   }
 
@@ -86,9 +86,11 @@ public class UI_PriorityPopup : UI_Popup
     {
       var obj = Managers.Resource.Instantiate("Top");
       var objScr = obj.GetComponent<UI_PriorityPopupTop>();
-      obj.transform.SetParent(contentTrans, true);
+      obj.transform.SetParent(contentTrans);
+      obj.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
 
       objScr.data = creature.CreatureData;
+      objScr.Owner = creature;
       objScr.SetInfo();
     }
   }

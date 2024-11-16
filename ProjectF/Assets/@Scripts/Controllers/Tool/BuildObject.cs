@@ -5,6 +5,9 @@ using static Define;
 
 public class BuildObject : Structure
 {
+  public UI_WorldUITest selectUI;
+  public bool setFlag;
+
   public override FStructureState StructureState
   {
     get { return base.StructureState; }
@@ -63,15 +66,7 @@ public class BuildObject : Structure
     grid = Managers.Map.CellGrid;
     startCellPos = Managers.Map.CellGrid.WorldToCell(this.transform.position);
 
-    Managers.FInput.startTouch -= StartTouch;
-    Managers.FInput.startTouch += StartTouch;
-
-    Managers.FInput.onDragging -= IsDragging;
-    Managers.FInput.onDragging += IsDragging;
-
-    Managers.FInput.endTouch -= EndTouch;
-    Managers.FInput.endTouch += EndTouch;
-
+    selectUI.SetInfo(this);
     StartCoroutine(CoUpdateAI());
     return true;
   }
@@ -83,6 +78,8 @@ public class BuildObject : Structure
     buildItemList = a;
     buildItemMass = b;
     SpriteRenderer.sprite = Managers.Resource.Load<Sprite>(data.Sprite);
+    SpriteRenderer.sortingOrder = 25;
+    selectUI.GetComponent<Canvas>().sortingOrder = 25;
 
     if (buildItemList.Count != buildItemMass.Count) return;
 
@@ -94,6 +91,7 @@ public class BuildObject : Structure
     curNeedList = new Dictionary<int, float>(buildNeedList);
 
     workableJob = FJob.Supply;
+    
   }
 
   public override void OnDamaged(BaseObject attacker)
@@ -159,45 +157,7 @@ public class BuildObject : Structure
     Worker.Target = null;
     Worker.jobSystem.supplyTargets.Clear();
     Worker = null;
-    Managers.Object.Spawn<Structure>(this.transform.position - Managers.Map.LerpObjectPos, dataTemplateID, data.Name);
+    Managers.Object.Spawn<Structure>(this.transform.position, dataTemplateID, data.Name);
     Managers.Object.Despawn(this);
   }
-
-
-  #region Input
-  private void StartTouch(Vector2 pos, float time)
-  {
-    worldPos = Camera.main.ScreenToWorldPoint(pos);
-    worldPos -= Managers.Map.LerpObjectPos;
-    worldPos.z = 0f;
-    if (Managers.Map.GetObject(worldPos) == this)
-    {
-      startCellPos = Managers.Map.World2Cell(worldPos);
-      isMe = true;
-    }
-  }
-
-  private void IsDragging(Vector2 pos)
-  {
-    if (!isMe) return;
-    worldPos = Camera.main.ScreenToWorldPoint(pos);
-    worldPos -= Managers.Map.LerpObjectPos;
-    worldPos.z = 0f;
-
-    //Lerp Position
-    cellPos = Managers.Map.World2Cell(worldPos);
-    cellWorldPos = Managers.Map.Cell2World(cellPos) + Managers.Map.LerpObjectPos;
-    this.transform.position = cellWorldPos;
-  }
-
-  private void EndTouch(Vector2 pos, float time)
-  {
-    if (!isMe) return;
-    this.transform.position = cellWorldPos;
-    var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
-    Managers.Map.ClearObject(startCellPos);
-    Managers.Map.AddObject(this, cellPos);
-    isMe = !isMe;
-  }
-  #endregion
 }

@@ -136,6 +136,9 @@ public class Env : BaseObject
   {
     base.OnDead(attacker);
 
+    var trunk = Managers.Object.Spawn<Trunk>(this.transform.position, dataTemplateID, prefabName: data.Name + "_trunk", addToCell: false);
+    trunk.SetInfo(data);
+
     EnvState = FEnvState.Dead;
   }
 

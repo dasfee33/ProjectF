@@ -45,12 +45,7 @@ public class Warrior : Creature
     Collider.isTrigger = false;
     RigidBody.simulated = false;
 
-    //TEST
-    //SetOrAddJobPriority(FJob.Cook, 10);
     SetOrAddJobPriority(FJob.Logging, 20);
-    //SetOrAddJobPriority(FJob.Toggle, 30);
-
-    //jobSystem += jobChanged
 
     _coai = StartCoroutine(CoUpdateAI());
     StartCoroutine(CoUpdateState());
@@ -75,7 +70,6 @@ public class Warrior : Creature
       int rand = Random.Range(0, 100);
       if (rand <= patrolPercent)
       {
-        if (CreatureState == FCreatureState.Skill/* || CreatureMoveState == FCreatureMoveState.Job*/) return;
         _destPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
         CreatureState = FCreatureState.Move;
         return;
@@ -107,14 +101,6 @@ public class Warrior : Creature
 
     if (Target.IsValid() == false)
     {
-      //일하러 가고 잇는데 일이 끝났거나 없어진 경우 => 다시 서치
-      //if(onWork)
-      //{
-      //  Target = null;
-      //  CreatureMoveState = FCreatureMoveState.None;
-      //  CreatureState = FCreatureState.Idle;
-      //  onWork = false;
-      //}
       FindPathAndMoveToCellPos(_destPos, 3);
 
       if(LerpCellPosCompleted)
@@ -159,10 +145,6 @@ public class Warrior : Creature
 
   protected override void UpdateSkill()
   {
-    //var dir = (Target.transform.position - this.transform.position).normalized;
-    //if (dir.x < 0) LookLeft = true;
-    //else LookLeft = false; 
-
     if (Target.IsValid() == false)
     {
       CreatureState = FCreatureState.Move;
@@ -190,16 +172,17 @@ public class Warrior : Creature
       if (supplyTarget != null && CurrentSupply < SupplyCapacity)
       {
         supplyTarget.OnDamaged(this);
+        CreatureState = FCreatureState.Idle;
         return;
       }
+      
     }
-    
+
     Target.OnDamaged(this);
   }
 
   public void OnAnimIsEnd()
   {
-    //if (CreatureState != FCreatureState.Move) return;  
 
     CreatureState = FCreatureState.Idle;
 

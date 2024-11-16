@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class GameManager
 {
@@ -17,4 +18,10 @@ public class GameManager
   }
 
   public event Action<Vector2> OnMoveDirChanged;
+
+  public event Action<Enum, bool> onJobAbleChanged;
+  public void OnJobAbleChanged(Enum job, bool set)
+  {
+    onJobAbleChanged?.Invoke(job, set);
+  } 
 }
