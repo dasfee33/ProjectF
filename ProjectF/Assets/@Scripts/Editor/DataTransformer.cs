@@ -27,6 +27,7 @@ public class DataTransformer : EditorWindow
     ParseExcelDataToJson<DropTableDataLoader, DropTableData_Internal>("DropTable");
     ParseExcelDataToJson<StructureDataLoader, StructureData>("Structure");
     ParseExcelDataToJson<ResearchDataLoader, ResearchData>("Research");
+    ParseExcelDataToJson<TextDataLoader, TextData>("Text");
 
     Debug.Log("DataTransformer Completed");
   }

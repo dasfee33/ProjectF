@@ -9,6 +9,7 @@ public class Managers : MonoBehaviour
   private static Managers Instance { get { Init(); return s_instance; } }
 
   #region Core
+  private BackendManager _backend = new BackendManager();
   private DataManager _data = new DataManager();
   private PoolManager _pool = new PoolManager();
   private ResourceManager _resource = new ResourceManager();
@@ -17,6 +18,7 @@ public class Managers : MonoBehaviour
   private UIManager _ui = new UIManager();
   private InputManager _input = new InputManager();
 
+  public static BackendManager BackEnd { get { return Instance?._backend; } }
   public static DataManager Data { get { return Instance?._data; } }
   public static PoolManager Pool { get { return Instance?._pool; } }
   public static ResourceManager Resource { get { return Instance?._resource; } }
@@ -68,6 +70,7 @@ public class Managers : MonoBehaviour
 
       s_instance = go.GetComponent<Managers>();
 
+      s_instance._backend.BackendSetup();
       s_instance._input.Init();
     }
   }

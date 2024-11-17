@@ -43,9 +43,9 @@ public class UI_PriorityPopupTop : UI_Base
 
     for (int i = 1; i < jobLength; i++)
     {
-      var obj = Managers.Resource.Instantiate("SelectJob");
+      var obj = Managers.Resource.Instantiate("SelectJobButton");
       obj.transform.SetParent(hori, true);
-      var objScr = obj.GetComponent<UI_PriorityPopupSelectJob>();
+      var objScr = obj.GetComponent<UI_PriorityPopupSelectJobButton>();
       objScr._owner = Owner;
       objScr.SetInfo((FJob)i);
     }

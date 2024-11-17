@@ -23,5 +23,28 @@ public class GameManager
   public void OnJobAbleChanged(Enum job, bool set)
   {
     onJobAbleChanged?.Invoke(job, set);
-  } 
+  }
+
+  #region Language
+  private FLanguage _language = FLanguage.Korean;
+  public FLanguage Language
+  {
+    get { return _language; }
+    set
+    {
+      _language = value;
+    }
+  }
+
+  public string GetText(string textId)
+  {
+    switch(_language)
+    {
+      case FLanguage.Korean:
+        return Managers.Data.TextDic[textId].KOR;
+
+    }
+    return "";
+  }
+  #endregion
 }

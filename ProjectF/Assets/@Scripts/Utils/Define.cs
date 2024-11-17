@@ -4,6 +4,16 @@ using UnityEngine;
 
 public static class Define
 {
+  public enum FLanguage
+  {
+    Korean,
+    English,
+    Japanese,
+    French,
+    SChinese,
+    TChinese,
+  }
+
   public enum FResearchType
   {
     None,
@@ -32,6 +42,16 @@ public static class Define
     PointerDown,
     PointerUp,
     Drag,
+  }
+
+  public enum FJobSelectEvent
+  {
+    Never,
+    DownDown,
+    Down,
+    None,
+    Up,
+    UpUp,
   }
 
   public enum FTool

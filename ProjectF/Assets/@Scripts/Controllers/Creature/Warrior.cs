@@ -45,7 +45,7 @@ public class Warrior : Creature
     Collider.isTrigger = false;
     RigidBody.simulated = false;
 
-    SetOrAddJobPriority(FJob.Logging, 20);
+    //SetOrAddJobPriority(FJob.Logging, 20);
 
     _coai = StartCoroutine(CoUpdateAI());
     StartCoroutine(CoUpdateState());

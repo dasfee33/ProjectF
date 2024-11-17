@@ -178,6 +178,7 @@ public class UIManager
       return;
 
     UI_Popup popup = _popupStack.Pop();
+    //popup.transform.parent.gameObject.SetActive(false);
     Managers.Resource.Destroy(popup.transform.parent.gameObject);
     _order--;
   }
