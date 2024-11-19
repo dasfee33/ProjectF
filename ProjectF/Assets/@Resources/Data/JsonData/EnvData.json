@@ -27,6 +27,20 @@
       "Dead": "treeDead2",
       "DropItemid": 400000,
       "Supplyitemid": -1
+    },
+    {
+      "DataId": 100002,
+      "Name": "Rock2",
+      "DescriptionTextID": "바위",
+      "Label": "Env",
+      "maxHp": 200.0,
+      "RegenTime": 500.0,
+      "Idle": null,
+      "type": "Rock",
+      "Hurt": null,
+      "Dead": null,
+      "DropItemid": 0,
+      "Supplyitemid": 0
     }
   ]
 }

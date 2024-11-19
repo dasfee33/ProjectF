@@ -22,7 +22,10 @@
         10.0
       ],
       "supplyItemid": null,
-      "supplyItemMass": null
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0
     },
     {
       "DataId": 101,
@@ -46,7 +49,10 @@
         10.0
       ],
       "supplyItemid": null,
-      "supplyItemMass": null
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0
     },
     {
       "DataId": 102,
@@ -70,7 +76,10 @@
         10.0
       ],
       "supplyItemid": null,
-      "supplyItemMass": null
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0
     },
     {
       "DataId": 103,
@@ -94,7 +103,10 @@
         10.0
       ],
       "supplyItemid": null,
-      "supplyItemMass": null
+      "supplyItemMass": null,
+      "maxCapacity": 200.0,
+      "extraCellX": 0,
+      "extraCellY": 0
     },
     {
       "DataId": 104,
@@ -118,7 +130,10 @@
         10.0
       ],
       "supplyItemid": null,
-      "supplyItemMass": null
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 1,
+      "extraCellY": 1
     }
   ]
 }

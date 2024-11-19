@@ -165,6 +165,10 @@ namespace Data
 
     public List<int> supplyItemid;
     public List<float> supplyItemMass;
+
+    public float maxCapacity;
+    public int extraCellX;
+    public int extraCellY;
   }
 
   [Serializable]

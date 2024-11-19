@@ -65,6 +65,9 @@ public class Env : BaseObject
       case FEnvType.Tree:
         workableJob = FJob.Logging;
         break;
+      case FEnvType.Rock:
+        workableJob = FJob.Dig;
+        break;
 
       //TODO;
     }
@@ -136,8 +139,15 @@ public class Env : BaseObject
   {
     base.OnDead(attacker);
 
-    var trunk = Managers.Object.Spawn<Trunk>(this.transform.position, dataTemplateID, prefabName: data.Name + "_trunk", addToCell: false);
-    trunk.SetInfo(data);
+    switch(EnvType)
+    {
+      case FEnvType.Tree:
+        var trunk = Managers.Object.Spawn<Trunk>(this.transform.position, dataTemplateID, prefabName: data.Name + "_trunk", addToCell: false);
+        trunk.SetInfo(data);
+        break;
+
+    }
+    
 
     EnvState = FEnvState.Dead;
   }

@@ -94,6 +94,12 @@ public class BuildObject : Structure
     
   }
 
+  public void SetColor(Vector4 color)
+  {
+    SpriteRenderer.color = color;
+  }
+
+
   public override void OnDamaged(BaseObject attacker)
   {
     if(workableJob is FJob.Make)
@@ -154,6 +160,11 @@ public class BuildObject : Structure
 
   protected override void UpdateWorkEnd()
   {
+    foreach(var need in buildNeedList)
+    {
+      Worker.SupplyFromHaveList(need.Key, need.Value);
+    }
+
     Worker.Target = null;
     Worker.jobSystem.supplyTargets.Clear();
     Worker = null;

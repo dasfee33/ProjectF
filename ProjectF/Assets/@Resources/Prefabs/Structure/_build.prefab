@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 6f61adf511a91434ba781591809d0d17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
@@ -122,8 +122,12 @@ MonoBehaviour:
     buildItemMass: []
     supplyItemid: 
     supplyItemMass: []
+    maxCapacity: 0
+    extraCellX: 0
+    extraCellY: 0
   Storage: []
   selectUI: {fileID: 725199453243986085}
+  setFlag: 0
 --- !u!1001 &5448571661372834472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,26 +136,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6203460866859716202}
     m_Modifications:
-    - target: {fileID: 424271437419770218, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 424271437419770218, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 492348036786086020, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e4d15c55fdc516f49a53aee015ad207b, type: 3}
-    - target: {fileID: 1571444581928984426, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Name
-      value: CancelButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 1906642580200338706, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Name
-      value: ConfirmButton
-      objectReference: {fileID: 0}
     - target: {fileID: 2337598385199151864, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -218,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2337598385199151864, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.871
+      value: -0.861
       objectReference: {fileID: 0}
     - target: {fileID: 2337598385199151864, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -235,34 +219,6 @@ PrefabInstance:
     - target: {fileID: 4295560360197133672, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_Name
       value: UI_WorldUITest
-      objectReference: {fileID: 0}
-    - target: {fileID: 5856228947484218977, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 66a41dc1430140b4d85bd0ca5dc6fb33, type: 3}
-    - target: {fileID: 6161609450615134490, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bd7724abea7cdd346a06abaa8a897c36, type: 3}
-    - target: {fileID: 6713634389506979035, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6713634389506979035, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7432093828928436832, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_Name
-      value: Move
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540628812701211267, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540628812701211267, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

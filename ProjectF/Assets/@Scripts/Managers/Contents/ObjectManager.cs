@@ -46,10 +46,12 @@ public class ObjectManager
 
     GameObject go = Managers.Resource.Instantiate(prefabName);
     go.name = prefabName;
-    go.transform.position = position;// + Managers.Map.LerpObjectPos;
+    var cellPos = Managers.Map.World2Cell(position);
+    go.transform.position = Managers.Map.Cell2World(cellPos);
+     //= position;// + Managers.Map.LerpObjectPos;
 
     BaseObject obj = go.GetComponent<BaseObject>();
-    var cellPos = Managers.Map.World2Cell(position);
+    
 
     if (obj.ObjectType == FObjectType.Creature)
     {

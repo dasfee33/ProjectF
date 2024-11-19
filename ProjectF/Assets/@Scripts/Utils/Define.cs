@@ -90,6 +90,7 @@ public static class Define
   {
     None,
     Tree,
+    Rock,
   }
 
   public enum FStructureType
@@ -152,6 +153,7 @@ public static class Define
   public enum FCreatureMoveState
   {
     None,
+    Patrol,
     Job,
     Hungry,
     Tremble, //떨림
@@ -234,6 +236,16 @@ public static class Define
     Wall,
   }
 
+  public enum FCellObjCollisionTypes
+  {
+    None,
+    SemiWall,
+    Wall,
+    Tree,
+    Rock,
+    Gayser,
+  }
+
   //safe area 대응 
   public enum FSetUISafeArea
   {
@@ -252,11 +264,18 @@ public static class Define
   public const char MAP_TOOL_NONE = '1';
   public const char MAP_TOOL_SEMI_WALL = '2';
 
+  public const char MAPOBJ_TOOL_WALL = '0';
+  public const char MAPOBJ_TOOL_SEMI_WALL = '1';
+  public const char MAPOBJ_TOOL_TREE = '2';
+  public const char MAPOBJ_TOOL_ROCK = '3';
+  public const char MAPOBJ_TOOL_GAYSER = '4';
+
   public const int RESEARCH_START = 4000;
 
   public const int CREATURE_WARRIOR_DATAID = 1;
   public const int ENV_TREE_NORMAL1 = 100000;
   public const int ENV_TREE_NORMAL2 = 100001;
+  public const int ENV_ROCK_NORMAL1 = 100002;
   
 
   public const int STRUCTURE_TOILET_NORMAL = 100;
@@ -312,6 +331,9 @@ public static class COLOR
   public static Vector4 DAY = new Vector4(1, 1, 1, 1);
   public static Vector4 BEFORESUNSET = new Vector4(0.9f, 0.6f, 0.1f, 1);
   public static Vector4 NIGHT = new Vector4(0.5f, 0.4f, 0.4f);
+
+  public static Vector4 SMOKERED = new Vector4(1, 0, 0, 0.5f);
+  public static Vector4 SMOKEWHITE = new Vector4(1, 1, 1, 0.5f);
 }
 
 

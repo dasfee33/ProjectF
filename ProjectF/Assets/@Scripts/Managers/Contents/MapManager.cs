@@ -24,11 +24,11 @@ public class MapManager
   public Vector3Int World2Cell(Vector3 worldPos) { return CellGrid.WorldToCell(worldPos); }
   public Vector3 Cell2World(Vector3Int cellPos) { return CellGrid.CellToWorld(cellPos); }
 
-  FCellCollisionTypes[,] _collision;
-  FCellCollisionTypes[,] _collision_obj;
+  public FCellCollisionTypes[,] _collision;
+  public FCellObjCollisionTypes[,] _collision_obj;
 
   public FCellCollisionTypes[,] Collision { get { return _collision; } private set { _collision = value; } }
-  public FCellCollisionTypes[,] Collision_obj { get { return _collision_obj; } private set { _collision_obj = value; } }
+  public FCellObjCollisionTypes[,] Collision_obj { get { return _collision_obj; } private set { _collision_obj = value; } }
 
   public void LoadMap(string mapName)
   {
@@ -44,7 +44,7 @@ public class MapManager
     LerpObjectPos = new Vector3(CellGrid.cellSize.x / 2, CellGrid.cellSize.y / 2, 0);
 
     _collision = ParseCollisionData(map, mapName);
-    _collision_obj = ParseCollisionData(map, mapName, "Tilemap_Collision_Obj");
+    _collision_obj = ParseObjCollisionData(map, mapName);
     
     CameraController cam = Camera.main.GetComponent<CameraController>();
     cam.confinerCam.m_BoundingShape2D = MakeMapCollisionBorder(map);
@@ -97,16 +97,6 @@ public class MapManager
       collision.SetActive(false);
 
     string mapDataAsset = $"{mapName}Collision";
-    if(tilemap != default)
-    {
-      switch(tilemap)
-      {
-        case "Tilemap_Collision_Obj":
-          mapDataAsset = $"{mapName}Collision_Obj";
-          break;
-        //TODO ADD
-      }
-    }
 
     TextAsset txt = Managers.Resource.Load<TextAsset>(mapDataAsset);
     StringReader reader = new StringReader(txt.text);
@@ -135,6 +125,55 @@ public class MapManager
             break;
           case Define.MAP_TOOL_SEMI_WALL:
             collisionArray[x, y] = FCellCollisionTypes.SemiWall;
+            break;
+        }
+      }
+    }
+
+    return collisionArray;
+  }
+
+  private FCellObjCollisionTypes[,] ParseObjCollisionData(GameObject map, string mapName, string tilemap = "Tilemap_Collision_Obj")
+  {
+    GameObject collision = Util.FindChild(map, tilemap, true);
+    if (collision != null)
+      collision.SetActive(false);
+
+    string mapDataAsset = $"{mapName}Collision_Obj";
+
+    TextAsset txt = Managers.Resource.Load<TextAsset>(mapDataAsset);
+    StringReader reader = new StringReader(txt.text);
+
+    MinX = int.Parse(reader.ReadLine());
+    MaxX = int.Parse(reader.ReadLine());
+    MinY = int.Parse(reader.ReadLine());
+    MaxY = int.Parse(reader.ReadLine());
+
+    int xCount = MaxX - MinX + 1;
+    int yCount = MaxY - MinY + 1;
+    FCellObjCollisionTypes[,] collisionArray = new FCellObjCollisionTypes[xCount, yCount];
+
+    for (int y = 0; y < yCount; y++)
+    {
+      string line = reader.ReadLine();
+      for (int x = 0; x < xCount; x++)
+      {
+        switch (line[x])
+        {
+          case Define.MAPOBJ_TOOL_WALL:
+            collisionArray[x, y] = FCellObjCollisionTypes.Wall;
+            break;
+          case Define.MAPOBJ_TOOL_SEMI_WALL:
+            collisionArray[x, y] = FCellObjCollisionTypes.SemiWall;
+            break;
+          case Define.MAPOBJ_TOOL_TREE:
+            collisionArray[x, y] = FCellObjCollisionTypes.Tree;
+            break;
+          case Define.MAPOBJ_TOOL_ROCK:
+            collisionArray[x, y] = FCellObjCollisionTypes.Rock;
+            break;
+          case Define.MAPOBJ_TOOL_GAYSER:
+            collisionArray[x, y] = FCellObjCollisionTypes.Gayser;
             break;
         }
       }
@@ -193,15 +232,19 @@ public class MapManager
 
   private void RemoveObject(BaseObject obj)
   {
-    int extraCells = 0;
+    int extraCellsX = 0;
+    int extraCellsY = 0;
     if (obj != null)
-      extraCells = obj.ExtraCells;
+    {
+      extraCellsX = obj.ExtraCellsX;
+      extraCellsY = obj.ExtraCellsY;
 
+    }
     Vector3Int cellPos = obj.CellPos;
 
-    for (int dx = -extraCells; dx <= extraCells; dx++)
+    for (int dx = -extraCellsX; dx <= extraCellsX; dx++)
     {
-      for (int dy = -extraCells; dy <= extraCells; dy++)
+      for (int dy = -extraCellsY; dy <= extraCellsY; dy++)
       {
         Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
         BaseObject prev = GetObject(newCellPos);
@@ -214,20 +257,28 @@ public class MapManager
 
   public void AddObject(BaseObject obj, Vector3Int cellPos)
   {
-    int extraCells = 0;
+    int extraCellsX = 0;
+    int extraCellsY = 0;
     if (obj != null)
-      extraCells = obj.ExtraCells;
+    {
+      extraCellsX = obj.ExtraCellsX;
+      extraCellsY = obj.ExtraCellsY;
+    }
+      
     else return;
 
-    for (int dx = -extraCells; dx <= extraCells; dx++)
+    for (int dx = -extraCellsX; dx <= extraCellsX; dx++)
     {
-      for (int dy = -extraCells; dy <= extraCells; dy++)
+      for (int dy = -extraCellsY; dy <= extraCellsY; dy++)
       {
         Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
 
         BaseObject prev = GetObject(newCellPos);
-        if (prev != null && prev != obj)
-          Debug.LogWarning($"AddObject {obj}");
+        if (prev != null && prev != obj && prev as Structure)
+        {
+          Debug.LogError($"AddObject {obj}");
+          return;
+        }
 
         _cells[newCellPos] = obj;
       }
@@ -248,7 +299,7 @@ public class MapManager
     var result = _collision[cellPos.x, cellPos.y];
     return result;
   }
-  public FCellCollisionTypes GetTileObjCollisionType(Vector3Int cellPos)
+  public FCellObjCollisionTypes GetTileObjCollisionType(Vector3Int cellPos)
   {
     var result = _collision_obj[cellPos.x, cellPos.y];
     return result;

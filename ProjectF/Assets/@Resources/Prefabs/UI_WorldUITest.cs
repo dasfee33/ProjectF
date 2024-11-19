@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Define;
+using static COLOR;
 
 public class UI_WorldUITest : UI_Base
 {
@@ -40,12 +41,31 @@ public class UI_WorldUITest : UI_Base
 
   public void Move(PointerEventData evt)
   {
-    var camera = Camera.main;
-    Vector3 sceenDelta = new Vector3(evt.delta.x, evt.delta.y);
-    Vector3 worldDelta = camera.ScreenToWorldPoint(sceenDelta + camera.WorldToScreenPoint(Owner.transform.position)) -
-      Owner.transform.position;
+    var worldPos = Camera.main.ScreenToWorldPoint(evt.position);
+    worldPos.z = 0f;
 
-    Owner.transform.position += worldDelta;
+    //Lerp Position
+    var cellPos = Managers.Map.World2Cell(worldPos);
+    var cellWorldPos = Managers.Map.Cell2World(cellPos);
+    Owner.transform.position = cellWorldPos;
+
+    var cellX = Owner.data.extraCellX;
+    var cellY = Owner.data.extraCellY;
+    for (int dx = -cellX; dx <= cellX; dx++)
+    {
+      for (int dy = -cellY; dy <= cellY; dy++)
+      {
+        Vector3Int checkCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
+        BaseObject prev = Managers.Map.GetObject(checkCellPos);
+
+        if (prev != null && prev != Owner)
+        {
+          Owner.SetColor(COLOR.SMOKERED);
+          return;
+        }
+        else { Owner.SetColor(COLOR.SMOKEWHITE); return; }
+      }
+    }
   }
 
   public void Confirm(PointerEventData evt)

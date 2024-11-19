@@ -45,6 +45,12 @@ public class UI_TitleScene : UI_Scene
         //데이터 초기화
         Managers.Data.Init();
 
+        if(Managers.Game.LoadGame() == false)
+        {
+          Managers.Game.InitGame();
+          Managers.Game.SaveGame();
+        }
+
         //Managers.Scene.LoadScene(//TODO)
       }
     });

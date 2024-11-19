@@ -7,7 +7,8 @@ using Data;
 
 public class BaseObject : InitBase
 {
-  public int ExtraCells { get; set; } = 0;
+  public int ExtraCellsX { get; set; } = 0;
+  public int ExtraCellsY { get; set; } = 0;
   public ItemHolder droppedItem;
 
   public FObjectType ObjectType { get; protected set; } = FObjectType.None;

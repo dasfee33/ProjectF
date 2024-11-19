@@ -47,6 +47,9 @@ public class Warrior : Creature
 
     //SetOrAddJobPriority(FJob.Logging, 20);
 
+    Managers.GameDay.dayChanged -= ResetJobIsAble;
+    Managers.GameDay.dayChanged += ResetJobIsAble;
+
     _coai = StartCoroutine(CoUpdateAI());
     StartCoroutine(CoUpdateState());
 
@@ -63,7 +66,6 @@ public class Warrior : Creature
 
   protected override void UpdateIdle()
   {
-
     // Patrol
     {
       int patrolPercent = 10;

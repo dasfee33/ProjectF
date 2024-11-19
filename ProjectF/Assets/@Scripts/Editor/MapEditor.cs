@@ -74,13 +74,16 @@ public class MapEditor : MonoBehaviour
             TileBase tile = tm.GetTile(new Vector3Int(x, y, 0));
             if (tile != null)
             {
-              if (tile.name.Equals("Dev_objO"))
-                writer.Write(Define.MAP_TOOL_NONE);
-              else
-                writer.Write(Define.MAP_TOOL_SEMI_WALL);
+              if (tile.name.Equals("Dev_objTree"))
+                writer.Write(Define.MAPOBJ_TOOL_TREE);
+              else if (tile.name.Equals("Dev_objRock"))
+                writer.Write(Define.MAPOBJ_TOOL_ROCK);
+              else if (tile.name.Equals("Dev_objGayser"))
+                writer.Write(Define.MAPOBJ_TOOL_GAYSER);
+              else writer.Write(Define.MAPOBJ_TOOL_SEMI_WALL);
             }
             else
-              writer.Write(Define.MAP_TOOL_WALL);
+              writer.Write(Define.MAPOBJ_TOOL_WALL);
           }
           writer.WriteLine();
         }

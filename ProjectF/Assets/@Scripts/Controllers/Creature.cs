@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using System;
 using System.Linq;
@@ -35,7 +36,8 @@ public class Creature : BaseObject
 {
   public BaseObject Target { get; set; }
   public List<BaseObject> SupplyTargets { get; set; } = new List<BaseObject>();
-  private Dictionary<int, float> ItemHaveList = new Dictionary<int, float>();
+  [SerializedDictionary("itemId", "itemMass")]
+  public SerializedDictionary<int, float> ItemHaveList;
 
   //public List<BaseObject> SupplyStorage { get; set; } = new List<BaseObject>(); 
   public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
@@ -78,7 +80,7 @@ public class Creature : BaseObject
     else _target = target;
 
     Vector3 dir = (_target.transform.position - transform.position);
-    float distToTarget = Math.Max(0, dir.magnitude - _target.ExtraCells * 1f - ExtraCells * 1f); // TEMP
+    float distToTarget = Math.Max(0, dir.magnitude - _target.ExtraCellsX * 1f - ExtraCellsX * 1f); // TEMP
     return distToTarget * distToTarget;
   }
 
@@ -89,7 +91,7 @@ public class Creature : BaseObject
 
   
   public FJobPhase jobPhase = FJobPhase.None;
-  protected BaseObject supplyTarget;
+  public BaseObject supplyTarget;
 
   #region Stats
   [SerializeField] private float _maxHp;
@@ -226,6 +228,14 @@ public class Creature : BaseObject
     FJob tmpJob = (FJob)job;
     if (JobDic.TryGetValue(tmpJob, out var value))
       JobDic[tmpJob].IsAble = set;
+  }
+
+  public void ResetJobIsAble()
+  {
+    foreach(var job in JobDic)
+    {
+      job.Value.IsAble = true;
+    }
   }
 
   public float GetJobPriority(Enum job)
@@ -627,11 +637,13 @@ public class Creature : BaseObject
         ChaseOrAttackTarget(100, distance);
       }
     }
+
   }
 
   protected virtual void JobStore(float distance)
   {
     supplyTarget = jobSystem.CurrentRootJob;
+    var targetScr = Target as Storage;
     if (supplyTarget != null && CurrentSupply < SupplyCapacity)
     {
       ChaseOrAttackTarget(100, distance, supplyTarget);
@@ -639,13 +651,14 @@ public class Creature : BaseObject
     else
     {
       //들고 있는게 있어야 함 .. 없는데 이쪽으로 넘어오면 욕구 취소로 다음사람에게 넘김?
-      if (CurrentSupply > 0) ChaseOrAttackTarget(100, distance);
+      if (CurrentSupply > 0 && targetScr.CurCapacity < targetScr.MaxCapacity) ChaseOrAttackTarget(100, distance);
       else
       {
         SetJobIsAble(job, false);
         ResetJob();
       }
     }
+
   }
 
   protected virtual void JobSupply(float distance)
@@ -681,6 +694,11 @@ public class Creature : BaseObject
           {
             ChaseOrAttackTarget(100, distance, supplyTarget);
           }
+          else
+          {
+            SetJobIsAble(job, false);
+            ResetJob();
+          }
         }
       }
     }
@@ -688,6 +706,7 @@ public class Creature : BaseObject
     {
       ResetJob();
     }
+
   }
 
   #endregion

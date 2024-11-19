@@ -47,15 +47,19 @@ public class Structure : BaseObject
   }
 
   #region Stats
-  private float _hp { get; set; }
-  private float _maxHp { get; set; }
-  private float _workTime { get; set; }
-  private float _supplyItemid { get; set; }
+  private float _hp;
+  private float _maxHp;
+  private float _workTime;
+  private float _supplyItemid;
+  private float _curCapacity;
+  private float _maxCapacity;
 
   public float Hp { get { return _hp; }set { _hp = value; } }
   public float MaxHp { get { return _maxHp; }set { _maxHp = value; } }
   public float WorkTime { get { return _workTime; }set { _workTime = value; } }
   public float SupplyItemId { get { return _supplyItemid; }set { _supplyItemid = value; } }
+  public float CurCapacity { get { return _curCapacity; }set { _curCapacity = value; } }
+  public float MaxCapacity { get { return _maxCapacity; }set { _maxCapacity = value; } }
   #endregion
 
   public override bool Init()
@@ -77,6 +81,9 @@ public class Structure : BaseObject
     _hp = data.maxHp;
     _maxHp = data.maxHp;
     _workTime = data.WorkTime;
+    _maxCapacity = data.maxCapacity;
+    ExtraCellsX = data.extraCellX;
+    ExtraCellsY = data.extraCellY;
 
     gameObject.name = $"{data.DataId}_{data.Name}";
 

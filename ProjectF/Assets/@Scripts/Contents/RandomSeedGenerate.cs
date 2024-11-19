@@ -66,33 +66,49 @@ public class RandomSeedGenerate
         var cellPos = new Vector3Int(x, y, 0);
         int X = x - width / 2;
         int Y = y - height / 2;
-        FCellCollisionTypes cellType = Managers.Map.GetTileObjCollisionType(new Vector3Int(x, y));
+        FCellObjCollisionTypes cellType = Managers.Map.GetTileObjCollisionType(new Vector3Int(x, y));
         if (X <= -width / 2 || X >= width / 2) continue;
         if (Y <= -height / 2 || Y >= height / 2) continue;
-        if (cellType == FCellCollisionTypes.Wall || cellType == FCellCollisionTypes.SemiWall) continue;
+        if (cellType == FCellObjCollisionTypes.Wall || cellType == FCellObjCollisionTypes.SemiWall) continue;
         
         point.Set(X, -Y, 0);
 
         var pos = Managers.Map.Cell2World(point);
-        
-        BaseObject bo = GetBiomObject(pos, cellPos, noiseArr[x, y]);
-        Managers.Map.AddObject(bo, cellPos);
+
+        BaseObject bo = GetBiomObject(cellType, pos, point, noiseArr[x, y]);
+        //Managers.Map.AddObject(bo, cellPos);
       }
     }
   }
 
-  private BaseObject GetBiomObject(Vector3 pos, Vector3Int cellPos, float noiseValue)
+  private BaseObject GetBiomObject(FCellObjCollisionTypes type, Vector3 pos, Vector3Int point, float noiseValue)
   {
-    BaseObject bo = Managers.Map.NearGetObject(pos, cellPos);
+    BaseObject bo = Managers.Map.NearGetObject(pos, point);
     if (bo != null)
       return null;
     switch(noiseValue)
     {
       case <= 0.3f:
-        bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL1, "Tree1");
+        switch(type)
+        {
+          case FCellObjCollisionTypes.Tree:
+            bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL1, "Tree1");
+            break;
+          case FCellObjCollisionTypes.Rock:
+            bo = Managers.Object.Spawn<Env>(pos, ENV_ROCK_NORMAL1, "Rock1");
+            break;
+        }
+        
         break;
       case <= 0.4f:
-        bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL2, "Tree2");
+        switch(type)
+        {
+          case FCellObjCollisionTypes.Tree:
+            bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL2, "Tree2");
+            break;
+          case FCellObjCollisionTypes.Rock:
+            break;
+        }
         break;
     }
     

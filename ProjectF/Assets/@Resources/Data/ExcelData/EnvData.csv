@@ -1,3 +1,4 @@
-﻿DataID,Name,DescriptionTextID,Label,maxHp,RegenTime,Idle,Type,Hurt,Dead,DropItemid,Supplyitemid
+DataID,Name,DescriptionTextID,Label,maxHp,RegenTime,Idle,Type,Hurt,Dead,DropItemid,Supplyitemid
 100000,Tree1,참나무,Env,100,50,tree1,Tree,treeHurt1,treeDead1,400000,-1
 100001,Tree2,참나무,Env,150,100,tree2,Tree,treeHurt2,treeDead2,400000,-1
+100002,Rock2,바위,Env,200,500,,Rock,,,,

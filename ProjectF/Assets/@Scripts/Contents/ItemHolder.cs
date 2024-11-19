@@ -114,8 +114,9 @@ public class ItemHolder : BaseObject
       //  }
       //}
       //else attackOwner.SupplyStorage.Add(this);
-    }
 
+    }
     Managers.Object.Despawn(this);
+
   }
 }
