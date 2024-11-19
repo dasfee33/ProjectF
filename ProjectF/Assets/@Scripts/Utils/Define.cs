@@ -101,6 +101,7 @@ public static class Define
     Base,
     Electronic,
     Station,
+    PlowBowl,
     BuildObject,
   }
 
@@ -113,6 +114,7 @@ public static class Define
     Bed,
     Station,
     BuildObject,
+    PlowBowl,
   }
 
   public enum FCreatureType
@@ -282,6 +284,7 @@ public static class Define
   public const int STRUCTURE_CHEST_NORMAL = 103;
   public const int STRUCTURE_BED_NORMAL = 102;
   public const int STRUCTURE_STATION_NORMAL = 104;
+  public const int STRUCTURE_PLOWBOWL_NORMAL = 105;
 
   public const string STRUCTURE_BUILD = "_build";
 }

@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "TouchPosition",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "9a2cfbca-ed83-42aa-8821-eb3c13ac3796",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

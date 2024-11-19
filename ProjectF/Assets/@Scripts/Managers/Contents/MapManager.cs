@@ -274,7 +274,7 @@ public class MapManager
         Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
 
         BaseObject prev = GetObject(newCellPos);
-        if (prev != null && prev != obj && prev as Structure)
+        if (prev != null && prev != obj && prev is Structure)
         {
           Debug.LogError($"AddObject {obj}");
           return;

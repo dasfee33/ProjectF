@@ -7,6 +7,7 @@ public class InputManager
   public InputSystem inputSystem;
   public event Action<Vector2, float> startTouch;
   public event Action<Vector2, float> endTouch;
+  public event Action<BaseObject> touchObject;
 
   public event Action<Vector2> onDragging;
   //public Vector2 OnDragging
@@ -25,8 +26,28 @@ public class InputManager
 
   private void StartTouch(InputAction.CallbackContext context)
   {
+    Vector2 touchPos = inputSystem.Touch.TouchPosition.ReadValue<Vector2>();
+    TriggerAtTouchPos(touchPos);
+
     if (startTouch != null)
       startTouch.Invoke(inputSystem.Touch.TouchPosition.ReadValue<Vector2>(), (float)context.startTime);
+  }
+
+  private void TriggerAtTouchPos(Vector2 screenPos)
+  {
+    Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+    worldPos.z = 0f;
+
+    RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+
+    if(hit.collider != null && hit.collider.isTrigger)
+    {
+      var scr = hit.collider.gameObject.GetComponent<BaseObject>();
+      if (scr != null)
+      {
+        touchObject.Invoke(scr);
+      }
+    }
   }
 
   private void EndTouch(InputAction.CallbackContext context)

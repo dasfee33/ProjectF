@@ -132,8 +132,35 @@
       "supplyItemid": null,
       "supplyItemMass": null,
       "maxCapacity": 0.0,
-      "extraCellX": 1,
-      "extraCellY": 1
+      "extraCellX": 0,
+      "extraCellY": 0
+    },
+    {
+      "DataId": 105,
+      "Name": "PlowBowl",
+      "DescriptionTextID": "식물을 기를 수 있는 그릇",
+      "Label": "Structure",
+      "type": "PlowBowl",
+      "subType": "PlowBowl",
+      "Sprite": "PlowBowlSprite",
+      "maxHp": 100.0,
+      "WorkTime": 5.0,
+      "BuildTime": 10.0,
+      "Idle": null,
+      "WorkStart": null,
+      "Work": null,
+      "WorkEnd": null,
+      "buildItemId": [
+        400000
+      ],
+      "buildItemMass": [
+        10.0
+      ],
+      "supplyItemid": null,
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0
     }
   ]
 }

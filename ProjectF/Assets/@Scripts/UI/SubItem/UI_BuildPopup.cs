@@ -42,6 +42,7 @@ public class UI_BuildPopup : UI_Popup
       Managers.Object.PossFurnitures.Add(STRUCTURE_BED_NORMAL);
       Managers.Object.PossFurnitures.Add(STRUCTURE_CHEST_NORMAL);
       Managers.Object.PossPipes.Add(STRUCTURE_TOILET_NORMAL);
+      Managers.Object.PossCooks.Add(STRUCTURE_PLOWBOWL_NORMAL);
     }
 
     return true;
@@ -97,6 +98,15 @@ public class UI_BuildPopup : UI_Popup
         break;
       case "Station":
         foreach(var station in Managers.Object.PossStations)
+        {
+          var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
+          var objScr = obj.GetComponent<UI_BuildPopup_Item>();
+          obj.transform.SetParent(GetObject((int)Objects.Content).transform, true);
+          objScr.SetInfo(station);
+        }
+        break;
+      case "Cook":
+        foreach (var station in Managers.Object.PossCooks)
         {
           var obj = Managers.Resource.Instantiate("UI_BuildPopup_Item");
           var objScr = obj.GetComponent<UI_BuildPopup_Item>();

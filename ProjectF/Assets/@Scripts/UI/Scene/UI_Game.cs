@@ -18,6 +18,7 @@ public class UI_Game : UI_Scene
     Pipe,
     Electronic,
     Station,
+    Cook,
 
     Priority,
   }
@@ -55,6 +56,7 @@ public class UI_Game : UI_Scene
     GetButton((int)Buttons.Pipe).gameObject.BindEvent(ClickPipe, FUIEvent.Click);
     GetButton((int)Buttons.Electronic).gameObject.BindEvent(ClickElectronic, FUIEvent.Click);
     GetButton((int)Buttons.Station).gameObject.BindEvent(ClickStation, FUIEvent.Click);
+    GetButton((int)Buttons.Cook).gameObject.BindEvent(ClickCook, FUIEvent.Click);
 
     GetButton((int)Buttons.Priority).gameObject.BindEvent(ClickPriority, FUIEvent.Click);
 
@@ -138,6 +140,21 @@ public class UI_Game : UI_Scene
   }
 
   private void ClickStation(PointerEventData evt)
+  {
+    if (build == null)
+    {
+      build = Managers.UI.MakeSubItem<UI_BuildPopup>(this.transform);
+      build.Refresh(evt.pointerClick.name);
+    }
+    else
+    {
+      if (build.isActiveAndEnabled && evt.pointerClick.name.Equals(build.current)) build.gameObject.SetActive(false);
+      else build.gameObject.SetActive(true);
+      build.Refresh(evt.pointerClick.name);
+    }
+  }
+
+  private void ClickCook(PointerEventData evt)
   {
     if (build == null)
     {

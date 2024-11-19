@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8658043550507998669}
   - component: {fileID: 3363301179222700552}
   - component: {fileID: -7710019357880605499}
+  - component: {fileID: 7941811552968867111}
   m_Layer: 0
   m_Name: Toilet
   m_TagString: Untagged
@@ -137,15 +138,64 @@ MonoBehaviour:
     Sprite: 
     maxHp: 0
     WorkTime: 0
+    BuildTime: 0
     Idle: 
     WorkStart: 
     Work: 
     WorkEnd: 
     buildItemId: 
-    buildItemCount: 
+    buildItemMass: []
     supplyItemid: 
-    supplyItemCount: 
+    supplyItemMass: []
+    maxCapacity: 0
+    extraCellX: 0
+    extraCellY: 0
   Storage: []
+--- !u!61 &7941811552968867111
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213364169568507058}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.001406461, y: 0.32088852}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.05}
+    oldSize: {x: 0.96, y: 0.96}
+    newSize: {x: 0.96, y: 0.96}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6308848, y: 0.6702663}
+  m_EdgeRadius: 0
 --- !u!1 &1910510718642538526
 GameObject:
   m_ObjectHideFlags: 0

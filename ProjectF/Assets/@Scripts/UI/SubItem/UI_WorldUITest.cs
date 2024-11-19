@@ -39,15 +39,22 @@ public class UI_WorldUITest : UI_Base
 
   }
 
+  Vector3 diff;
   public void Move(PointerEventData evt)
   {
-    var worldPos = Camera.main.ScreenToWorldPoint(evt.position);
+    var camera = Camera.main;
+    if (diff == Vector3.zero)
+      diff = Owner.transform.position - this.transform.position;
+
+    var worldPos = camera.ScreenToWorldPoint(evt.position);
     worldPos.z = 0f;
 
     //Lerp Position
     var cellPos = Managers.Map.World2Cell(worldPos);
     var cellWorldPos = Managers.Map.Cell2World(cellPos);
-    Owner.transform.position = cellWorldPos;
+    Owner.transform.position = cellWorldPos + Managers.Map.LerpObjectPos + diff;
+
+    var ownerCellPos = Managers.Map.World2Cell(cellWorldPos + diff);
 
     var cellX = Owner.data.extraCellX;
     var cellY = Owner.data.extraCellY;
@@ -55,7 +62,7 @@ public class UI_WorldUITest : UI_Base
     {
       for (int dy = -cellY; dy <= cellY; dy++)
       {
-        Vector3Int checkCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
+        Vector3Int checkCellPos = new Vector3Int(ownerCellPos.x + dx, ownerCellPos.y + dy);
         BaseObject prev = Managers.Map.GetObject(checkCellPos);
 
         if (prev != null && prev != Owner)
@@ -70,8 +77,8 @@ public class UI_WorldUITest : UI_Base
 
   public void Confirm(PointerEventData evt)
   {
-    var cellPos = Managers.Map.World2Cell(Owner.transform.position);
-    Owner.transform.position = Managers.Map.Cell2World(cellPos);
+    //var cellPos = Managers.Map.World2Cell(Owner.transform.position);
+    //Owner.transform.position = Managers.Map.Cell2World(cellPos);
 
     Owner.setFlag = true;
 

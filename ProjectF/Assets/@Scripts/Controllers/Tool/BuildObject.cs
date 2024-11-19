@@ -168,7 +168,7 @@ public class BuildObject : Structure
     Worker.Target = null;
     Worker.jobSystem.supplyTargets.Clear();
     Worker = null;
-    Managers.Object.Spawn<Structure>(this.transform.position, dataTemplateID, data.Name);
+    Managers.Object.Spawn<Structure>(this.transform.position - Managers.Map.LerpObjectPos, dataTemplateID, data.Name);
     Managers.Object.Despawn(this);
   }
 }

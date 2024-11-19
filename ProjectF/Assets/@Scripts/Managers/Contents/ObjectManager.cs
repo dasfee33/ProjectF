@@ -23,6 +23,7 @@ public class ObjectManager
   public List<int> PossBases { get; } = new List<int>();
   public List<int> PossElectronics { get; } = new List<int>();
   public List<int> PossStations { get; } = new List<int>();
+  public List<int> PossCooks { get; } = new List<int>();
 
   public Transform GetRootTransform(string name)
   {
@@ -47,7 +48,7 @@ public class ObjectManager
     GameObject go = Managers.Resource.Instantiate(prefabName);
     go.name = prefabName;
     var cellPos = Managers.Map.World2Cell(position);
-    go.transform.position = Managers.Map.Cell2World(cellPos);
+    go.transform.position = Managers.Map.Cell2World(cellPos) + Managers.Map.LerpObjectPos;
      //= position;// + Managers.Map.LerpObjectPos;
 
     BaseObject obj = go.GetComponent<BaseObject>();
