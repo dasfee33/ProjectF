@@ -287,6 +287,9 @@ public static class Define
   public const int STRUCTURE_PLOWBOWL_NORMAL = 105;
 
   public const string STRUCTURE_BUILD = "_build";
+  public const string INFODESC = "infodesc";
+  public const string INFOTEXT = "infotext";
+  public const string INFOTITLE = "Title";
 }
 
 public class JobPriority

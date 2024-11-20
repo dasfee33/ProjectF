@@ -103,6 +103,8 @@ public class Warrior : Creature
 
     if (Target.IsValid() == false)
     {
+      if (CreatureMoveState == FCreatureMoveState.Job) CreatureState = FCreatureState.Move;
+
       FindPathAndMoveToCellPos(_destPos, 3);
 
       if(LerpCellPosCompleted)

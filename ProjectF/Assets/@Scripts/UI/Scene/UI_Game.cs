@@ -8,6 +8,11 @@ using static Define;
 
 public class UI_Game : UI_Scene
 {
+  enum Objects
+  {
+    UI_Info,
+  }
+
   enum Buttons
   {
     Fast,
@@ -47,6 +52,7 @@ public class UI_Game : UI_Scene
     BindButtons(typeof(Buttons));
     BindImages(typeof(Images));
     BindTexts(typeof(Texts));
+    BindObjects(typeof(Objects));
 
     GetButton((int)Buttons.Fast).gameObject.BindEvent(Test, FUIEvent.Click);
     GetButton((int)Buttons.Slow).gameObject.BindEvent(Test2, FUIEvent.Click);
@@ -64,7 +70,17 @@ public class UI_Game : UI_Scene
     PeriodMoon = GetImage((int)Images.PeriodMoon);
     PeriodText = GetText((int)Texts.PeriodText);
 
+    Managers.FInput.touchObject -= CallbackSomething;
+    Managers.FInput.touchObject += CallbackSomething;
+
     return true;
+  }
+
+  public void CallbackSomething(BaseObject obj)
+  {
+    var info = GetObject((int)Objects.UI_Info).gameObject.GetComponent<UI_Info>();
+    if (!info.gameObject.activeSelf) info.gameObject.SetActive(true);
+    info.SetInfo(obj);
   }
 
   public void Test(PointerEventData evt)
