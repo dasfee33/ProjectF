@@ -27,6 +27,34 @@
       "Item4": 0,
       "Prob5": 0,
       "Item5": 0
+    },
+    {
+      "DataId": 100002,
+      "RewardExp": 10,
+      "Prob1": 70,
+      "Item1": 400001,
+      "Prob2": 0,
+      "Item2": 0,
+      "Prob3": 0,
+      "Item3": 0,
+      "Prob4": 0,
+      "Item4": 0,
+      "Prob5": 0,
+      "Item5": 0
+    },
+    {
+      "DataId": 100003,
+      "RewardExp": 10,
+      "Prob1": 70,
+      "Item1": 400002,
+      "Prob2": 30,
+      "Item2": 400003,
+      "Prob3": 0,
+      "Item3": 0,
+      "Prob4": 0,
+      "Item4": 0,
+      "Prob5": 0,
+      "Item5": 0
     }
   ]
 }

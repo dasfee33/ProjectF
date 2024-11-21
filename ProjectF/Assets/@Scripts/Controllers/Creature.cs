@@ -193,6 +193,7 @@ public class Creature : BaseObject
       }
     }
     CurrentSupply -= result;
+    Managers.Object.RemoveItem(dataID, mass);
     return result;
   }
   #endregion

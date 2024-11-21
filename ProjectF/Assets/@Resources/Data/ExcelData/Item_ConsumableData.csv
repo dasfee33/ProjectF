@@ -1,2 +1,5 @@
-﻿DataId,Name,DescriptionTextId,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Value,CoolTime,SupplyJob
-400000,wood_normal,구하기 쉬운 일반 목재,Material,Wood,Consumable,Architecture,None,Normal,99,10,0,0,Make
+DataId,Name,DescriptionTextID,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Value,CoolTime,SupplyJob
+400000,wood_normal,,Material,Wood,Consumable,Architecture,None,Normal,99,10,,,Make
+400001,stone_normal,,Material,Stone,Consumable,Architecture,None,Normal,99,40,,,Make
+400002,kick3,,Food,Veget,Consumable,Cook,None,Normal,99,5,,,Cook
+400003,kick_seed,,Seed,Seed,Consumable,Plow,None,Normal,99,5,,,Plow

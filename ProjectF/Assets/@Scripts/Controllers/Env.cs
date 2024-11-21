@@ -2,11 +2,13 @@ using System;
 using UnityEngine;
 using static Define;
 using Data;
+using System.Collections;
 
 public class Env : BaseObject
 {
+  public bool harvestIsReady = false;
   private Vector3 dropPos;
-  private EnvData data;
+  protected EnvData data;
   private FEnvState envState = FEnvState.Idle;
   public FEnvState EnvState
   {
@@ -55,7 +57,7 @@ public class Env : BaseObject
     regenTIme = data.RegenTime;
     if (Enum.TryParse(data.type, out FEnvType result))
       EnvType = result;
-    
+
   }
 
   private void UpdateJob()
@@ -63,14 +65,34 @@ public class Env : BaseObject
     switch(envType)
     {
       case FEnvType.Tree:
+        harvestIsReady = true;
         workableJob = FJob.Logging;
         break;
       case FEnvType.Rock:
+        harvestIsReady = true;
         workableJob = FJob.Dig;
+        break;
+      case FEnvType.Plant:
+        workableJob = FJob.Plow;
+        int default_growth = UnityEngine.Random.Range(0, 6);
+        SpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"kick{default_growth}");
+        StartCoroutine(Growth(default_growth));
         break;
 
       //TODO;
     }
+  }
+
+  private IEnumerator Growth(int growth)
+  {
+    var g = growth;
+    while (g < 5)
+    {
+      yield return new WaitForSeconds(data.GrowthTime / 5);
+      g += 1;
+      SpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"kick{g}");
+    }
+    harvestIsReady = true;
   }
 
   protected override void UpdateAnimation()
@@ -131,7 +153,7 @@ public class Env : BaseObject
       }
       dropItem = Managers.Object.Spawn<ItemHolder>(transform.position, dropItemId, addToCell: false);
       dropItem.Owner = this;
-      dropItem.SetInfo(0, rewardData.itemTemplateId, dropPos);
+      dropItem.SetInfo(-999, rewardData.itemTemplateId, dropPos);
     }
   }
 
@@ -150,6 +172,7 @@ public class Env : BaseObject
     
 
     EnvState = FEnvState.Dead;
+    if (Animator == null) OnDespawn();
   }
 
   private RewardData GetRandomReward()

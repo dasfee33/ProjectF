@@ -57,7 +57,7 @@ public class ItemHolder : BaseObject
   private void Arrived()
   {
     //이미 어떤 아이템이 드랍될 경우 그 위치로 떨어지게 하고 스택 증가 
-    if (Owner.droppedItem != null)
+    if (Owner.droppedItem != null && Owner.droppedItem.dataTemplateID == this.dataTemplateID)
     {
       if (Owner.droppedItem.stack < Owner.droppedItem.data.maxStack)
       {

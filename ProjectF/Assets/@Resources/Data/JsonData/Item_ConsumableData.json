@@ -6,7 +6,7 @@
       "SupplyJob": 11,
       "DataId": 400000,
       "Name": "wood_normal",
-      "DescirptionTextID": "구하기 쉬운 일반 목재",
+      "DescirptionTextID": null,
       "Label": "Material",
       "type": "Wood",
       "ItemGroupType": 2,
@@ -15,6 +15,54 @@
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 10.0
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": 11,
+      "DataId": 400001,
+      "Name": "stone_normal",
+      "DescirptionTextID": null,
+      "Label": "Material",
+      "type": "Stone",
+      "ItemGroupType": 2,
+      "ItemType": 1,
+      "ItemSubType": 0,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 40.0
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": 5,
+      "DataId": 400002,
+      "Name": "kick3",
+      "DescirptionTextID": null,
+      "Label": "Food",
+      "type": "Veget",
+      "ItemGroupType": 2,
+      "ItemType": 2,
+      "ItemSubType": 0,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 5.0
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": 9,
+      "DataId": 400003,
+      "Name": "kick_seed",
+      "DescirptionTextID": null,
+      "Label": "Seed",
+      "type": "Seed",
+      "ItemGroupType": 2,
+      "ItemType": 3,
+      "ItemSubType": 0,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 5.0
     }
   ]
 }

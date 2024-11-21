@@ -91,6 +91,7 @@ public static class Define
     None,
     Tree,
     Rock,
+    Plant,
   }
 
   public enum FStructureType
@@ -216,6 +217,8 @@ public static class Define
   {
     None,
     Architecture,
+    Cook,
+    Plow,
   }
 
   public enum FItemSubType
@@ -246,6 +249,7 @@ public static class Define
     Tree,
     Rock,
     Gayser,
+    KickPlant,
   }
 
   //safe area 대응 
@@ -271,6 +275,7 @@ public static class Define
   public const char MAPOBJ_TOOL_TREE = '2';
   public const char MAPOBJ_TOOL_ROCK = '3';
   public const char MAPOBJ_TOOL_GAYSER = '4';
+  public const char MAPOBJ_TOOL_KICKPLANT = '5';
 
   public const int RESEARCH_START = 4000;
 
@@ -278,6 +283,7 @@ public static class Define
   public const int ENV_TREE_NORMAL1 = 100000;
   public const int ENV_TREE_NORMAL2 = 100001;
   public const int ENV_ROCK_NORMAL1 = 100002;
+  public const int ENV_PLANT_KICK = 100003;
   
 
   public const int STRUCTURE_TOILET_NORMAL = 100;

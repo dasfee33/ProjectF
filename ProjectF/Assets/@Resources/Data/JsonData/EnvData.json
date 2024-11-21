@@ -6,6 +6,7 @@
       "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 100.0,
+      "GrowthTime": 0.0,
       "RegenTime": 50.0,
       "Idle": "tree1",
       "type": "Tree",
@@ -20,6 +21,7 @@
       "DescriptionTextID": "참나무",
       "Label": "Env",
       "maxHp": 150.0,
+      "GrowthTime": 0.0,
       "RegenTime": 100.0,
       "Idle": "tree2",
       "type": "Tree",
@@ -34,13 +36,29 @@
       "DescriptionTextID": "바위",
       "Label": "Env",
       "maxHp": 200.0,
+      "GrowthTime": 0.0,
       "RegenTime": 500.0,
       "Idle": null,
       "type": "Rock",
       "Hurt": null,
       "Dead": null,
-      "DropItemid": 0,
+      "DropItemid": 400001,
       "Supplyitemid": 0
+    },
+    {
+      "DataId": 100003,
+      "Name": "KickPlant",
+      "DescriptionTextID": "끼익 식물",
+      "Label": "Env",
+      "maxHp": 100.0,
+      "GrowthTime": 500.0,
+      "RegenTime": 0.0,
+      "Idle": null,
+      "type": "Plant",
+      "Hurt": null,
+      "Dead": null,
+      "DropItemid": 400002,
+      "Supplyitemid": -1
     }
   ]
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using TMPro;
 using static Define;
 using static Util;
 
@@ -24,13 +25,13 @@ public class UI_Info : UI_Popup
   }
 
   private GameObject infoContentDesc;
-  private GameObject infoContentText;
+  private TextMeshProUGUI infoContentText;
 
   private GameObject effectContentDesc;
-  private GameObject effectContentText;
+  private TextMeshProUGUI effectContentText;
 
   private GameObject descContentDesc;
-  private GameObject descContentText;
+  private TextMeshProUGUI descContentText;
 
 
   public override bool Init()
@@ -44,15 +45,15 @@ public class UI_Info : UI_Popup
 
     FindChild(GetObject((int)Objects.infoContent), INFOTITLE, true).BindEvent(ClickInfoContent, FUIEvent.Click);
     infoContentDesc = FindChild(GetObject((int)Objects.infoContent), INFODESC, true);
-    infoContentText = FindChild(GetObject((int)Objects.infoContent), INFOTEXT, true);
+    infoContentText = FindChild(GetObject((int)Objects.infoContent), INFOTEXT, true).GetComponent<TextMeshProUGUI>();
 
     FindChild(GetObject((int)Objects.effectContent), INFOTITLE, true).BindEvent(ClickEffectContent, FUIEvent.Click);
     effectContentDesc = FindChild(GetObject((int)Objects.effectContent), INFODESC, true);
-    effectContentText = FindChild(GetObject((int)Objects.effectContent), INFOTEXT, true);
+    effectContentText = FindChild(GetObject((int)Objects.effectContent), INFOTEXT, true).GetComponent<TextMeshProUGUI>();
 
     FindChild(GetObject((int)Objects.descContent), INFOTITLE, true).BindEvent(ClickDescContent, FUIEvent.Click);
     descContentDesc = FindChild(GetObject((int)Objects.descContent), INFODESC, true);
-    descContentText = FindChild(GetObject((int)Objects.descContent), INFOTEXT, true);
+    descContentText = FindChild(GetObject((int)Objects.descContent), INFOTEXT, true).GetComponent<TextMeshProUGUI>();
 
     return true;
   }
@@ -69,14 +70,15 @@ public class UI_Info : UI_Popup
 
     if (!infoContentDesc.activeSelf)
     {
-      //infoContentDesc.SetActive(true);
-      rect.sizeDelta = new Vector2(defaultSize.x, 0f);
-      rect.DOSizeDelta(defaultSize, 1f).SetEase(Ease.OutQuad).OnComplete(() => infoContentDesc.SetActive(true));
+      infoContentDesc.SetActive(true);
+      //rect.sizeDelta = new Vector2(defaultSize.x, 0f);
+      //rect.DOSizeDelta(defaultSize, 1f).SetEase(Ease.OutQuad).OnComplete(() => infoContentDesc.SetActive(true));
     }
     else
     {
-      var foldSizeDelta = new Vector2(defaultSize.x, 0f);
-      rect.DOSizeDelta(foldSizeDelta, 1f).SetEase(Ease.OutQuad).OnComplete(() => infoContentDesc.SetActive(false)); ;
+      infoContentDesc.SetActive(false);
+      //var foldSizeDelta = new Vector2(defaultSize.x, 0f);
+      //rect.DOSizeDelta(foldSizeDelta, 1f).SetEase(Ease.OutQuad).OnComplete(() => infoContentDesc.SetActive(false)); ;
     }
   }
 
@@ -92,6 +94,10 @@ public class UI_Info : UI_Popup
 
   public void SetInfo(BaseObject obj)
   {
-
+    Structure structure = obj as Structure;
+    if(structure != null)
+    {
+      infoContentText.text = structure.data.DescriptionTextID;
+    }
   }
 }

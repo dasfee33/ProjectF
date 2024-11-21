@@ -1,3 +1,5 @@
-﻿DataId,RewardExp,Prob1,Item1,Prob2,Item2,Prob3,Item3,Prob4,Item4,Prob5,Item5
+DataId,RewardExp,Prob1,Item1,Prob2,Item2,Prob3,Item3,Prob4,Item4,Prob5,Item5
 100000,10,80,400000,0,0,0,0,0,0,0,0
 100001,10,80,400000,0,0,0,0,0,0,0,0
+100002,10,70,400001,0,0,0,0,0,0,0,0
+100003,10,70,400002,30,400003,,,,,,

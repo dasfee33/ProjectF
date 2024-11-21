@@ -172,6 +172,9 @@ public class MapManager
           case Define.MAPOBJ_TOOL_ROCK:
             collisionArray[x, y] = FCellObjCollisionTypes.Rock;
             break;
+          case Define.MAPOBJ_TOOL_KICKPLANT:
+            collisionArray[x, y] = FCellObjCollisionTypes.KickPlant;
+            break;
           case Define.MAPOBJ_TOOL_GAYSER:
             collisionArray[x, y] = FCellObjCollisionTypes.Gayser;
             break;

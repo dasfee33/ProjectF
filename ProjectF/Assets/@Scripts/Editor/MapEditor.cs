@@ -80,6 +80,8 @@ public class MapEditor : MonoBehaviour
                 writer.Write(Define.MAPOBJ_TOOL_ROCK);
               else if (tile.name.Equals("Dev_objGayser"))
                 writer.Write(Define.MAPOBJ_TOOL_GAYSER);
+              else if (tile.name.Equals("Dev_objKick"))
+                writer.Write(Define.MAPOBJ_TOOL_KICKPLANT);
               else writer.Write(Define.MAPOBJ_TOOL_SEMI_WALL);
             }
             else

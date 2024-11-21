@@ -111,6 +111,7 @@ namespace Data
     public string DescriptionTextID;
     public string Label;
     public float maxHp;
+    public float GrowthTime;
     public float RegenTime;
 
     public string Idle;

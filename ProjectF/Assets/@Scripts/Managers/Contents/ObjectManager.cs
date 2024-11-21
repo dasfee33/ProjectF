@@ -8,6 +8,7 @@ public class ObjectManager
   public List<Env> Envs { get; } = new List<Env> ();
   public List<Structure> Structures { get; } = new List<Structure> ();
   public List<ItemHolder> ItemHolders { get; } = new List<ItemHolder> ();
+  public Dictionary<int, float> ItemStorage { get; } = new Dictionary<int, float> ();
   public List<BuildObject> BuildObjects { get; } = new List<BuildObject> ();
 
   public List<BaseObject> Workables { get; } = new List<BaseObject>();
@@ -83,7 +84,7 @@ public class ObjectManager
       obj.transform.parent = ItemHolderRoot;
       ItemHolder itemholder = obj as ItemHolder;
       ItemHolders.Add(itemholder);
-
+      AddItem(itemholder);
     }
     else if (obj.ObjectType == FObjectType.Structure)
     {
@@ -157,6 +158,7 @@ public class ObjectManager
     {
       ItemHolder itemHolder = obj as ItemHolder;
       ItemHolders.Remove(itemHolder);
+      RemoveItem(itemHolder);
     }
     else if (obj.ObjectType == FObjectType.Structure)
     {
@@ -205,6 +207,7 @@ public class ObjectManager
     {
       ItemHolder itemHolder = obj as ItemHolder;
       ItemHolders.Remove(itemHolder);
+      RemoveItem(itemHolder);
     }
     else if (obj.ObjectType == FObjectType.Structure)
     {
@@ -219,5 +222,42 @@ public class ObjectManager
     if(bo == obj) Managers.Map.ClearObject(cellPos);
 
     Managers.Resource.Destroy(obj.gameObject);
+  }
+
+  public void AddItem(ItemHolder item)
+  {
+    if (ItemStorage.ContainsKey(item.dataTemplateID))
+      ItemStorage[item.dataTemplateID] += item.mass;
+    else ItemStorage.Add(item.dataTemplateID, item.mass);
+  }
+
+  public void AddItem(ItemHolder item, float mass)
+  {
+    ItemStorage[item.dataTemplateID] += mass;
+  }
+
+  public void AddItem(int id, float mass)
+  {
+    ItemStorage[id] += mass;
+  }
+
+  public void RemoveItem(ItemHolder item)
+  {
+    if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
+    ItemStorage[item.dataTemplateID] -= item.mass;
+    if (ItemStorage[item.dataTemplateID] < 0) ItemStorage.Remove(item.dataTemplateID);
+  }
+
+  public void RemoveItem(ItemHolder item, float mass)
+  {
+    if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
+    ItemStorage[item.dataTemplateID] -= mass;
+    if (ItemStorage[item.dataTemplateID] < 0) ItemStorage.Remove(item.dataTemplateID);
+  }
+
+  public void RemoveItem(int id, float mass)
+  {
+    if (!ItemStorage.ContainsKey(id)) return;
+    ItemStorage[id] -= mass;
   }
 }
