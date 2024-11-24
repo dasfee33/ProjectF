@@ -84,6 +84,7 @@ public class Structure : BaseObject
     _maxCapacity = data.maxCapacity;
     ExtraCellsX = data.extraCellX;
     ExtraCellsY = data.extraCellY;
+    if (data.option == 1) Option = true;
 
     gameObject.name = $"{data.DataId}_{data.Name}";
 

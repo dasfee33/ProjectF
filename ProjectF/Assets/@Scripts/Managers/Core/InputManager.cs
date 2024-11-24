@@ -8,6 +8,7 @@ public class InputManager
   public event Action<Vector2, float> startTouch;
   public event Action<Vector2, float> endTouch;
   public event Action<BaseObject> touchObject;
+  public event Action nonTouchObject;
 
   public event Action<Vector2> onDragging;
   //public Vector2 OnDragging
@@ -47,6 +48,7 @@ public class InputManager
       {
         touchObject.Invoke(scr);
       }
+      else nonTouchObject.Invoke();
     }
   }
 

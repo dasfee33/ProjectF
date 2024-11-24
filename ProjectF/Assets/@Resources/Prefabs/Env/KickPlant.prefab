@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876913073606047425}
   - component: {fileID: 5982702473277080865}
-  - component: {fileID: -2232973111813590370}
+  - component: {fileID: -1719744050395508438}
   m_Layer: 0
   m_Name: KickPlant
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2232973111813590370
+--- !u!114 &-1719744050395508438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8499583350047715904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52a69f0d36527934e85b7b1c88d6ef10, type: 3}
+  m_Script: {fileID: 11500000, guid: 05100e46beeb4644099edb5305a06776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
   onWorkSomeOne: 0
+  harvestIsReady: 0

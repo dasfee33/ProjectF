@@ -42,7 +42,7 @@ public class ObjectManager
   public Transform StructureRoot { get { return GetRootTransform("@Structures"); } }
   public Transform BuildObjectRoot { get { return GetRootTransform("@BuildObjects"); } }
 
-  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true) where T : BaseObject
+  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true, Vector3 dropPos = default(Vector3), BaseObject Owner = null) where T : BaseObject
   {
     if(string.IsNullOrEmpty(prefabName)) prefabName = typeof(T).Name;
 
@@ -83,6 +83,8 @@ public class ObjectManager
     {
       obj.transform.parent = ItemHolderRoot;
       ItemHolder itemholder = obj as ItemHolder;
+      itemholder.Owner = Owner;
+      itemholder.SetInfo(-999, dataID, dropPos);
       ItemHolders.Add(itemholder);
       AddItem(itemholder);
     }
@@ -227,8 +229,8 @@ public class ObjectManager
   public void AddItem(ItemHolder item)
   {
     if (ItemStorage.ContainsKey(item.dataTemplateID))
-      ItemStorage[item.dataTemplateID] += item.mass;
-    else ItemStorage.Add(item.dataTemplateID, item.mass);
+      ItemStorage[item.dataTemplateID] += item.data.Mass;
+    else ItemStorage.Add(item.dataTemplateID, item.data.Mass);
   }
 
   public void AddItem(ItemHolder item, float mass)
@@ -244,7 +246,7 @@ public class ObjectManager
   public void RemoveItem(ItemHolder item)
   {
     if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
-    ItemStorage[item.dataTemplateID] -= item.mass;
+    ItemStorage[item.dataTemplateID] -= item.data.Mass;
     if (ItemStorage[item.dataTemplateID] < 0) ItemStorage.Remove(item.dataTemplateID);
   }
 

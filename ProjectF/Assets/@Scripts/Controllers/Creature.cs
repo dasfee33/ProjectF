@@ -237,6 +237,8 @@ public class Creature : BaseObject
     {
       job.Value.IsAble = true;
     }
+
+    jobSystem.supplyTargets.Clear();
   }
 
   public float GetJobPriority(Enum job)
@@ -641,11 +643,35 @@ public class Creature : BaseObject
 
   }
 
+  protected virtual void JobPlow(float distance)
+  {
+    var targetScr = Target as Env;
+    if(targetScr != null)
+    {
+      if(!targetScr.harvestIsReady)
+      {
+        SetJobIsAble(job, false);
+        ResetJob();
+      }
+      else
+      {
+        ChaseOrAttackTarget(100, distance);
+      }
+    }
+  }
+
   protected virtual void JobStore(float distance)
   {
     supplyTarget = jobSystem.CurrentRootJob;
+    var supplyTargetScr = supplyTarget as ItemHolder;
     var targetScr = Target as Storage;
-    if (supplyTarget != null && CurrentSupply < SupplyCapacity)
+    if(targetScr == null || supplyTargetScr == null)
+    {
+      SetJobIsAble(job, false);
+      ResetJob();
+    }
+
+    if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.isDropped)
     {
       ChaseOrAttackTarget(100, distance, supplyTarget);
     }
@@ -691,7 +717,8 @@ public class Creature : BaseObject
 
           //2. 방법
           supplyTarget = jobSystem.CurrentRootJob;
-          if(supplyTarget != null && CurrentSupply < SupplyCapacity && item.Key == supplyTarget.dataTemplateID)
+          var supplyTargetScr = supplyTarget as ItemHolder;
+          if(supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && item.Key == supplyTarget.dataTemplateID && supplyTargetScr.isDropped)
           {
             ChaseOrAttackTarget(100, distance, supplyTarget);
           }

@@ -18,6 +18,7 @@ public class ItemHolder : BaseObject
   public int stack;
   public float defaultMass;
   public float mass;
+  public bool isDropped = false;
 
   public override bool Init()
   {
@@ -62,11 +63,13 @@ public class ItemHolder : BaseObject
       if (Owner.droppedItem.stack < Owner.droppedItem.data.maxStack)
       {
         Owner.droppedItem.RefreshStack(1);
+        Managers.Object.AddItem(Owner.droppedItem.dataTemplateID, defaultMass);
         Managers.Object.Despawn(this);
       }
     }
     else
     {
+      isDropped = true;
       Owner.droppedItem = this;
       stack += 1;
       mass = (defaultMass * stack);
@@ -114,9 +117,9 @@ public class ItemHolder : BaseObject
       //  }
       //}
       //else attackOwner.SupplyStorage.Add(this);
-
+      Managers.Object.Despawn(this);
     }
-    Managers.Object.Despawn(this);
+    
 
   }
 }

@@ -36,7 +36,12 @@ public class GameScene : BaseScene
     //warrior.CreatureState = FCreatureState.Move;
 
     CameraController camera = Camera.main.GetComponent<CameraController>();
-    camera.virtualCam.Follow = warrior.transform;
+    if (Managers.Object.Creatures.Count > 0)
+    {
+      var count = Managers.Object.Creatures.Count;
+      camera.virtualCam.Follow = Managers.Object.Creatures[camera.targetNum % count].transform;
+
+    }
     //camera.transform.position = new Vector3(0, 0, -2);
 
     return true;

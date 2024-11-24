@@ -14,7 +14,8 @@
       "ItemSubType": 0,
       "ItemGrade": 1,
       "maxStack": 99,
-      "Mass": 10.0
+      "Mass": 10.0,
+      "Sprite": null
     },
     {
       "Value": 0.0,
@@ -30,7 +31,8 @@
       "ItemSubType": 0,
       "ItemGrade": 1,
       "maxStack": 99,
-      "Mass": 40.0
+      "Mass": 40.0,
+      "Sprite": null
     },
     {
       "Value": 0.0,
@@ -43,10 +45,11 @@
       "type": "Veget",
       "ItemGroupType": 2,
       "ItemType": 2,
-      "ItemSubType": 0,
+      "ItemSubType": 1,
       "ItemGrade": 1,
       "maxStack": 99,
-      "Mass": 5.0
+      "Mass": 5.0,
+      "Sprite": "kick5"
     },
     {
       "Value": 0.0,
@@ -62,7 +65,8 @@
       "ItemSubType": 0,
       "ItemGrade": 1,
       "maxStack": 99,
-      "Mass": 5.0
+      "Mass": 5.0,
+      "Sprite": null
     }
   ]
 }

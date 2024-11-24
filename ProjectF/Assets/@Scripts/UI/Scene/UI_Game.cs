@@ -11,6 +11,7 @@ public class UI_Game : UI_Scene
   enum Objects
   {
     UI_Info,
+    UI_Option,
   }
 
   enum Buttons
@@ -79,8 +80,13 @@ public class UI_Game : UI_Scene
   public void CallbackSomething(BaseObject obj)
   {
     var info = GetObject((int)Objects.UI_Info).gameObject.GetComponent<UI_Info>();
+    var option = GetObject((int)Objects.UI_Option).gameObject.GetComponent<UI_Option>();
+
+    if (obj.Option && !option.gameObject.activeSelf) option.gameObject.SetActive(true);
     if (!info.gameObject.activeSelf) info.gameObject.SetActive(true);
-    info.SetInfo(obj);
+
+    option.SetInfo(obj);
+    info.SetInfo(obj, option);
   }
 
   public void Test(PointerEventData evt)

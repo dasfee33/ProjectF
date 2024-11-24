@@ -25,7 +25,8 @@
       "supplyItemMass": null,
       "maxCapacity": 0.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 0
     },
     {
       "DataId": 101,
@@ -52,7 +53,8 @@
       "supplyItemMass": null,
       "maxCapacity": 0.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 0
     },
     {
       "DataId": 102,
@@ -79,7 +81,8 @@
       "supplyItemMass": null,
       "maxCapacity": 0.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 0
     },
     {
       "DataId": 103,
@@ -106,7 +109,8 @@
       "supplyItemMass": null,
       "maxCapacity": 200.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 0
     },
     {
       "DataId": 104,
@@ -133,7 +137,8 @@
       "supplyItemMass": null,
       "maxCapacity": 0.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 0
     },
     {
       "DataId": 105,
@@ -160,7 +165,8 @@
       "supplyItemMass": null,
       "maxCapacity": 0.0,
       "extraCellX": 0,
-      "extraCellY": 0
+      "extraCellY": 0,
+      "option": 1
     }
   ]
 }

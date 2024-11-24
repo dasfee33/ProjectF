@@ -33,6 +33,7 @@ public class UI_Info : UI_Popup
   private GameObject descContentDesc;
   private TextMeshProUGUI descContentText;
 
+  private UI_Option option;
 
   public override bool Init()
   {
@@ -61,6 +62,7 @@ public class UI_Info : UI_Popup
   private void Cancel(PointerEventData evt)
   {
     this.gameObject.SetActive(false);
+    if (option != null) option.Exit.Invoke();
   }
 
   private void ClickInfoContent(PointerEventData evt)
@@ -92,12 +94,14 @@ public class UI_Info : UI_Popup
 
   }
 
-  public void SetInfo(BaseObject obj)
+  public void SetInfo(BaseObject obj, UI_Option option)
   {
     Structure structure = obj as Structure;
     if(structure != null)
     {
       infoContentText.text = structure.data.DescriptionTextID;
     }
+    if (option != null) this.option = option;
+    
   }
 }

@@ -5,6 +5,8 @@ using static Define;
 
 public class PlowBowl : Structure
 {
+  public Transform plantPort;
+
   public override FStructureState StructureState
   {
     get { return base.StructureState; }

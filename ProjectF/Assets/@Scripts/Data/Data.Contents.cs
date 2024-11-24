@@ -170,6 +170,8 @@ namespace Data
     public float maxCapacity;
     public int extraCellX;
     public int extraCellY;
+
+    public int option;
   }
 
   [Serializable]
@@ -205,6 +207,7 @@ namespace Data
 
     public int maxStack;
     public float Mass;
+    public string Sprite;
   }
 
   [Serializable]

@@ -10,10 +10,17 @@ public class BackendManager
     if(bro.IsSuccess())
     {
       Debug.Log($"초기화 성공 : {bro}");
+      Test();
     }
     else
     {
       Debug.LogError($"초기화 실패 : {bro}");
     }
+  }
+   
+  private void Test()
+  {
+    Managers.BackendLogin.CustomLogin("kys", "1234");
+    Debug.Log("로그인 테스트 종료");
   }
 }

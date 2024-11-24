@@ -224,6 +224,7 @@ public static class Define
   public enum FItemSubType
   {
     None,
+    Seed,
   }
 
   public enum FFindPathResults

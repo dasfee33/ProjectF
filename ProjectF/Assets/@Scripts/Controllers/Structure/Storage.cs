@@ -39,7 +39,9 @@ public class Storage : Structure
 
   public void AddCapacity(int key, float mass)
   {
-    storageItem[key] += mass;
+    if(!storageItem.ContainsKey(key)) storageItem.Add(key, mass);
+    else storageItem[key] += mass;
+
     CurCapacity += mass;
   }
 
@@ -82,17 +84,24 @@ public class Storage : Structure
     var haveList = new List<int>();
     foreach(var item in Worker.ItemHaveList)
     {
-      if (storageItem.ContainsKey(item.Key))
-      {
-        var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
-        AddCapacity(item.Key, value);
-        Worker.CurrentSupply -= value;
-        haveList.Add(item.Key);
-      }
-      else
-      {
-        AddCapacity(item.Key, item.Value);
-      }
+      //if (storageItem.ContainsKey(item.Key))
+      //{
+      //  var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
+      //  AddCapacity(item.Key, value);
+      //  Worker.CurrentSupply -= value;
+      //  haveList.Add(item.Key);
+      //}
+      //else
+      //{
+      //  var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
+      //  AddCapacity(item.Key, item.Value, false);
+      //  Worker.CurrentSupply -= value;
+      //}
+
+      var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
+      AddCapacity(item.Key, value);
+      Worker.CurrentSupply -= value;
+      haveList.Add(item.Key);
     }
 
     foreach(var list in haveList)

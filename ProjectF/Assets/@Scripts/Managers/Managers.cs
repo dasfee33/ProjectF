@@ -10,6 +10,7 @@ public class Managers : MonoBehaviour
 
   #region Core
   private BackendManager _backend = new BackendManager();
+  private BackendLogin _backendLogin = new BackendLogin();
   private DataManager _data = new DataManager();
   private PoolManager _pool = new PoolManager();
   private ResourceManager _resource = new ResourceManager();
@@ -19,6 +20,7 @@ public class Managers : MonoBehaviour
   private InputManager _input = new InputManager();
 
   public static BackendManager BackEnd { get { return Instance?._backend; } }
+  public static BackendLogin BackendLogin { get { return Instance?._backendLogin; } }
   public static DataManager Data { get { return Instance?._data; } }
   public static PoolManager Pool { get { return Instance?._pool; } }
   public static ResourceManager Resource { get { return Instance?._resource; } }

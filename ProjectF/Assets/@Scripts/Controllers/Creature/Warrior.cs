@@ -130,6 +130,7 @@ public class Warrior : Creature
           case FJob.Store: JobStore(MinActionDistance); break;
           case FJob.Supply: JobSupply(MinActionDistance); break;
           case FJob.Make: JobMake(MinActionDistance); break;
+          case FJob.Plow: JobPlow(MinActionDistance); break;
           default: ChaseOrAttackTarget(100, MinActionDistance); break;
         }
 

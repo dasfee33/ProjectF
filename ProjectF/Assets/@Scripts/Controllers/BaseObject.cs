@@ -9,6 +9,7 @@ public class BaseObject : InitBase
 {
   public int ExtraCellsX { get; set; } = 0;
   public int ExtraCellsY { get; set; } = 0;
+  public bool Option { get; set; } = false;
   public ItemHolder droppedItem;
 
   public FObjectType ObjectType { get; protected set; } = FObjectType.None;

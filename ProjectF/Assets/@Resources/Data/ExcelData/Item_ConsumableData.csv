@@ -1,5 +1,5 @@
-DataId,Name,DescriptionTextID,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Value,CoolTime,SupplyJob
-400000,wood_normal,,Material,Wood,Consumable,Architecture,None,Normal,99,10,,,Make
-400001,stone_normal,,Material,Stone,Consumable,Architecture,None,Normal,99,40,,,Make
-400002,kick3,,Food,Veget,Consumable,Cook,None,Normal,99,5,,,Cook
-400003,kick_seed,,Seed,Seed,Consumable,Plow,None,Normal,99,5,,,Plow
+DataId,Name,DescriptionTextID,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Sprite,Value,CoolTime,SupplyJob
+400000,wood_normal,,Material,Wood,Consumable,Architecture,None,Normal,99,10,,,,Make
+400001,stone_normal,,Material,Stone,Consumable,Architecture,None,Normal,99,40,,,,Make
+400002,kick3,,Food,Veget,Consumable,Cook,Seed,Normal,99,5,kick5,,,Cook
+400003,kick_seed,,Seed,Seed,Consumable,Plow,None,Normal,99,5,,,,Plow
