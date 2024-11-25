@@ -42,14 +42,16 @@ public class ObjectManager
   public Transform StructureRoot { get { return GetRootTransform("@Structures"); } }
   public Transform BuildObjectRoot { get { return GetRootTransform("@BuildObjects"); } }
 
-  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true, Vector3 dropPos = default(Vector3), BaseObject Owner = null) where T : BaseObject
+  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true, Vector3 dropPos = default(Vector3), BaseObject Owner = null, bool isFarm = false) where T : BaseObject
   {
     if(string.IsNullOrEmpty(prefabName)) prefabName = typeof(T).Name;
 
     GameObject go = Managers.Resource.Instantiate(prefabName);
-    go.name = prefabName;
     var cellPos = Managers.Map.World2Cell(position);
-    go.transform.position = Managers.Map.Cell2World(cellPos) + Managers.Map.LerpObjectPos;
+    go.name = prefabName;
+    if (addToCell) go.transform.position = Managers.Map.Cell2World(cellPos) + Managers.Map.LerpObjectPos;
+    else go.transform.position = position;
+    
      //= position;// + Managers.Map.LerpObjectPos;
 
     BaseObject obj = go.GetComponent<BaseObject>();
@@ -77,7 +79,7 @@ public class ObjectManager
       Envs.Add(env);
       Workables.Add(obj);
 
-      env.SetInfo(dataID);
+      env.SetInfo(dataID, isFarm);
     }
     else if (obj.ObjectType == FObjectType.ItemHolder)
     {

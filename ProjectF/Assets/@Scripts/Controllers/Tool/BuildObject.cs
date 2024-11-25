@@ -121,7 +121,7 @@ public class BuildObject : Structure
 
     if(CheckBuildReady())
     {
-      attackOwner.Target = null;
+      attackOwner.ResetJob();
     }
   }
 
@@ -160,13 +160,8 @@ public class BuildObject : Structure
 
   protected override void UpdateWorkEnd()
   {
-    foreach(var need in buildNeedList)
-    {
-      Worker.SupplyFromHaveList(need.Key, need.Value);
-    }
-
-    Worker.Target = null;
-    Worker.jobSystem.supplyTargets.Clear();
+    Worker.ResetJob();
+    
     Worker = null;
     Managers.Object.Spawn<Structure>(this.transform.position - Managers.Map.LerpObjectPos, dataTemplateID, data.Name);
     Managers.Object.Despawn(this);

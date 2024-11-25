@@ -14,8 +14,9 @@ public class JobSystem : InitBase
   private Dictionary<FJob, jobDicValue> jobDict = new Dictionary<FJob, jobDicValue>();
 
   public BaseObject target;
+  public BaseObject supplyTarget;
   public List<BaseObject> targets = new List<BaseObject>();
-  public List<BaseObject> supplyTargets;
+  public List<BaseObject> supplyTargets = new List<BaseObject>();
 
   public KeyValuePair<FJob, jobDicValue> CurrentJob
   {
@@ -26,8 +27,8 @@ public class JobSystem : InitBase
         if (!job.Value.IsAble) continue;
         targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
 
-        if (targets.Count <= 0 || targets == null) Owner.SetJobIsAble(Job, false);
-        else Owner.SetJobIsAble(Job, true);
+        //if (targets.Count <= 0 || targets == null) Owner.SetJobIsAble(Job, false);
+        //else Owner.SetJobIsAble(Job, true);
 
         foreach(var t in targets)
         {
@@ -61,6 +62,8 @@ public class JobSystem : InitBase
       {
         if (t == null) continue;
         var itemHolder = t.GetComponent<ItemHolder>();
+        if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
+        if (!itemHolder.isDropped) continue;
         if (itemHolder.stack <= 0) continue;
 
         if (supplyTargets != null)
@@ -68,7 +71,7 @@ public class JobSystem : InitBase
           if (t.Worker != Owner.Target.Worker) t.Worker = null;
           //작업자가 이미 있는데 그게 내가 아니라면 포기? 
           if (t.Worker != null && t.Worker != Owner) continue;
-          target = t;
+          supplyTarget = t;
           t.Worker = Owner;
           return t;
         }
@@ -117,7 +120,7 @@ public class JobSystem : InitBase
 
   private Dictionary<FJob, jobDicValue> GetSelectJobList(int count)
   {
-    var sortDict = Owner.JobDic.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value); 
+    var sortDict = Owner.JobDic.Take(jobCount).ToDictionary(pair => pair.Key, pair => pair.Value); 
     return sortDict;
   }
 

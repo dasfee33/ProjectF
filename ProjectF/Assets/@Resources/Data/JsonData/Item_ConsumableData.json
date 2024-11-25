@@ -4,6 +4,7 @@
       "Value": 0.0,
       "CoolTIme": 0.0,
       "SupplyJob": 11,
+      "ParentEnv": 0,
       "DataId": 400000,
       "Name": "wood_normal",
       "DescirptionTextID": null,
@@ -21,6 +22,7 @@
       "Value": 0.0,
       "CoolTIme": 0.0,
       "SupplyJob": 11,
+      "ParentEnv": 0,
       "DataId": 400001,
       "Name": "stone_normal",
       "DescirptionTextID": null,
@@ -38,6 +40,7 @@
       "Value": 0.0,
       "CoolTIme": 0.0,
       "SupplyJob": 5,
+      "ParentEnv": 0,
       "DataId": 400002,
       "Name": "kick3",
       "DescirptionTextID": null,
@@ -45,16 +48,17 @@
       "type": "Veget",
       "ItemGroupType": 2,
       "ItemType": 2,
-      "ItemSubType": 1,
+      "ItemSubType": 0,
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 5.0,
-      "Sprite": "kick5"
+      "Sprite": null
     },
     {
       "Value": 0.0,
       "CoolTIme": 0.0,
       "SupplyJob": 9,
+      "ParentEnv": 100003,
       "DataId": 400003,
       "Name": "kick_seed",
       "DescirptionTextID": null,
@@ -62,11 +66,11 @@
       "type": "Seed",
       "ItemGroupType": 2,
       "ItemType": 3,
-      "ItemSubType": 0,
+      "ItemSubType": 1,
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 5.0,
-      "Sprite": null
+      "Sprite": "kick5"
     }
   ]
 }

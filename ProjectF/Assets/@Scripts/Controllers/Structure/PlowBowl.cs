@@ -6,6 +6,7 @@ using static Define;
 public class PlowBowl : Structure
 {
   public Transform plantPort;
+  public System.Action<Data.ConsumableItemData> plantSeed;
 
   public override FStructureState StructureState
   {
@@ -41,8 +42,17 @@ public class PlowBowl : Structure
     StructureType = FStructureType.PlowBowl;
     StructureSubType = FStructureSubType.PlowBowl;
 
+    plantSeed -= PlantSeed;
+    plantSeed += PlantSeed;
+
     StartCoroutine(CoUpdateAI());
     return true;
+  }
+
+  private void PlantSeed(Data.ConsumableItemData data)
+  {
+    var env = Managers.Object.Spawn<Env>(plantPort.position, data.ParentEnv, "KickPlant",  addToCell: false, isFarm: true);
+    env.SpriteRenderer.sortingOrder = 21;
   }
 
   protected override void UpdateIdle()

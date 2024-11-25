@@ -35,7 +35,8 @@ public class jobDicValue
 public class Creature : BaseObject
 {
   public BaseObject Target { get; set; }
-  public List<BaseObject> SupplyTargets { get; set; } = new List<BaseObject>();
+  public BaseObject supplyTarget { get; set; }
+
   [SerializedDictionary("itemId", "itemMass")]
   public SerializedDictionary<int, float> ItemHaveList;
 
@@ -91,7 +92,6 @@ public class Creature : BaseObject
 
   
   public FJobPhase jobPhase = FJobPhase.None;
-  public BaseObject supplyTarget;
 
   #region Stats
   [SerializeField] private float _maxHp;
@@ -165,6 +165,8 @@ public class Creature : BaseObject
       ItemHaveList[dataID] += mass;
     }
     else ItemHaveList.Add(dataID, mass);
+
+    CurrentSupply += mass;
   }
 
   public bool SearchHaveList(int dataID)
@@ -192,7 +194,11 @@ public class Creature : BaseObject
         result = mass;
       }
     }
+
+    if (ItemHaveList[dataID] <= 0) ItemHaveList.Remove(dataID);
+
     CurrentSupply -= result;
+
     Managers.Object.RemoveItem(dataID, mass);
     return result;
   }
@@ -594,6 +600,7 @@ public class Creature : BaseObject
 
         //chaseTarget = null;
         CreatureState = FCreatureState.Skill;
+        //ResetJob();
         
       }
       else if(result == FFindPathResults.Fail_MoveTo)
@@ -616,11 +623,12 @@ public class Creature : BaseObject
   #endregion
 
   #region Job
-  protected virtual void ResetJob()
+  public virtual void ResetJob()
   {
     onWork = false;
     Target.Worker = null;
     Target = null;
+    supplyTarget = null;
 
     CreatureMoveState = FCreatureMoveState.None;
     CreatureState = FCreatureState.Idle;
@@ -646,9 +654,9 @@ public class Creature : BaseObject
   protected virtual void JobPlow(float distance)
   {
     var targetScr = Target as Env;
-    if(targetScr != null)
+    if (targetScr != null)
     {
-      if(!targetScr.harvestIsReady)
+      if (!targetScr.harvestIsReady)
       {
         SetJobIsAble(job, false);
         ResetJob();
@@ -658,20 +666,25 @@ public class Creature : BaseObject
         ChaseOrAttackTarget(100, distance);
       }
     }
+    else
+    {
+      SetJobIsAble(job, false);
+      ResetJob();
+    }
   }
 
   protected virtual void JobStore(float distance)
   {
     supplyTarget = jobSystem.CurrentRootJob;
-    var supplyTargetScr = supplyTarget as ItemHolder;
     var targetScr = Target as Storage;
-    if(targetScr == null || supplyTargetScr == null)
-    {
-      SetJobIsAble(job, false);
-      ResetJob();
-    }
+    //if(targetScr == null)
+    //{
+    //  SetJobIsAble(job, false);
+    //  ResetJob();
+    //  return;
+    //}
 
-    if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.isDropped)
+    if (supplyTarget != null)
     {
       ChaseOrAttackTarget(100, distance, supplyTarget);
     }
@@ -732,6 +745,7 @@ public class Creature : BaseObject
     }
     else
     {
+      SetJobIsAble(job, false);
       ResetJob();
     }
 

@@ -6,6 +6,7 @@ using System.Collections;
 
 public class Env : BaseObject
 {
+  public bool isFarm = false;
   public bool harvestIsReady = false;
   private Vector3 dropPos;
   protected EnvData data;
@@ -47,7 +48,7 @@ public class Env : BaseObject
     return true;
   }
 
-  public void SetInfo(int dataID)
+  public void SetInfo(int dataID, bool isFarm)
   {
     dataTemplateID = dataID;
     data = Managers.Data.EnvDic[dataID];
@@ -55,9 +56,10 @@ public class Env : BaseObject
     Hp = data.maxHp;
     maxHp = data.maxHp;
     regenTIme = data.RegenTime;
+    this.isFarm = isFarm;
     if (Enum.TryParse(data.type, out FEnvType result))
       EnvType = result;
-
+    
   }
 
   private void UpdateJob()
@@ -74,7 +76,8 @@ public class Env : BaseObject
         break;
       case FEnvType.Plant:
         workableJob = FJob.Plow;
-        int default_growth = UnityEngine.Random.Range(0, 6);
+        int default_growth = 0;
+        if(!isFarm) default_growth = UnityEngine.Random.Range(0, 6);
         SpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"kick{default_growth}");
         StartCoroutine(Growth(default_growth));
         break;
@@ -139,9 +142,9 @@ public class Env : BaseObject
 
   private void DroppedItem()
   {
-    int dropItemId = data.DropItemid;
+    //int dropItemId = data.DropItemid;
     RewardData rewardData = GetRandomReward();
-    ItemHolder dropItem;
+    //ItemHolder dropItem;
     if (rewardData != null)
     {
       //TEMP
@@ -151,7 +154,7 @@ public class Env : BaseObject
         Vector3 rand2 = new Vector3(transform.position.x + UnityEngine.Random.Range(2f, 5f) * 0.1f, transform.position.y);
         dropPos = UnityEngine.Random.value < 0.5 ? rand : rand2;        
       }
-      Managers.Object.Spawn<ItemHolder>(transform.position, dropItemId, addToCell: false, dropPos: dropPos, Owner: this);
+      Managers.Object.Spawn<ItemHolder>(transform.position, rewardData.itemTemplateId, addToCell: false, dropPos: dropPos, Owner: this);
     }
   }
 

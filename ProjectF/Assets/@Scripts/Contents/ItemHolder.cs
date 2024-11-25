@@ -89,9 +89,8 @@ public class ItemHolder : BaseObject
   public override void OnDamaged(BaseObject attacker)
   {
     var attackOwner = attacker as Creature;
-    if(attackOwner.SupplyCapacity > attackOwner.CurrentSupply + mass)
+    if(attackOwner.SupplyCapacity >= attackOwner.CurrentSupply + mass)
     {
-      attackOwner.CurrentSupply += mass;
       attackOwner.AddHaveList(dataTemplateID, mass);
       //인벤토리 할때 같이 
       //if (attackOwner.SupplyStorage.Count > 0)

@@ -81,7 +81,7 @@ public class Storage : Structure
 
   protected override void UpdateWorkEnd()
   {
-    var haveList = new List<int>();
+    var haveList = new Dictionary<int, float>();
     foreach(var item in Worker.ItemHaveList)
     {
       //if (storageItem.ContainsKey(item.Key))
@@ -100,24 +100,17 @@ public class Storage : Structure
 
       var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
       AddCapacity(item.Key, value);
-      Worker.CurrentSupply -= value;
-      haveList.Add(item.Key);
+      haveList.Add(item.Key, value);
     }
 
     foreach(var list in haveList)
     {
-      if(Worker.ItemHaveList.TryGetValue(list, out var v))
-      {
-        if (v <= 0) Worker.ItemHaveList.Remove(list);
-      }
+      Worker.SupplyFromHaveList(list.Key, list.Value);
     }
    
     {
       //Worker.CurrentSupply = 0;
-      Worker.jobSystem.supplyTargets.Clear();
-      Worker.jobSystem.target = null;
-      Worker.SetOrAddJobPriority(workableJob, 0, true);
-      Worker.Target = null;
+      Worker.ResetJob();
       Worker = null;
 
       StructureState = FStructureState.Idle;

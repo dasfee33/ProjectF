@@ -174,7 +174,7 @@ public class Warrior : Creature
     
     if(job is FJob.Store || job is FJob.Supply)
     {
-      if (supplyTarget != null && CurrentSupply < SupplyCapacity)
+      if (supplyTarget != null)
       {
         supplyTarget.OnDamaged(this);
         CreatureState = FCreatureState.Idle;

@@ -113,8 +113,13 @@ public class RandomSeedGenerate
             break;
         }
         break;
+      //TEST
+      case <= 0.9f:
+        if(type is FCellObjCollisionTypes.KickPlant)
+          bo = Managers.Object.Spawn<Plant>(pos, ENV_PLANT_KICK, "KickPlant");
+        break;
     }
-    
+
 
     return bo;
   }

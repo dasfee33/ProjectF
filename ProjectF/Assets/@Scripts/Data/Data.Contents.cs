@@ -224,6 +224,7 @@ namespace Data
     public double Value;
     public double CoolTIme;
     public FJob SupplyJob;
+    public int ParentEnv;
   }
 
   [Serializable]

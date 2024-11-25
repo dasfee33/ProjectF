@@ -1668,7 +1668,7 @@ GameObject:
   - component: {fileID: 495915473439830191}
   - component: {fileID: 5873842710105142207}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DescText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4055,7 +4055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3502325105588018779, guid: 716b4ef589e9c7c45817d3a5cc7a103f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
