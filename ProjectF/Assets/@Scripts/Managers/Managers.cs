@@ -13,7 +13,7 @@ public class Managers : MonoBehaviour
   private BackendLogin _backendLogin = new BackendLogin();
   private DataManager _data = new DataManager();
   private PoolManager _pool = new PoolManager();
-  private ResourceManager _resource = new ResourceManager();
+  private FResourceManager _resource = new FResourceManager();
   private SoundManager _sound = new SoundManager();
   private FSceneManager _scene = new FSceneManager();
   private UIManager _ui = new UIManager();
@@ -23,7 +23,7 @@ public class Managers : MonoBehaviour
   public static BackendLogin BackendLogin { get { return Instance?._backendLogin; } }
   public static DataManager Data { get { return Instance?._data; } }
   public static PoolManager Pool { get { return Instance?._pool; } }
-  public static ResourceManager Resource { get { return Instance?._resource; } }
+  public static FResourceManager Resource { get { return Instance?._resource; } }
   public static SoundManager Sound { get { return Instance?._sound; } }
   public static FSceneManager Scene { get { return Instance?._scene; } }
   public static UIManager UI { get { return Instance?._ui; } }
@@ -97,5 +97,10 @@ public class Managers : MonoBehaviour
     }
   }
 
-  
+  private void OnApplicationQuit()
+  {
+    Debug.Log("게임 종료.");
+    Managers.Game.GameDataInsert();
+  }
+
 }

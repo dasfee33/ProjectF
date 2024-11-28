@@ -7,6 +7,39 @@ using static Define;
 
 public static class Util
 {
+  public static long OneGB = 1000000000;
+  public static long OneMB = 1000000;
+  public static long OneKB = 1000;
+
+  public static bool IsNetworkValid()
+  {
+    return Application.internetReachability != NetworkReachability.NotReachable;
+  }
+
+  public static bool IsDiskSpaceEnough(long requiredSize)
+  {
+    return Caching.defaultCache.spaceFree >= requiredSize;
+  }
+
+  public static FSizeUnits GetProperByteUnit(long byteSize)
+  {
+    if (byteSize >= OneGB) return FSizeUnits.GB;
+    else if(byteSize >= OneMB) return FSizeUnits.MB;
+    else if(byteSize >= OneKB) return FSizeUnits.KB;
+    return FSizeUnits.Byte;
+  }
+
+  public static long ConvertByteByUnit(long byteSize, FSizeUnits unit)
+  {
+    return (long)((byteSize / (double)System.Math.Pow(1024, (long)unit)));
+  }
+
+  public static string GetConvertedByteString(long byteSize, FSizeUnits unit, bool appendUnit = true)
+  {
+    string unitStr = appendUnit ? unit.ToString() : string.Empty;
+    return $"{ConvertByteByUnit(byteSize, unit).ToString("0.00")}{unitStr}";
+  }
+
   public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
   {
     T component = go.GetComponent<T>();
@@ -75,42 +108,6 @@ public static class Util
     return parsedColor;
   }
 
-  //public static ObjectTypes DetermineTargetType(ObjectTypes ownerType, bool findAllies)
-  //{
-  //  if (ownerType == Define.ObjectTypes.Player)
-  //  {
-  //    return findAllies ? ObjectTypes.Player : ObjectTypes.Monster;
-  //  }
-  //  else if (ownerType == Define.ObjectTypes.Monster)
-  //  {
-  //    return findAllies ? ObjectTypes.Monster : ObjectTypes.Player;
-  //  }
-
-  //  return ObjectTypes.None;
-  //}
-
-  //public static float GetEffectRadius(EffectSizes size)
-  //{
-  //  switch (size)
-  //  {
-  //    case EffectSizes.CircleSmall:
-  //      return EFFECT_SMALL_RADIUS;
-  //    case EffectSizes.CircleNormal:
-  //      return EFFECT_NORMAL_RADIUS;
-  //    case EffectSizes.CircleBig:
-  //      return EFFECT_BIG_RADIUS;
-  //    case EffectSizes.ConeSmall:
-  //      return EFFECT_SMALL_RADIUS * 2f;
-  //    case EffectSizes.ConeNormal:
-  //      return EFFECT_NORMAL_RADIUS * 2f;
-  //    case EffectSizes.ConeBig:
-  //      return EFFECT_BIG_RADIUS * 2f;
-  //    default:
-  //      return EFFECT_SMALL_RADIUS;
-  //  }
-  //}
-
-  //Ȯ�� ����ġ ���
   public static T RandomElementByWeight<T>(this IEnumerable<T> sequence, Func<T, float> weightSelector)
   {
     float totalWeight = sequence.Sum(weightSelector);

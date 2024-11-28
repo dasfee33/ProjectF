@@ -21,6 +21,8 @@ public class BackendManager
   private void Test()
   {
     Managers.BackendLogin.CustomLogin("kys", "1234");
-    Debug.Log("로그인 테스트 종료");
+    //Managers.Game.GameDataInsert();
+
+    Debug.Log("테스트 종료");
   }
 }

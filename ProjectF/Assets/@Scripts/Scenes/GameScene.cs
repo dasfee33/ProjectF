@@ -44,6 +44,7 @@ public class GameScene : BaseScene
     }
     //camera.transform.position = new Vector3(0, 0, -2);
 
+
     return true;
   }
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public static class Define
 {
+  public enum FSizeUnits
+  {
+    Byte, KB, MB, GB
+  }
+
   public enum FLanguage
   {
     Korean,

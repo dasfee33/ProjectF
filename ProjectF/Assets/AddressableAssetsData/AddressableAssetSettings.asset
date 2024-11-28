@@ -15,9 +15,9 @@ MonoBehaviour:
   m_DefaultGroup: 8d59ce0ca31c954468c0e832178c6508
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 7452aedcb2812336cb41b97f6a6e013e
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: 0cd676bc493623e45a8e3af6fa27020a, type: 2}
@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac5848493679ec84ab3071cee4086740, type: 2}
   - {fileID: 11400000, guid: 9bf2c8c388ccff144b6a7903f8171506, type: 2}
   - {fileID: 11400000, guid: 715c0a8f9cab70f4b9a435fece427e7c, type: 2}
+  - {fileID: 11400000, guid: bd0d309d8e20ccb47929667f40222fab, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -75,7 +76,7 @@ MonoBehaviour:
       - m_Id: 9a6ea5d93fd0e5f45a590c9412f63eba
         m_Value: ServerData/[BuildTarget]
       - m_Id: b4de6ae342f09c043bd1f46a83f12a11
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: https://s3.ap-northeast-2.amazonaws.com/com.test1/Android
     - m_InheritedParent: 
       m_Id: 1db55edd4b5296d4a973ed455764f84a
       m_ProfileName: TestProfile
@@ -83,13 +84,13 @@ MonoBehaviour:
       - m_Id: 05c3917a59202844bae07dfde340d380
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: cb5989b86b53faa429392322cc793b48
-        m_Value: ServerData/[BuildTarget]
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 9d5ec64745f17c046bd2a5b4158cf21c
-        m_Value: ServerData/[BuildTarget]
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: 9a6ea5d93fd0e5f45a590c9412f63eba
         m_Value: ServerData/[BuildTarget]
       - m_Id: b4de6ae342f09c043bd1f46a83f12a11
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: '{AddressableDownloader.DownloadURL}'
     m_ProfileEntryNames:
     - m_Id: 05c3917a59202844bae07dfde340d380
       m_Name: BuildTarget

@@ -18713,6 +18713,7 @@ MonoBehaviour:
     maxCapacity: 0
     extraCellX: 0
     extraCellY: 0
+    option: 0
 --- !u!1 &2725284060997560086
 GameObject:
   m_ObjectHideFlags: 0
