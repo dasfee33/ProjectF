@@ -147,11 +147,11 @@ public class AddressableDownloader
 
   private void OnException(AsyncOperationHandle handle, Exception exp)
   {
-    Debug.LogError("CustomExceptionCaught !! " + exp.Message);
+    Debug.LogError("customexceptioncaught !! " + exp.Message);
 
-    if(exp is UnityEngine.ResourceManagement.Exceptions.RemoteProviderException)
+    if (exp is UnityEngine.ResourceManagement.Exceptions.RemoteProviderException)
     {
-       //Remote 관련 에러 발생시 
+      //remote 관련 에러 발생시 
     }
   }
 }

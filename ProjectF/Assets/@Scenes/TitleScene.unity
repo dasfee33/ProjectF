@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1352593251
+--- !u!1001 &1685210443
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1077736451074435032, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2341775996381418052, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
       propertyPath: m_Name
       value: UI_TitleScene
@@ -143,21 +147,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2808500910270237879, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1158.5255
-      objectReference: {fileID: 0}
-    - target: {fileID: 2808500910270237879, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2808500910270237879, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -539.3528
-      objectReference: {fileID: 0}
-    - target: {fileID: 2808500910270237879, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -515
+    - target: {fileID: 6883582875458305256, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7580945342307711229, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
       propertyPath: m_Pivot.x
@@ -386,4 +378,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1747014802}
   - {fileID: 2144897676}
-  - {fileID: 1352593251}
+  - {fileID: 1685210443}

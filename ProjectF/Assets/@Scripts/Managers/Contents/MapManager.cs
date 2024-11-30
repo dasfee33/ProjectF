@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Tilemaps;
 using static Define;
 
@@ -35,6 +36,16 @@ public class MapManager
     DestroyMap();
 
     GameObject map = Managers.Resource.Instantiate(mapName);
+    //GameObject map = null;
+    //Addressables.LoadAssetAsync<GameObject>("BaseMap").Completed += (result) =>
+    //{
+    //  if (result.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+    //  {
+    //    Debug.LogError("맵 불러오기 성공");
+    //    map = result.Result;
+    //  }
+    //};
+
     map.transform.position = Vector3.zero;
     map.name = $"@Map_{mapName}";
 

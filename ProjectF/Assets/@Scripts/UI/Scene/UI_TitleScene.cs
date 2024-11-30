@@ -96,6 +96,8 @@ public class UI_TitleScene : UI_Scene
 
   private void SetState(State state, bool updateUI)
   {
+    if (CurrentState != state) CurrentState = state;
+
     switch(state)
     {
       case State.CalculatingSize:
@@ -103,8 +105,8 @@ public class UI_TitleScene : UI_Scene
         GetObject((int)Objects.DownloadConfirm).SetActive(true);
         break;
       case State.Downloading:
-        GetObject((int)Objects.DownloadConfirm).SetActive(false);
-        GetObject((int)Sliders.DownloadSlider).gameObject.SetActive(true);
+        //GetObject((int)Objects.DownloadConfirm).SetActive(false);
+        GetSlider((int)Sliders.DownloadSlider).gameObject.SetActive(true);
         break;
       case State.DownloadFinished:
         GetButton((int)Buttons.Startarea).enabled = true;
@@ -129,6 +131,7 @@ public class UI_TitleScene : UI_Scene
     else if(CurrentState == State.NothingToDownload)
     {
       descText.text = "이미 최신버전입니다.";
+      //SetState(State.DownloadFinished, true);
     }
     else if(CurrentState == State.AskingDownload)
     {
@@ -136,11 +139,30 @@ public class UI_TitleScene : UI_Scene
     }
     else if(CurrentState == State.Downloading)
     {
+      descText.text = $"{progressInfo.totalProgress}% / {progressInfo.downloadedBytes} / {progressInfo.remainBytes} / {progressInfo.totalBytes}";
       GetSlider((int)Sliders.DownloadSlider).value = progressInfo.totalProgress;
     }
     else if(CurrentState == State.DownloadFinished)
     {
-      descText.text = "완료";
+      Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
+      {
+        descText.text = $"{key} {count}/{totalCount}";
+
+        if (count == totalCount)
+        {
+          descText.text = "데이터 초기화";
+          //데이터 초기화
+          Managers.Data.Init();
+
+          if (Managers.Game.LoadGame() == false)
+          {
+            Managers.Game.InitGame();
+            Managers.Game.SaveGame();
+          }
+
+          //Managers.Scene.LoadScene(//TODO)
+        }
+      });
     }
   }
 
@@ -218,7 +240,7 @@ public class UI_TitleScene : UI_Scene
   //      //데이터 초기화
   //      Managers.Data.Init();
 
-  //      if(Managers.Game.LoadGame() == false)
+  //      if (Managers.Game.LoadGame() == false)
   //      {
   //        Managers.Game.InitGame();
   //        Managers.Game.SaveGame();
