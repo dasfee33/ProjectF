@@ -123,3 +123,5 @@ MonoBehaviour:
   Worker: {fileID: 0}
   onWork: 0
   onWorkSomeOne: 0
+  isFarm: 0
+  harvestIsReady: 0

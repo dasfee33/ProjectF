@@ -12,11 +12,30 @@ public class GameScene : BaseScene
     SceneType = Define.FScene.GameScene;
 
     Managers.Map.LoadMap("BaseMap");
-    Managers.RandomSeedGenerate.GenerateMaps();
+    //Managers.RandomSeedGenerate.GenerateMaps();
 
-    Warrior warrior = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-    Warrior warrior2 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-    Warrior warrior3 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+    var creatureSaveData = Managers.Game.SaveData.creatureSaveData;
+    var envSaveData = Managers.Game.SaveData.envSaveData;
+
+    foreach (var creature in creatureSaveData)
+    {
+      switch (creature.type)
+      {
+        case (int)FCreatureType.Warrior:
+          //FIXME
+          Managers.Object.Spawn<Creature>(new Vector3(creature.posX, creature.posY), creature.dataID, "Warrior");
+          break;
+      }
+    }
+
+    foreach (var env in envSaveData)
+    {
+      Managers.Object.Spawn<Env>(new Vector3(env.posX, env.posY), env.dataID, env.name);
+    }
+
+   //Warrior warrior = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+   //Warrior warrior2 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+   //Warrior warrior3 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
     //Warrior warrior4 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
     //Warrior warrior5 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
 
@@ -28,9 +47,9 @@ public class GameScene : BaseScene
     //Env env1 = Managers.Object.Spawn<Env>(new Vector3(-1, 0), ENV_TREE_NORMAL1, "Tree1");
     //Env env2 = Managers.Object.Spawn<Env>(new Vector3(1, 0), ENV_TREE_NORMAL2, "Tree2");
 
-    Managers.Map.MoveTo(warrior, new Vector3Int(-5, 0), true);
-    Managers.Map.MoveTo(warrior2, new Vector3Int(-5, 1), true);
-    Managers.Map.MoveTo(warrior3, new Vector3Int(-5, -1), true);
+    //Managers.Map.MoveTo(warrior, new Vector3Int(-5, 0), true);
+    //Managers.Map.MoveTo(warrior2, new Vector3Int(-5, 1), true);
+    //Managers.Map.MoveTo(warrior3, new Vector3Int(-5, -1), true);
     //Managers.Map.MoveTo(warrior4, new Vector3Int(-4, 1), true);
     //Managers.Map.MoveTo(warrior5, new Vector3Int(-4, 0), true);
     //warrior.CreatureState = FCreatureState.Move;

@@ -142,7 +142,7 @@ public class Creature : BaseObject
 
     var jobLength = Enum.GetValues(typeof(FJob)).Length;
     var personalLength = Enum.GetValues(typeof(FPersonalJob)).Length;
-    for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, new jobDicValue(0, true));
+    for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, new jobDicValue(20, true));
     for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, 0);
 
     Managers.Game.onJobAbleChanged -= SetJobIsAble;

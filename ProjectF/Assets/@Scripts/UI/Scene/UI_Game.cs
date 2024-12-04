@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using static Define;
+using System;
 
 public class UI_Game : UI_Scene
 {
@@ -16,8 +17,11 @@ public class UI_Game : UI_Scene
 
   enum Buttons
   {
+    //Dev
     Fast,
     Slow,
+    SaveData,
+    UpdateData,
 
     Base,
     Furniture,
@@ -57,6 +61,8 @@ public class UI_Game : UI_Scene
 
     GetButton((int)Buttons.Fast).gameObject.BindEvent(Test, FUIEvent.Click);
     GetButton((int)Buttons.Slow).gameObject.BindEvent(Test2, FUIEvent.Click);
+    GetButton((int)Buttons.SaveData).gameObject.BindEvent(SaveData, FUIEvent.Click);
+    GetButton((int)Buttons.UpdateData).gameObject.BindEvent(UpdateData, FUIEvent.Click);
 
     GetButton((int)Buttons.Base).gameObject.BindEvent(ClickBase, FUIEvent.Click);
     GetButton((int)Buttons.Furniture).gameObject.BindEvent(ClickFurniture, FUIEvent.Click);
@@ -75,6 +81,16 @@ public class UI_Game : UI_Scene
     Managers.FInput.touchObject += CallbackSomething;
 
     return true;
+  }
+
+  private void UpdateData(PointerEventData evt)
+  {
+    Managers.Game.GameDataUpdate();
+  }
+
+  private void SaveData(PointerEventData evt)
+  {
+    Managers.Game.GameDataInsert();
   }
 
   public void CallbackSomething(BaseObject obj)

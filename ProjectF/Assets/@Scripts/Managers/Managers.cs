@@ -85,8 +85,6 @@ public class Managers : MonoBehaviour
     gameDayLight = GameObject.Find("@GameDayLight").GetComponent<Light2D>();
     gameDayLight.lightType = Light2D.LightType.Global;
     StartCoroutine(Instance?._gameDay.coDay());
-
-    
   }
 
   private void Update()
@@ -97,10 +95,10 @@ public class Managers : MonoBehaviour
     }
   }
 
-  private void OnApplicationQuit()
-  {
-    Debug.Log("게임 종료.");
-    Managers.Game.GameDataInsert();
-  }
+  //private void OnApplicationQuit()
+  //{
+  //  Debug.Log("게임 종료.");
+  //  Managers.Game.GameDataInsert();
+  //}
 
 }

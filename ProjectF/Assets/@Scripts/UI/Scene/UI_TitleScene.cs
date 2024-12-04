@@ -16,6 +16,9 @@ public class UI_TitleScene : UI_Scene
     AskingDownload,
     Downloading,
     DownloadFinished,
+    ResourceGenerated,
+
+    AllFinished,
   }
 
   enum Objects
@@ -46,6 +49,7 @@ public class UI_TitleScene : UI_Scene
   private DownloadController Downloader;
 
   private DownloadProgressStatus progressInfo;
+  private ResourceProgrerssStatus rprogressInfo;
   private FSizeUnits sizeUnit;
   private long curDownloadSizeUnit;
   private long totalSizeUnit;
@@ -69,12 +73,6 @@ public class UI_TitleScene : UI_Scene
     GetButton((int)Buttons.Confirm).gameObject.BindEvent(OnClickStartDownload, FUIEvent.Click);
     GetButton((int)Buttons.Cancel).gameObject.BindEvent(OnClickCancelDownload, FUIEvent.Click);
 
-    GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
-    {
-      Debug.Log("Change Scene");
-      Managers.Scene.LoadScene(FScene.GameScene);
-    }, FUIEvent.Click);
-
     //StartLoadAssets();
 
     return true;
@@ -91,6 +89,7 @@ public class UI_TitleScene : UI_Scene
       evt.SizeDownloadedListener += OnSizeDownloaded;
       evt.DownloadProgressListener += OnDownloadProgress;
       evt.DownloadFinished += OnDownloadFinished;
+      evt.ReSourceListGenerateListener += OnResourceGenerated;
     });
   }
 
@@ -105,11 +104,12 @@ public class UI_TitleScene : UI_Scene
         GetObject((int)Objects.DownloadConfirm).SetActive(true);
         break;
       case State.Downloading:
-        //GetObject((int)Objects.DownloadConfirm).SetActive(false);
+      case State.ResourceGenerated:
         GetSlider((int)Sliders.DownloadSlider).gameObject.SetActive(true);
         break;
-      case State.DownloadFinished:
+      case State.AllFinished:
         GetButton((int)Buttons.Startarea).enabled = true;
+        GetButton((int)Buttons.Startarea).interactable = true;
         GetText((int)Texts.Gamestart).gameObject.SetActive(true);
         break;
       default: break;
@@ -131,7 +131,7 @@ public class UI_TitleScene : UI_Scene
     else if(CurrentState == State.NothingToDownload)
     {
       descText.text = "이미 최신버전입니다.";
-      //SetState(State.DownloadFinished, true);
+      SetState(State.ResourceGenerated, true);
     }
     else if(CurrentState == State.AskingDownload)
     {
@@ -144,25 +144,21 @@ public class UI_TitleScene : UI_Scene
     }
     else if(CurrentState == State.DownloadFinished)
     {
-      Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
+      SetState(State.ResourceGenerated, true);
+    }
+    else if (CurrentState == State.ResourceGenerated)
+    {
+      if (rprogressInfo.totalCount <= 0) return;
+      descText.text = $"{rprogressInfo.count} / {rprogressInfo.totalCount}";
+      GetSlider((int)Sliders.DownloadSlider).value = rprogressInfo.count / rprogressInfo.totalCount;
+    }
+    else if(CurrentState == State.AllFinished)
+    {
+      GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
       {
-        descText.text = $"{key} {count}/{totalCount}";
-
-        if (count == totalCount)
-        {
-          descText.text = "데이터 초기화";
-          //데이터 초기화
-          Managers.Data.Init();
-
-          if (Managers.Game.LoadGame() == false)
-          {
-            Managers.Game.InitGame();
-            Managers.Game.SaveGame();
-          }
-
-          //Managers.Scene.LoadScene(//TODO)
-        }
-      });
+        Debug.Log("Change Scene");
+        Managers.Scene.LoadScene(FScene.GameScene);
+      }, FUIEvent.Click);
     }
   }
 
@@ -199,6 +195,7 @@ public class UI_TitleScene : UI_Scene
     if(size <= 0)
     {
       SetState(State.NothingToDownload, true);
+
     }
     else
     {
@@ -227,6 +224,28 @@ public class UI_TitleScene : UI_Scene
   {
     SetState(State.DownloadFinished, true);
     Downloader.GoNext();
+  }
+
+  private void OnResourceGenerated(ResourceProgrerssStatus resourceStatus)
+  {
+    bool equal = this.rprogressInfo.count == (resourceStatus.totalCount - 1);
+
+    rprogressInfo = resourceStatus;
+
+    UpdateUI();
+
+    if(equal)
+    {
+      Managers.Data.Init();
+
+      if (Managers.Game.LoadGame() == false)
+      {
+        Managers.Game.InitGame();
+        Managers.Game.SaveGame();
+      }
+      SetState(State.AllFinished, true);
+      Downloader.GoNext();
+    }
   }
 
   //private void StartLoadAssets()

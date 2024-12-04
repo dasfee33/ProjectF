@@ -34,7 +34,7 @@ public class FResourceManager
   public GameObject Instantiate(string key, Transform parent = null, bool pooling = false)
   {
     GameObject prefab = Load<GameObject>(key);
-    if(prefab == null)
+    if (prefab == null)
     {
       Debug.LogError($"Failed to load Prefab : {key}");
       return null;

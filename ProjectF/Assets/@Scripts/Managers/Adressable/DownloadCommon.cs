@@ -18,3 +18,15 @@ public struct DownloadProgressStatus
   }
 
 }
+
+public struct ResourceProgrerssStatus
+{
+  public float count;
+  public float totalCount;
+
+  public ResourceProgrerssStatus(float count, float totalCount)
+  {
+    this.count = count;
+    this.totalCount = totalCount;
+  }
+}

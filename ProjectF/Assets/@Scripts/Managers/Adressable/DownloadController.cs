@@ -14,6 +14,7 @@ public class DownloadController : MonoBehaviour
     DownloadSize,
     DownloadDependencies,
     Downloading,
+    ResourceListGenerate,
 
     Finished,
   }
@@ -77,6 +78,10 @@ public class DownloadController : MonoBehaviour
     {
       Downloader.Update();
     }
+    else if(CurrentState == State.ResourceListGenerate)
+    {
+      Downloader.ResourceListGenerated();
+    }
 
   }
 
@@ -85,7 +90,8 @@ public class DownloadController : MonoBehaviour
     if (LastValidState == State.Initialize) CurrentState = State.UpdateCatalog;
     else if (LastValidState == State.UpdateCatalog) CurrentState = State.DownloadSize;
     else if (LastValidState == State.DownloadSize) CurrentState = State.DownloadDependencies;
-    else if (LastValidState == State.DownloadDependencies || LastValidState == State.Downloading) CurrentState = State.Finished;
+    else if (LastValidState == State.DownloadDependencies || LastValidState == State.Downloading) CurrentState = State.ResourceListGenerate;
+    else if (LastValidState == State.ResourceListGenerate) CurrentState = State.Finished;
 
     LastValidState = CurrentState;
   }

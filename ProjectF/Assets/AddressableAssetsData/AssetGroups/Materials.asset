@@ -15,16 +15,10 @@ MonoBehaviour:
   m_GroupName: Materials
   m_Data:
     m_SerializedData: []
-  m_GUID: fd8fc847cfae1bf4b98f7fcce7a9d77f
+  m_GUID: c9b0adc6c3762f644a6d643269ccb061
   m_SerializeEntries:
   - m_GUID: a97c105638bdf8b4a8650670310a4cd3
     m_Address: Sprite-Lit-Default
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 35cfe91d0c631264ab568128538c014b
-    m_Address: Testmat
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -33,5 +27,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: c25fae4729910374a9e1983580378d5f, type: 2}
-    - {fileID: 11400000, guid: a16db39b141185c46805e6e593f9e6a1, type: 2}
+    - {fileID: 11400000, guid: 0ab6359bafa59044cbb655ad63658501, type: 2}
+    - {fileID: 11400000, guid: 24655ad4f7a079349b005ac03569eab4, type: 2}

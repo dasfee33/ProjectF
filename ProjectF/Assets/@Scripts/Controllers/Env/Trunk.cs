@@ -13,7 +13,7 @@ public class Trunk : BaseObject
   public override bool Init()
   {
     if (base.Init() == false) return false;
-    ObjectType = FObjectType.None;
+    ObjectType = FObjectType.Env;
     
 
     return true;

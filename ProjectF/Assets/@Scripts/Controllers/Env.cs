@@ -35,6 +35,7 @@ public class Env : BaseObject
   public float Hp { get; set; }
   public float maxHp { get; set; }
   public float regenTIme { get; set; }
+  public string Name { get; set; }
 
   #endregion
 
@@ -56,6 +57,7 @@ public class Env : BaseObject
     Hp = data.maxHp;
     maxHp = data.maxHp;
     regenTIme = data.RegenTime;
+    Name = data.Name;
     this.isFarm = isFarm;
     if (Enum.TryParse(data.type, out FEnvType result))
       EnvType = result;

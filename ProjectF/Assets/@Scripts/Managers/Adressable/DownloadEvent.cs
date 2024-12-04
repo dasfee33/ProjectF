@@ -21,6 +21,10 @@ public class DownloadEvent
   public event Action<DownloadProgressStatus> DownloadProgressListener;
   public void NotifyDownloadProgress(DownloadProgressStatus status) => DownloadProgressListener?.Invoke(status);
 
+  //내부 리소스 리스트 생성
+  public event Action<ResourceProgrerssStatus> ReSourceListGenerateListener;
+  public void NotifyResourceListGenerate(ResourceProgrerssStatus status) => ReSourceListGenerateListener?.Invoke(status);
+
   //Bundle 다운로드 완료
   public event Action<bool> DownloadFinished;
   public void NotifyDownloadFinished(bool isSuccess) => DownloadFinished?.Invoke(isSuccess);

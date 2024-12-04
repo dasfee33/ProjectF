@@ -10,16 +10,17 @@ using UnityEngine;
 
 public class AddressableDownloader
 {
-  public static string DownloadURL = "https://storage.cloud.google.com/ysaddressabletest2/Android/";
+  public static string DownloadURL = "https://eb2b07fc-1217-478f-95ab-2057f5b1a798.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/ee375f27-4398-436e-9ba5-131a4b60068f/releases/23b99ff2-1341-4786-b880-4b165eddb9ee/entry_by_path/content/?path=";
   DownloadEvent Events;
 
   string LabelToDownload;
 
-  long TotalSize;
+  public long TotalSize;
   AsyncOperationHandle DownloadHandle;
 
   public DownloadEvent InitializeSystem(string label, string downloadURL)
   {
+    Debug.Log("InitializeSystem");
     //네트워크 끊김 감지
     if (IsNetworkValid() == false)
     {
@@ -66,6 +67,7 @@ public class AddressableDownloader
 
   public void UpdateCatalog()
   {
+    Debug.Log("UpdateCatalog");
     Addressables.CheckForCatalogUpdates().Completed += (result) =>
     {
       var catalogToUpdate = result.Result;
@@ -80,47 +82,76 @@ public class AddressableDownloader
 
   public void DownloadSize()
   {
-    Addressables.GetDownloadSizeAsync(LabelToDownload).Completed += OnSizeDownloaded;
+    Debug.Log("DownLoadSize");
+    Addressables.GetDownloadSizeAsync(LabelToDownload).Completed += handle =>
+    {
+      if (handle.Status == AsyncOperationStatus.Succeeded)
+      {
+        long downloadSize = handle.Result;
+        OnSizeDownloaded(handle);
+      }
+      else
+      {
+        Debug.LogError($"Failed to DownloadSize for Label : {LabelToDownload}");
+      }
+    };
   }
 
   public void StartDownload()
   {
+    Debug.Log("StartDownLoad");
     DownloadHandle = Addressables.DownloadDependenciesAsync(LabelToDownload);
     DownloadHandle.Completed += OnDependenciesDownloaded;
-    //DownloadHandle.Completed += ((op) =>
-    //{
-    //  // 다운로드가 완료되면 리소스 로케이션을 먼저 로드
-    //  Addressables.LoadResourceLocationsAsync(LabelToDownload, typeof(UnityEngine.Object)).Completed += locHandle =>
-    //  {
-    //    if (locHandle.Status == AsyncOperationStatus.Succeeded)
-    //    {
-    //      // 로드된 리소스 위치 정보를 순회
-    //      foreach (var location in locHandle.Result)
-    //      {
-    //        // 각 위치에서 에셋을 비동기적으로 로드
-    //        Addressables.LoadAssetAsync<UnityEngine.Object>(location).Completed += assetHandle =>
-    //        {
-    //          if (assetHandle.Status == AsyncOperationStatus.Succeeded)
-    //          {
-    //            // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
-    //            Managers.Resource._resources.Add(location.PrimaryKey, assetHandle.Result);
-    //          }
-    //          else
-    //          {
-    //            Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
-    //          }
-    //        };
-    //      }
-    //    }
-    //    else
-    //    {
-    //      Debug.LogError("Failed to load resource locations.");
-    //    }
-    //  };
-    //});
+    
   }
 
-  
+  public void ResourceListGenerated()
+  {
+    Debug.Log("ResourceListGenerated");
+
+    //다운로드가 완료되면 리소스 로케이션을 먼저 로드
+    Addressables.LoadResourceLocationsAsync(LabelToDownload, typeof(UnityEngine.Object)).Completed += op =>
+    {
+      if (op.Status == AsyncOperationStatus.Succeeded)
+      {
+        float loadCount = 0;
+        float totalCount = op.Result.Count;
+
+        // 로드된 리소스 위치 정보를 순회
+        foreach (var location in op.Result)
+        {
+          Debug.Log(location.PrimaryKey);
+          // 각 위치에서 에셋을 비동기적으로 로드
+          Addressables.LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey).Completed += op =>
+          {
+            if (op.Status == AsyncOperationStatus.Succeeded)
+            {
+              var key = location.PrimaryKey;
+              // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
+              if (!Managers.Resource._resources.ContainsKey(key))
+                Managers.Resource._resources.Add(location.PrimaryKey, op.Result);
+
+              loadCount++;
+              Events.NotifyResourceListGenerate(
+                new ResourceProgrerssStatus(
+                  loadCount,
+                  totalCount
+                  ));
+            }
+            else
+            {
+              Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
+            }
+          };
+        }
+      }
+      else
+      {
+        Debug.LogError("Failed to load resource locations.");
+      }
+    };
+  }
+
 
   //------------------------------------------------------------------------------------
 
@@ -137,7 +168,12 @@ public class AddressableDownloader
   private void OnSizeDownloaded(AsyncOperationHandle<long> result)
   {
     TotalSize = result.Result;
+    if(TotalSize <= 0)
+    {
+      ResourceListGenerated();
+    }
     Events.NotifySizeDownload(result.Result);
+
   }
 
   private void OnDependenciesDownloaded(AsyncOperationHandle result)
@@ -147,7 +183,7 @@ public class AddressableDownloader
 
   private void OnException(AsyncOperationHandle handle, Exception exp)
   {
-    Debug.LogError("customexceptioncaught !! " + exp.Message);
+    Debug.LogError("customexceptioncaught !! " + exp.Message + "/" + handle);
 
     if (exp is UnityEngine.ResourceManagement.Exceptions.RemoteProviderException)
     {

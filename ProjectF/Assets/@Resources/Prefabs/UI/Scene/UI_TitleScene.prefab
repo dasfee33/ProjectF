@@ -1499,7 +1499,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3132761769891593884}
   m_OnClick:
     m_PersistentCalls:
@@ -1571,4 +1571,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LabelToDownload: PreLoad
-  DownloadURL: https://storage.cloud.google.com/ysaddressabletest2/Android/
+  DownloadURL: https://eb2b07fc-1217-478f-95ab-2057f5b1a798.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/ee375f27-4398-436e-9ba5-131a4b60068f/releases/23b99ff2-1341-4786-b880-4b165eddb9ee/entry_by_path/content/?path=

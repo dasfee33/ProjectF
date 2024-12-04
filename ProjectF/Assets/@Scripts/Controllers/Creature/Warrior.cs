@@ -161,11 +161,11 @@ public class Warrior : Creature
   {
     if (Managers.GameDay.currentTime >= FCurrentTime.BeforeSunset)
       SetOrAddJobPriority(FPersonalJob.Sleepy, 5f);
-    SetOrAddJobPriority(FJob.Store, 1f);
+    //SetOrAddJobPriority(FJob.Store, 1f);
 
-    //TEMP
-    SetOrAddJobPriority(FJob.Supply, 20f);
-    SetOrAddJobPriority(FJob.Make, 20f);
+    ////TEMP
+    //SetOrAddJobPriority(FJob.Supply, 20f);
+    //SetOrAddJobPriority(FJob.Make, 20f);
   }
 
   public override void OnAnimEventHandler()

@@ -247,7 +247,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owner: {fileID: 0}
   SpritePool:
-  - {fileID: 21300000, guid: bac17821140c63c4fb4e9db063af771c, type: 3}
   - {fileID: 21300000, guid: 24e156c0fab6f8c479610a9c4f4fd068, type: 3}
   - {fileID: 21300000, guid: f217dabe391790646ace50cefd095630, type: 3}
   - {fileID: 21300000, guid: bac17821140c63c4fb4e9db063af771c, type: 3}
