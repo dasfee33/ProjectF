@@ -48,7 +48,7 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b93fbe6d788d8234b9da3a200a116c19
-    m_Address: Rock1
+    m_Address: Rock2
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

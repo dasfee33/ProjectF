@@ -121,6 +121,9 @@ namespace Data
 
     public int DropItemid;
     public int Supplyitemid;
+
+    public int DeadEnv;
+    public int RegenEnv;
   }
 
   [Serializable]

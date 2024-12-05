@@ -238,11 +238,8 @@ public class UI_TitleScene : UI_Scene
     {
       Managers.Data.Init();
 
-      if (Managers.Game.LoadGame() == false)
-      {
-        Managers.Game.InitGame();
-        Managers.Game.SaveGame();
-      }
+      Managers.Game.LoadGame();
+
       SetState(State.AllFinished, true);
       Downloader.GoNext();
     }

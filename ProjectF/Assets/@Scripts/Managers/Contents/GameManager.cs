@@ -43,6 +43,9 @@ public class EnvSaveData
 
 public class StructSaveData
 {
+  public int dataID;
+  public string name;
+  public int type;
   public float posX;
   public float posY;
 }
@@ -64,13 +67,31 @@ public class GameManager
   #region GameData
   GameSaveData _saveData = new GameSaveData ();
   public GameSaveData SaveData { get { return _saveData; } set { _saveData = value; } }
+  public bool LoadFlag = false;
 
   private string gameDataRowInData = string.Empty;
 
   public void GameDataInsert()
   {
-    CreatureDataInsert();
-    EnvDataInsert();
+    Param param = new Param();
+
+    CreatureDataInsert(param);
+    EnvDataInsert(param);
+    StructDataInsert(param);
+
+    Debug.Log("게임 데이터 삽입 요청합니다.");
+    var bro = Backend.GameData.Insert("TEST_DATA", param);
+
+    if (bro.IsSuccess())
+    {
+      Debug.Log("게임 데이터 삽입 성공." + bro);
+
+      gameDataRowInData = bro.GetInDate();
+    }
+    else
+    {
+      Debug.LogError("게임 데이터 삽입 실패" + bro);
+    }
   }
 
   public bool GameDataGet()
@@ -83,12 +104,21 @@ public class GameManager
     {
       Debug.Log("게임 데이터 조회에 성공했습니다." + bro);
       LitJson.JsonData gameDataJson = bro.FlattenRows();
-      gameDataRowInData = gameDataJson[0]["inDate"].ToString();
+      if(gameDataJson.Count <= 0)
+      {
+        Debug.Log("저장된 게임데이터가 없습니다.");
+        return false;
+      }
+      else
+      {
+        gameDataRowInData = gameDataJson[0]["inDate"].ToString();
 
-      CreatureDataGet(gameDataJson);
-      EnvDataGet(gameDataJson);
+        CreatureDataGet(gameDataJson);
+        EnvDataGet(gameDataJson);
+        StructureDataGet(gameDataJson);
 
-      return true;
+        return true;
+      }
     }
     else
     {
@@ -99,15 +129,38 @@ public class GameManager
 
   public void GameDataUpdate()
   {
-    CreatureDataUpdate();
-    EnvDataUpdate();
+    Param param = new Param();
+
+    CreatureDataUpdate(param);
+    EnvDataUpdate(param);
+    StructureDataUpdate(param);
+
+    BackendReturnObject bro = null;
+    if (string.IsNullOrEmpty(gameDataRowInData))
+    {
+      Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
+      bro = Backend.GameData.Update("TEST_DATA", new Where(), param);
+    }
+    else
+    {
+      Debug.Log($"{gameDataRowInData} 의 게임 정보 데이터 수정을 요청합니다.");
+      bro = Backend.GameData.UpdateV2("TEST_DATA", gameDataRowInData, Backend.UserInDate, param);
+    }
+
+    if (bro.IsSuccess())
+    {
+      Debug.Log("데이터의 수정을 완료했습니다." + bro);
+    }
+    else
+    {
+      Debug.LogError("데이터의 수정을 실패했습니다." + bro);
+    }
   }
   #region DataHelpers
 
   #region DataUpdate
-  public bool CreatureDataUpdate()
+  public void CreatureDataUpdate(Param param)
   {
-    Param param = new Param();
     var creatures = Managers.Object.Creatures;
     if (SaveData.creatureSaveData.Count > 0) SaveData.creatureSaveData.Clear();
 
@@ -134,33 +187,10 @@ public class GameManager
 
     param.Add("csavedata", SaveData.creatureSaveData);
 
-    BackendReturnObject bro = null;
-    if(string.IsNullOrEmpty(gameDataRowInData))
-    {
-      Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
-      bro = Backend.GameData.Update("TEST_DATA", new Where(), param);
-    }
-    else
-    {
-      Debug.Log($"{gameDataRowInData} 의 게임 정보 데이터 수정을 요청합니다.");
-      bro = Backend.GameData.UpdateV2("TEST_DATA", gameDataRowInData, Backend.UserInDate, param);
-    }
-
-    if(bro.IsSuccess())
-    {
-      Debug.Log("크리쳐 데이터의 수정을 완료했습니다." + bro);
-      return true;
-    }
-    else
-    {
-      Debug.LogError("크리쳐 데이터의 수정을 실패했습니다." + bro);
-      return false;
-    }
   }
 
-  public bool EnvDataUpdate()
+  public void EnvDataUpdate(Param param)
   {
-    Param param = new Param();
     var envs = Managers.Object.Envs;
     if (SaveData.envSaveData.Count > 0) SaveData.envSaveData.Clear();
 
@@ -178,35 +208,33 @@ public class GameManager
 
     param.Add("esavedata", SaveData.envSaveData);
 
-    BackendReturnObject bro = null;
-    if (string.IsNullOrEmpty(gameDataRowInData))
+  }
+
+  public void StructureDataUpdate(Param param)
+  {
+    var structures = Managers.Object.Structures;
+    if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
+
+    foreach (var structure in structures)
     {
-      Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
-      bro = Backend.GameData.Update("TEST_DATA", new Where(), param);
-    }
-    else
-    {
-      Debug.Log($"{gameDataRowInData} 의 게임 정보 데이터 수정을 요청합니다.");
-      bro = Backend.GameData.UpdateV2("TEST_DATA", gameDataRowInData, Backend.UserInDate, param);
+      StructSaveData structureSaveData = new StructSaveData();
+      structureSaveData.dataID = structure.dataTemplateID;
+      structureSaveData.name = structure.Name;
+      structureSaveData.type = (int)structure.StructureType;
+      structureSaveData.posX = structure.transform.position.x;
+      structureSaveData.posY = structure.transform.position.y;
+
+      SaveData.structSaveData.Add(structureSaveData);
     }
 
-    if (bro.IsSuccess())
-    {
-      Debug.Log("환경요소 데이터의 수정을 완료했습니다." + bro);
-      return true;
-    }
-    else
-    {
-      Debug.LogError("환경요소 데이터의 수정을 실패했습니다." + bro);
-      return false;
-    }
+    param.Add("ssavedata", SaveData.structSaveData);
   }
 
   #endregion
 
   #region DataInsert
 
-  public void CreatureDataInsert()
+  public void CreatureDataInsert(Param param)
   {
     var creatures = Managers.Object.Creatures;
 
@@ -232,7 +260,6 @@ public class GameManager
     }
 
     Debug.Log("DB 업데이트 목록에 해당 데이터들을 추가합니다.");
-    Param param = new Param();
     param.Add("csavedata", SaveData.creatureSaveData);
     //param.Add("dataID", creatureSaveData.dataID);
     //param.Add("name", creatureSaveData.name);
@@ -242,23 +269,11 @@ public class GameManager
     //param.Add("jobPriority", creatureSaveData.jobPriority);
     //param.Add("pJobPriority", creatureSaveData.pJobPriority);
 
-    Debug.Log("게임 데이터 삽입 요청합니다.");
 
-    var bro = Backend.GameData.Insert("TEST_DATA", param);
-
-    if (bro.IsSuccess())
-    {
-      Debug.Log("게임 데이터 삽입 성공." + bro);
-
-      gameDataRowInData = bro.GetInDate();
-    }
-    else
-    {
-      Debug.LogError("게임 데이터 삽입 실패" + bro);
-    }
+    
   }
 
-  public void EnvDataInsert()
+  public void EnvDataInsert(Param param)
   {
     var envs = Managers.Object.Envs;
 
@@ -275,8 +290,27 @@ public class GameManager
     }
 
     Debug.Log("DB 업데이트 목록에 해당 데이터들을 추가합니다.");
-    Param param = new Param();
     param.Add("esavedata", SaveData.envSaveData);
+  }
+
+  public void StructDataInsert(Param param)
+  {
+    var structures = Managers.Object.Structures;
+
+    foreach (var structure in structures)
+    {
+      StructSaveData structSaveData = new StructSaveData();
+      structSaveData.dataID = structure.dataTemplateID;
+      structSaveData.name = structure.Name;
+      structSaveData.type = (int)structure.StructureType;
+      structSaveData.posX = structure.transform.position.x;
+      structSaveData.posY = structure.transform.position.y;
+
+      SaveData.structSaveData.Add(structSaveData);
+    }
+
+    Debug.Log("DB 업데이트 목록에 해당 데이터들을 추가합니다.");
+    param.Add("ssavedata", SaveData.structSaveData);
     //param.Add("dataID", creatureSaveData.dataID);
     //param.Add("name", creatureSaveData.name);
     //param.Add("posX", creatureSaveData.posX);
@@ -284,21 +318,6 @@ public class GameManager
 
     //param.Add("jobPriority", creatureSaveData.jobPriority);
     //param.Add("pJobPriority", creatureSaveData.pJobPriority);
-
-    Debug.Log("게임 데이터 삽입 요청합니다.");
-
-    var bro = Backend.GameData.Insert("TEST_DATA", param);
-
-    if (bro.IsSuccess())
-    {
-      Debug.Log("게임 데이터 삽입 성공." + bro);
-
-      gameDataRowInData = bro.GetInDate();
-    }
-    else
-    {
-      Debug.LogError("게임 데이터 삽입 실패" + bro);
-    }
   }
 
   #endregion
@@ -386,6 +405,41 @@ public class GameManager
       return true;
     }
   }
+
+  public bool StructureDataGet(LitJson.JsonData gameDataJson)
+  {
+    if (gameDataJson.Count <= 0)
+    {
+      Debug.LogWarning("데이터가 존재하지 않습니다.");
+      return false;
+    }
+    else
+    {
+      var structureData = gameDataJson[0]["ssavedata"];
+
+      if (structureData == null || structureData.Count <= 0)
+      {
+        Debug.Log("구조물의 데이터가 존재하지 않습니다.");
+        return false;
+      }
+
+      if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
+
+      foreach (LitJson.JsonData data in structureData)
+      {
+        StructSaveData structureLoadData = new StructSaveData();
+        structureLoadData.dataID = int.Parse(data["dataID"].ToString());
+        structureLoadData.name = data["name"].ToString();
+        structureLoadData.type = int.Parse(data["type"].ToString());
+        structureLoadData.posX = float.Parse(data["posX"].ToString());
+        structureLoadData.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.Add(structureLoadData);
+      }
+
+      return true;
+    }
+  }
   #endregion
 
   #endregion
@@ -441,10 +495,19 @@ public class GameManager
 
   public void InitGame()
   {
+    Managers.Object.Spawn<Creature>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
+    Managers.RandomSeedGenerate.GenerateMaps(); //랜덤 시드 생성
+    GameDataInsert();
+
     //if (File.Exists(Path))
     //  return;
 
     //Managers.Data.HeroDic => 데이터 시트에 접근
+  }
+
+  public void UpdateGame()
+  {
+    GameDataUpdate();
   }
 
   public void SaveGame()
@@ -454,9 +517,13 @@ public class GameManager
     //Debug.Log($"Save Game Completed : {Path}");
   }
 
-  public bool LoadGame()
+  public void LoadGame()
   {
-    GameDataGet();
+    if(GameDataGet() == true)
+    {
+      LoadFlag = true;
+    }
+    
     //if (File.Exists(Path) == false)
     //  return false;
 
@@ -469,8 +536,6 @@ public class GameManager
     //Debug.Log($"Save Game Loaded : {Path}");
     //return true;
 
-    //TEMP
-    return true;
   }
 
 

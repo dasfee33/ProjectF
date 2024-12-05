@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Trunk : BaseObject
+public class Trunk : Env
 {
   private float regenTime;
   private int dataId;
@@ -21,16 +21,19 @@ public class Trunk : BaseObject
 
   private void Start()
   {
+    wait = new WaitForSeconds(regenTime);
     StartCoroutine(Regen());
   }
 
-  public void SetInfo(Data.EnvData data)
-  {
-    _data = data;
-    dataId = data.DataId;
-    regenTime = data.RegenTime;
-    wait = new WaitForSeconds(regenTime);
-  }
+  //public void SetInfo(Data.EnvData data)
+  //{
+  //  _data = data;
+  //  dataId = data.DataId;
+  //  regenTime = data.RegenTime;
+  //  wait = new WaitForSeconds(regenTime);
+
+    
+  //}
 
   private WaitForSeconds wait;
   private IEnumerator Regen()

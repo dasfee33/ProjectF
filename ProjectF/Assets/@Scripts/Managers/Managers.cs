@@ -95,10 +95,10 @@ public class Managers : MonoBehaviour
     }
   }
 
-  //private void OnApplicationQuit()
-  //{
-  //  Debug.Log("게임 종료.");
-  //  Managers.Game.GameDataInsert();
-  //}
+  private void OnApplicationQuit()
+  {
+    Debug.Log("게임 종료.");
+    Managers.Game.GameDataUpdate();
+  }
 
 }

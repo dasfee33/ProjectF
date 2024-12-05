@@ -97,6 +97,7 @@ public static class Define
     Tree,
     Rock,
     Plant,
+    Trunk,
   }
 
   public enum FStructureType

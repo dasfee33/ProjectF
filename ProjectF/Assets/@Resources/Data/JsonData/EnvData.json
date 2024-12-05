@@ -3,7 +3,7 @@
     {
       "DataId": 100000,
       "Name": "Tree1",
-      "DescriptionTextID": "참나무",
+      "DescriptionTextID": "참나무1",
       "Label": "Env",
       "maxHp": 100.0,
       "GrowthTime": 0.0,
@@ -13,12 +13,14 @@
       "Hurt": "treeHurt1",
       "Dead": "treeDead1",
       "DropItemid": 400000,
-      "Supplyitemid": -1
+      "Supplyitemid": -1,
+      "DeadEnv": 100004,
+      "RegenEnv": 0
     },
     {
       "DataId": 100001,
       "Name": "Tree2",
-      "DescriptionTextID": "참나무",
+      "DescriptionTextID": "참나무2",
       "Label": "Env",
       "maxHp": 150.0,
       "GrowthTime": 0.0,
@@ -28,7 +30,9 @@
       "Hurt": "treeHurt2",
       "Dead": "treeDead2",
       "DropItemid": 400000,
-      "Supplyitemid": -1
+      "Supplyitemid": -1,
+      "DeadEnv": 100005,
+      "RegenEnv": 0
     },
     {
       "DataId": 100002,
@@ -43,7 +47,9 @@
       "Hurt": null,
       "Dead": null,
       "DropItemid": 400001,
-      "Supplyitemid": 0
+      "Supplyitemid": 0,
+      "DeadEnv": 0,
+      "RegenEnv": 0
     },
     {
       "DataId": 100003,
@@ -58,7 +64,43 @@
       "Hurt": null,
       "Dead": null,
       "DropItemid": 400002,
-      "Supplyitemid": -1
+      "Supplyitemid": -1,
+      "DeadEnv": 0,
+      "RegenEnv": 0
+    },
+    {
+      "DataId": 100004,
+      "Name": "Tree1_trunk",
+      "DescriptionTextID": "베인 참나무1",
+      "Label": "Env",
+      "maxHp": 50.0,
+      "GrowthTime": 0.0,
+      "RegenTime": 0.0,
+      "Idle": null,
+      "type": "Trunk",
+      "Hurt": null,
+      "Dead": null,
+      "DropItemid": 400000,
+      "Supplyitemid": 0,
+      "DeadEnv": 0,
+      "RegenEnv": 100000
+    },
+    {
+      "DataId": 100005,
+      "Name": "Tree2_trunk",
+      "DescriptionTextID": "베인 참나무2",
+      "Label": "Env",
+      "maxHp": 50.0,
+      "GrowthTime": 0.0,
+      "RegenTime": 0.0,
+      "Idle": null,
+      "type": "Trunk",
+      "Hurt": null,
+      "Dead": null,
+      "DropItemid": 400000,
+      "Supplyitemid": 0,
+      "DeadEnv": 0,
+      "RegenEnv": 100001
     }
   ]
 }

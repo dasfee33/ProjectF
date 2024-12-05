@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6529799126337332062}
   - component: {fileID: 2391695496089885936}
-  - component: {fileID: 7749797991149784449}
+  - component: {fileID: -5337031280032878337}
   m_Layer: 0
   m_Name: Tree1_trunk
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7749797991149784449
+--- !u!114 &-5337031280032878337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,13 +94,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7712762480637389692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2af68c8338aa3d448e1c6165dde5ce3, type: 3}
+  m_Script: {fileID: 11500000, guid: 05100e46beeb4644099edb5305a06776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
   onWorkSomeOne: 0
-  regenTime: 0
-  dataId: 0
-  count: 0
+  isFarm: 0
+  harvestIsReady: 0

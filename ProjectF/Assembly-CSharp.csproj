@@ -152,6 +152,7 @@
     <None Include="Assets\@Resources\Data\MapData\BaseMapCollision.txt" />
     <None Include="Assets\@Assets\RafaelMatos\Grass LandV2\ERW-Grassland 2.0 V1.7.1\TILED RANDOM TIPS.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\LunarConsole\readme.txt" />
     <None Include="Assets\TheBackend\Plugins\WebSocket4Net.dll" />
     <None Include="Assets\TheBackend\Plugins\Settings\TheBackendSettings.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
@@ -1173,6 +1174,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Services.Ccd.Management">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Ccd.Management.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
       <Private>False</Private>
@@ -1362,6 +1367,14 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{A81573DF-6017-DA75-E9DB-1E39A50795E2}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="LunarConsoleEditor.csproj">
+      <Project>{4D1F43B2-7EE3-7FA3-3D51-ADB8F128DAF8}</Project>
+      <Name>LunarConsoleEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LunarConsole.csproj">
+      <Project>{6A48D013-99D8-7687-D464-32157B5B79B5}</Project>
+      <Name>LunarConsole</Name>
     </ProjectReference>
     <ProjectReference Include="AYellowpaper.SerializedCollections.csproj">
       <Project>{2BCB645C-6AD7-026A-6E33-1AD7F7DC6347}</Project>

@@ -37,6 +37,9 @@ public class Env : BaseObject
   public float regenTIme { get; set; }
   public string Name { get; set; }
 
+  public int DeadEnv { get; set; }
+  public int RegenEnv { get; set; }
+
   #endregion
 
   public override bool Init()
@@ -58,6 +61,9 @@ public class Env : BaseObject
     maxHp = data.maxHp;
     regenTIme = data.RegenTime;
     Name = data.Name;
+    DeadEnv = data.DeadEnv;
+    RegenEnv = data.RegenEnv;
+
     this.isFarm = isFarm;
     if (Enum.TryParse(data.type, out FEnvType result))
       EnvType = result;
@@ -83,7 +89,10 @@ public class Env : BaseObject
         SpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"kick{default_growth}");
         StartCoroutine(Growth(default_growth));
         break;
-
+      case FEnvType.Trunk:
+        workableJob = FJob.None;
+        StartCoroutine(Regen());
+        break;
       //TODO;
     }
   }
@@ -98,6 +107,16 @@ public class Env : BaseObject
       SpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"kick{g}");
     }
     harvestIsReady = true;
+  }
+
+  private IEnumerator Regen()
+  {
+    var regenEnv = Managers.Data.EnvDic[RegenEnv];
+    var wait = new WaitForSeconds(regenEnv.RegenTime);
+    yield return wait;
+
+    Managers.Object.Spawn<Env>(this.transform.position, RegenEnv, regenEnv.Name);
+    Managers.Object.Despawn(this);
   }
 
   protected override void UpdateAnimation()
@@ -164,14 +183,16 @@ public class Env : BaseObject
   {
     base.OnDead(attacker);
 
-    switch(EnvType)
-    {
-      case FEnvType.Tree:
-        var trunk = Managers.Object.Spawn<Trunk>(this.transform.position, dataTemplateID, prefabName: data.Name + "_trunk", addToCell: false);
-        trunk.SetInfo(data);
-        break;
+    if(DeadEnv > 0)
+      Managers.Object.Spawn<Env>(this.transform.position, DeadEnv, Managers.Data.EnvDic[DeadEnv].Name);
 
-    }
+    //switch (EnvType)
+    //{
+    //  case FEnvType.Tree:
+    //    Managers.Object.Spawn<Trunk>(this.transform.position, DeadEnv, Managers.Data.EnvDic[DeadEnv].Name);
+    //    break;
+
+    //}
     
 
     EnvState = FEnvState.Dead;

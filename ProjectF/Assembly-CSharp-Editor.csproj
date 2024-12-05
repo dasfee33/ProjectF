@@ -1161,6 +1161,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Services.Ccd.Management">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Ccd.Management.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
       <Private>False</Private>
@@ -1354,6 +1358,14 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{55CA0F59-23DD-4941-E4AE-E2CCC50920B2}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="LunarConsoleEditor.csproj">
+      <Project>{4D1F43B2-7EE3-7FA3-3D51-ADB8F128DAF8}</Project>
+      <Name>LunarConsoleEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="LunarConsole.csproj">
+      <Project>{6A48D013-99D8-7687-D464-32157B5B79B5}</Project>
+      <Name>LunarConsole</Name>
     </ProjectReference>
     <ProjectReference Include="AYellowpaper.SerializedCollections.csproj">
       <Project>{2BCB645C-6AD7-026A-6E33-1AD7F7DC6347}</Project>

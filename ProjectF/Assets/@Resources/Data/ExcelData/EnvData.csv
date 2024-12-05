@@ -1,5 +1,7 @@
-﻿DataId,Name,DescriptionTextId,Label,maxHp,growthTime,regenTime,Idle,type,Hurt,Dead,DropItemid,Supplyitemid
-100000,Tree1,참나무,Env,100,,50000,tree1,Tree,treeHurt1,treeDead1,400000,-1
-100001,Tree2,참나무,Env,150,,50000,tree2,Tree,treeHurt2,treeDead2,400000,-1
-100002,Rock2,바위,Env,200,,50000,,Rock,,,400001,
-100003,KickPlant,끼익 식물,Env,100,500,,,Plant,,,400002,-1
+﻿DataId,Name,DescriptionTextId,Label,maxHp,growthTime,regenTime,Idle,type,Hurt,Dead,DropItemid,Supplyitemid,DeadEnv,RegenEnv
+100000,Tree1,참나무1,Env,100,,50000,tree1,Tree,treeHurt1,treeDead1,400000,-1,100004,
+100001,Tree2,참나무2,Env,150,,50000,tree2,Tree,treeHurt2,treeDead2,400000,-1,100005,
+100002,Rock2,바위,Env,200,,50000,,Rock,,,400001,,,
+100003,KickPlant,끼익 식물,Env,100,500,,,Plant,,,400002,-1,,
+100004,Tree1_trunk,베인 참나무1,Env,50,,,,Trunk,,,400000,,,100000
+100005,Tree2_trunk,베인 참나무2,Env,50,,,,Trunk,,,400000,,,100001

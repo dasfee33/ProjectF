@@ -14,45 +14,47 @@ public class GameScene : BaseScene
     Managers.Map.LoadMap("BaseMap");
     //Managers.RandomSeedGenerate.GenerateMaps();
 
-    var creatureSaveData = Managers.Game.SaveData.creatureSaveData;
-    var envSaveData = Managers.Game.SaveData.envSaveData;
-
-    foreach (var creature in creatureSaveData)
+    //저장 된 데이터가 있습니다.
+    if(Managers.Game.LoadFlag)
     {
-      switch (creature.type)
+      var creatureSaveData = Managers.Game.SaveData.creatureSaveData;
+      var envSaveData = Managers.Game.SaveData.envSaveData;
+      var structureData = Managers.Game.SaveData.structSaveData;
+
+      foreach (var env in envSaveData)
       {
-        case (int)FCreatureType.Warrior:
-          //FIXME
-          Managers.Object.Spawn<Creature>(new Vector3(creature.posX, creature.posY), creature.dataID, "Warrior");
-          break;
+        Managers.Object.Spawn<Env>(new Vector3(env.posX, env.posY), env.dataID, env.name);
+      }
+
+      foreach(var structure in structureData)
+      {
+        Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
+      }
+
+      foreach (var creatureData in creatureSaveData)
+      {
+        switch (creatureData.type)
+        {
+          case (int)FCreatureType.Warrior:
+            //FIXME
+            Vector3Int pos = new Vector3Int((int)creatureData.posX, (int)creatureData.posY);
+            Creature creat = Managers.Object.Spawn<Creature>(pos, creatureData.dataID, "Warrior");
+            Managers.Map.MoveTo(creat, pos, true);
+
+            for (int i = 0; i < creatureData.jobPriority.Count; i++)
+              creat.SetOrAddJobPriority((FJob)i, creatureData.jobPriority[i], true);
+
+            for(int i = 0; i < creatureData.pJobPriority.Count; i++)
+              creat.SetOrAddJobPriority((FPersonalJob)i, creatureData.pJobPriority[i], true);
+
+            break;
+        }
       }
     }
-
-    foreach (var env in envSaveData)
+    else
     {
-      Managers.Object.Spawn<Env>(new Vector3(env.posX, env.posY), env.dataID, env.name);
+      Managers.Game.InitGame();
     }
-
-   //Warrior warrior = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-   //Warrior warrior2 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-   //Warrior warrior3 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-    //Warrior warrior4 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-    //Warrior warrior5 = Managers.Object.Spawn<Warrior>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
-
-    //Structure toilet = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.right * 3, STRUCTURE_TOILET_NORMAL, "Toilet");
-    //Structure toilet2 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.right * 4, STRUCTURE_TOILET_NORMAL, "Toilet");
-    //Structure bed1 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left, STRUCTURE_BED_NORMAL, "Bed1");
-    //Structure bed2 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left + new Vector3(-1, 0), STRUCTURE_BED_NORMAL, "Bed1");
-    //Structure bed3 = Managers.Object.Spawn<Structure>(Vector3.zero + Vector3.left + new Vector3(-2, 0), STRUCTURE_BED_NORMAL, "Bed1");
-    //Env env1 = Managers.Object.Spawn<Env>(new Vector3(-1, 0), ENV_TREE_NORMAL1, "Tree1");
-    //Env env2 = Managers.Object.Spawn<Env>(new Vector3(1, 0), ENV_TREE_NORMAL2, "Tree2");
-
-    //Managers.Map.MoveTo(warrior, new Vector3Int(-5, 0), true);
-    //Managers.Map.MoveTo(warrior2, new Vector3Int(-5, 1), true);
-    //Managers.Map.MoveTo(warrior3, new Vector3Int(-5, -1), true);
-    //Managers.Map.MoveTo(warrior4, new Vector3Int(-4, 1), true);
-    //Managers.Map.MoveTo(warrior5, new Vector3Int(-4, 0), true);
-    //warrior.CreatureState = FCreatureState.Move;
 
     CameraController camera = Camera.main.GetComponent<CameraController>();
     if (Managers.Object.Creatures.Count > 0)

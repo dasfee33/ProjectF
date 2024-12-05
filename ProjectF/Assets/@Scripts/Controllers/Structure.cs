@@ -53,6 +53,7 @@ public class Structure : BaseObject
   private float _supplyItemid;
   private float _curCapacity;
   private float _maxCapacity;
+  private string _name;
 
   public float Hp { get { return _hp; }set { _hp = value; } }
   public float MaxHp { get { return _maxHp; }set { _maxHp = value; } }
@@ -60,6 +61,7 @@ public class Structure : BaseObject
   public float SupplyItemId { get { return _supplyItemid; }set { _supplyItemid = value; } }
   public float CurCapacity { get { return _curCapacity; }set { _curCapacity = value; } }
   public float MaxCapacity { get { return _maxCapacity; }set { _maxCapacity = value; } }
+  public string Name { get { return _name; } set { _name = value; } }
   #endregion
 
   public override bool Init()
@@ -84,6 +86,7 @@ public class Structure : BaseObject
     _maxCapacity = data.maxCapacity;
     ExtraCellsX = data.extraCellX;
     ExtraCellsY = data.extraCellY;
+    _name = data.Name;
     if (data.option == 1) Option = true;
 
     gameObject.name = $"{data.DataId}_{data.Name}";

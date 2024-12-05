@@ -95,7 +95,7 @@ public class RandomSeedGenerate
             bo = Managers.Object.Spawn<Env>(pos, ENV_TREE_NORMAL1, "Tree1");
             break;
           case FCellObjCollisionTypes.Rock:
-            bo = Managers.Object.Spawn<Env>(pos, ENV_ROCK_NORMAL1, "Rock1");
+            bo = Managers.Object.Spawn<Env>(pos, ENV_ROCK_NORMAL1, "Rock2");
             break;
           case FCellObjCollisionTypes.KickPlant:
             bo = Managers.Object.Spawn<Plant>(pos, ENV_PLANT_KICK, "KickPlant");
