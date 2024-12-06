@@ -20,15 +20,21 @@ public class GameScene : BaseScene
       var creatureSaveData = Managers.Game.SaveData.creatureSaveData;
       var envSaveData = Managers.Game.SaveData.envSaveData;
       var structureData = Managers.Game.SaveData.structSaveData;
+      var ItemHolderData = Managers.Game.SaveData.itemHolderSaveData;
 
       foreach (var env in envSaveData)
       {
         Managers.Object.Spawn<Env>(new Vector3(env.posX, env.posY), env.dataID, env.name);
       }
-
-      foreach(var structure in structureData)
+      foreach (var structure in structureData)
       {
         Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
+      }
+
+      foreach (var ItemHolder in ItemHolderData)
+      {
+        var item = Managers.Object.Spawn<ItemHolder>(new Vector3(ItemHolder.posX, ItemHolder.posY), ItemHolder.dataID);
+        item.mass = ItemHolder.mass;
       }
 
       foreach (var creatureData in creatureSaveData)

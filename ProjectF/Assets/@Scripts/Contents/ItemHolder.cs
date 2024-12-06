@@ -38,14 +38,14 @@ public class ItemHolder : BaseObject
   public void SetInfo(int itemHolderId, int itemDataId, Vector3 pos)
   {
     dropPos = pos;
-    ownerPos = Owner.transform.position;
+    if(Owner != null) ownerPos = Owner.transform.position;
     dataTemplateID = itemDataId;
     data = Managers.Data.ItemDic[itemDataId];
     currentSprite.sprite = Managers.Resource.Load<Sprite>($"{data.Name}");
     currentSprite.sortingOrder = 19;
     maxStack = data.maxStack;
     defaultMass = data.Mass;
-    parabolaMotion.SetInfo(0, transform.position, dropPos, endCallback: Arrived);
+    if(dropPos != default(Vector3))  parabolaMotion.SetInfo(0, transform.position, dropPos, endCallback: Arrived);
 
   }
 

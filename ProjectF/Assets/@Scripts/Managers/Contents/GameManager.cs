@@ -16,6 +16,7 @@ public class GameSaveData
   public List<StructSaveData> structSaveData = new List<StructSaveData> ();
   public List<ItemHoldersSaveData> itemHolderSaveData = new List<ItemHoldersSaveData> ();
   public List<BuildObjectSaveData> buildObjectSaveData = new List<BuildObjectSaveData> ();
+  public List<ItemSaveData> itemSaveData = new List<ItemSaveData>();
 }
 
 public class CreatureSaveData
@@ -28,8 +29,6 @@ public class CreatureSaveData
 
   public List<float> jobPriority = Enumerable.Repeat(0f, Enum.GetValues(typeof(FJob)).Length).ToList();
   public List<float> pJobPriority = Enumerable.Repeat(0f, Enum.GetValues(typeof(FPersonalJob)).Length).ToList();
-
-
 }
 
 public class EnvSaveData
@@ -52,14 +51,23 @@ public class StructSaveData
 
 public class ItemHoldersSaveData
 {
+  public int dataID;
   public float posX;
   public float posY;
+  public float mass;
 }
 
 public class BuildObjectSaveData
 {
+  public int dataID;
   public float posX;
   public float posY;
+}
+
+public class ItemSaveData
+{
+  public int dataID;
+  public float mass;
 }
 #endregion
 public class GameManager
@@ -78,6 +86,7 @@ public class GameManager
     CreatureDataInsert(param);
     EnvDataInsert(param);
     StructDataInsert(param);
+    ItemHolderDataInsert(param);
 
     Debug.Log("게임 데이터 삽입 요청합니다.");
     var bro = Backend.GameData.Insert("TEST_DATA", param);
@@ -116,6 +125,7 @@ public class GameManager
         CreatureDataGet(gameDataJson);
         EnvDataGet(gameDataJson);
         StructureDataGet(gameDataJson);
+        ItemHolderDataGet(gameDataJson);
 
         return true;
       }
@@ -134,6 +144,7 @@ public class GameManager
     CreatureDataUpdate(param);
     EnvDataUpdate(param);
     StructureDataUpdate(param);
+    ItemHolderDataUpdate(param);
 
     BackendReturnObject bro = null;
     if (string.IsNullOrEmpty(gameDataRowInData))
@@ -230,6 +241,25 @@ public class GameManager
     param.Add("ssavedata", SaveData.structSaveData);
   }
 
+  public void ItemHolderDataUpdate(Param param)
+  {
+    var itemHolders = Managers.Object.ItemHolders;
+    if (SaveData.itemHolderSaveData.Count > 0) SaveData.itemHolderSaveData.Clear();
+
+    foreach (var itemHolder in itemHolders)
+    {
+      ItemHoldersSaveData itemholderSaveData = new ItemHoldersSaveData();
+      itemholderSaveData.dataID = itemHolder.dataTemplateID;
+      itemholderSaveData.posX = itemHolder.transform.position.x;
+      itemholderSaveData.posY = itemHolder.transform.position.y;
+      itemholderSaveData.mass = itemHolder.mass;
+
+      SaveData.itemHolderSaveData.Add(itemholderSaveData);
+    }
+
+    param.Add("ihsavedata", SaveData.itemHolderSaveData);
+  } 
+
   #endregion
 
   #region DataInsert
@@ -288,8 +318,6 @@ public class GameManager
 
       SaveData.envSaveData.Add(envSaveData);
     }
-
-    Debug.Log("DB 업데이트 목록에 해당 데이터들을 추가합니다.");
     param.Add("esavedata", SaveData.envSaveData);
   }
 
@@ -308,16 +336,24 @@ public class GameManager
 
       SaveData.structSaveData.Add(structSaveData);
     }
-
-    Debug.Log("DB 업데이트 목록에 해당 데이터들을 추가합니다.");
     param.Add("ssavedata", SaveData.structSaveData);
-    //param.Add("dataID", creatureSaveData.dataID);
-    //param.Add("name", creatureSaveData.name);
-    //param.Add("posX", creatureSaveData.posX);
-    //param.Add("posY", creatureSaveData.posY);
+  }
 
-    //param.Add("jobPriority", creatureSaveData.jobPriority);
-    //param.Add("pJobPriority", creatureSaveData.pJobPriority);
+  public void ItemHolderDataInsert(Param param)
+  {
+    var itemHolders = Managers.Object.ItemHolders;
+
+    foreach (var itemHolder in itemHolders)
+    {
+      ItemHoldersSaveData itemHolderSaveData = new ItemHoldersSaveData();
+      itemHolderSaveData.dataID = itemHolder.dataTemplateID;
+      itemHolderSaveData.posX = itemHolder.transform.position.x;
+      itemHolderSaveData.posY = itemHolder.transform.position.y;
+      itemHolderSaveData.mass = itemHolder.mass;
+
+      SaveData.itemHolderSaveData.Add(itemHolderSaveData);
+    }
+    param.Add("ihsavedata", SaveData.itemHolderSaveData);
   }
 
   #endregion
@@ -440,6 +476,40 @@ public class GameManager
       return true;
     }
   }
+
+  public bool ItemHolderDataGet(LitJson.JsonData gameDataJson)
+  {
+    if (gameDataJson.Count <= 0)
+    {
+      Debug.LogWarning("데이터가 존재하지 않습니다.");
+      return false;
+    }
+    else
+    {
+      var itemholderData = gameDataJson[0]["ihsavedata"];
+
+      if (itemholderData == null || itemholderData.Count <= 0)
+      {
+        Debug.Log("아이템 홀더의 데이터가 존재하지 않습니다.");
+        return false;
+      }
+
+      if (SaveData.itemHolderSaveData.Count > 0) SaveData.itemHolderSaveData.Clear();
+
+      foreach (LitJson.JsonData data in itemholderData)
+      {
+        ItemHoldersSaveData itemholderLoadData = new ItemHoldersSaveData();
+        itemholderLoadData.dataID = int.Parse(data["dataID"].ToString());
+        itemholderLoadData.posX = float.Parse(data["posX"].ToString());
+        itemholderLoadData.posY = float.Parse(data["posY"].ToString());
+        itemholderLoadData.mass = float.Parse(data["mass"].ToString());
+
+        SaveData.itemHolderSaveData.Add(itemholderLoadData);
+      }
+
+      return true;
+    }
+  }
   #endregion
 
   #endregion
@@ -499,10 +569,6 @@ public class GameManager
     Managers.RandomSeedGenerate.GenerateMaps(); //랜덤 시드 생성
     GameDataInsert();
 
-    //if (File.Exists(Path))
-    //  return;
-
-    //Managers.Data.HeroDic => 데이터 시트에 접근
   }
 
   public void UpdateGame()
@@ -512,9 +578,7 @@ public class GameManager
 
   public void SaveGame()
   {
-    //string jsonStr = JsonUtility.ToJson(Managers.Game.SaveData);
-    //File.WriteAllText(Path, jsonStr);
-    //Debug.Log($"Save Game Completed : {Path}");
+
   }
 
   public void LoadGame()
@@ -523,18 +587,7 @@ public class GameManager
     {
       LoadFlag = true;
     }
-    
-    //if (File.Exists(Path) == false)
-    //  return false;
-
-    //string fileStr = File.ReadAllText(Path);
-    //GameSaveData data = JsonUtility.FromJson<GameSaveData>(fileStr);
-
-    //if (data != null)
-    //  Managers.Game.SaveData = data;
-
-    //Debug.Log($"Save Game Loaded : {Path}");
-    //return true;
+   
 
   }
 
