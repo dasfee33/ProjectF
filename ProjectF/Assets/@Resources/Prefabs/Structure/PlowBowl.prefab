@@ -126,6 +126,7 @@ MonoBehaviour:
     maxCapacity: 0
     extraCellX: 0
     extraCellY: 0
+    option: 0
   Storage: []
   plantPort: {fileID: 7058834092450062670}
 --- !u!61 &377985255083104923

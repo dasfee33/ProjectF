@@ -97,7 +97,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813d724d8c4a56e4a8223b80dd7e3983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  job: 0
-  workableJob: 0
+  droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
+  onWorkSomeOne: 0
+  data:
+    DataId: 0
+    Name: 
+    DescirptionTextID: 
+    Label: 
+    type: 
+    ItemGroupType: 0
+    ItemType: 0
+    ItemSubType: 0
+    ItemGrade: 0
+    maxStack: 0
+    Mass: 0
+    Sprite: 
+  maxStack: 0
+  stack: 0
+  defaultMass: 0
+  mass: 0
+  isDropped: 0

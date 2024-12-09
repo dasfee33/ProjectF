@@ -294,8 +294,9 @@ public static class Define
   
 
   public const int STRUCTURE_TOILET_NORMAL = 100;
-  public const int STRUCTURE_CHEST_NORMAL = 103;
+  public const int STRUCTURE_COOKTABLE_NORMAL = 101;
   public const int STRUCTURE_BED_NORMAL = 102;
+  public const int STRUCTURE_CHEST_NORMAL = 103;
   public const int STRUCTURE_STATION_NORMAL = 104;
   public const int STRUCTURE_PLOWBOWL_NORMAL = 105;
 

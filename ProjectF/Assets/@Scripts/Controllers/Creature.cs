@@ -571,19 +571,19 @@ public class Creature : BaseObject
 
     if (distToTargetSqr <= attackDistanceSqr)
     {
-      if(job is FPersonalJob.Sleepy)
-      {
-        LerpCellPosCompleted = true;
-        if (_coai != null) { CancelCo(); StopAnimation(); }
-        SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
-        this.transform.position = chaseTarget.transform.position;
-        chaseTarget.OnDamaged(this);
-        return;
-      }
-      else if(job is FJob.Supply)
-      {
+      //if(job is FPersonalJob.Sleepy)
+      //{
+      //  LerpCellPosCompleted = true;
+      //  if (_coai != null) { CancelCo(); StopAnimation(); }
+      //  SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
+      //  this.transform.position = chaseTarget.transform.position;
+      //  chaseTarget.OnDamaged(this);
+      //  return;
+      //}
+      //else if(job is FJob.Supply)
+      //{
         
-      }
+      //}
       
 
       // 공격 범위 이내로 들어왔다면 공격.
@@ -749,6 +749,20 @@ public class Creature : BaseObject
       ResetJob();
     }
 
+  }
+
+  public virtual void JobSleepy(float distance)
+  {
+    ChaseOrAttackTarget(100, distance);
+
+    return;
+  }
+
+  public virtual void JobHungry(float distance)
+  {
+    ChaseOrAttackTarget(100, distance);
+
+    return;
   }
 
   #endregion

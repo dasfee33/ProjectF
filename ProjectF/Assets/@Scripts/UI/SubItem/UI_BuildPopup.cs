@@ -43,6 +43,7 @@ public class UI_BuildPopup : UI_Popup
       Managers.Object.PossFurnitures.Add(STRUCTURE_CHEST_NORMAL);
       Managers.Object.PossPipes.Add(STRUCTURE_TOILET_NORMAL);
       Managers.Object.PossCooks.Add(STRUCTURE_PLOWBOWL_NORMAL);
+      Managers.Object.PossCooks.Add(STRUCTURE_COOKTABLE_NORMAL);
     }
 
     return true;

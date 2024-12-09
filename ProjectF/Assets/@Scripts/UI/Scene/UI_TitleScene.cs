@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using static Define;
 
 public class UI_TitleScene : UI_Scene
 {
-  public enum State
+  public enum DownloadState
   {
     None = 0,
 
@@ -54,7 +55,7 @@ public class UI_TitleScene : UI_Scene
   private long curDownloadSizeUnit;
   private long totalSizeUnit;
 
-  public State CurrentState { get; private set; } = State.None;
+  public DownloadState CurrentState { get; private set; } = DownloadState.None;
 
 
   public override bool Init()
@@ -80,7 +81,7 @@ public class UI_TitleScene : UI_Scene
 
   IEnumerator Start()
   {
-    SetState(State.CalculatingSize, true);
+    SetState(DownloadState.CalculatingSize, true);
 
     yield return Downloader.StartDownloadRoutine((evt) =>
     {
@@ -89,25 +90,26 @@ public class UI_TitleScene : UI_Scene
       evt.SizeDownloadedListener += OnSizeDownloaded;
       evt.DownloadProgressListener += OnDownloadProgress;
       evt.DownloadFinished += OnDownloadFinished;
-      evt.ReSourceListGenerateListener += OnResourceGenerated;
+      evt.ResourceListGenerateListener += OnResourceGenerated;
+      evt.ResourceListGenerateFinished += OnResourceGeneratedFinished;
     });
   }
 
-  private void SetState(State state, bool updateUI)
+  private void SetState(DownloadState state, bool updateUI)
   {
     if (CurrentState != state) CurrentState = state;
 
     switch(state)
     {
-      case State.CalculatingSize:
-      case State.AskingDownload:
+      case DownloadState.CalculatingSize:
+      case DownloadState.AskingDownload:
         GetObject((int)Objects.DownloadConfirm).SetActive(true);
         break;
-      case State.Downloading:
-      case State.ResourceGenerated:
+      case DownloadState.Downloading:
+      case DownloadState.ResourceGenerated:
         GetSlider((int)Sliders.DownloadSlider).gameObject.SetActive(true);
         break;
-      case State.AllFinished:
+      case DownloadState.AllFinished:
         GetButton((int)Buttons.Startarea).enabled = true;
         GetButton((int)Buttons.Startarea).interactable = true;
         GetText((int)Texts.Gamestart).gameObject.SetActive(true);
@@ -124,35 +126,35 @@ public class UI_TitleScene : UI_Scene
   private void UpdateUI()
   {
     var descText = GetText((int)Texts.DownloadDesc);
-    if (CurrentState == State.CalculatingSize)
+    if (CurrentState == DownloadState.CalculatingSize)
     {
       descText.text = "다운로드 정보를 가져오고 있습니다. 잠시만 기다려주세요.";
     }
-    else if(CurrentState == State.NothingToDownload)
+    else if(CurrentState == DownloadState.NothingToDownload)
     {
       descText.text = "이미 최신버전입니다.";
-      SetState(State.ResourceGenerated, true);
+      SetState(DownloadState.ResourceGenerated, true);
     }
-    else if(CurrentState == State.AskingDownload)
+    else if(CurrentState == DownloadState.AskingDownload)
     {
       descText.text = $"최신 버전이 아닙니다 다운로드를 진행하시겠습니까? ({this.totalSizeUnit}{this.sizeUnit})";
     }
-    else if(CurrentState == State.Downloading)
+    else if(CurrentState == DownloadState.Downloading)
     {
       descText.text = $"{progressInfo.totalProgress}% / {progressInfo.downloadedBytes} / {progressInfo.remainBytes} / {progressInfo.totalBytes}";
       GetSlider((int)Sliders.DownloadSlider).value = progressInfo.totalProgress;
     }
-    else if(CurrentState == State.DownloadFinished)
+    else if(CurrentState == DownloadState.DownloadFinished)
     {
-      SetState(State.ResourceGenerated, true);
+      SetState(DownloadState.ResourceGenerated, true);
     }
-    else if (CurrentState == State.ResourceGenerated)
+    else if (CurrentState == DownloadState.ResourceGenerated)
     {
       if (rprogressInfo.totalCount <= 0) return;
       descText.text = $"{rprogressInfo.count} / {rprogressInfo.totalCount}";
       GetSlider((int)Sliders.DownloadSlider).value = rprogressInfo.count / rprogressInfo.totalCount;
     }
-    else if(CurrentState == State.AllFinished)
+    else if(CurrentState == DownloadState.AllFinished)
     {
       GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
       {
@@ -164,7 +166,7 @@ public class UI_TitleScene : UI_Scene
 
   private void OnClickStartDownload(PointerEventData evt)
   {
-    SetState(State.Downloading, true);
+    SetState(DownloadState.Downloading, true);
     Downloader.GoNext();
   }
 
@@ -194,15 +196,16 @@ public class UI_TitleScene : UI_Scene
   {
     if(size <= 0)
     {
-      SetState(State.NothingToDownload, true);
-
+      SetState(DownloadState.NothingToDownload, true);
+      Downloader.LastValidState = DownloadController.State.NothingToDownload;
+      Downloader.GoNext();
     }
     else
     {
       sizeUnit = Util.GetProperByteUnit(size);
       totalSizeUnit = Util.ConvertByteByUnit(size, sizeUnit);
 
-      SetState(State.AskingDownload, true);
+      SetState(DownloadState.AskingDownload, true);
     }
   }
 
@@ -222,28 +225,27 @@ public class UI_TitleScene : UI_Scene
 
   private void OnDownloadFinished(bool isSuccess)
   {
-    SetState(State.DownloadFinished, true);
+    SetState(DownloadState.DownloadFinished, true);
     Downloader.GoNext();
   }
 
   private void OnResourceGenerated(ResourceProgrerssStatus resourceStatus)
   {
-    bool equal = this.rprogressInfo.count == (resourceStatus.totalCount - 1);
-
     rprogressInfo = resourceStatus;
 
     UpdateUI();
-
-    if(equal)
-    {
-      Managers.Data.Init();
-
-      Managers.Game.LoadGame();
-
-      SetState(State.AllFinished, true);
-      Downloader.GoNext();
-    }
   }
+
+  private void OnResourceGeneratedFinished()
+  {
+    Managers.Data.Init();
+
+    Managers.Game.LoadGame();
+
+    SetState(DownloadState.AllFinished, true);
+    Downloader.GoNext();
+  }
+
 
   //private void StartLoadAssets()
   //{

@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class AddressableDownloader
 {
-  public static string DownloadURL = "https://eb2b07fc-1217-478f-95ab-2057f5b1a798.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/ee375f27-4398-436e-9ba5-131a4b60068f/releases/23b99ff2-1341-4786-b880-4b165eddb9ee/entry_by_path/content/?path=";
+  public static string DownloadURL = "https://2746801c-de23-4a66-b822-a8fa07a50254.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/0dcf2acd-e042-4fe7-a82f-175500d818dc/releases/b90dfeb6-3369-4284-a99c-d00bf6a2d4dc/entry_by_path/content/?path=";
   DownloadEvent Events;
 
   string LabelToDownload;
@@ -100,9 +100,7 @@ public class AddressableDownloader
   public void StartDownload()
   {
     Debug.Log("StartDownLoad");
-    DownloadHandle = Addressables.DownloadDependenciesAsync(LabelToDownload);
-    DownloadHandle.Completed += OnDependenciesDownloaded;
-    
+    Addressables.DownloadDependenciesAsync(LabelToDownload).Completed += OnDependenciesDownloaded;
   }
 
   public void ResourceListGenerated()
@@ -137,6 +135,10 @@ public class AddressableDownloader
                   loadCount,
                   totalCount
                   ));
+              if(loadCount == totalCount)
+              {
+                OnResourceGenerateFinished();
+              }
             }
             else
             {
@@ -170,7 +172,7 @@ public class AddressableDownloader
     TotalSize = result.Result;
     if(TotalSize <= 0)
     {
-      ResourceListGenerated();
+      //ResourceListGenerated();
     }
     Events.NotifySizeDownload(result.Result);
 
@@ -181,13 +183,18 @@ public class AddressableDownloader
     Events.NotifyDownloadFinished(result.Status == AsyncOperationStatus.Succeeded);
   }
 
+  private void OnResourceGenerateFinished()
+  {
+    Events.NotifyResourceListGenerateFinished();
+  }
+
   private void OnException(AsyncOperationHandle handle, Exception exp)
   {
-    Debug.LogError("customexceptioncaught !! " + exp.Message + "/" + handle);
+    //Debug.LogError("customexceptioncaught !! " + exp.Message + "/" + handle);
 
-    if (exp is UnityEngine.ResourceManagement.Exceptions.RemoteProviderException)
-    {
-      //remote 관련 에러 발생시 
-    }
+    //if (exp is UnityEngine.ResourceManagement.Exceptions.RemoteProviderException)
+    //{
+    //  //remote 관련 에러 발생시 
+    //}
   }
 }

@@ -55,6 +55,7 @@ public class ItemHoldersSaveData
   public float posX;
   public float posY;
   public float mass;
+  public int stack;
 }
 
 public class BuildObjectSaveData
@@ -253,6 +254,7 @@ public class GameManager
       itemholderSaveData.posX = itemHolder.transform.position.x;
       itemholderSaveData.posY = itemHolder.transform.position.y;
       itemholderSaveData.mass = itemHolder.mass;
+      itemholderSaveData.stack = itemHolder.stack;
 
       SaveData.itemHolderSaveData.Add(itemholderSaveData);
     }
@@ -350,6 +352,7 @@ public class GameManager
       itemHolderSaveData.posX = itemHolder.transform.position.x;
       itemHolderSaveData.posY = itemHolder.transform.position.y;
       itemHolderSaveData.mass = itemHolder.mass;
+      itemHolderSaveData.stack = itemHolder.stack;
 
       SaveData.itemHolderSaveData.Add(itemHolderSaveData);
     }
@@ -503,6 +506,7 @@ public class GameManager
         itemholderLoadData.posX = float.Parse(data["posX"].ToString());
         itemholderLoadData.posY = float.Parse(data["posY"].ToString());
         itemholderLoadData.mass = float.Parse(data["mass"].ToString());
+        itemholderLoadData.stack = int.Parse(data["stack"].ToString());
 
         SaveData.itemHolderSaveData.Add(itemholderLoadData);
       }

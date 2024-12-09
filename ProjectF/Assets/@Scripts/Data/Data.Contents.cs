@@ -228,6 +228,7 @@ namespace Data
     public double CoolTIme;
     public FJob SupplyJob;
     public int ParentEnv;
+    public float Calories;
   }
 
   [Serializable]

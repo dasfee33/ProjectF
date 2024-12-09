@@ -53,6 +53,11 @@ public class Bed : Structure
   {
     onWorkSomeOne = true;
     StructureState = FStructureState.Work;
+
+    LerpCellPosCompleted = true;
+    if (Worker._coai != null) { Worker.CancelCo(); Worker.StopAnimation(); }
+    Worker.SpriteRenderer.sprite = Managers.Resource.Load<Sprite>("warrior-sleep");
+    Worker.transform.position = this.transform.position;
   }
 
   protected override void UpdateOnWork()

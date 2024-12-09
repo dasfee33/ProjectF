@@ -125,6 +125,7 @@ MonoBehaviour:
     maxCapacity: 0
     extraCellX: 0
     extraCellY: 0
+    option: 0
   Storage: []
 --- !u!61 &1297848813184914110
 BoxCollider2D:

@@ -652,10 +652,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05100e46beeb4644099edb5305a06776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  job: 0
-  workableJob: 0
+  droppedItem: {fileID: 0}
   Worker: {fileID: 0}
   onWork: 0
+  onWorkSomeOne: 0
+  isFarm: 0
+  harvestIsReady: 0
 --- !u!1 &6605652632226886711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,6 +1426,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6393824351660524932, guid: ff401e0d478c9b148aa6e1a784d36cd4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6393824351660524933, guid: ff401e0d478c9b148aa6e1a784d36cd4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.882
@@ -1486,6 +1492,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6605652632020738096}
     m_Modifications:
+    - target: {fileID: 3264894994393240001, guid: ae63f04e8d711da4f9b3472a2bd8efd3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 3264894994393240003, guid: ae63f04e8d711da4f9b3472a2bd8efd3, type: 3}
       propertyPath: m_Name
       value: CabinChest
@@ -1600,6 +1610,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2250438996357270956, guid: 68377126148d6d04ab581b647f881ab3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2250438996357270958, guid: 68377126148d6d04ab581b647f881ab3, type: 3}
       propertyPath: m_Name
       value: CabinTop
@@ -1638,6 +1652,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 625472622684267146, guid: 855bc3415592486438ce759ebbe399da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 625472622684267147, guid: 855bc3415592486438ce759ebbe399da, type: 3}
       propertyPath: m_RootOrder
       value: 2

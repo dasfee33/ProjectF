@@ -14,6 +14,7 @@ public class DownloadController : MonoBehaviour
     DownloadSize,
     DownloadDependencies,
     Downloading,
+    NothingToDownload,
     ResourceListGenerate,
 
     Finished,
@@ -26,8 +27,8 @@ public class DownloadController : MonoBehaviour
   [SerializeField]
   string DownloadURL;
 
-  public State CurrentState { get; private set; } = State.Idle;
-  public State LastValidState { get; private set; } = State.Idle;
+  public State CurrentState { get; set; } = State.Idle;
+  public State LastValidState { get; set; } = State.Idle;
 
   Action<DownloadEvent> OnEventObtained;
 
@@ -81,6 +82,8 @@ public class DownloadController : MonoBehaviour
     else if(CurrentState == State.ResourceListGenerate)
     {
       Downloader.ResourceListGenerated();
+
+      CurrentState = State.Idle;
     }
 
   }
@@ -90,7 +93,7 @@ public class DownloadController : MonoBehaviour
     if (LastValidState == State.Initialize) CurrentState = State.UpdateCatalog;
     else if (LastValidState == State.UpdateCatalog) CurrentState = State.DownloadSize;
     else if (LastValidState == State.DownloadSize) CurrentState = State.DownloadDependencies;
-    else if (LastValidState == State.DownloadDependencies || LastValidState == State.Downloading) CurrentState = State.ResourceListGenerate;
+    else if (LastValidState == State.NothingToDownload || LastValidState == State.Downloading) CurrentState = State.ResourceListGenerate;
     else if (LastValidState == State.ResourceListGenerate) CurrentState = State.Finished;
 
     LastValidState = CurrentState;
