@@ -58,7 +58,7 @@ public class GameDayManager
 
       if (lerpTime < lerpDuration)
       {
-        Managers.GameDayLight.color = Color.Lerp(Managers.GameDayLight.color, targetColor, lerpTime / lerpDuration);
+        //Managers.GameDayLight.color = Color.Lerp(Managers.GameDayLight.color, targetColor, lerpTime / lerpDuration);
         lerpTime += Time.deltaTime;
       }
 

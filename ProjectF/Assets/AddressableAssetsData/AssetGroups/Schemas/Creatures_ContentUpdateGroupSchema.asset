@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
   m_Name: Creatures_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 5e146c1d221d9234391416c7354e13b3, type: 2}
+  m_Group: {fileID: 11400000, guid: 6a4156e8b6dfc084eb90402f01f57857, type: 2}
   m_StaticContent: 0

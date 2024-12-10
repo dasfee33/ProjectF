@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UI
   m_Data:
     m_SerializedData: []
-  m_GUID: 7eb53d153da308c4e8596185356be5f7
+  m_GUID: 6ffe72142c694564ab82a189a401db44
   m_SerializeEntries:
   - m_GUID: 38ae406ab58fa2e4dafaa93f6f509f0d
     m_Address: UI_Game
@@ -53,26 +53,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1b73d3b1b8b51124eaf63c7f38039d03
-    m_Address: Top
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3445330758e71fd40a30d10816bf6654
     m_Address: UI_PriorityPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c3c71fcf0183e6f4881e36bbb998bba5
-    m_Address: SelectJob
+  - m_GUID: 1b73d3b1b8b51124eaf63c7f38039d03
+    m_Address: Top
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d830ba847c1e9144cb208a784a5cc4c8
-    m_Address: UI_WorldUITest
+  - m_GUID: c3c71fcf0183e6f4881e36bbb998bba5
+    m_Address: SelectJob
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -89,8 +83,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4e52c711b60dbe64db744ac7ab0a86f5
-    m_Address: UI_TitleScene
+  - m_GUID: d830ba847c1e9144cb208a784a5cc4c8
+    m_Address: UI_WorldUITest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ecd68d4c379c43e45af67c04211eca8a
+    m_Address: UI_Info
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76b8ad38b3d1fc94f9e096c54509ba77
+    m_Address: UI_Option
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -99,5 +105,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 09ace17bb5c290c41829de063fbfc7bb, type: 2}
-    - {fileID: 11400000, guid: 4d379ab4738ab184eb368313ab537d6c, type: 2}
+    - {fileID: 11400000, guid: 501e7c095dfb0a941af5a5a15947c08c, type: 2}
+    - {fileID: 11400000, guid: 630416cb96c72c442ac48e75c33f6227, type: 2}

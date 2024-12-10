@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Sprites
   m_Data:
     m_SerializedData: []
-  m_GUID: 62f9f0ed00a2b9d4a811a46cbd51d1cf
+  m_GUID: 33ead8a1c74cdf34d906ff65e2a3632f
   m_SerializeEntries:
   - m_GUID: 4d762bb604b57e242bcceb1b3dec5bbd
     m_Address: wood_normal
@@ -41,13 +41,13 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 70c327e3551f6024e8b4cb26b6a683f9
+  - m_GUID: f6f5d7f131a7e4f42ae74d60114dba2f
     m_Address: chest_normalSprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7319bedbe0c9c3b408531fc0b161d752
+  - m_GUID: ecc505ce3f2b19b488244bba2c63b7cf
     m_Address: Bed1Sprite
     m_ReadOnly: 0
     m_SerializedLabels:
@@ -61,18 +61,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe9b377c707a9bd47bd583a691608d0b
     m_Address: PlowBowlSprite
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eb4fdc5a25716ab40b6d8e4474835717
-    m_Address: kick3
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4439aa72c3a1ab24ab226f5f49a29a61
-    m_Address: kick_seed
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -103,6 +91,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ace859c53a114a44ac05ef9110b5445
     m_Address: kick5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4439aa72c3a1ab24ab226f5f49a29a61
+    m_Address: kick_seed
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -143,6 +137,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb4fdc5a25716ab40b6d8e4474835717
+    m_Address: kick3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1f0a8f82a37b3a4e8c05f648e0d84c0
     m_Address: chest-closing - lock 1
     m_ReadOnly: 0
@@ -177,5 +177,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: c5c5963fd93669349a7bfc7facc29086, type: 2}
-    - {fileID: 11400000, guid: 473df401a5ebb0d4a97a710be8974f20, type: 2}
+    - {fileID: 11400000, guid: 698654f6b15212e46ab7bffcbc5c7c3b, type: 2}
+    - {fileID: 11400000, guid: 180a550151eb2124a9584d7e23e1d61a, type: 2}

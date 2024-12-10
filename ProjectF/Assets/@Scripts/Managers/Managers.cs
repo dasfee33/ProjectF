@@ -82,8 +82,8 @@ public class Managers : MonoBehaviour
 
   private void Start()
   {
-    gameDayLight = GameObject.Find("@GameDayLight").GetComponent<Light2D>();
-    gameDayLight.lightType = Light2D.LightType.Global;
+    //gameDayLight = GameObject.Find("@GameDayLight").GetComponent<Light2D>();
+    //gameDayLight.lightType = Light2D.LightType.Global;
     StartCoroutine(Instance?._gameDay.coDay());
   }
 

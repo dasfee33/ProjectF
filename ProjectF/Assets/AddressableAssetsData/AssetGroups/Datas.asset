@@ -15,40 +15,10 @@ MonoBehaviour:
   m_GroupName: Datas
   m_Data:
     m_SerializedData: []
-  m_GUID: 95e39b8c353c29040861902b8d16931d
+  m_GUID: 9afa92e29d6e74043b57285cb690624b
   m_SerializeEntries:
-  - m_GUID: 0b291d50cda17c247b7605d0e6e917b9
-    m_Address: TestData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 03f616a218394cc4bb204e4316efd390
     m_Address: CreatureData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e168c83a0d197f84da29b97b8b9e5de7
-    m_Address: SkillData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 85a0cabc8b9ca2c4c9ce9c6dc5a26cf4
-    m_Address: EnvData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 28d5d998bf82fdd4e88636afc2e2c1ba
-    m_Address: Item_EquipmentData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7849e5402c93a6f47a8b053d94ce8949
-    m_Address: Item_ConsumableData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -59,14 +29,44 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2673e80729ee05d4993570dabacf529c
-    m_Address: StructureData
+  - m_GUID: 85a0cabc8b9ca2c4c9ce9c6dc5a26cf4
+    m_Address: EnvData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7849e5402c93a6f47a8b053d94ce8949
+    m_Address: Item_ConsumableData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28d5d998bf82fdd4e88636afc2e2c1ba
+    m_Address: Item_EquipmentData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e44d5029fb02474c9654583c66fb486
     m_Address: ResearchData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e168c83a0d197f84da29b97b8b9e5de7
+    m_Address: SkillData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2673e80729ee05d4993570dabacf529c
+    m_Address: StructureData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b291d50cda17c247b7605d0e6e917b9
+    m_Address: TestData
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -81,5 +81,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: b20d7976045516d4ea9eed6ecca356e5, type: 2}
-    - {fileID: 11400000, guid: 0c8bdf02335c5e34191fae562b027a55, type: 2}
+    - {fileID: 11400000, guid: 968eee42cc26dee41bc84b329bd89c58, type: 2}
+    - {fileID: 11400000, guid: 9db56be87bb063740a817bb0bb49f8ad, type: 2}

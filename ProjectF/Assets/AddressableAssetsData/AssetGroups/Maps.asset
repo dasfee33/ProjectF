@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Maps
   m_Data:
     m_SerializedData: []
-  m_GUID: 9f66deb7451a3a44ba618e94662cac71
+  m_GUID: ff22bbcd3534e0e4c94bb96ac197e306
   m_SerializeEntries:
   - m_GUID: 1aac77f4b3bb9e142abfbbfd896f157b
     m_Address: BaseMap
@@ -39,5 +39,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: feffcd5e419ff624bbd2875ef996dc7d, type: 2}
-    - {fileID: 11400000, guid: 88b3af05a5f9b7a43b399c96b528f116, type: 2}
+    - {fileID: 11400000, guid: 61d2f1624db923448abc60d7708c7227, type: 2}
+    - {fileID: 11400000, guid: c97547bbf2d444a478f7ec01518fba69, type: 2}

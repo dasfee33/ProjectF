@@ -15,14 +15,8 @@ MonoBehaviour:
   m_GroupName: Props
   m_Data:
     m_SerializedData: []
-  m_GUID: 9b0fd09fcd6cea44f86fe2f085667de7
+  m_GUID: 4397f6434f178aa4ab17e0e1fa527e7a
   m_SerializeEntries:
-  - m_GUID: 3ef61e751cdf5c947865d5760fe11515
-    m_Address: Coin
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24591e6871d5f6b4b85afb4ab07af126
     m_Address: Tree2
     m_ReadOnly: 0
@@ -63,5 +57,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d7bb47e57da23a348a814274d6f55218, type: 2}
-    - {fileID: 11400000, guid: 62f2f60e6282fc34abb1e8ee837eda8e, type: 2}
+    - {fileID: 11400000, guid: 2fa586042036b6c419bbb2004a2f1121, type: 2}
+    - {fileID: 11400000, guid: b0d478766a2d2c947be81aa98ec3556e, type: 2}

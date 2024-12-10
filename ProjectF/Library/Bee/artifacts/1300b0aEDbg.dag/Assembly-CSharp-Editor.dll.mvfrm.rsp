@@ -18,8 +18,11 @@ Library\Bee\artifacts\mvdfrm\Unity.2D.Tilemap.Extras.Editor.ref.dll_27AE4E140AA3
 Library\Bee\artifacts\mvdfrm\Unity.2D.Tilemap.Extras.ref.dll_FD54DBCE44D88AE4.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Editor.ref.dll_C575084B77283742.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Profiler.Editor.ref.dll_D8F07649FBA2D2D3.mvfrm
+Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Samsung.Android.Editor.ref.dll_643DF12FF2EC9455.mvfrm
+Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Samsung.Android.ref.dll_8CD6BF889387F91C.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Simulator.Editor.ref.dll_59089834F2F665CC.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Simulator.Extension.ref.dll_96C433F2A05650D6.mvfrm
+Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.Simulator.VRR.Extension.ref.dll_29106984C862DE7E.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.UI.Editor.ref.dll_D90D5A34877188F8.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.AdaptivePerformance.ref.dll_6268F5D1C23BCB5F.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.Addressables.Editor.ref.dll_5361B8999EF3E68B.mvfrm
@@ -59,7 +62,6 @@ Library\Bee\artifacts\mvdfrm\Unity.Services.Core.Analytics.ref.dll_CC4BDB495E8BC
 Library\Bee\artifacts\mvdfrm\Unity.Services.Core.Environments.ref.dll_3166FFB2F7BC4730.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.Services.Core.ref.dll_AF203140D634E744.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.ShaderGraph.Editor.ref.dll_E88F0417AC801313.mvfrm
-Library\Bee\artifacts\mvdfrm\Unity.Subsystem.Registration.ref.dll_F55E115723DEF1F9.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.TextMeshPro.Editor.ref.dll_EEDCF50BDD4614C9.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.TextMeshPro.ref.dll_4A5B02DEDB940168.mvfrm
 Library\Bee\artifacts\mvdfrm\Unity.Timeline.Editor.ref.dll_C8BF959B21FAAFDF.mvfrm

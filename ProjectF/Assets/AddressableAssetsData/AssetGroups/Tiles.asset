@@ -15,14 +15,8 @@ MonoBehaviour:
   m_GroupName: Tiles
   m_Data:
     m_SerializedData: []
-  m_GUID: 5341d9fe2a1f09f48a6a773f373e6e87
+  m_GUID: f0f16eeb26a59f54e8453d81a239340e
   m_SerializeEntries:
-  - m_GUID: 49e7491dcf083b84f828db94a9bfe613
-    m_Address: TestTile
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d5452223b3542b4e83e76b1a7c6a9c3
     m_Address: plowToolTile
     m_ReadOnly: 0
@@ -87,5 +81,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 80e51aa30bbfc9d42aea44c0a18de52c, type: 2}
-    - {fileID: 11400000, guid: 1987eccf76a47664eb1f5467fb5b22c5, type: 2}
+    - {fileID: 11400000, guid: 2ad8017acea79d848ac9e4dd0f21f497, type: 2}
+    - {fileID: 11400000, guid: 9b9269c326e2c754297be85d77d2c028, type: 2}

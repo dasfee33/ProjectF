@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
   m_Name: Sprites_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: fcb61436a49c47a4485216b7752f2552, type: 2}
+  m_Group: {fileID: 11400000, guid: f87c2e1a315a2544b8ee99faea984e49, type: 2}
   m_StaticContent: 0

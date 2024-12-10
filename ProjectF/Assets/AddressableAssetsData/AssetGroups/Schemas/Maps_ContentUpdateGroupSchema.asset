@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
   m_Name: Maps_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 0d1d69c3cb62c0148b48826da7f13d70, type: 2}
+  m_Group: {fileID: 11400000, guid: 6191a4045b4da054398f57453ab439d9, type: 2}
   m_StaticContent: 0

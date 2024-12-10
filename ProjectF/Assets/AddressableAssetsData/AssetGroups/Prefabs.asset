@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Prefabs
   m_Data:
     m_SerializedData: []
-  m_GUID: 117dbea03da2d894eb56fc1bb24b0c05
+  m_GUID: ce2c57bfb76c8f041b665cd53585e083
   m_SerializeEntries:
   - m_GUID: 4cfdcb22b1fae06458717d8301ac0a8b
     m_Address: ItemHolder
@@ -36,7 +36,7 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae63f04e8d711da4f9b3472a2bd8efd3
-    m_Address: Chest_normal
+    m_Address: CabinChest
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -63,5 +63,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 8780bf63f5f4bd646849bc8b26af0491, type: 2}
-    - {fileID: 11400000, guid: a742782dcfbf9d04aa06064cd6220114, type: 2}
+    - {fileID: 11400000, guid: 0e1f96ebc4e87b6468dd2fdb9b5db638, type: 2}
+    - {fileID: 11400000, guid: c6ed209576afac946b37ac1a0f2f758e, type: 2}

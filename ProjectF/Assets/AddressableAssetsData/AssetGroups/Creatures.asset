@@ -15,16 +15,10 @@ MonoBehaviour:
   m_GroupName: Creatures
   m_Data:
     m_SerializedData: []
-  m_GUID: 5262d50d3e543b94ab959a100034d426
+  m_GUID: 2cc2187e12f767b4282505a0090c0957
   m_SerializeEntries:
   - m_GUID: 11414cde4596b9a4a95b9944ea8ec87a
     m_Address: Warrior
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f29cbe020aa9a94898372e5d59b1f5e
-    m_Address: Test
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -33,5 +27,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 6bda74ced629f8746a0333ae4230cacb, type: 2}
-    - {fileID: 11400000, guid: df11cd30cb64b5c46b36c302987662fb, type: 2}
+    - {fileID: 11400000, guid: bdfc92f4ec495bd4a8443668612df761, type: 2}
+    - {fileID: 11400000, guid: c0d7b888fcf97cb47885d9e5315018e1, type: 2}

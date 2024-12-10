@@ -1,9 +1,8 @@
 <linker>
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="Bed" preserve="all" />
-    <type fullname="BuildObject" preserve="all" />
     <type fullname="BuildTool" preserve="all" />
-    <type fullname="DownloadController" preserve="all" />
+    <type fullname="CookTable" preserve="all" />
     <type fullname="Env" preserve="all" />
     <type fullname="ItemHolder" preserve="all" />
     <type fullname="JobSystem" preserve="all" />
@@ -14,7 +13,6 @@
     <type fullname="Storage" preserve="all" />
     <type fullname="Toilet" preserve="all" />
     <type fullname="ToolBase" preserve="all" />
-    <type fullname="Trunk" preserve="all" />
     <type fullname="UI_BuildPopup" preserve="all" />
     <type fullname="UI_BuildPopup_Item" preserve="all" />
     <type fullname="UI_Game" preserve="all" />
@@ -27,7 +25,6 @@
     <type fullname="UI_PriorityPopupTop" preserve="all" />
     <type fullname="UI_Research" preserve="all" />
     <type fullname="UI_ResearchItem" preserve="all" />
-    <type fullname="UI_TitleScene" preserve="all" />
     <type fullname="UI_WorldUITest" preserve="all" />
     <type fullname="Warrior" preserve="all" />
     <type fullname="Data.StructureData" preserve="nothing" serialized="true" />
@@ -112,7 +109,6 @@
     <type fullname="UnityEngine.UI.Mask" preserve="all" />
     <type fullname="UnityEngine.UI.Scrollbar" preserve="all" />
     <type fullname="UnityEngine.UI.ScrollRect" preserve="all" />
-    <type fullname="UnityEngine.UI.Slider" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle" preserve="all" />
     <type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all" />
     <type fullname="UnityEngine.UI.AnimationTriggers" preserve="nothing" serialized="true" />
@@ -122,7 +118,6 @@
     <type fullname="UnityEngine.UI.Navigation" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.UI.ScrollRect/ScrollRectEvent" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.UI.Scrollbar/ScrollEvent" preserve="nothing" serialized="true" />
-    <type fullname="UnityEngine.UI.Slider/SliderEvent" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.UI.SpriteState" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.UI.Toggle/ToggleEvent" preserve="nothing" serialized="true" />
   </assembly>
