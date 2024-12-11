@@ -37,6 +37,19 @@ public class BackendLogin
     }
   }
 
+  public void GuestLogin()
+  {
+    BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인");
+    if(bro.IsSuccess())
+    {
+      Debug.Log($"게스트 로그인 성공 : {bro}");
+    }
+    else
+    {
+      Debug.LogError($"게스트 로그인 실패 : {bro}");
+    }
+  }
+
   public void UpdateNickName(string nickname)
   {
 

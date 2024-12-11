@@ -551,7 +551,7 @@ public class Creature : BaseObject
       targetdic.Add(obj, distToTargetSqr);
     }
 
-    targetdic = targetdic.OrderBy(pair => pair.Value).Take(10).ToDictionary(x => x.Key, x => x.Value);
+    targetdic = targetdic.OrderBy(pair => pair.Value)./*Take(10).*/ToDictionary(x => x.Key, x => x.Value);
     foreach(var dic in targetdic)
     {
       target.Add(dic.Key);

@@ -36,6 +36,7 @@ public class GameScene : BaseScene
         var item = Managers.Object.Spawn<ItemHolder>(new Vector3(ItemHolder.posX, ItemHolder.posY), ItemHolder.dataID);
         item.mass = ItemHolder.mass;
         item.stack = ItemHolder.stack;
+        item.isDropped = ItemHolder.isDropped;
       }
 
       foreach (var creatureData in creatureSaveData)

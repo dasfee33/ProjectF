@@ -120,7 +120,7 @@ public class JobSystem : InitBase
 
   private Dictionary<FJob, jobDicValue> GetSelectJobList(int count)
   {
-    var sortDict = Owner.JobDic.Take(jobCount).ToDictionary(pair => pair.Key, pair => pair.Value); 
+    var sortDict = Owner.JobDic./*Take(jobCount).*/ToDictionary(pair => pair.Key, pair => pair.Value); 
     return sortDict;
   }
 

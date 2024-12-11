@@ -20,7 +20,8 @@ public class BackendManager
    
   private void Test()
   {
-    Managers.BackendLogin.CustomLogin("kys", "1234");
+    Managers.BackendLogin.GuestLogin();
+    //Managers.BackendLogin.CustomLogin("kys", "1234");
     //Managers.Game.GameDataInsert();
 
     Debug.Log("테스트 종료");

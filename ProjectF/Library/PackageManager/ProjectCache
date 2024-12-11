@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638694456506187553
-    m_Hash: 1843550312
+      ticks: 638695321392725009
+    m_Hash: 2244343037
   m_LockFileStatus:
     m_FilePath: C:/ProjectF/ProjectF/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638694456506238487
-    m_Hash: 2813496761
+      ticks: 638695321392777202
+    m_Hash: 334180654
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -1733,12 +1733,12 @@ m_ResolvedPackages:
     deprecationMessage: 
   isDeprecated: 0
   deprecationMessage: 
-- packageId: com.unity.cinemachine@2.10.2
+- packageId: com.unity.cinemachine@2.10.3
   testable: 0
   isDirectDependency: 1
-  version: 2.10.2
+  version: 2.10.3
   source: 1
-  resolvedPath: C:\ProjectF\ProjectF\Library\PackageCache\com.unity.cinemachine@2.10.2
+  resolvedPath: C:\ProjectF\ProjectF\Library\PackageCache\com.unity.cinemachine@2.10.3
   assetPath: Packages/com.unity.cinemachine
   name: com.unity.cinemachine
   displayName: Cinemachine
@@ -1900,13 +1900,13 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638654459477540000
+  datePublishedTicks: 638666077203430000
   documentationUrl: https://docs.unity3d.com/Packages/com.unity.cinemachine@2.10/manual/index.html
   hasRepository: 1
   repository:
     type: git
     url: https://github.com/Unity-Technologies/com.unity.cinemachine.git
-    revision: 579032a363b6269a3817d495c99a64394339b076
+    revision: fa616229e5cf36a8c640e862aff6eb686dbef444
     path: 
   unityLifecycle:
     version: 2.10.0
@@ -6319,11 +6319,13 @@ m_ResolvedPackages:
     - 1.4.1
     - 1.4.2
     - 1.4.3
+    - 1.4.4
     compatible:
     - 1.4.1
     - 1.4.2
     - 1.4.3
-    recommended: 1.4.3
+    - 1.4.4
+    recommended: 1.4.4
     deprecated: []
   dependencies: []
   resolvedDependencies: []

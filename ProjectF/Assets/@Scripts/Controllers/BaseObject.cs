@@ -41,6 +41,7 @@ public class BaseObject : InitBase
     RigidBody = this.GetComponent<Rigidbody2D>();
     Collider = this.GetComponent<CapsuleCollider2D>();
     SpriteRenderer = this.GetComponent<SpriteRenderer>();
+    if (SpriteRenderer == null) this.GetComponentInChildren<SpriteRenderer>();
     Animator = this.GetComponent<Animator>();
     if(Animator == null) Animator = this.GetComponentInChildren<Animator>();
 

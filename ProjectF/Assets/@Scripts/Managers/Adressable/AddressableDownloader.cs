@@ -100,7 +100,8 @@ public class AddressableDownloader
   public void StartDownload()
   {
     Debug.Log("StartDownLoad");
-    Addressables.DownloadDependenciesAsync(LabelToDownload).Completed += OnDependenciesDownloaded;
+    DownloadHandle = Addressables.DownloadDependenciesAsync(LabelToDownload);
+    DownloadHandle.Completed += OnDependenciesDownloaded;
   }
 
   public void ResourceListGenerated()
