@@ -81,25 +81,12 @@ public class Storage : Structure
 
   protected override void UpdateWorkEnd()
   {
-    var haveList = new Dictionary<int, float>();
+    var haveList = new Dictionary<int, float>(); // 임시 저장소. 쓰면 안됌 
     foreach(var item in Worker.ItemHaveList)
     {
-      //if (storageItem.ContainsKey(item.Key))
-      //{
-      //  var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
-      //  AddCapacity(item.Key, value);
-      //  Worker.CurrentSupply -= value;
-      //  haveList.Add(item.Key);
-      //}
-      //else
-      //{
-      //  var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
-      //  AddCapacity(item.Key, item.Value, false);
-      //  Worker.CurrentSupply -= value;
-      //}
-
       var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
       AddCapacity(item.Key, value);
+      Managers.Object.AddItem(item.Key, value, this);
       haveList.Add(item.Key, value);
     }
 

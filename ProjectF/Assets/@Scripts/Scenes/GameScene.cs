@@ -21,6 +21,7 @@ public class GameScene : BaseScene
       var envSaveData = Managers.Game.SaveData.envSaveData;
       var structureData = Managers.Game.SaveData.structSaveData;
       var ItemHolderData = Managers.Game.SaveData.itemHolderSaveData;
+      var ItemData = Managers.Game.SaveData.itemSaveData;
 
       foreach (var env in envSaveData)
       {
@@ -37,6 +38,11 @@ public class GameScene : BaseScene
         item.mass = ItemHolder.mass;
         item.stack = ItemHolder.stack;
         item.isDropped = ItemHolder.isDropped;
+      }
+
+      foreach (var item in ItemData)
+      {
+        Managers.Object.ItemStorage.Add(item.dataID, new ItemInfo(item.mass, item.storageList));
       }
 
       foreach (var creatureData in creatureSaveData)

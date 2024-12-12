@@ -62,8 +62,8 @@ public class ItemHolder : BaseObject
     {
       if (Owner.droppedItem.stack < Owner.droppedItem.data.maxStack)
       {
-        Owner.droppedItem.RefreshStack(1);
         Managers.Object.AddItem(Owner.droppedItem.dataTemplateID, defaultMass);
+        Owner.droppedItem.RefreshStack(1);
         Managers.Object.Despawn(this);
       }
     }
@@ -71,9 +71,11 @@ public class ItemHolder : BaseObject
     {
       isDropped = true;
       Owner.droppedItem = this;
+      Managers.Object.AddItem(Owner.droppedItem.dataTemplateID, defaultMass);
       stack += 1;
       mass = (defaultMass * stack);
     }
+
 
     //currentSprite.DOFade(0, 3f).OnComplete(() =>
     //{

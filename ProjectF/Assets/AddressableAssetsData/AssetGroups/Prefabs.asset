@@ -36,7 +36,7 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae63f04e8d711da4f9b3472a2bd8efd3
-    m_Address: CabinChest
+    m_Address: Chest_normal
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

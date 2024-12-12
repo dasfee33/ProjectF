@@ -2,13 +2,111 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
+public class ItemInfo
+{
+  // 전체 아이템 질량 => 상자에 있든 땅에있든 상관없음
+  public float mass;
+  //locate, mass
+  public Dictionary<BaseObject, float> locateList = new Dictionary<BaseObject, float>();
+
+  public ItemInfo(float mass, BaseObject locate = null)
+  {
+    this.mass = mass;
+    if(locate != null) this.locateList.Add(locate, mass);
+  }
+
+  public ItemInfo(float mass, Dictionary<Vector3, float> locateList)
+  {
+    this.mass = mass;
+    if(locateList != null)
+    {
+      foreach(var locate in locateList)
+      {
+        var obj = Managers.Map.GetObject(locate.Key);
+        if(obj != null) this.locateList.Add(obj, mass);
+        else
+        {
+          Debug.LogError("not Found object Backend Data!!");
+        }
+      }
+    }
+  }
+}
+
 public class ObjectManager
 {
+  #region ItemHelpers
+  //땅에 떨어져있는
+  public void AddItem(ItemHolder item)
+  {
+    if (ItemStorage.ContainsKey(item.dataTemplateID))
+      ItemStorage[item.dataTemplateID].mass += item.data.Mass;
+    else ItemStorage.Add(item.dataTemplateID, new ItemInfo(item.data.Mass));
+  }
+
+  //저장고에 들어가있는 또는 땅에서 저장고로 가는..
+  public void AddItem(int itemKey, float mass, BaseObject locate = null)
+  {
+    if(ItemStorage.ContainsKey(itemKey))
+    {
+      if (locate == null)
+      {
+        ItemStorage[itemKey].mass += mass;
+      }
+      else
+      {
+        if (ItemStorage[itemKey].locateList.ContainsKey(locate))
+        {
+          ItemStorage[itemKey].locateList[locate] += mass;
+        }
+        else
+        {
+          ItemStorage[itemKey].locateList.Add(locate, mass);
+        }
+      }
+    }
+    else
+    {
+      ItemStorage.Add(itemKey, new ItemInfo(mass, locate));
+    }
+  }
+
+  public void RemoveItem(ItemHolder item)
+  {
+    if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
+    ItemStorage[item.dataTemplateID].mass -= item.data.Mass;
+    if (ItemStorage[item.dataTemplateID].mass <= 0) ItemStorage.Remove(item.dataTemplateID);
+  }
+
+  public void RemoveItem(int itemKey, float mass, BaseObject locate = null)
+  {
+    if(ItemStorage.ContainsKey(itemKey))
+    {
+      if (locate == null)
+      {
+        ItemStorage[itemKey].mass -= mass;
+      }
+      else
+      {
+        if (ItemStorage[itemKey].locateList.ContainsKey(locate))
+        {
+          ItemStorage[itemKey].locateList[locate] -= mass;
+          if (ItemStorage[itemKey].locateList[locate] <= 0) ItemStorage[itemKey].locateList.Remove(locate);
+        }
+      }
+
+      
+
+      if (ItemStorage[itemKey].mass <= 0) ItemStorage.Remove(itemKey);
+    }
+  }
+  #endregion
+
   public List<Creature> Creatures { get; } = new List<Creature> ();
   public List<Env> Envs { get; } = new List<Env> ();
   public List<Structure> Structures { get; } = new List<Structure> ();
   public List<ItemHolder> ItemHolders { get; } = new List<ItemHolder> ();
-  public Dictionary<int, float> ItemStorage { get; } = new Dictionary<int, float> ();
+  public Dictionary<int, ItemInfo> ItemStorage { get; } = new Dictionary<int, ItemInfo> ();
   public List<BuildObject> BuildObjects { get; } = new List<BuildObject> ();
 
   public List<BaseObject> Workables { get; } = new List<BaseObject>();
@@ -88,7 +186,6 @@ public class ObjectManager
       itemholder.Owner = Owner;
       itemholder.SetInfo(-999, dataID, dropPos);
       ItemHolders.Add(itemholder);
-      AddItem(itemholder);
     }
     else if (obj.ObjectType == FObjectType.Structure)
     {
@@ -162,7 +259,6 @@ public class ObjectManager
     {
       ItemHolder itemHolder = obj as ItemHolder;
       ItemHolders.Remove(itemHolder);
-      RemoveItem(itemHolder);
     }
     else if (obj.ObjectType == FObjectType.Structure)
     {
@@ -228,40 +324,4 @@ public class ObjectManager
     Managers.Resource.Destroy(obj.gameObject);
   }
 
-  public void AddItem(ItemHolder item)
-  {
-    if (ItemStorage.ContainsKey(item.dataTemplateID))
-      ItemStorage[item.dataTemplateID] += item.data.Mass;
-    else ItemStorage.Add(item.dataTemplateID, item.data.Mass);
-  }
-
-  public void AddItem(ItemHolder item, float mass)
-  {
-    ItemStorage[item.dataTemplateID] += mass;
-  }
-
-  public void AddItem(int id, float mass)
-  {
-    ItemStorage[id] += mass;
-  }
-
-  public void RemoveItem(ItemHolder item)
-  {
-    if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
-    ItemStorage[item.dataTemplateID] -= item.data.Mass;
-    if (ItemStorage[item.dataTemplateID] < 0) ItemStorage.Remove(item.dataTemplateID);
-  }
-
-  public void RemoveItem(ItemHolder item, float mass)
-  {
-    if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
-    ItemStorage[item.dataTemplateID] -= mass;
-    if (ItemStorage[item.dataTemplateID] < 0) ItemStorage.Remove(item.dataTemplateID);
-  }
-
-  public void RemoveItem(int id, float mass)
-  {
-    if (!ItemStorage.ContainsKey(id)) return;
-    ItemStorage[id] -= mass;
-  }
 }

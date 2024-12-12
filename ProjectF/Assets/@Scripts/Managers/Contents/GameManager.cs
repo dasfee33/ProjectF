@@ -70,6 +70,8 @@ public class ItemSaveData
 {
   public int dataID;
   public float mass;
+
+  public Dictionary<Vector3, float> storageList = new Dictionary<Vector3, float>();
 }
 #endregion
 public class GameManager
@@ -89,6 +91,7 @@ public class GameManager
     EnvDataInsert(param);
     StructDataInsert(param);
     ItemHolderDataInsert(param);
+    ItemSaveDataInsert(param);
 
     Debug.Log("게임 데이터 삽입 요청합니다.");
     var bro = Backend.GameData.Insert("TEST_DATA", param);
@@ -128,6 +131,7 @@ public class GameManager
         EnvDataGet(gameDataJson);
         StructureDataGet(gameDataJson);
         ItemHolderDataGet(gameDataJson);
+        ItemDataGet(gameDataJson);
 
         return true;
       }
@@ -147,6 +151,7 @@ public class GameManager
     EnvDataUpdate(param);
     StructureDataUpdate(param);
     ItemHolderDataUpdate(param);
+    ItemDataUpdate(param);
 
     BackendReturnObject bro = null;
     if (string.IsNullOrEmpty(gameDataRowInData))
@@ -250,6 +255,7 @@ public class GameManager
 
     foreach (var itemHolder in itemHolders)
     {
+      if (!itemHolder.isDropped) continue;
       ItemHoldersSaveData itemholderSaveData = new ItemHoldersSaveData();
       itemholderSaveData.dataID = itemHolder.dataTemplateID;
       itemholderSaveData.posX = itemHolder.transform.position.x;
@@ -262,7 +268,29 @@ public class GameManager
     }
 
     param.Add("ihsavedata", SaveData.itemHolderSaveData);
-  } 
+  }
+
+  public void ItemDataUpdate(Param param)
+  {
+    var items = Managers.Object.ItemStorage;
+    if (SaveData.itemSaveData.Count > 0) SaveData.itemSaveData.Clear();
+
+    foreach (var item in items)
+    {
+      ItemSaveData itemSaveData = new ItemSaveData();
+      itemSaveData.dataID = item.Key;
+      itemSaveData.mass = item.Value.mass;
+
+      foreach (var locate in item.Value.locateList)
+      {
+        itemSaveData.storageList.Add(locate.Key.transform.position, locate.Value);
+      }
+
+      SaveData.itemSaveData.Add(itemSaveData);
+    }
+
+    param.Add("isavedata", SaveData.itemSaveData);
+  }
 
   #endregion
 
@@ -360,6 +388,27 @@ public class GameManager
       SaveData.itemHolderSaveData.Add(itemHolderSaveData);
     }
     param.Add("ihsavedata", SaveData.itemHolderSaveData);
+  }
+
+  public void ItemSaveDataInsert(Param param)
+  {
+    var items = Managers.Object.ItemStorage;
+
+    foreach(var item in items)
+    {
+      ItemSaveData itemSaveData = new ItemSaveData();
+      itemSaveData.dataID = item.Key;
+      itemSaveData.mass = item.Value.mass;
+
+      foreach(var locate in item.Value.locateList)
+      {
+        itemSaveData.storageList.Add(locate.Key.transform.position, locate.Value);
+      }
+
+      SaveData.itemSaveData.Add(itemSaveData);
+    }
+
+    param.Add("isavedata", SaveData.itemSaveData);
   }
 
   #endregion
@@ -513,6 +562,53 @@ public class GameManager
         itemholderLoadData.isDropped = bool.Parse(data["isDropped"].ToString());
 
         SaveData.itemHolderSaveData.Add(itemholderLoadData);
+      }
+
+      return true;
+    }
+  }
+
+  public bool ItemDataGet(LitJson.JsonData gameDataJson)
+  {
+    if (gameDataJson.Count <= 0)
+    {
+      Debug.LogWarning("데이터가 존재하지 않습니다.");
+      return false;
+    }
+    else
+    {
+      var itemData = gameDataJson[0]["isavedata"];
+
+      if (itemData == null || itemData.Count <= 0)
+      {
+        Debug.Log("아이템의 데이터가 존재하지 않습니다.");
+        return false;
+      }
+
+      if (SaveData.itemSaveData.Count > 0) SaveData.itemSaveData.Clear();
+
+      foreach (LitJson.JsonData data in itemData)
+      {
+        ItemSaveData itemLoadData = new ItemSaveData();
+        itemLoadData.dataID = int.Parse(data["dataID"].ToString());
+        itemLoadData.mass = float.Parse(data["mass"].ToString());
+
+        foreach (string itemKey in data["storageList"].Keys)
+        {
+          string vecString = itemKey;
+          vecString = vecString.Trim(new char[] { '(', ')' });
+          string[] values = vecString.Split(',');
+
+          Vector3 result = new Vector3(
+            float.Parse(values[0]),
+            float.Parse(values[1]),
+            float.Parse(values[2])
+          );
+
+          itemLoadData.storageList.Add(result, float.Parse(data["storageList"].ToString()));
+        }
+
+        SaveData.itemSaveData.Add(itemLoadData);
       }
 
       return true;
