@@ -13,7 +13,7 @@ public class GameSaveData
 {
   public List<CreatureSaveData> creatureSaveData = new List<CreatureSaveData> ();
   public List<EnvSaveData> envSaveData = new List<EnvSaveData> ();
-  public List<StructSaveData> structSaveData = new List<StructSaveData> ();
+  public StructSaveData structSaveData = new StructSaveData();
   public List<ItemHoldersSaveData> itemHolderSaveData = new List<ItemHoldersSaveData> ();
   public List<BuildObjectSaveData> buildObjectSaveData = new List<BuildObjectSaveData> ();
   public List<ItemSaveData> itemSaveData = new List<ItemSaveData>();
@@ -42,12 +42,88 @@ public class EnvSaveData
 
 public class StructSaveData
 {
+  public List<ToiletSaveData> toiletSaveData = new List<ToiletSaveData> ();
+  public List<EatingTableSaveData> eatingTableSaveData = new List<EatingTableSaveData> ();
+  public List<StorageSaveData> storageSaveData = new List<StorageSaveData> ();
+  public List<BedSaveData> bedSaveData = new List<BedSaveData> ();
+  public List<StationSaveData> stationSaveData = new List<StationSaveData>();
+  public List<BuildObjectFSaveData> buildObjectFSaveData = new List<BuildObjectFSaveData> ();
+  public List<PlowBowlSaveData> plowBowlSaveData = new List<PlowBowlSaveData> ();
+  
+}
+
+#region StructSaveDataBySubType
+public class ToiletSaveData
+{
   public int dataID;
   public string name;
   public int type;
+  public int subType;
   public float posX;
   public float posY;
 }
+
+public class EatingTableSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class StorageSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class BedSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class StationSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class BuildObjectFSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class PlowBowlSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+#endregion
 
 public class ItemHoldersSaveData
 {
@@ -229,18 +305,96 @@ public class GameManager
   public void StructureDataUpdate(Param param)
   {
     var structures = Managers.Object.Structures;
-    if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
+    if (SaveData.structSaveData.toiletSaveData.Count > 0) SaveData.structSaveData.toiletSaveData.Clear();
+    if (SaveData.structSaveData.eatingTableSaveData.Count > 0) SaveData.structSaveData.eatingTableSaveData.Clear();
+    if (SaveData.structSaveData.storageSaveData.Count > 0) SaveData.structSaveData.storageSaveData.Clear();
+    if (SaveData.structSaveData.bedSaveData.Count > 0) SaveData.structSaveData.bedSaveData.Clear();
+    if (SaveData.structSaveData.stationSaveData.Count > 0) SaveData.structSaveData.stationSaveData.Clear();
+    if (SaveData.structSaveData.plowBowlSaveData.Count > 0) SaveData.structSaveData.plowBowlSaveData.Clear();
+    if (SaveData.structSaveData.buildObjectFSaveData.Count > 0) SaveData.structSaveData.buildObjectFSaveData.Clear();
 
     foreach (var structure in structures)
     {
-      StructSaveData structureSaveData = new StructSaveData();
-      structureSaveData.dataID = structure.dataTemplateID;
-      structureSaveData.name = structure.Name;
-      structureSaveData.type = (int)structure.StructureType;
-      structureSaveData.posX = structure.transform.position.x;
-      structureSaveData.posY = structure.transform.position.y;
+      switch(structure.StructureSubType)
+      {
+        case FStructureSubType.Toilet:
+          ToiletSaveData toilet = new ToiletSaveData();
+          toilet.dataID = structure.dataTemplateID;
+          toilet.name = structure.Name;
+          toilet.type = (int)structure.StructureType;
+          toilet.subType = (int)structure.StructureSubType;
+          toilet.posX = structure.transform.position.x;
+          toilet.posY = structure.transform.position.y;
 
-      SaveData.structSaveData.Add(structureSaveData);
+          SaveData.structSaveData.toiletSaveData.Add(toilet);
+          break;
+        case FStructureSubType.EatingTable:
+          EatingTableSaveData eatingTable = new EatingTableSaveData();
+          eatingTable.dataID = structure.dataTemplateID;
+          eatingTable.name = structure.Name;
+          eatingTable.type = (int)structure.StructureType;
+          eatingTable.subType = (int)structure.StructureSubType;
+          eatingTable.posX = structure.transform.position.x;  
+          eatingTable.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.eatingTableSaveData.Add(eatingTable);
+          break;
+        case FStructureSubType.Storage:
+          StorageSaveData storage = new StorageSaveData();
+          storage.dataID = structure.dataTemplateID;
+          storage.name = structure.Name;
+          storage.type = (int)structure.StructureType;
+          storage.subType = (int)structure.StructureSubType;
+          storage.posX = structure.transform.position.x;
+          storage.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.storageSaveData.Add(storage);
+          break;
+        case FStructureSubType.Bed:
+          BedSaveData bed = new BedSaveData();
+          bed.dataID = structure.dataTemplateID;
+          bed.name = structure.Name;
+          bed.type = (int)structure.StructureType;
+          bed.subType = (int)structure.StructureSubType;
+          bed.posX = structure.transform.position.x;
+          bed.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.bedSaveData.Add(bed);
+          break;
+        case FStructureSubType.Station:
+          StationSaveData station = new StationSaveData();
+          station.dataID = structure.dataTemplateID;
+          station.name = structure.Name;
+          station.type = (int)structure.StructureType;
+          station.subType = (int)structure.StructureSubType;
+          station.posX = structure.transform.position.x;
+          station.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.stationSaveData.Add(station);
+          break;
+        case FStructureSubType.BuildObject:
+          BuildObjectFSaveData buildObject = new BuildObjectFSaveData();
+          buildObject.dataID = structure.dataTemplateID;
+          buildObject.name = structure.Name;
+          buildObject.type = (int)structure.StructureType;
+          buildObject.subType = (int)structure.StructureSubType;
+          buildObject.posX = structure.transform.position.x;
+          buildObject.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.buildObjectFSaveData.Add(buildObject);
+          break;
+        case FStructureSubType.PlowBowl:
+          PlowBowlSaveData plowBowl = new PlowBowlSaveData();
+          plowBowl.dataID = structure.dataTemplateID;
+          plowBowl.name = structure.Name;
+          plowBowl.type = (int)structure.StructureType;
+          plowBowl.subType = (int)structure.StructureSubType;
+          plowBowl.posX = structure.transform.position.x;
+          plowBowl.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.plowBowlSaveData.Add(plowBowl);
+          break;
+      }
     }
 
     param.Add("ssavedata", SaveData.structSaveData);
@@ -352,14 +506,15 @@ public class GameManager
 
     foreach (var structure in structures)
     {
-      StructSaveData structSaveData = new StructSaveData();
-      structSaveData.dataID = structure.dataTemplateID;
-      structSaveData.name = structure.Name;
-      structSaveData.type = (int)structure.StructureType;
-      structSaveData.posX = structure.transform.position.x;
-      structSaveData.posY = structure.transform.position.y;
+      //StructSaveData structSaveData = new StructSaveData();
+      //structSaveData.dataID = structure.dataTemplateID;
+      //structSaveData.name = structure.Name;
+      //structSaveData.type = (int)structure.StructureType;
+      //structSaveData.subType = (int)structure.StructureSubType;
+      //structSaveData.posX = structure.transform.position.x;
+      //structSaveData.posY = structure.transform.position.y;
 
-      SaveData.structSaveData.Add(structSaveData);
+      //SaveData.structSaveData.Add(structSaveData);
     }
     param.Add("ssavedata", SaveData.structSaveData);
   }
@@ -502,19 +657,19 @@ public class GameManager
         return false;
       }
 
-      if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
+      //if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
 
-      foreach (LitJson.JsonData data in structureData)
-      {
-        StructSaveData structureLoadData = new StructSaveData();
-        structureLoadData.dataID = int.Parse(data["dataID"].ToString());
-        structureLoadData.name = data["name"].ToString();
-        structureLoadData.type = int.Parse(data["type"].ToString());
-        structureLoadData.posX = float.Parse(data["posX"].ToString());
-        structureLoadData.posY = float.Parse(data["posY"].ToString());
+      //foreach (LitJson.JsonData data in structureData)
+      //{
+      //  StructSaveData structureLoadData = new StructSaveData();
+      //  structureLoadData.dataID = int.Parse(data["dataID"].ToString());
+      //  structureLoadData.name = data["name"].ToString();
+      //  structureLoadData.type = int.Parse(data["type"].ToString());
+      //  structureLoadData.posX = float.Parse(data["posX"].ToString());
+      //  structureLoadData.posY = float.Parse(data["posY"].ToString());
 
-        SaveData.structSaveData.Add(structureLoadData);
-      }
+      //  SaveData.structSaveData.Add(structureLoadData);
+      //}
 
       return true;
     }

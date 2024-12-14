@@ -6,31 +6,12 @@ public class ItemInfo
 {
   // 전체 아이템 질량 => 상자에 있든 땅에있든 상관없음
   public float mass;
-  //locate, mass
-  //public Dictionary<BaseObject, float> locateList = new Dictionary<BaseObject, float>();
 
-  public ItemInfo(float mass/*, BaseObject locate = null*/)
+  public ItemInfo(float mass)
   {
     this.mass = mass;
-    //if(locate != null) this.locateList.Add(locate, mass);
+    
   }
-
-  //public ItemInfo(float mass, Dictionary<Vector3, float> locateList)
-  //{
-  //  this.mass = mass;
-  //  if(locateList != null)
-  //  {
-  //    foreach(var locate in locateList)
-  //    {
-  //      var obj = Managers.Map.GetObject(locate.Key);
-  //      if(obj != null) this.locateList.Add(obj, mass);
-  //      else
-  //      {
-  //        Debug.LogError("not Found object Backend Data!!");
-  //      }
-  //    }
-  //  }
-  //}
 }
 
 public class ObjectManager
@@ -53,33 +34,6 @@ public class ObjectManager
     else ItemStorage.Add(dataID, new ItemInfo(mass));
   }
 
-  //저장고에 들어가있는 또는 땅에서 저장고로 가는..
-  //public void AddItem(int itemKey, float mass, BaseObject locate = null)
-  //{
-  //  if(ItemStorage.ContainsKey(itemKey))
-  //  {
-  //    if (locate == null)
-  //    {
-  //      ItemStorage[itemKey].mass += mass;
-  //    }
-  //    else
-  //    {
-  //      if (ItemStorage[itemKey].locateList.ContainsKey(locate))
-  //      {
-  //        ItemStorage[itemKey].locateList[locate] += mass;
-  //      }
-  //      else
-  //      {
-  //        ItemStorage[itemKey].locateList.Add(locate, mass);
-  //      }
-  //    }
-  //  }
-  //  else
-  //  {
-  //    ItemStorage.Add(itemKey, new ItemInfo(mass, locate));
-  //  }
-  //}
-
   public void RemoveItem(ItemHolder item)
   {
     if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
@@ -94,28 +48,6 @@ public class ObjectManager
     if (ItemStorage[dataID].mass <= 0) ItemStorage.Remove(dataID);
   }
 
-  //public void RemoveItem(int itemKey, float mass, BaseObject locate = null)
-  //{
-  //  if(ItemStorage.ContainsKey(itemKey))
-  //  {
-  //    if (locate == null)
-  //    {
-  //      ItemStorage[itemKey].mass -= mass;
-  //    }
-  //    else
-  //    {
-  //      if (ItemStorage[itemKey].locateList.ContainsKey(locate))
-  //      {
-  //        ItemStorage[itemKey].locateList[locate] -= mass;
-  //        if (ItemStorage[itemKey].locateList[locate] <= 0) ItemStorage[itemKey].locateList.Remove(locate);
-  //      }
-  //    }
-
-      
-
-  //    if (ItemStorage[itemKey].mass <= 0) ItemStorage.Remove(itemKey);
-  //  }
-  //}
   #endregion
 
   public List<Creature> Creatures { get; } = new List<Creature> ();

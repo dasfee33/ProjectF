@@ -27,10 +27,10 @@ public class GameScene : BaseScene
       {
         Managers.Object.Spawn<Env>(new Vector3(env.posX, env.posY), env.dataID, env.name);
       }
-      foreach (var structure in structureData)
-      {
-        Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
-      }
+      //foreach (var structure in structureData)
+      //{
+      //  Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
+      //}
 
       foreach (var ItemHolder in ItemHolderData)
       {
