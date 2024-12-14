@@ -156,17 +156,24 @@ public class Creature : BaseObject
 
   
   #region Supply
-  public void AddHaveList(int dataID, float mass)
+  public float AddHaveList(int dataID, float mass)
   {
-    if (CurrentSupply + mass > SupplyCapacity) return;
+    var value = 0f;
+    if (CurrentSupply + mass > SupplyCapacity)
+    {
+      value = SupplyCapacity - CurrentSupply;
+    }
+    else value = mass;
 
     if (ItemHaveList.ContainsKey(dataID))
     {
-      ItemHaveList[dataID] += mass;
+      ItemHaveList[dataID] += value;
     }
-    else ItemHaveList.Add(dataID, mass);
+    else ItemHaveList.Add(dataID, value);
 
-    CurrentSupply += mass;
+    CurrentSupply += value;
+
+    return value;
   }
 
   public bool SearchHaveList(int dataID)
@@ -183,7 +190,7 @@ public class Creature : BaseObject
 
     if(ItemHaveList.ContainsKey(dataID))
     {
-      if(ItemHaveList[dataID] - mass < 0)
+      if(ItemHaveList[dataID] - mass <= 0)
       {
         result = ItemHaveList[dataID];
         ItemHaveList.Remove(dataID);
@@ -193,13 +200,13 @@ public class Creature : BaseObject
         ItemHaveList[dataID] -= mass;
         result = mass;
       }
+
+      //if (ItemHaveList[dataID] <= 0) ItemHaveList.Remove(dataID);
+
+      CurrentSupply -= result;
+
+      Managers.Object.RemoveItem(dataID, result);
     }
-
-    if (ItemHaveList[dataID] <= 0) ItemHaveList.Remove(dataID);
-
-    CurrentSupply -= result;
-
-    Managers.Object.RemoveItem(dataID, mass);
     return result;
   }
   #endregion
@@ -497,6 +504,48 @@ public class Creature : BaseObject
   #endregion
 
   #region Map
+  // 창고에서 데이터 아이디로 위치 찾음
+  public BaseObject FindStorageInRange(int dataID, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+  {
+    BaseObject target = null;
+    float bestDistanceSqr = float.MaxValue;
+    float searchDistanceSqr = range * range;
+
+    foreach (BaseObject obj in objs)
+    {
+      Vector3 dir = obj.transform.position - transform.position;
+      float distToTargetSqr = dir.sqrMagnitude;
+
+      // 서치 범위보다 멀리 있으면 스킵.
+      if (distToTargetSqr > searchDistanceSqr)
+        continue;
+
+      // 이미 더 좋은 후보를 찾았으면 스킵.
+      if (distToTargetSqr > bestDistanceSqr)
+        continue;
+
+      // 추가 조건
+      if (func != null && func.Invoke(obj) == false)
+        continue;
+
+      Storage storage = obj as Storage;
+      if (storage == null) continue;
+
+      foreach(var item in storage.storageItem)
+      {
+        if (item.Key != dataID) continue;
+        else
+        {
+          target = obj;
+          bestDistanceSqr = distToTargetSqr;
+          break;
+        }
+      }
+    }
+
+    return target;
+  }
+
   public BaseObject FindClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null) where T : Enum
   { 
     BaseObject target = null;
@@ -714,7 +763,7 @@ public class Creature : BaseObject
     
     if (targetScr != null)
     {
-      foreach (var item in targetScr.buildNeedList)
+      foreach (var item in targetScr.curNeedList)
       {
         if (SearchHaveList(item.Key))
         {
@@ -728,17 +777,34 @@ public class Creature : BaseObject
           // 2. 땅에 떨어진 것들
           // 땅에 떨어진 루팅할 수잇는 아이템들 중에서 id가 같은것을 찾아봄
 
-          //2. 방법
-          supplyTarget = jobSystem.CurrentRootJob;
-          var supplyTargetScr = supplyTarget as ItemHolder;
-          if(supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && item.Key == supplyTarget.dataTemplateID && supplyTargetScr.isDropped)
+          //1. 창고에서 찾음
+          supplyTarget = FindStorageInRange(item.Key, 10, Managers.Object.Structures, IsValid);
+          if(supplyTarget != null)
           {
-            ChaseOrAttackTarget(100, distance, supplyTarget);
+            var storage = supplyTarget as Storage;
+            // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
+            if(storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey(item.Key))
+            {
+              storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
+              storage.Worker = this;
+              ChaseOrAttackTarget(100, distance, supplyTarget);
+            }
           }
           else
           {
-            SetJobIsAble(job, false);
-            ResetJob();
+            //2. 땅에 떨어진것 찾음
+            supplyTarget = jobSystem.CurrentRootJob;
+            var supplyTargetScr = supplyTarget as ItemHolder;
+            if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && item.Key == supplyTarget.dataTemplateID && supplyTargetScr.isDropped)
+            {
+              ChaseOrAttackTarget(100, distance, supplyTarget);
+            }
+            else
+            {
+              //아무데도 없는 경우 => 리셋
+              SetJobIsAble(job, false);
+              ResetJob();
+            }
           }
         }
       }

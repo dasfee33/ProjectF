@@ -70,8 +70,6 @@ public class ItemSaveData
 {
   public int dataID;
   public float mass;
-
-  public Dictionary<Vector3, float> storageList = new Dictionary<Vector3, float>();
 }
 #endregion
 public class GameManager
@@ -281,11 +279,6 @@ public class GameManager
       itemSaveData.dataID = item.Key;
       itemSaveData.mass = item.Value.mass;
 
-      foreach (var locate in item.Value.locateList)
-      {
-        itemSaveData.storageList.Add(locate.Key.transform.position, locate.Value);
-      }
-
       SaveData.itemSaveData.Add(itemSaveData);
     }
 
@@ -399,11 +392,6 @@ public class GameManager
       ItemSaveData itemSaveData = new ItemSaveData();
       itemSaveData.dataID = item.Key;
       itemSaveData.mass = item.Value.mass;
-
-      foreach(var locate in item.Value.locateList)
-      {
-        itemSaveData.storageList.Add(locate.Key.transform.position, locate.Value);
-      }
 
       SaveData.itemSaveData.Add(itemSaveData);
     }
@@ -592,21 +580,6 @@ public class GameManager
         ItemSaveData itemLoadData = new ItemSaveData();
         itemLoadData.dataID = int.Parse(data["dataID"].ToString());
         itemLoadData.mass = float.Parse(data["mass"].ToString());
-
-        foreach (string itemKey in data["storageList"].Keys)
-        {
-          string vecString = itemKey;
-          vecString = vecString.Trim(new char[] { '(', ')' });
-          string[] values = vecString.Split(',');
-
-          Vector3 result = new Vector3(
-            float.Parse(values[0]),
-            float.Parse(values[1]),
-            float.Parse(values[2])
-          );
-
-          itemLoadData.storageList.Add(result, float.Parse(data["storageList"].ToString()));
-        }
 
         SaveData.itemSaveData.Add(itemLoadData);
       }

@@ -42,7 +42,7 @@ public class GameScene : BaseScene
 
       foreach (var item in ItemData)
       {
-        Managers.Object.ItemStorage.Add(item.dataID, new ItemInfo(item.mass, item.storageList));
+        Managers.Object.AddItem(item.dataID, item.mass);
       }
 
       foreach (var creatureData in creatureSaveData)

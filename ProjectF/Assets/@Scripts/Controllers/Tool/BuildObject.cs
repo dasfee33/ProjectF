@@ -110,29 +110,35 @@ public class BuildObject : Structure
 
     var attackOwner = attacker as Creature;
 
-    foreach(var item in buildNeedList)
+    var saveList = new Dictionary<int, float>();
+
+    foreach(var item in curNeedList)
     {
       if (attackOwner.SearchHaveList(item.Key))
       {
         float result = attackOwner.SupplyFromHaveList(item.Key, item.Value);
-        curNeedList[item.Key] -= result;
+        saveList.Add(item.Key, result);
+        //attackOwner.ResetJob();
       }
     }
 
-    if(CheckBuildReady())
+    if(saveList.Count > 0)
     {
-      attackOwner.ResetJob();
+      foreach (var save in saveList)
+        curNeedList[save.Key] -= save.Value;
     }
+
+    CheckBuildReady();
+    attackOwner.ResetJob();
   }
 
-  private bool CheckBuildReady()
+  private void CheckBuildReady()
   {
     foreach(var value in curNeedList.Values)
     {
-      if (value != 0) return false;
+      if (value != 0) return;
     }
     workableJob = FJob.Make;
-    return true;
   }
 
   protected override void UpdateIdle()

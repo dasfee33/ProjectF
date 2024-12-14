@@ -10,6 +10,8 @@ public class Storage : Structure
   [SerializedDictionary("item dataID", "item mass")]
   public SerializedDictionary<int, float> storageItem;
 
+  public KeyValuePair<int, float> takeItem = new KeyValuePair<int, float>(-1, 0);
+
   public override FStructureState StructureState
   {
     get { return base.StructureState; }
@@ -43,6 +45,8 @@ public class Storage : Structure
     else storageItem[key] += mass;
 
     CurCapacity += mass;
+
+    if (storageItem[key] <= 0) storageItem.Remove(key);
   }
 
 
@@ -81,28 +85,37 @@ public class Storage : Structure
 
   protected override void UpdateWorkEnd()
   {
-    var haveList = new Dictionary<int, float>(); // 임시 저장소. 쓰면 안됌 
-    foreach(var item in Worker.ItemHaveList)
+    // 빼는 것
+    if (takeItem.Key != -1)
     {
-      var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
-      AddCapacity(item.Key, value);
-      Managers.Object.AddItem(item.Key, value, this);
-      haveList.Add(item.Key, value);
+      var value = Mathf.Min(takeItem.Value, storageItem[takeItem.Key]);
+      
+      var realValue = Worker.AddHaveList(takeItem.Key, value);
+      AddCapacity(takeItem.Key, -realValue);
+    }
+    else
+    {
+      // 넣는 것
+      var haveList = new Dictionary<int, float>(); // 임시 저장소. 쓰면 안됌 
+      foreach (var item in Worker.ItemHaveList)
+      {
+        var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
+        AddCapacity(item.Key, value);
+        haveList.Add(item.Key, value);
+      }
+
+      foreach (var list in haveList)
+      {
+        Worker.SupplyFromHaveList(list.Key, list.Value);
+      }
     }
 
-    foreach(var list in haveList)
-    {
-      Worker.SupplyFromHaveList(list.Key, list.Value);
-    }
-   
-    {
-      //Worker.CurrentSupply = 0;
-      Worker.ResetJob();
-      Worker = null;
+    //Worker.CurrentSupply = 0;
+    Worker.ResetJob();
+    Worker = null;
 
-      StructureState = FStructureState.Idle;
-      onWorkSomeOne = false;
-    }
-
+    takeItem = new KeyValuePair<int, float>(-1, 0);
+    StructureState = FStructureState.Idle;
+    onWorkSomeOne = false;
   }
 }

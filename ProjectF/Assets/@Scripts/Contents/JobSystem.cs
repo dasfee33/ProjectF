@@ -36,6 +36,9 @@ public class JobSystem : InitBase
           {
             //작업자가 이미 있는데 그게 내가 아니라면 
             if (t.Worker != null && t.Worker != Owner) continue;
+            var storage = t as Storage; // 창고 조건 하나 추가 
+            if (storage != null && storage.CurCapacity >= storage.MaxCapacity) continue;
+            
             target = t;
             target.Worker = Owner;
             return job;
