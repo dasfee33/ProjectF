@@ -50,37 +50,34 @@ public class JobSystem : InitBase
     
   }
 
-  public BaseObject CurrentRootJob
+  public BaseObject CurrentRootJob(FJob job)
   {
-    get
+    if (supplyTargets.All(item => item == null))
     {
-      if(supplyTargets.All(item => item == null))
-      {
-        if(supplyTargets.Count <= 0)
-          supplyTargets = Owner.FindsClosestInRange(FJob.Supply, 10f, Managers.Object.ItemHolders, func: Owner.IsValid);
-      }
-        
-
-      foreach (var t in supplyTargets)
-      {
-        if (t == null) continue;
-        var itemHolder = t.GetComponent<ItemHolder>();
-        if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
-        if (!itemHolder.isDropped) continue;
-        if (itemHolder.stack <= 0) continue;
-
-        if (supplyTargets != null)
-        {
-          if (t.Worker != Owner.Target.Worker) t.Worker = null;
-          //작업자가 이미 있는데 그게 내가 아니라면 포기? 
-          if (t.Worker != null && t.Worker != Owner) continue;
-          supplyTarget = t;
-          t.Worker = Owner;
-          return t;
-        }
-      }
-      return null;
+      if (supplyTargets.Count <= 0)
+        supplyTargets = Owner.FindsClosestInRange(job, 10f, Managers.Object.ItemHolders, func: Owner.IsValid);
     }
+
+
+    foreach (var t in supplyTargets)
+    {
+      if (t == null) continue;
+      var itemHolder = t.GetComponent<ItemHolder>();
+      if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
+      if (!itemHolder.isDropped) continue;
+      if (itemHolder.stack <= 0) continue;
+
+      if (supplyTargets != null)
+      {
+        if (t.Worker != Owner.Target.Worker) t.Worker = null;
+        //작업자가 이미 있는데 그게 내가 아니라면 포기? 
+        if (t.Worker != null && t.Worker != Owner) continue;
+        supplyTarget = t;
+        t.Worker = Owner;
+        return t;
+      }
+    }
+    return null;
   }
 
   public override bool Init()

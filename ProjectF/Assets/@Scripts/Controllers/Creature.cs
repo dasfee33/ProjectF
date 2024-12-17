@@ -30,6 +30,30 @@ public class jobDicValue
     set { isAble = value; }
   }
 }
+
+[Serializable]
+public class HaveList
+{
+  [SerializeField]
+  private int _id;
+  [SerializeField]
+  private float _mass;
+  [SerializeField]
+  private string _label;
+
+
+  public int id { get { return _id; } set { _id = value; } }
+  public float mass { get { return _mass; } set { _mass = value; } }
+  public string label { get { return _label; } set { _label = value; } }
+
+  public HaveList(int id, float mass, string label)
+  {
+    this.id = id;
+    this.mass = mass;
+    this.label = label;
+  }
+}
+
 #endregion
 
 public class Creature : BaseObject
@@ -37,8 +61,9 @@ public class Creature : BaseObject
   public BaseObject Target { get; set; }
   public BaseObject supplyTarget { get; set; }
 
-  [SerializedDictionary("itemId", "itemMass")]
-  public SerializedDictionary<int, float> ItemHaveList;
+  //[SerializedDictionary("itemId", "itemMass")]
+  //public SerializedDictionary<int, float> ItemHaveList;
+  public List<HaveList> ItemHaveList = new List<HaveList>();
 
   //public List<BaseObject> SupplyStorage { get; set; } = new List<BaseObject>(); 
   public List<Data.SkillData> Skills { get; protected set; } = new List<Data.SkillData>();
@@ -156,7 +181,7 @@ public class Creature : BaseObject
 
   
   #region Supply
-  public float AddHaveList(int dataID, float mass)
+  public float AddHaveList(int dataID, float mass, string label = null)
   {
     var value = 0f;
     if (CurrentSupply + mass > SupplyCapacity)
@@ -165,11 +190,12 @@ public class Creature : BaseObject
     }
     else value = mass;
 
-    if (ItemHaveList.ContainsKey(dataID))
+    var item = ItemHaveList.ReturnProperty("id", dataID) as HaveList;
+    if(item != null)
     {
-      ItemHaveList[dataID] += value;
+      item.mass += value;
     }
-    else ItemHaveList.Add(dataID, value);
+    else ItemHaveList.Add(new HaveList(dataID, mass, label));
 
     CurrentSupply += value;
 
@@ -178,35 +204,38 @@ public class Creature : BaseObject
 
   public bool SearchHaveList(int dataID)
   {
-    if (ItemHaveList.ContainsKey(dataID)
-      && ItemHaveList[dataID] > 0)
-    return true;
-    return false;
+    return ItemHaveList.CompareIdProperty("id", dataID);
   }
 
-  public float SupplyFromHaveList(int dataID, float mass)
+  public bool SearchHaveList(string label)
   {
-    float result = 0;
+    return ItemHaveList.CompareIabelProperty("label", label);
+  }
 
-    if(ItemHaveList.ContainsKey(dataID))
+  public float SupplyFromHaveList(int dataID, float mass, string label = null)
+  {
+    float result = -1;
+
+    var item = ItemHaveList.ReturnProperty("id", dataID) as HaveList;
+    if(item != null)
     {
-      if(ItemHaveList[dataID] - mass <= 0)
-      {
-        result = ItemHaveList[dataID];
-        ItemHaveList.Remove(dataID);
+      if(item.mass - mass <= 0)
+        {
+        result = item.mass;
+        ItemHaveList.Remove(item);
       }
       else
       {
-        ItemHaveList[dataID] -= mass;
+        item.mass -= mass;
         result = mass;
       }
-
-      //if (ItemHaveList[dataID] <= 0) ItemHaveList.Remove(dataID);
 
       CurrentSupply -= result;
 
       Managers.Object.RemoveItem(dataID, result);
+      return result;
     }
+
     return result;
   }
   #endregion
@@ -368,12 +397,12 @@ public class Creature : BaseObject
 
   public Enum SelectJob(/*Func<BaseObjenct, bool> func = null*/)
   {
-    if (ppSystem.CurrentPersonalJob.Key is not FPersonalJob.None)
-    {
-      if (job is FPersonalJob && Target != null)
-        return job;
-      else return ppSystem.CurrentPersonalJob.Key;
-    }
+    //if (ppSystem.CurrentPersonalJob.Key is not FPersonalJob.None)
+    //{
+    //  if (job is FPersonalJob && Target != null)
+    //    return job;
+    //  else return ppSystem.CurrentPersonalJob.Key;
+    //}
 
     if (job is FJob && Target != null)
       return job;
@@ -505,7 +534,7 @@ public class Creature : BaseObject
 
   #region Map
   // 창고에서 데이터 아이디로 위치 찾음
-  public BaseObject FindStorageInRange(int dataID, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null)
+  public BaseObject FindStorageInRange(int dataID, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null, string label = null)
   {
     BaseObject target = null;
     float bestDistanceSqr = float.MaxValue;
@@ -533,12 +562,25 @@ public class Creature : BaseObject
 
       foreach(var item in storage.storageItem)
       {
-        if (item.Key != dataID) continue;
+        if(string.IsNullOrEmpty(label))
+        {
+          if (item.id != dataID) continue;
+          else
+          {
+            target = obj;
+            bestDistanceSqr = distToTargetSqr;
+            break;
+          }
+        }
         else
         {
-          target = obj;
-          bestDistanceSqr = distToTargetSqr;
-          break;
+          if (!item.label.Equals(label)) continue;
+          else
+          {
+            target = obj;
+            bestDistanceSqr = distToTargetSqr;
+            break;
+          }
         }
       }
     }
@@ -546,7 +588,7 @@ public class Creature : BaseObject
     return target;
   }
 
-  public BaseObject FindClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null) where T : Enum
+  public BaseObject FindClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null, string label = null) where T : Enum
   { 
     BaseObject target = null;
     float bestDistanceSqr = float.MaxValue;
@@ -724,7 +766,7 @@ public class Creature : BaseObject
 
   protected virtual void JobStore(float distance)
   {
-    supplyTarget = jobSystem.CurrentRootJob;
+    supplyTarget = jobSystem.CurrentRootJob(FJob.Supply);
     var targetScr = Target as Storage;
     //if(targetScr == null)
     //{
@@ -750,6 +792,10 @@ public class Creature : BaseObject
 
   }
 
+  /// <summary>
+  ///1. 아이템 ld로 창고에서 찾음
+  ///2. 땅에서 ld로 찾음 
+  /// </summary>
   protected virtual void JobSupply(float distance)
   {
     var targetScr = Target as BuildObject;
@@ -771,19 +817,13 @@ public class Creature : BaseObject
         }
         else
         {
-          // 들고 있지 않다면 주변에서 찾아봄
-          // 1. 상자
-          // 상자를 서치해서 그 안에 있는 아이템을 가져옴 
-          // 2. 땅에 떨어진 것들
-          // 땅에 떨어진 루팅할 수잇는 아이템들 중에서 id가 같은것을 찾아봄
-
           //1. 창고에서 찾음
           supplyTarget = FindStorageInRange(item.Key, 10, Managers.Object.Structures, IsValid);
           if(supplyTarget != null)
           {
             var storage = supplyTarget as Storage;
             // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
-            if(storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey(item.Key))
+            if(storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey(item.Key.ToString()))
             {
               storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
               storage.Worker = this;
@@ -793,7 +833,7 @@ public class Creature : BaseObject
           else
           {
             //2. 땅에 떨어진것 찾음
-            supplyTarget = jobSystem.CurrentRootJob;
+            supplyTarget = jobSystem.CurrentRootJob(FJob.Supply);
             var supplyTargetScr = supplyTarget as ItemHolder;
             if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && item.Key == supplyTarget.dataTemplateID && supplyTargetScr.isDropped)
             {
@@ -824,10 +864,52 @@ public class Creature : BaseObject
     return;
   }
 
+  /// <summary>
+  ///1. 아이템 label로 창고에서 찾음
+  ///2. 땅에서 label로 찾음 
+  /// </summary>
   public virtual void JobHungry(float distance)
   {
-    ChaseOrAttackTarget(100, distance);
-
+    if (SearchHaveList("Food"))
+    {
+      ChaseOrAttackTarget(100, distance);
+    }
+    else
+    {
+      //1. 창고에서 찾음
+      supplyTarget = FindStorageInRange(-1, 10, Managers.Object.Structures, IsValid, "Food");
+      if (supplyTarget != null)
+      {
+        var storage = supplyTarget as Storage;
+        // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
+        if (storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey("label"))
+        {
+          var item = storage.storageItem.ReturnProperty("label", "Food") as StorageItem;
+          if(item != null)
+          {
+            storage.takeItem = new KeyValuePair<int, float>(item.id, item.mass);
+            storage.Worker = this;
+            ChaseOrAttackTarget(100, distance, supplyTarget);
+          }
+        }
+      }
+      else
+      {
+        //2. 땅에 떨어진것 찾음
+        supplyTarget = jobSystem.CurrentRootJob(FJob.Cook);
+        var supplyTargetScr = supplyTarget as ItemHolder;
+        if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.label.Equals("Food") && supplyTargetScr.isDropped)
+        {
+          ChaseOrAttackTarget(100, distance, supplyTarget);
+        }
+        else
+        {
+          //아무데도 없는 경우 => 리셋
+          SetJobIsAble(job, false);
+          ResetJob();
+        }
+      }
+    }
     return;
   }
 

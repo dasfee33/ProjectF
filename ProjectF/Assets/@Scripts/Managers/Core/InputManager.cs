@@ -48,7 +48,7 @@ public class InputManager
       {
         touchObject.Invoke(scr);
       }
-      else nonTouchObject.Invoke();
+      //else nonTouchObject.Invoke();
     }
   }
 

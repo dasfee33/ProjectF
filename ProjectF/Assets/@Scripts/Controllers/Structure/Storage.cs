@@ -1,14 +1,35 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using static Define;
 
+[Serializable]
+public class StorageItem
+{
+  [SerializeField]
+  private int _id;
+  [SerializeField]
+  private float _mass;
+  [SerializeField]
+  private string _label;
+
+  public int id { get { return _id; } set { _id = value; } }
+  public float mass { get { return _mass; } set { _mass = value; } }
+  public string label { get { return _label; } set { _label = value; } }
+
+  public StorageItem(int id, float mass, string label)
+  {
+    this.id = id;
+    this.mass = mass;
+    this.label = label;
+  }
+}
+
 public class Storage : Structure
 {
-  [SerializedDictionary("item dataID", "item mass")]
-  public SerializedDictionary<int, float> storageItem;
+  //[SerializedDictionary("item dataID", "item mass")]
+  //public SerializedDictionary<int, float> storageItem;
+  public List<StorageItem> storageItem = new List<StorageItem>();
 
   public KeyValuePair<int, float> takeItem = new KeyValuePair<int, float>(-1, 0);
 
@@ -39,14 +60,21 @@ public class Storage : Structure
     }
   }
 
-  public void AddCapacity(int key, float mass)
+  public void AddCapacity(int key, float mass, string label = null)
   {
-    if(!storageItem.ContainsKey(key)) storageItem.Add(key, mass);
-    else storageItem[key] += mass;
+    var item = storageItem.ReturnProperty("id", key) as StorageItem;  
+    if(item != null)
+    {
+      item.mass += mass;
+    }
+    else storageItem.Add(new StorageItem(key, mass, label));
 
     CurCapacity += mass;
 
-    if (storageItem[key] <= 0) storageItem.Remove(key);
+    for(var i = storageItem.Count - 1; i >= 0; i--)
+    {
+      if (storageItem[i].mass <= 0) storageItem.RemoveAt(i);
+    }
   }
 
 
@@ -88,25 +116,31 @@ public class Storage : Structure
     // 빼는 것
     if (takeItem.Key != -1)
     {
-      var value = Mathf.Min(takeItem.Value, storageItem[takeItem.Key]);
-      
+      var value = 0f;
+      var item = storageItem.ReturnProperty("id", takeItem.Key) as StorageItem;
+
+      if(item != null)
+      {
+        value = Mathf.Min(takeItem.Value, item.mass);
+      }
       var realValue = Worker.AddHaveList(takeItem.Key, value);
       AddCapacity(takeItem.Key, -realValue);
+
     }
     else
     {
       // 넣는 것
-      var haveList = new Dictionary<int, float>(); // 임시 저장소. 쓰면 안됌 
+      var haveList = new List<StorageItem>(); // 임시 저장소. 쓰면 안됌 
       foreach (var item in Worker.ItemHaveList)
       {
-        var value = Mathf.Min(item.Value, MaxCapacity - CurCapacity);
-        AddCapacity(item.Key, value);
-        haveList.Add(item.Key, value);
+        var value = Mathf.Min(item.mass, MaxCapacity - CurCapacity);
+        AddCapacity(item.id, value, item.label);
+        haveList.Add(new StorageItem(item.id, value, item.label));
       }
 
       foreach (var list in haveList)
       {
-        Worker.SupplyFromHaveList(list.Key, list.Value);
+        Worker.SupplyFromHaveList(list.id, list.mass, list.label);
       }
     }
 

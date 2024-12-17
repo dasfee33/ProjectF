@@ -42,21 +42,45 @@ public class CameraController : InitBase
     //Managers.FInput.startTouch -= StartTouch;
     //Managers.FInput.startTouch += StartTouch;
 
-    //Managers.FInput.onDragging -= OnDragging;
-    //Managers.FInput.onDragging += OnDragging;
+    Managers.FInput.onDragging -= OnDragging;
+    Managers.FInput.onDragging += OnDragging;
 
-    //Managers.FInput.endTouch -= EndTouch;
-    //Managers.FInput.endTouch += EndTouch;
+    Managers.FInput.endTouch -= EndTouch;
+    Managers.FInput.endTouch += EndTouch;
 
-    Managers.FInput.touchObject -= FocusObject;
-    Managers.FInput.touchObject += FocusObject;
+    //Managers.FInput.touchObject -= FocusObject;
+    //Managers.FInput.touchObject += FocusObject;
 
-    Managers.FInput.nonTouchObject -= NonFocusObject;
-    Managers.FInput.nonTouchObject += NonFocusObject;
+    //Managers.FInput.nonTouchObject -= NonFocusObject;
+    //Managers.FInput.nonTouchObject += NonFocusObject;
 
 
 
     return true;
+  }
+
+  private Vector2 previousPos;
+
+  public void OnDragging(Vector2 pos)
+  {
+    Vector2 currentTouchPos = Camera.main.ScreenToViewportPoint(new Vector3(pos.x, pos.y, 0));
+
+    if (previousPos == Vector2.zero)
+    {
+      previousPos = currentTouchPos;
+      return;
+    }
+
+    Vector2 delta = previousPos - currentTouchPos;
+
+    Camera.main.transform.Translate(new Vector3(delta.x, delta.y, 0) * virtualCam.m_Lens.OrthographicSize * 1.8f);
+
+    previousPos = currentTouchPos;
+  }
+
+  public void EndTouch(Vector2 pos, float time)
+  {
+    previousPos = Vector2.zero;
   }
 
   //private bool isDragging = false;
@@ -88,27 +112,27 @@ public class CameraController : InitBase
 
   private Transform saveFollow;
 
-  private void FocusObject(BaseObject obj)
-  {
-    if (obj != null)
-    {
-      virtualCam.m_Lens.OrthographicSize = defaultSize;
-      DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, focusSize, zoomDuration).
-        SetEase(Ease.OutCubic).OnComplete(() =>
-        {
-          saveFollow = virtualCam.Follow;
-          virtualCam.Follow = obj.transform;
-        });
-    }
-  }
+  //private void FocusObject(BaseObject obj)
+  //{
+  //  if (obj != null)
+  //  {
+  //    virtualCam.m_Lens.OrthographicSize = defaultSize;
+  //    DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, focusSize, zoomDuration).
+  //      SetEase(Ease.OutCubic).OnComplete(() =>
+  //      {
+  //        saveFollow = virtualCam.Follow;
+  //        virtualCam.Follow = obj.transform;
+  //      });
+  //  }
+  //}
 
-  private void NonFocusObject()
-  {
-    if (virtualCam.m_Lens.OrthographicSize == defaultSize) return;
+  //private void NonFocusObject()
+  //{
+  //  if (virtualCam.m_Lens.OrthographicSize == defaultSize) return;
 
-    DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, defaultSize, zoomDuration).
-        SetEase(Ease.InCubic).OnComplete(() => { virtualCam.Follow = saveFollow; });
-  }
+  //  DOTween.To(() => virtualCam.m_Lens.OrthographicSize, x => virtualCam.m_Lens.OrthographicSize = x, defaultSize, zoomDuration).
+  //      SetEase(Ease.InCubic).OnComplete(() => { virtualCam.Follow = saveFollow; });
+  //}
 
   private void LateUpdate()
   {

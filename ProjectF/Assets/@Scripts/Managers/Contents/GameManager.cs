@@ -81,6 +81,8 @@ public class StorageSaveData
   public int subType;
   public float posX;
   public float posY;
+
+  public Dictionary<int, float> storageItem = new Dictionary<int, float>();
 }
 
 public class BedSaveData
@@ -347,6 +349,9 @@ public class GameManager
           storage.subType = (int)structure.StructureSubType;
           storage.posX = structure.transform.position.x;
           storage.posY = structure.transform.position.y;
+          var store = structure as Storage;
+          foreach (var s in store.storageItem)
+            storage.storageItem.Add(s.id, s.mass);
 
           SaveData.structSaveData.storageSaveData.Add(storage);
           break;
@@ -506,6 +511,89 @@ public class GameManager
 
     foreach (var structure in structures)
     {
+      switch(structure.StructureSubType)
+      {
+        case FStructureSubType.Toilet:
+          ToiletSaveData toilet = new ToiletSaveData();
+          toilet.dataID = structure.dataTemplateID;
+          toilet.name = structure.Name;
+          toilet.type = (int)structure.StructureType;
+          toilet.subType = (int)structure.StructureSubType;
+          toilet.posX = structure.transform.position.x;
+          toilet.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.toiletSaveData.Add(toilet);
+          break;
+        case FStructureSubType.EatingTable:
+          EatingTableSaveData eatingTable = new EatingTableSaveData();
+          eatingTable.dataID = structure.dataTemplateID;
+          eatingTable.name = structure.Name;
+          eatingTable.type = (int)structure.StructureType;
+          eatingTable.subType = (int)structure.StructureSubType;
+          eatingTable.posX = structure.transform.position.x;
+          eatingTable.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.eatingTableSaveData.Add(eatingTable);
+          break;
+        case FStructureSubType.Storage:
+          StorageSaveData storage = new StorageSaveData();
+          storage.dataID = structure.dataTemplateID;
+          storage.name = structure.Name;
+          storage.type = (int)structure.StructureType;
+          storage.subType = (int)structure.StructureSubType;
+          storage.posX = structure.transform.position.x;
+          storage.posY = structure.transform.position.y;
+          var store = structure as Storage;
+          foreach (var s in store.storageItem)
+            storage.storageItem.Add(s.id, s.mass);
+
+          SaveData.structSaveData.storageSaveData.Add(storage);
+          break;
+        case FStructureSubType.Bed:
+          BedSaveData bed = new BedSaveData();
+          bed.dataID = structure.dataTemplateID;
+          bed.name = structure.Name;
+          bed.type = (int)structure.StructureType;
+          bed.subType = (int)structure.StructureSubType;
+          bed.posX = structure.transform.position.x;
+          bed.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.bedSaveData.Add(bed);
+          break;
+        case FStructureSubType.Station:
+          StationSaveData station = new StationSaveData();
+          station.dataID = structure.dataTemplateID;
+          station.name = structure.Name;
+          station.type = (int)structure.StructureType;
+          station.subType = (int)structure.StructureSubType;
+          station.posX = structure.transform.position.x;
+          station.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.stationSaveData.Add(station);
+          break;
+        case FStructureSubType.BuildObject:
+          BuildObjectFSaveData buildObject = new BuildObjectFSaveData();
+          buildObject.dataID = structure.dataTemplateID;
+          buildObject.name = structure.Name;
+          buildObject.type = (int)structure.StructureType;
+          buildObject.subType = (int)structure.StructureSubType;
+          buildObject.posX = structure.transform.position.x;
+          buildObject.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.buildObjectFSaveData.Add(buildObject);
+          break;
+        case FStructureSubType.PlowBowl:
+          PlowBowlSaveData plowBowl = new PlowBowlSaveData();
+          plowBowl.dataID = structure.dataTemplateID;
+          plowBowl.name = structure.Name;
+          plowBowl.type = (int)structure.StructureType;
+          plowBowl.subType = (int)structure.StructureSubType;
+          plowBowl.posX = structure.transform.position.x;
+          plowBowl.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.plowBowlSaveData.Add(plowBowl);
+          break;
+      }
       //StructSaveData structSaveData = new StructSaveData();
       //structSaveData.dataID = structure.dataTemplateID;
       //structSaveData.name = structure.Name;
@@ -659,9 +747,103 @@ public class GameManager
 
       //if (SaveData.structSaveData.Count > 0) SaveData.structSaveData.Clear();
 
+      foreach(LitJson.JsonData data in structureData["toiletSaveData"])
+      {
+        ToiletSaveData toilet = new ToiletSaveData();
+        toilet.dataID = int.Parse(data["dataID"].ToString());
+        toilet.name = data["name"].ToString();
+        toilet.type = int.Parse(data["type"].ToString());
+        toilet.posX = float.Parse(data["posX"].ToString());
+        toilet.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.toiletSaveData.Add(toilet);
+      }
+
+      foreach (LitJson.JsonData data in structureData["eatingTableSaveData"])
+      {
+        EatingTableSaveData eatingTable = new EatingTableSaveData();
+        eatingTable.dataID = int.Parse(data["dataID"].ToString());
+        eatingTable.name = data["name"].ToString();
+        eatingTable.type = int.Parse(data["type"].ToString());
+        eatingTable.posX = float.Parse(data["posX"].ToString());
+        eatingTable.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.eatingTableSaveData.Add(eatingTable);
+      }
+
+      foreach (LitJson.JsonData data in structureData["storageSaveData"])
+      {
+        StorageSaveData storage = new StorageSaveData();
+        storage.dataID = int.Parse(data["dataID"].ToString());
+        storage.name = data["name"].ToString();
+        storage.type = int.Parse(data["type"].ToString());
+        storage.posX = float.Parse(data["posX"].ToString());
+        storage.posY = float.Parse(data["posY"].ToString());
+
+        foreach(string key in data["storageItem"].Keys)
+        {
+          storage.storageItem.Add(int.Parse(key), float.Parse(data["storageItem"][key].ToString()));
+        }
+
+        SaveData.structSaveData.storageSaveData.Add(storage);
+      }
+
+      foreach (LitJson.JsonData data in structureData["bedSaveData"])
+      {
+        BedSaveData bed = new BedSaveData();
+        bed.dataID = int.Parse(data["dataID"].ToString());
+        bed.name = data["name"].ToString();
+        bed.type = int.Parse(data["type"].ToString());
+        bed.posX = float.Parse(data["posX"].ToString());
+        bed.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.bedSaveData.Add(bed);
+      }
+
+      foreach (LitJson.JsonData data in structureData["stationSaveData"])
+      {
+        StationSaveData station = new StationSaveData();
+        station.dataID = int.Parse(data["dataID"].ToString());
+        station.name = data["name"].ToString();
+        station.type = int.Parse(data["type"].ToString());
+        station.posX = float.Parse(data["posX"].ToString());
+        station.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.stationSaveData.Add(station);
+      }
+
+      foreach (LitJson.JsonData data in structureData["buildObjectFSaveData"])
+      {
+        BuildObjectFSaveData buildObject = new BuildObjectFSaveData();
+        buildObject.dataID = int.Parse(data["dataID"].ToString());
+        buildObject.name = data["name"].ToString();
+        buildObject.type = int.Parse(data["type"].ToString());
+        buildObject.posX = float.Parse(data["posX"].ToString());
+        buildObject.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.buildObjectFSaveData.Add(buildObject);
+      }
+
+      foreach (LitJson.JsonData data in structureData["plowBowlSaveData"])
+      {
+        PlowBowlSaveData plowbowl = new PlowBowlSaveData();
+        plowbowl.dataID = int.Parse(data["dataID"].ToString());
+        plowbowl.name = data["name"].ToString();
+        plowbowl.type = int.Parse(data["type"].ToString());
+        plowbowl.posX = float.Parse(data["posX"].ToString());
+        plowbowl.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.plowBowlSaveData.Add(plowbowl);
+      }
+
+
+
+
+
       //foreach (LitJson.JsonData data in structureData)
       //{
       //  StructSaveData structureLoadData = new StructSaveData();
+
       //  structureLoadData.dataID = int.Parse(data["dataID"].ToString());
       //  structureLoadData.name = data["name"].ToString();
       //  structureLoadData.type = int.Parse(data["type"].ToString());

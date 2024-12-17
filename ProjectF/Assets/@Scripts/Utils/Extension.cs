@@ -6,6 +6,87 @@ using UnityEngine.EventSystems;
 
 public static class Extension
 {
+  public static object ReturnProperty<T>(this IEnumerable<T> list, string property, int id) where T: class
+  {
+    foreach(var item in list)
+    {
+      var param = item.GetType().GetProperty(property);
+      if (param != null)
+      {
+        var paramValue = param.GetValue(item);
+        if((int)paramValue == id)
+          return item;
+      }
+    }
+
+    return null;
+  }
+
+  public static object ReturnProperty<T>(this IEnumerable<T> list, string property, string label) where T : class
+  {
+    foreach (var item in list)
+    {
+      var param = item.GetType().GetProperty(property);
+      if (param != null)
+      {
+        var paramValue = param.GetValue(item);
+        if (paramValue.ToString().Equals(label))
+          return item;
+      }
+    }
+
+    return null;
+  }
+
+  public static bool CompareIdProperty<T>(this IEnumerable<T> list, string property, int id) where T: class
+  {
+    foreach(var item in list)
+    {
+      var param = item.GetType().GetProperty(property);
+      if(param != null)
+      {
+        var paramValue = param.GetValue(item);
+        if ((int)paramValue == id)
+          return true;
+      }
+    }
+    return false;
+  }
+
+  public static bool CompareIabelProperty<T>(this IEnumerable<T> list, string property, string label) where T : class
+  {
+    foreach (var item in list)
+    {
+      var param = item.GetType().GetProperty(property);
+      if (param != null)
+      {
+        var paramValue = param.GetValue(item);
+        if (paramValue.ToString().Equals(label))
+          return true;
+      }
+    }
+    return false;
+  }
+
+  public static bool ContainsKey<T>(this IEnumerable<T> list, string property, string label = null) where T : class
+  {
+    foreach (var item in list)
+    {
+      var param = item.GetType().GetProperty(property);
+      if (param != null)
+      {
+        if (!string.IsNullOrEmpty(label))
+        {
+          var paramValue = param.GetValue(item);
+          if (paramValue.ToString().Equals(label))
+            return true;
+        }
+        else return true;
+      }
+    }
+    return false;
+  }
+
   public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
   {
     return Util.GetOrAddComponent<T>(go);

@@ -18,6 +18,7 @@ public class ItemHolder : BaseObject
   public int stack;
   public float defaultMass;
   public float mass;
+  public string label;
   public bool isDropped = false;
 
   public override bool Init()
@@ -27,8 +28,6 @@ public class ItemHolder : BaseObject
     guid = Guid.NewGuid();
 
     ObjectType = FObjectType.ItemHolder;
-    //FIXME
-    workableJob = FJob.Supply;
     currentSprite = gameObject.GetOrAddComponent<SpriteRenderer>();
     parabolaMotion = gameObject.GetOrAddComponent<ParabolaMotion>();
 
@@ -45,8 +44,22 @@ public class ItemHolder : BaseObject
     currentSprite.sortingOrder = 19;
     maxStack = data.maxStack;
     defaultMass = data.Mass;
+    label = data.Label;
     if(dropPos != default(Vector3))  parabolaMotion.SetInfo(0, transform.position, dropPos, endCallback: Arrived);
 
+    UpdateJob();
+  }
+
+  private void UpdateJob()
+  {
+    switch(label)
+    {
+      case "Material":
+      case "Seed":
+        workableJob = FJob.Supply; break;
+      case "Food":
+        workableJob = FJob.Cook; break;
+    }
   }
 
   public void RefreshStack(int a)
@@ -93,7 +106,7 @@ public class ItemHolder : BaseObject
     var attackOwner = attacker as Creature;
     if(attackOwner.SupplyCapacity >= attackOwner.CurrentSupply + mass)
     {
-      attackOwner.AddHaveList(dataTemplateID, mass);
+      attackOwner.AddHaveList(dataTemplateID, mass, label);
       //인벤토리 할때 같이 
       //if (attackOwner.SupplyStorage.Count > 0)
       //{
