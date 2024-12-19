@@ -273,7 +273,7 @@ public class GameManager
       }
       foreach (var priority in creature.PersonalDic)
       {
-        creatureSaveData.pJobPriority[(int)priority.Key] = priority.Value;
+        creatureSaveData.pJobPriority[(int)priority.Key] = priority.Value.Priority;
       }
 
       SaveData.creatureSaveData.Add(creatureSaveData);
@@ -467,7 +467,7 @@ public class GameManager
       }
       foreach (var priority in creature.PersonalDic)
       {
-        creatureSaveData.pJobPriority[(int)priority.Key] = priority.Value;
+        creatureSaveData.pJobPriority[(int)priority.Key] = priority.Value.Priority;
       }
 
       SaveData.creatureSaveData.Add(creatureSaveData);

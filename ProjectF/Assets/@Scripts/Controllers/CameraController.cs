@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class CameraController : InitBase
 {
@@ -63,6 +64,7 @@ public class CameraController : InitBase
 
   public void OnDragging(Vector2 pos)
   {
+    
     Vector2 currentTouchPos = Camera.main.ScreenToViewportPoint(new Vector3(pos.x, pos.y, 0));
 
     if (previousPos == Vector2.zero)

@@ -71,7 +71,7 @@ public class Creature : BaseObject
   public FCreatureType CreatureType { get; protected set; } = FCreatureType.None;
 
   public Dictionary<FJob, jobDicValue> JobDic = new Dictionary<FJob, jobDicValue>();
-  public Dictionary<FPersonalJob, float> PersonalDic = new Dictionary<FPersonalJob, float>();
+  public Dictionary<FPersonalJob, jobDicValue> PersonalDic = new Dictionary<FPersonalJob, jobDicValue>();
 
   public KeyValuePair<Enum, float> CurrentJob => new KeyValuePair<Enum, float>(job, GetJobPriority(job));
 
@@ -87,9 +87,9 @@ public class Creature : BaseObject
     }
   }
 
-  public event Action<KeyValuePair<FPersonalJob, float>> pjobChanged;
-  private KeyValuePair<FPersonalJob, float> pjobChangedPair;
-  public KeyValuePair<FPersonalJob, float> PJobChanged
+  public event Action<KeyValuePair<FPersonalJob, jobDicValue>> pjobChanged;
+  private KeyValuePair<FPersonalJob, jobDicValue> pjobChangedPair;
+  public KeyValuePair<FPersonalJob, jobDicValue> PJobChanged
   {
     get { return pjobChangedPair; }
     set
@@ -168,7 +168,7 @@ public class Creature : BaseObject
     var jobLength = Enum.GetValues(typeof(FJob)).Length;
     var personalLength = Enum.GetValues(typeof(FPersonalJob)).Length;
     for(int i = 0; i < jobLength; i++) JobDic.Add((FJob)i, new jobDicValue(20, true));
-    for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, 0);
+    for(int i = 0; i < personalLength; i++) PersonalDic.Add((FPersonalJob)i, new jobDicValue(0, true));
 
     Managers.Game.onJobAbleChanged -= SetJobIsAble;
     Managers.Game.onJobAbleChanged += SetJobIsAble;
@@ -256,13 +256,13 @@ public class Creature : BaseObject
     else if(job is FPersonalJob)
     {
       FPersonalJob tmpJob = (FPersonalJob)job;
-      if (set) PersonalDic[tmpJob] = p;
+      if (set) PersonalDic[tmpJob].Priority = p;
       else
       {
         if (PersonalDic.TryGetValue(tmpJob, out var value))
-          PersonalDic[tmpJob] += p;
+          PersonalDic[tmpJob].Priority += p;
       }
-      PJobChanged = new KeyValuePair<FPersonalJob, float>(tmpJob, PersonalDic[tmpJob]);
+      PJobChanged = new KeyValuePair<FPersonalJob, jobDicValue>(tmpJob, PersonalDic[tmpJob]);
     }
   }
 
@@ -293,7 +293,7 @@ public class Creature : BaseObject
     else if(job is FPersonalJob)
     {
       if (PersonalDic.TryGetValue((FPersonalJob)job, out var value))
-        return value;
+        return value.Priority;
     }
     return -1;
   }
@@ -823,11 +823,15 @@ public class Creature : BaseObject
           {
             var storage = supplyTarget as Storage;
             // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
-            if(storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey(item.Key.ToString()))
+            if(storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey("id"))
             {
-              storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
-              storage.Worker = this;
-              ChaseOrAttackTarget(100, distance, supplyTarget);
+              var supply = storage.storageItem.ReturnProperty("id", item.Key);
+              if(supply != null)
+              {
+                storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
+                storage.Worker = this;
+                ChaseOrAttackTarget(100, distance, supplyTarget);
+              }
             }
           }
           else

@@ -15,124 +15,124 @@ public class PersonalPrioritySystem : InitBase
   private Dictionary<FPersonalJob, jobDicValue> personalDict = new Dictionary<FPersonalJob, jobDicValue>();
 
   public BaseObject target;
-  public List<BaseObject> targets = new List<BaseObject>();  
+  public List<BaseObject> targets = new List<BaseObject>();
 
-  //public KeyValuePair<FPersonalJob, float> CurrentPersonalJob
-  //{
-  //  get
-  //  {
-  //    foreach (var job in personalDict)
-  //    {
-  //      if (job.Value < 80f) continue;
-        
+  public KeyValuePair<FPersonalJob, jobDicValue> CurrentPersonalJob
+  {
+    get
+    {
+      foreach (var job in personalDict)
+      {
+        if (job.Value.Priority < 80f) continue;
 
-  //      targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
 
-  //      foreach(var t in targets)
-  //      {
-  //        if (targets != null)
-  //        {
-  //          //작업자가 이미 있는데 그게 내가 아니라면 
-  //          if (t.Worker != null && t.Worker != Owner) continue;
-  //          target = t;
-  //          target.Worker = Owner;
-  //          return job;
-  //        }
-  //      }
-  //    }
+        targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
 
-  //    return new KeyValuePair<FPersonalJob, float>(FPersonalJob.None, 0);
-  //  }
+        foreach (var t in targets)
+        {
+          if (targets != null)
+          {
+            //작업자가 이미 있는데 그게 내가 아니라면 
+            if (t.Worker != null && t.Worker != Owner) continue;
+            target = t;
+            target.Worker = Owner;
+            return job;
+          }
+        }
+      }
 
-  //}
+      return new KeyValuePair<FPersonalJob, jobDicValue>(FPersonalJob.None, new jobDicValue(0, false));
+    }
 
-  //public override bool Init()
-  //{
-  //  if (base.Init() == false) return false;
+  }
 
-  //  Owner = this.GetComponent<Creature>();
-  //  personalDict = Owner.PersonalDic;
+  public override bool Init()
+  {
+    if (base.Init() == false) return false;
 
-  //  gameDay = Managers.GameDay;
-  //  gameDay.timeChanged -= RefreshNeeds;
-  //  gameDay.timeChanged += RefreshNeeds;
+    Owner = this.GetComponent<Creature>();
+    personalDict = Owner.PersonalDic;
 
-  //  Owner.pjobChanged -= RefreshJobList;
-  //  Owner.pjobChanged += RefreshJobList;
-  //  Owner.PersonalDic = DescendingDIct(Owner.PersonalDic);
+    gameDay = Managers.GameDay;
+    gameDay.timeChanged -= RefreshNeeds;
+    gameDay.timeChanged += RefreshNeeds;
 
-  //  MakeJobList();
+    Owner.pjobChanged -= RefreshJobList;
+    Owner.pjobChanged += RefreshJobList;
+    Owner.PersonalDic = DescendingDIct(Owner.PersonalDic);
 
-  //  return true;
-  //}
+    MakeJobList();
 
-  //private void MakeJobList()
-  //{
-  //  personalDict = GetSelectJobList(jobCount);
-  //}
+    return true;
+  }
 
-  //private void RefreshJobList(KeyValuePair<FPersonalJob, float> job)
-  //{
-  //  if (personalDict.ContainsKey(job.Key))
-  //  {
-  //    personalDict[job.Key] = job.Value;
-  //    personalDict = DescendingDIct(personalDict);
-  //  }
-  //  else
-  //  {
-  //    personalDict.Add(job.Key, job.Value);
-  //    personalDict = DescendingDIct(personalDict);
-  //    personalDict.Remove(personalDict.Last().Key);
-  //  }
-  //}
+  private void MakeJobList()
+  {
+    personalDict = GetSelectJobList(jobCount);
+  }
 
-  //private Dictionary<FPersonalJob, float> DescendingDIct(Dictionary<FPersonalJob, float> dict)
-  //{
-  //  return dict.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-  //}
+  private void RefreshJobList(KeyValuePair<FPersonalJob, jobDicValue> job)
+  {
+    if (personalDict.ContainsKey(job.Key))
+    {
+      personalDict[job.Key] = job.Value;
+      personalDict = DescendingDIct(personalDict);
+    }
+    else
+    {
+      personalDict.Add(job.Key, job.Value);
+      personalDict = DescendingDIct(personalDict);
+      personalDict.Remove(personalDict.Last().Key);
+    }
+  }
 
-  //private Dictionary<FPersonalJob, float> GetSelectJobList(int count)
-  //{
-  //  var sortDict = personalDict.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value);
-  //  return sortDict;
-  //}
+  private Dictionary<FPersonalJob, jobDicValue> DescendingDIct(Dictionary<FPersonalJob, jobDicValue> dict)
+  {
+    return dict.OrderByDescending(pair => pair.Value.Priority).ToDictionary(pair => pair.Key, pair => pair.Value);
+  }
 
-  //public void RefreshNeeds()
-  //{
-  //  if (Owner == null) return;
-  //  //배설
-  //  if (personalDict.ContainsKey(FPersonalJob.Excretion))
-  //  {
-  //    var tmp = 0f;
-  //    tmp = Mathf.Clamp(personalDict[FPersonalJob.Excretion] + 1, 0, 100);
+  private Dictionary<FPersonalJob, jobDicValue> GetSelectJobList(int count)
+  {
+    var sortDict = personalDict.Take(10).ToDictionary(pair => pair.Key, pair => pair.Value);
+    return sortDict;
+  }
 
-  //    personalDict[FPersonalJob.Excretion] = tmp;
-  //  }
+  public void RefreshNeeds()
+  {
+    if (Owner == null) return;
+    //배설
+    if (personalDict.ContainsKey(FPersonalJob.Excretion))
+    {
+      var tmp = 0f;
+      tmp = Mathf.Clamp(personalDict[FPersonalJob.Excretion].Priority + 1, 0, 100);
 
-  //  //배고픔
-  //  if (personalDict.ContainsKey(FPersonalJob.Hungry))
-  //  {
-  //    var tmp = 0f;
-  //    Mathf.Clamp(Owner.Calories -= 50, 0, Owner.Calories);
+      personalDict[FPersonalJob.Excretion].Priority = tmp;
+    }
 
-  //    if(Owner.Calories < 500f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry] + 5, 0, 100);
-  //    else if(Owner.Calories < 5000f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry] + 1, 0, 100);
+    //배고픔
+    if (personalDict.ContainsKey(FPersonalJob.Hungry))
+    {
+      var tmp = 0f;
+      Mathf.Clamp(Owner.Calories -= 50, 0, Owner.Calories);
 
-  //    personalDict[FPersonalJob.Hungry] = tmp;
-  //  }
+      if (Owner.Calories < 500f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority + 5, 0, 100);
+      else if (Owner.Calories < 5000f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority + 1, 0, 100);
 
-  //  //수면 
-  //  if (personalDict.ContainsKey(FPersonalJob.Sleepy))
-  //  {
-  //    var tmp = 0f;
-  //    switch (gameDay.currentTime)
-  //    {
-  //      case FCurrentTime.BeforeSunset: tmp = Mathf.Clamp(personalDict[FPersonalJob.Sleepy] += 5, 0, 100); break;
-  //      case FCurrentTime.Night: tmp = Mathf.Clamp(personalDict[FPersonalJob.Sleepy] += 10, 0, 100); break;
-  //    }
+      personalDict[FPersonalJob.Hungry].Priority = tmp;
+    }
 
-  //    personalDict[FPersonalJob.Sleepy] = tmp;
-  //  }
-  //}
+    //수면 
+    if (personalDict.ContainsKey(FPersonalJob.Sleepy))
+    {
+      var tmp = 0f;
+      switch (gameDay.currentTime)
+      {
+        case FCurrentTime.BeforeSunset: tmp = Mathf.Clamp(personalDict[FPersonalJob.Sleepy].Priority += 5, 0, 100); break;
+        case FCurrentTime.Night: tmp = Mathf.Clamp(personalDict[FPersonalJob.Sleepy].Priority += 10, 0, 100); break;
+      }
+
+      personalDict[FPersonalJob.Sleepy].Priority = tmp;
+    }
+  }
 
 }
