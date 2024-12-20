@@ -45,9 +45,9 @@
     {
       "DataId": 100003,
       "RewardExp": 10,
-      "Prob1": 0,
+      "Prob1": 50,
       "Item1": 400002,
-      "Prob2": 100,
+      "Prob2": 50,
       "Item2": 400003,
       "Prob3": 0,
       "Item3": 0,

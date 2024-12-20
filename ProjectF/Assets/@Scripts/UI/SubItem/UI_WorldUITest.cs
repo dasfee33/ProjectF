@@ -46,15 +46,15 @@ public class UI_WorldUITest : UI_Base
     if (diff == Vector3.zero)
       diff = Owner.transform.position - this.transform.position;
 
-    var worldPos = camera.ScreenToWorldPoint(evt.position);
+    var worldPos = camera.ScreenToWorldPoint(evt.position) + diff;
     worldPos.z = 0f;
 
     //Lerp Position
     var cellPos = Managers.Map.World2Cell(worldPos);
     var cellWorldPos = Managers.Map.Cell2World(cellPos);
-    Owner.transform.position = cellWorldPos + Managers.Map.LerpObjectPos + diff;
+    Owner.transform.position = cellWorldPos;// + /*Managers.Map.LerpObjectPos + */diff;
 
-    var ownerCellPos = Managers.Map.World2Cell(cellWorldPos + diff);
+    var ownerCellPos = Managers.Map.World2Cell(cellWorldPos);// + diff);
 
     var cellX = Owner.data.extraCellX;
     var cellY = Owner.data.extraCellY;

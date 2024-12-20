@@ -82,7 +82,7 @@ public class StorageSaveData
   public float posX;
   public float posY;
 
-  public Dictionary<int, float> storageItem = new Dictionary<int, float>();
+  public List<StorageItem> storageItem = new List<StorageItem>();
 }
 
 public class BedSaveData
@@ -351,7 +351,7 @@ public class GameManager
           storage.posY = structure.transform.position.y;
           var store = structure as Storage;
           foreach (var s in store.storageItem)
-            storage.storageItem.Add(s.id, s.mass);
+            storage.storageItem.Add(new StorageItem(s.id, s.mass, s.label));
 
           SaveData.structSaveData.storageSaveData.Add(storage);
           break;
@@ -545,7 +545,7 @@ public class GameManager
           storage.posY = structure.transform.position.y;
           var store = structure as Storage;
           foreach (var s in store.storageItem)
-            storage.storageItem.Add(s.id, s.mass);
+            storage.storageItem.Add(new StorageItem(s.id, s.mass, s.label));
 
           SaveData.structSaveData.storageSaveData.Add(storage);
           break;
@@ -779,10 +779,9 @@ public class GameManager
         storage.type = int.Parse(data["type"].ToString());
         storage.posX = float.Parse(data["posX"].ToString());
         storage.posY = float.Parse(data["posY"].ToString());
-
-        foreach(string key in data["storageItem"].Keys)
+        foreach (LitJson.JsonData Indata in data["storageItem"])
         {
-          storage.storageItem.Add(int.Parse(key), float.Parse(data["storageItem"][key].ToString()));
+          storage.storageItem.Add(new StorageItem(int.Parse(Indata["id"].ToString()), float.Parse(Indata["mass"].ToString()), Indata["label"].ToString()));
         }
 
         SaveData.structSaveData.storageSaveData.Add(storage);
@@ -944,10 +943,10 @@ public class GameManager
 
   public event Action<Vector2> OnMoveDirChanged;
 
-  public event Action<Enum, bool> onJobAbleChanged;
-  public void OnJobAbleChanged(Enum job, bool set)
+  public event Action<Enum, bool, bool> onJobAbleChanged;
+  public void OnJobAbleChanged(Enum job, bool set, bool personal = false)
   {
-    onJobAbleChanged?.Invoke(job, set);
+    onJobAbleChanged?.Invoke(job, set, personal);
   }
   #endregion
 

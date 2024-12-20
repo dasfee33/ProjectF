@@ -125,6 +125,7 @@ MonoBehaviour:
     maxCapacity: 0
     extraCellX: 0
     extraCellY: 0
+    option: 0
   Storage: []
   selectUI: {fileID: 725199453243986085}
   setFlag: 0
@@ -202,7 +203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2337598385199151864, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.861
+      value: -0.462
       objectReference: {fileID: 0}
     - target: {fileID: 2337598385199151864, guid: d830ba847c1e9144cb208a784a5cc4c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

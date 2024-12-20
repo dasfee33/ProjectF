@@ -175,7 +175,7 @@ public class Warrior : Creature
   {
     if (Target.IsValid() == false) return;
     
-    if(job is FJob.Store || job is FJob.Supply)
+    if(job is FJob.Store || job is FJob.Supply || job is FPersonalJob.Hungry)
     {
       if (supplyTarget != null)
       {

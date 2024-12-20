@@ -266,16 +266,31 @@ public class Creature : BaseObject
     }
   }
 
-  public void SetJobIsAble(Enum job, bool set)
+  public void SetJobIsAble(Enum job, bool set, bool personal = false)
   {
-    FJob tmpJob = (FJob)job;
-    if (JobDic.TryGetValue(tmpJob, out var value))
-      JobDic[tmpJob].IsAble = set;
+    if(personal)
+    {
+      FPersonalJob tmpJob = (FPersonalJob)job;
+      if (PersonalDic.TryGetValue(tmpJob, out var value))
+        PersonalDic[tmpJob].IsAble = set;
+    }
+    else
+    {
+      FJob tmpJob = (FJob)job;
+      if (JobDic.TryGetValue(tmpJob, out var value))
+        JobDic[tmpJob].IsAble = set;
+    }
+    
   }
 
   public void ResetJobIsAble()
   {
     foreach(var job in JobDic)
+    {
+      job.Value.IsAble = true;
+    }
+
+    foreach(var job in PersonalDic)
     {
       job.Value.IsAble = true;
     }
@@ -397,12 +412,12 @@ public class Creature : BaseObject
 
   public Enum SelectJob(/*Func<BaseObjenct, bool> func = null*/)
   {
-    //if (ppSystem.CurrentPersonalJob.Key is not FPersonalJob.None)
-    //{
-    //  if (job is FPersonalJob && Target != null)
-    //    return job;
-    //  else return ppSystem.CurrentPersonalJob.Key;
-    //}
+    if (ppSystem.CurrentPersonalJob.Key is not FPersonalJob.None)
+    {
+      if (job is FPersonalJob && Target != null)
+        return job;
+      else return ppSystem.CurrentPersonalJob.Key;
+    }
 
     if (job is FJob && Target != null)
       return job;
@@ -909,7 +924,7 @@ public class Creature : BaseObject
         else
         {
           //아무데도 없는 경우 => 리셋
-          SetJobIsAble(job, false);
+          SetJobIsAble(job, false, true);
           ResetJob();
         }
       }

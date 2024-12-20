@@ -62,7 +62,7 @@ public class GameScene : BaseScene
     {
       var storage = Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name) as Storage;
       foreach (var s in structure.storageItem)
-        storage.AddCapacity(s.Key, s.Value);
+        storage.AddCapacity(s.id, s.mass, s.label);
     }
     foreach (var structure in structureData.bedSaveData)
     {

@@ -23,6 +23,7 @@ public class PersonalPrioritySystem : InitBase
     {
       foreach (var job in personalDict)
       {
+        if (!job.Value.IsAble) continue;
         if (job.Value.Priority < 80f) continue;
 
 

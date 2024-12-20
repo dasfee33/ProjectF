@@ -121,36 +121,70 @@ public class AddressableDownloader
         {
           Debug.Log(location.PrimaryKey);
           // 각 위치에서 에셋을 비동기적으로 로드
-          Addressables.LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey).Completed += op =>
+          if(location.PrimaryKey.Contains(".sprite"))
           {
-            if (op.Status == AsyncOperationStatus.Succeeded)
+            LoadAsync<Sprite>(location.PrimaryKey, (obj) =>
             {
-              var key = location.PrimaryKey;
-              // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
-              if (!Managers.Resource._resources.ContainsKey(key))
-                Managers.Resource._resources.Add(location.PrimaryKey, op.Result);
-
               loadCount++;
-              Events.NotifyResourceListGenerate(
-                new ResourceProgrerssStatus(
-                  loadCount,
-                  totalCount
-                  ));
-              if(loadCount == totalCount)
-              {
-                OnResourceGenerateFinished();
-              }
-            }
-            else
-            {
-              Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
-            }
-          };
+              Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
+              if (loadCount == totalCount) OnResourceGenerateFinished();
+            });
+          }
+          else LoadAsync<UnityEngine.Object>(location.PrimaryKey, (obj) =>
+          {
+            loadCount++;
+            Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
+            if (loadCount == totalCount) OnResourceGenerateFinished();
+          });
+
+          //Addressables.LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey).Completed += op =>
+          //{
+          //  if (op.Status == AsyncOperationStatus.Succeeded)
+          //  {
+          //    var key = location.PrimaryKey;
+          //    // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
+          //    if (!Managers.Resource._resources.ContainsKey(key))
+          //      Managers.Resource._resources.Add(location.PrimaryKey, op.Result);
+
+          //    loadCount++;
+          //    Events.NotifyResourceListGenerate(
+          //      new ResourceProgrerssStatus(
+          //        loadCount,
+          //        totalCount
+          //        ));
+          //    if(loadCount == totalCount)
+          //    {
+          //      OnResourceGenerateFinished();
+          //    }
+          //  }
+          //  else
+          //  {
+          //    Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
+          //  }
+          //};
         }
       }
       else
       {
         Debug.LogError("Failed to load resource locations.");
+      }
+    };
+  }
+
+  private void LoadAsync<T>(string key, Action<T> callback = null) where T : UnityEngine.Object
+  {
+    Addressables.LoadAssetAsync<T>(key).Completed += op =>
+    {
+      if (op.Status == AsyncOperationStatus.Succeeded)
+      {
+        // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
+        if (!Managers.Resource._resources.ContainsKey(key))
+          Managers.Resource._resources.Add(key, op.Result);
+        callback?.Invoke(op.Result);
+      }
+      else
+      {
+        Debug.LogError($"Failed to load asset at {key}");
       }
     };
   }

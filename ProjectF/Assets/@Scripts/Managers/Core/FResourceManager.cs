@@ -13,19 +13,23 @@ public class FResourceManager
   #region Load Resource
   public T Load<T>(string key) where T : Object
   {
-    if (typeof(T) == typeof(Sprite) && key.Contains(".sprite") == false)
-    {
-      // 리소스가 Texture2D로 로드되었을 가능성이 있다면, 이를 Sprite로 변환
-      var texture = _resources[key] as Texture2D;
-      if (texture != null)
-      {
-        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f) as T;
-      }
-    }
-
     if (_resources.TryGetValue(key, out Object resource))
       return resource as T;
 
+    if (typeof(T) == typeof(Sprite) && key.Contains(".sprite") == false)
+    {
+      // 리소스가 Texture2D로 로드되었을 가능성이 있다면, 이를 Sprite로 변환
+      if (_resources.TryGetValue($"{key}.sprite", out resource))
+        return resource as T;
+
+      //var texture = _resources[key] as Texture2D;
+      //if (texture != null)
+      //{
+      //  texture.
+
+      //  return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f) as T;
+      //}
+    }
     Debug.LogError($"Failed to load Prefab : {key}");
 
     return null;

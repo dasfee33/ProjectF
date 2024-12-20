@@ -169,7 +169,7 @@ public class BuildObject : Structure
     Worker.ResetJob();
     
     Worker = null;
-    Managers.Object.Spawn<Structure>(this.transform.position - Managers.Map.LerpObjectPos, dataTemplateID, data.Name);
+    Managers.Object.Spawn<Structure>(this.transform.position/* - Managers.Map.LerpObjectPos*/, dataTemplateID, data.Name);
     Managers.Object.Despawn(this);
   }
 }

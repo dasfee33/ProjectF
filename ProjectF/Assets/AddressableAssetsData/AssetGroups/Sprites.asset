@@ -18,157 +18,157 @@ MonoBehaviour:
   m_GUID: 33ead8a1c74cdf34d906ff65e2a3632f
   m_SerializeEntries:
   - m_GUID: 4d762bb604b57e242bcceb1b3dec5bbd
-    m_Address: wood_normal
+    m_Address: wood_normal.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 14a60dff7eab4f345b5929c562c959d6
-    m_Address: warrior-sleep
+    m_Address: warrior-sleep.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 361311d1ca784654e95982c363f286b0
-    m_Address: toiletSprite
+    m_Address: toiletSprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33ca2e6149f91ca43bb9210ce920952f
-    m_Address: eatingTableSprite
+    m_Address: eatingTableSprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6f5d7f131a7e4f42ae74d60114dba2f
-    m_Address: chest_normalSprite
+    m_Address: chest_normalSprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ecc505ce3f2b19b488244bba2c63b7cf
-    m_Address: Bed1Sprite
+    m_Address: Bed1Sprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6f61adf511a91434ba781591809d0d17
-    m_Address: Station1Sprite
+    m_Address: Station1Sprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe9b377c707a9bd47bd583a691608d0b
-    m_Address: PlowBowlSprite
+    m_Address: PlowBowlSprite.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: daff559eba6f57a46a0bb3679823dbc7
-    m_Address: kick0
+    m_Address: kick0.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30ec895fbaafb6c41a36bf5af41b212b
-    m_Address: kick1
+    m_Address: kick1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3f4fec3976a83314c9fd29eb0f443e5e
-    m_Address: kick2
+    m_Address: kick2.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cf37f7a42459d84488790d7832454f4f
-    m_Address: kick4
+    m_Address: kick4.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ace859c53a114a44ac05ef9110b5445
-    m_Address: kick5
+    m_Address: kick5.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4439aa72c3a1ab24ab226f5f49a29a61
-    m_Address: kick_seed
+    m_Address: kick_seed.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dca3c41c29e096e4396919ca71cb8e21
-    m_Address: stone_normal
+    m_Address: stone_normal.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0359410d4f6a97341b0e44a8253cdc58
-    m_Address: cancelToolTile
+    m_Address: cancelToolTile.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33c118beeab55904798ee46ded822490
-    m_Address: chest-opening - lock 2
+    m_Address: chest-opening - lock 2.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3bcc3a23b539de94a9f0ade0a7d158e7
-    m_Address: Devtile
+    m_Address: Devtile.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed837c14a496aa742b44a8e432048184
-    m_Address: 9SlicedObjects_windows_1
+    m_Address: 9SlicedObjects_windows_1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4d15c55fdc516f49a53aee015ad207b
-    m_Address: cancel-arrow1
+    m_Address: cancel-arrow1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb4fdc5a25716ab40b6d8e4474835717
-    m_Address: kick3
+    m_Address: kick3.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1f0a8f82a37b3a4e8c05f648e0d84c0
-    m_Address: chest-closing - lock 1
+    m_Address: chest-closing - lock 1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e24f76bdb2b87304b9cb6a8ccd929668
-    m_Address: chest-closing - lock 2
+    m_Address: chest-closing - lock 2.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f55825560a13c54f9f4bec34aec69e5
-    m_Address: chest-opening - lock1
+    m_Address: chest-opening - lock1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 66a41dc1430140b4d85bd0ca5dc6fb33
-    m_Address: confirm-arrow1
+    m_Address: confirm-arrow1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd7724abea7cdd346a06abaa8a897c36
-    m_Address: cross-arrow1
+    m_Address: cross-arrow1.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
