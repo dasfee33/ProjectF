@@ -132,6 +132,27 @@ public class BaseObject : InitBase
     }
   }
 
+  protected Action coReset;
+  protected Coroutine lerpWait;
+  protected IEnumerator LerpWait()
+  {
+    var time = 10f;
+    while (time > 0)
+    {
+      time -= Time.deltaTime;
+      yield return null;
+    }
+    if (time <= 0)
+    {
+      if(lerpWait != null)
+      {
+        StopCoroutine(LerpWait());
+        lerpWait = null;
+        coReset?.Invoke();
+      }
+    }
+  }
+
   public void LerpToCellPos(float moveSpeed)
   {
     if (LerpCellPosCompleted)
@@ -153,7 +174,13 @@ public class BaseObject : InitBase
     {
       transform.position = destPos;
       LerpCellPosCompleted = true;
+      StopCoroutine(LerpWait());
+      lerpWait = null;
       return;
+    }
+    else
+    {
+      if(lerpWait == null) lerpWait = StartCoroutine(LerpWait());
     }
 
     float moveDist = Mathf.Min(dir.magnitude, moveSpeed * Time.deltaTime);

@@ -51,43 +51,28 @@ public class CookTable : Structure
 
   protected override void UpdateWorkStart()
   {
-    onWorkSomeOne = true;
     StructureState = FStructureState.Work;
   }
 
   protected override void UpdateOnWork()
   {
-    var want = Worker.GetJobPriority(workableJob);
-    // 자는 사람이 있을 때 
-    if (Worker != null)
+    if(!onWorkSomeOne)
     {
-      StartCoroutine(ReduceSleepy(want));
+      UpdateAITick = data.WorkTime;
+      onWorkSomeOne = true;
     }
-
-
-  }
-
-  private IEnumerator ReduceSleepy(float want)
-  {
-    while (true)
+    else
     {
-      yield return null;
-      want -= 1;
-      if (want <= 0)
-      {
-        StructureState = FStructureState.WorkEnd;
-        break;
-      }
+      StructureState = FStructureState.WorkEnd;
     }
   }
 
   protected override void UpdateWorkEnd()
   {
-    //Storage.AddRange(Worker.SupplyStorage);
-    //Worker.SupplyStorage.Clear();
-    //Worker.CurrentSupply = 0;
-    //Worker.jobSystem.supplyTargets.Clear();
     if (Worker == null) return;
+
+    Worker.SupplyFromHaveListCalories();
+
     Worker.ppSystem.target = null;
     Worker.SetOrAddJobPriority(workableJob, 0, true);
     Worker.Target = null;

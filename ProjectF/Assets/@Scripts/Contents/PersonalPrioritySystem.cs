@@ -114,10 +114,12 @@ public class PersonalPrioritySystem : InitBase
     if (personalDict.ContainsKey(FPersonalJob.Hungry))
     {
       var tmp = 0f;
-      Mathf.Clamp(Owner.Calories -= 50, 0, Owner.Calories);
+      Mathf.Clamp(Owner.Calories -= 2, 0, Owner.Calories);
 
       if (Owner.Calories < 500f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority + 5, 0, 100);
       else if (Owner.Calories < 5000f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority + 1, 0, 100);
+      else if(Owner.Calories >= 5000f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority - 1, 0, 100);
+      else if(Owner.Calories >= 10000f) tmp = Mathf.Clamp(personalDict[FPersonalJob.Hungry].Priority - 5, 0, 100);
 
       personalDict[FPersonalJob.Hungry].Priority = tmp;
     }

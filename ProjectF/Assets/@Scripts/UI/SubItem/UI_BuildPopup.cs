@@ -121,12 +121,12 @@ public class UI_BuildPopup : UI_Popup
   public void ClearList()
   {
     var obj = GetObject((int)Objects.Content);
-    var len = obj.transform.childCount;
+    obj.DestroyChilds();
 
-    for (int i = 0; i < len; i++)
-    {
-      Managers.Resource.Destroy(obj.transform.GetChild(i).gameObject);
-    }
+    //for (int i = 0; i < len; i++)
+    //{
+    //  Managers.Resource.Destroy(obj.transform.GetChild(i).gameObject);
+    //}
   }
 
   //private void SelectAnother(Vector3 pos)

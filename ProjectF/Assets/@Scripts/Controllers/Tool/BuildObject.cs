@@ -6,6 +6,7 @@ using static Define;
 public class BuildObject : Structure
 {
   public UI_WorldUITest selectUI;
+  public UI_BuildSlider sliderUI;
   public bool setFlag;
 
   public override FStructureState StructureState
@@ -152,6 +153,8 @@ public class BuildObject : Structure
 
     onWorkSomeOne = true;
     StructureState = FStructureState.Work;
+    sliderUI.gameObject.SetActive(true);
+    sliderUI.SetInfo(data.BuildTime);
   }
 
   protected override void UpdateOnWork()
@@ -166,6 +169,8 @@ public class BuildObject : Structure
 
   protected override void UpdateWorkEnd()
   {
+    StopCoroutine(sliderUI.coBuild);
+    sliderUI.gameObject.SetActive(false);
     Worker.ResetJob();
     
     Worker = null;

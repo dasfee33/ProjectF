@@ -78,12 +78,10 @@ public class Toilet : Structure
   {
     Worker.SpriteRenderer.DOFade(1, 0.8f).OnComplete(() =>
     {
-      Worker.Target = null;
-      Worker.ppSystem.target = null;
       Worker.SetOrAddJobPriority(workableJob, 0, true);
-      Worker = null;
-
       StructureState = FStructureState.Idle;
+      Worker.ResetJob();
+
       onWorkSomeOne = false;
     });
     

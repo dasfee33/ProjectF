@@ -121,7 +121,7 @@ public class Creature : BaseObject
   #region Stats
   [SerializeField] private float _maxHp;
   [SerializeField] private float _Atk;
-  [SerializeField] private float _Calories = 10000f;
+  [SerializeField] private float _Calories = 5000f;
   [SerializeField] private float _SupplyCapacity;
   [SerializeField] private float _CurrentSupply;
 
@@ -172,6 +172,9 @@ public class Creature : BaseObject
 
     Managers.Game.onJobAbleChanged -= SetJobIsAble;
     Managers.Game.onJobAbleChanged += SetJobIsAble;
+
+    coReset -= ResetJob;
+    coReset += ResetJob;
     //FIXME
     //StartCoroutine(CoLerpToCellPos());
     
@@ -212,6 +215,9 @@ public class Creature : BaseObject
     return ItemHaveList.CompareIabelProperty("label", label);
   }
 
+  /// <summary>
+  /// mass가 -1 이면 전부다 소모함
+  /// </summary>
   public float SupplyFromHaveList(int dataID, float mass, string label = null)
   {
     float result = -1;
@@ -219,7 +225,7 @@ public class Creature : BaseObject
     var item = ItemHaveList.ReturnProperty("id", dataID) as HaveList;
     if(item != null)
     {
-      if(item.mass - mass <= 0)
+      if(item.mass - mass <= 0 || mass == -1)
         {
         result = item.mass;
         ItemHaveList.Remove(item);
@@ -233,6 +239,50 @@ public class Creature : BaseObject
       CurrentSupply -= result;
 
       Managers.Object.RemoveItem(dataID, result);
+      return result;
+    }
+    else
+    {
+      item = ItemHaveList.ReturnProperty("label", label) as HaveList;
+      if(item != null)
+      {
+        if (item.mass - mass <= 0 || mass == -1)
+        {
+          result = item.mass;
+          ItemHaveList.Remove(item);
+        }
+        else
+        {
+          item.mass -= mass;
+          result = mass;
+        }
+
+        CurrentSupply -= result;
+
+        Managers.Object.RemoveItem(dataID, result);
+        return result;
+      }
+    }
+
+    return result;
+  }
+
+  public float SupplyFromHaveListCalories()
+  {
+    float result = -1;
+
+    var item = ItemHaveList.ReturnProperty("label", "Food") as HaveList;
+    if (item != null)
+    {
+      result = item.mass;
+      var itemData = Managers.Data.ConsumableDic[item.id];
+      var stack = item.mass / itemData.Mass; 
+      ItemHaveList.Remove(item);
+      
+      CurrentSupply -= result;
+      Calories += (itemData.Calories * stack);
+
+      Managers.Object.RemoveItem(item.id, result);
       return result;
     }
 
@@ -490,7 +540,9 @@ public class Creature : BaseObject
   public FFindPathResults FindPathAndMoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
   {
     if (LerpCellPosCompleted == false)
+    {
       return FFindPathResults.Fail_LerpCell;
+    }
 
     if (CreatureState != FCreatureState.Move) return FFindPathResults.Success;
 
@@ -732,8 +784,11 @@ public class Creature : BaseObject
   public virtual void ResetJob()
   {
     onWork = false;
-    Target.Worker = null;
-    Target = null;
+    if(Target)
+    {
+      Target.Worker = null;
+      Target = null;
+    }
     supplyTarget = null;
 
     CreatureMoveState = FCreatureMoveState.None;

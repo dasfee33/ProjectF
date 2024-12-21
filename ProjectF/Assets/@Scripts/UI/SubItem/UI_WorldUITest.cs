@@ -36,7 +36,7 @@ public class UI_WorldUITest : UI_Base
 
   public void Cancel(PointerEventData evt)
   {
-
+    if (Owner != null) Managers.Object.Despawn(Owner);
   }
 
   Vector3 diff;

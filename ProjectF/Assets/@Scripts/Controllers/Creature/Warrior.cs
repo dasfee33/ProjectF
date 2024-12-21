@@ -72,6 +72,8 @@ public class Warrior : Creature
       int rand = Random.Range(0, 100);
       if (rand <= patrolPercent)
       {
+        if (CreatureMoveState == FCreatureMoveState.Job) return;
+        //ResetJob();
         _destPos = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5));
         CreatureState = FCreatureState.Move;
         return;
