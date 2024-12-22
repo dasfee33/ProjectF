@@ -238,6 +238,7 @@ public static class Define
     Fail_LerpCell,
     Fail_NoPath,
     Fail_MoveTo,
+    Fail_Loop,
     Success,
   }
 

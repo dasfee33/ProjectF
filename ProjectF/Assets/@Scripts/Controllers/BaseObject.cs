@@ -43,7 +43,7 @@ public class BaseObject : InitBase
     SpriteRenderer = this.GetComponent<SpriteRenderer>();
     if (SpriteRenderer == null) this.GetComponentInChildren<SpriteRenderer>();
     Animator = this.GetComponent<Animator>();
-    if(Animator == null) Animator = this.GetComponentInChildren<Animator>();
+    if (Animator == null) Animator = this.GetComponentInChildren<Animator>();
 
     //TEMP
     SpriteRenderer.sortingOrder = 20;
@@ -82,7 +82,7 @@ public class BaseObject : InitBase
 
     currentPos = transform.position;
     if (currentPos.x < previousPos.x) SpriteRenderer.flipX = true;
-    else if(currentPos.x > previousPos.x) SpriteRenderer.flipX = false;
+    else if (currentPos.x > previousPos.x) SpriteRenderer.flipX = false;
 
     previousPos = currentPos;
 
@@ -114,7 +114,7 @@ public class BaseObject : InitBase
   {
     get { return _cellPos; }
     protected set
-    { 
+    {
       _cellPos = value;
       LerpCellPosCompleted = false;
     }
@@ -132,9 +132,24 @@ public class BaseObject : InitBase
     }
   }
 
-  protected Action coReset;
-  protected Coroutine lerpWait;
-  protected IEnumerator LerpWait()
+  public void StartLerpWait()
+  {
+    if(lerpWait == null)
+    {
+      lerpWait = StartCoroutine(LerpWait());
+    }
+  }
+
+  public void StopLerpWait()
+  {
+    if(lerpWait != null)
+    {
+      StopCoroutine(lerpWait);
+    }
+  }
+  public Action coReset;
+  public Coroutine lerpWait;
+  public IEnumerator LerpWait()
   {
     var time = 10f;
     while (time > 0)
@@ -174,13 +189,7 @@ public class BaseObject : InitBase
     {
       transform.position = destPos;
       LerpCellPosCompleted = true;
-      StopCoroutine(LerpWait());
-      lerpWait = null;
       return;
-    }
-    else
-    {
-      if(lerpWait == null) lerpWait = StartCoroutine(LerpWait());
     }
 
     float moveDist = Mathf.Min(dir.magnitude, moveSpeed * Time.deltaTime);

@@ -421,7 +421,9 @@ public class MapManager
       pos = node.CellPos;
 
       if (pos == dest)
+      {
         break;
+      }
 
       if (node.Depth >= maxDepth)
         break;

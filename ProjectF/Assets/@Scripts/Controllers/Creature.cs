@@ -537,6 +537,7 @@ public class Creature : BaseObject
     return FindPathAndMoveToCellPos(destCellPos, maxDepth, forceMoveCloser);
   }
 
+  private List<Vector3Int> loopDetect = new List<Vector3Int>();
   public FFindPathResults FindPathAndMoveToCellPos(Vector3Int destCellPos, int maxDepth, bool forceMoveCloser = false)
   {
     if (LerpCellPosCompleted == false)
@@ -547,6 +548,15 @@ public class Creature : BaseObject
     if (CreatureState != FCreatureState.Move) return FFindPathResults.Success;
 
     // A*
+    
+
+    if (loopDetect.Count < 2) loopDetect.Add(CellPos);
+    else
+    {
+      if (loopDetect[0] == CellPos) return FFindPathResults.Fail_Loop;
+      loopDetect.Clear();
+    }
+
     List<Vector3Int> path = Managers.Map.FindPath(this, CellPos, destCellPos, maxDepth);
     if (path.Count < 2)
       return FFindPathResults.Fail_NoPath;
@@ -767,6 +777,11 @@ public class Creature : BaseObject
         //chaseTarget = null;
         //CreatureState = FCreatureState.Move;
       }
+      else if(result == FFindPathResults.Fail_Loop)
+      {
+        loopDetect.Clear();
+        ResetJob();
+      }
       // 너무 멀어지면 포기.
       //float searchDistanceSqr = chaseRange * chaseRange;
       //if (distToTargetSqr > searchDistanceSqr)
@@ -790,6 +805,11 @@ public class Creature : BaseObject
       Target = null;
     }
     supplyTarget = null;
+    jobSystem.target = null;
+    jobSystem.targets.Clear();
+
+    ppSystem.target = null;
+    ppSystem.targets.Clear();
 
     CreatureMoveState = FCreatureMoveState.None;
     CreatureState = FCreatureState.Idle;

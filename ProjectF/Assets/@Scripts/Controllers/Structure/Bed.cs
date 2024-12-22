@@ -93,12 +93,10 @@ public class Bed : Structure
     //Worker.CurrentSupply = 0;
     //Worker.jobSystem.supplyTargets.Clear();
     if (Worker == null) return;
-    Worker.ppSystem.target = null;
     Worker.SetOrAddJobPriority(workableJob, 0, true);
-    Worker.Target = null;
     Worker.RestartCo();
     Worker.StartAnimation();
-    Worker = null;
+    Worker.ResetJob();
 
     StructureState = FStructureState.Idle;
     onWorkSomeOne = false;
