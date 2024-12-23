@@ -145,7 +145,9 @@ public class Env : BaseObject
 
     base.OnDamaged(attacker);
     //TODO
-    float finalDamage = attacker.GetComponent<Creature>().Skills[0].DamageMultiflier;
+    var creature = attacker as Creature;
+    float finalDamage = creature.Skills[0].DamageMultiflier;
+    creature.ResetJob();
     EnvState = FEnvState.Hurt;
     // hp 가 없는 일반 환경사물 (ex 상자)
     if (maxHp < 0) return;

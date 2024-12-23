@@ -62,27 +62,15 @@ public class Bed : Structure
 
   protected override void UpdateOnWork()
   {
-    var want = Worker.GetJobPriority(workableJob);
-    // 자는 사람이 있을 때 
-    if (Worker != null)
+    if (!onWorkSomeOne)
     {
-      StartCoroutine(ReduceSleepy(want));
+      UpdateAITick = data.WorkTime;
+      onWorkSomeOne = true;
     }
-
-
-  }
-
-  private IEnumerator ReduceSleepy(float want)
-  {
-    while(true)
+    else
     {
-      yield return null;
-      want -= 1;
-      if (want <= 0)
-      {
-        StructureState = FStructureState.WorkEnd;
-        break;
-      }
+      //틱 뒤에 다시 들어오면 일 끝남처리
+      StructureState = FStructureState.WorkEnd;
     }
   }
 
@@ -92,8 +80,8 @@ public class Bed : Structure
     //Worker.SupplyStorage.Clear();
     //Worker.CurrentSupply = 0;
     //Worker.jobSystem.supplyTargets.Clear();
-    if (Worker == null) return;
     Worker.SetOrAddJobPriority(workableJob, 0, true);
+    Managers.Event.MoodStable(Worker, workableJob);
     Worker.RestartCo();
     Worker.StartAnimation();
     Worker.ResetJob();

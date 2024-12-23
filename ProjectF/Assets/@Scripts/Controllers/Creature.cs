@@ -132,6 +132,19 @@ public class Creature : BaseObject
   public float CurrentSupply { get { return _CurrentSupply; } set { _CurrentSupply = value; } }
   #endregion
 
+  protected FMood mood = FMood.None;
+  public virtual FMood MoodState
+  {
+    get { return mood; }
+    set
+    {
+      if(mood != value)
+      {
+        mood = value;
+      }
+    }
+  }
+
   protected FCreatureState creatureState = FCreatureState.None;
   public virtual FCreatureState CreatureState
   {
@@ -719,7 +732,7 @@ public class Creature : BaseObject
       targetdic.Add(obj, distToTargetSqr);
     }
 
-    targetdic = targetdic.OrderBy(pair => pair.Value)./*Take(10).*/ToDictionary(x => x.Key, x => x.Value);
+    targetdic = targetdic.OrderBy(pair => pair.Value).Take(10).ToDictionary(x => x.Key, x => x.Value);
     foreach(var dic in targetdic)
     {
       target.Add(dic.Key);

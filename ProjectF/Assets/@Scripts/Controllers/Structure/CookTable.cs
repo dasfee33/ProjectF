@@ -69,16 +69,11 @@ public class CookTable : Structure
 
   protected override void UpdateWorkEnd()
   {
-    if (Worker == null) return;
-
     Worker.SupplyFromHaveListCalories();
 
-    Worker.ppSystem.target = null;
     Worker.SetOrAddJobPriority(workableJob, 0, true);
-    Worker.Target = null;
-    Worker.RestartCo();
-    Worker.StartAnimation();
-    Worker = null;
+    Managers.Event.MoodStable(Worker, workableJob);
+    Worker.ResetJob();
 
     StructureState = FStructureState.Idle;
     onWorkSomeOne = false;

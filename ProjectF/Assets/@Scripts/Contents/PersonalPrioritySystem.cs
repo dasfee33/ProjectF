@@ -24,8 +24,11 @@ public class PersonalPrioritySystem : InitBase
       foreach (var job in personalDict)
       {
         if (!job.Value.IsAble) continue;
-        if (job.Value.Priority < 80f) continue;
-
+        if (job.Value.Priority < 60f)
+        {
+          Managers.Event.MoodStable(Owner, job.Key);
+          continue;
+        }
 
         targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
 
@@ -37,6 +40,7 @@ public class PersonalPrioritySystem : InitBase
             if (t.Worker != null && t.Worker != Owner) continue;
             target = t;
             target.Worker = Owner;
+            UpdateMood(job.Key, job.Value.Priority);
             return job;
           }
         }
@@ -45,6 +49,32 @@ public class PersonalPrioritySystem : InitBase
       return new KeyValuePair<FPersonalJob, jobDicValue>(FPersonalJob.None, new jobDicValue(0, false));
     }
 
+  }
+
+  private void UpdateMood(FPersonalJob job, float value)
+  {
+    FMood mood = FMood.None;
+    switch(job)
+    {
+      case FPersonalJob.None:
+        mood = FMood.None;
+        break;
+      case FPersonalJob.Excretion:
+        if (value < 80f) mood = FMood.Needbathroom;
+        else mood = FMood.Soneedbathroom;
+        break;
+      case FPersonalJob.Hungry:
+        if (value < 80f) mood = FMood.Hungry;
+        else mood = FMood.Starving;
+        break;
+      case FPersonalJob.Sleepy:
+        if (value < 80f) mood = FMood.Sleepy;
+        else mood = FMood.Exhausted;
+        break;
+    }
+    if (Owner.MoodState == mood) return;
+
+    Managers.Event.MoodChanged(Owner, job, mood);
   }
 
   public override bool Init()

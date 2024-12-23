@@ -54,7 +54,8 @@ public class Toilet : Structure
   protected override void UpdateWorkStart()
   {
     // 일 시작상태로 1초 뒤에 다시 들어오면 일 하는 상태로 변경
-    /* if (StructureState is FStructureState.WorkStart)*/ StructureState = FStructureState.Work;
+    /* if (StructureState is FStructureState.WorkStart)*/
+    StructureState = FStructureState.Work;
   }
 
   protected override void UpdateOnWork()
@@ -79,9 +80,10 @@ public class Toilet : Structure
     Worker.SpriteRenderer.DOFade(1, 0.8f).OnComplete(() =>
     {
       Worker.SetOrAddJobPriority(workableJob, 0, true);
-      StructureState = FStructureState.Idle;
+      Managers.Event.MoodStable(Worker, workableJob);
       Worker.ResetJob();
 
+      StructureState = FStructureState.Idle;
       onWorkSomeOne = false;
     });
     

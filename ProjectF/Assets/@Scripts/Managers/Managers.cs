@@ -39,6 +39,7 @@ public class Managers : MonoBehaviour
   private PartitionManager _partition = new PartitionManager();
   private RandomSeedGenerate _randomSeedGenerate = new RandomSeedGenerate();
   private GameDayManager _gameDay = new GameDayManager();
+  private EventManager _event = new EventManager();
 
   public static GameManager Game { get { return Instance?._game; } }
   public static ObjectManager Object { get { return Instance?._object; } }
@@ -47,6 +48,7 @@ public class Managers : MonoBehaviour
   public static PartitionManager Partition { get { return Instance?._partition; } }
   public static RandomSeedGenerate RandomSeedGenerate { get { return Instance?._randomSeedGenerate; } }
   public static GameDayManager GameDay { get { return Instance?._gameDay; } }
+  public static EventManager Event { get { return Instance?._event; } }
 
   #endregion
 

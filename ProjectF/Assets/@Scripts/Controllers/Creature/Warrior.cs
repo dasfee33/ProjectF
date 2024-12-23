@@ -82,15 +82,15 @@ public class Warrior : Creature
 
     //Job selection
     {
-      if(CreatureMoveState == FCreatureMoveState.Job) return;
+      if (CreatureMoveState == FCreatureMoveState.Job) return;
       job = SelectJob();
-      if(job is FJob and not FJob.None)
+      if (job is FJob and not FJob.None)
       {
         Target = jobSystem.target;
         CreatureMoveState = FCreatureMoveState.Job;
         CreatureState = FCreatureState.Move;
       }
-      else if(job is FPersonalJob and not FPersonalJob.None)
+      else if (job is FPersonalJob and not FPersonalJob.None)
       {
         Target = ppSystem.target;
         if (Target.onWorkSomeOne) return;

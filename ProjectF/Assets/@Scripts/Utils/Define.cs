@@ -203,6 +203,30 @@ public static class Define
     //TODO,
   }
 
+  public enum FMood
+  {
+    None,
+    Hurt,
+    Death,
+
+    Happy,
+    Annoying,
+    Unbearable,
+
+    Interesting,
+    Boring,
+
+    Hungry,
+    Starving,
+
+    Needbathroom,
+    Soneedbathroom,
+
+    Sleepy,
+    Exhausted,
+
+  }
+
   public enum FItemGrade
   {
     None,

@@ -22,6 +22,7 @@ public class UI_Game : UI_Scene
     Slow,
     SaveData,
     UpdateData,
+    ResetCreature,
 
     Base,
     Furniture,
@@ -63,6 +64,7 @@ public class UI_Game : UI_Scene
     GetButton((int)Buttons.Slow).gameObject.BindEvent(Test2, FUIEvent.Click);
     GetButton((int)Buttons.SaveData).gameObject.BindEvent(SaveData, FUIEvent.Click);
     GetButton((int)Buttons.UpdateData).gameObject.BindEvent(UpdateData, FUIEvent.Click);
+    GetButton((int)Buttons.ResetCreature).gameObject.BindEvent(ResetCreature, FUIEvent.Click);
 
     GetButton((int)Buttons.Base).gameObject.BindEvent(ClickBase, FUIEvent.Click);
     GetButton((int)Buttons.Furniture).gameObject.BindEvent(ClickFurniture, FUIEvent.Click);
@@ -91,6 +93,14 @@ public class UI_Game : UI_Scene
   private void SaveData(PointerEventData evt)
   {
     Managers.Game.GameDataInsert();
+  }
+
+  private void ResetCreature(PointerEventData evt)
+  {
+    foreach(var creature in Managers.Object.Creatures)
+    {
+      creature.ResetJob();
+    }
   }
 
   public void CallbackSomething(BaseObject obj)
