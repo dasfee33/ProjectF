@@ -40,6 +40,7 @@ public class UI_Game : UI_Scene
   enum Texts
   {
     PeriodText,
+    Notice,
   }
 
   private Image PeriodMoon;
@@ -82,6 +83,9 @@ public class UI_Game : UI_Scene
     Managers.FInput.touchObject -= CallbackSomething;
     Managers.FInput.touchObject += CallbackSomething;
 
+    Managers.Event.notice -= NoticeAlarm;
+    Managers.Event.notice += NoticeAlarm;
+
     return true;
   }
 
@@ -101,6 +105,33 @@ public class UI_Game : UI_Scene
     {
       creature.ResetJob();
     }
+  }
+
+  private Coroutine coNotice;
+  public void NoticeAlarm(string notice)
+  {
+    var text = GetText((int)Texts.Notice);
+    text.gameObject.SetActive(true);
+    text.text = notice;
+
+    if (coNotice != null) StopCoroutine(coNotice);
+    text.color = Color.white;
+
+    coNotice = StartCoroutine(TextFadeOut(text));
+  }
+
+  private IEnumerator TextFadeOut(TextMeshProUGUI notice)
+  {
+    float alpha = 1f;
+
+    while (alpha > 0f)
+    {
+      notice.color = new Vector4(1, 1, 1, alpha);
+      alpha -= (0.1f * 5 * Time.deltaTime);
+      yield return null;
+    }
+
+    notice.gameObject.SetActive(false);
   }
 
   public void CallbackSomething(BaseObject obj)

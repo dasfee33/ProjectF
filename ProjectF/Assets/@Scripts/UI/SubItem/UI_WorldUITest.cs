@@ -40,6 +40,7 @@ public class UI_WorldUITest : UI_Base
   }
 
   Vector3 diff;
+  private bool buildIsReady = false;
   public void Move(PointerEventData evt)
   {
     var camera = Camera.main;
@@ -67,10 +68,11 @@ public class UI_WorldUITest : UI_Base
 
         if (prev != null && prev != Owner)
         {
+          buildIsReady = false;
           Owner.SetColor(COLOR.SMOKERED);
           return;
         }
-        else { Owner.SetColor(COLOR.SMOKEWHITE); return; }
+        else { buildIsReady = true; Owner.SetColor(COLOR.SMOKEWHITE); return; }
       }
     }
   }
@@ -80,8 +82,14 @@ public class UI_WorldUITest : UI_Base
     //var cellPos = Managers.Map.World2Cell(Owner.transform.position);
     //Owner.transform.position = Managers.Map.Cell2World(cellPos);
 
-    Owner.setFlag = true;
+    if(!buildIsReady)
+    {
+      Managers.Event.notice.Invoke("해당 위치에 지을 수 없습니다.");
+      return;
+    }
 
+    Owner.setFlag = true;
+    Managers.Map.AddObject(Owner, Owner.GetCellPos());
     Managers.Game.OnJobAbleChanged(Owner.workableJob, true);
 
     this.gameObject.SetActive(false);

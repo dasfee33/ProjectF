@@ -31,7 +31,7 @@ public class BuildTool : MonoBehaviour
 
   public void SetInfo()
   {
-    /*BuildObject = */Managers.Object.Spawn<BuildObject>(Vector3.zero, parent.objData.DataId, STRUCTURE_BUILD);
+    /*BuildObject = */Managers.Object.Spawn<BuildObject>(Vector3.zero, parent.objData.DataId, STRUCTURE_BUILD, addToCell: false);
   }
 
   private string SetTag(string tag)

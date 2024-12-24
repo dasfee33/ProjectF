@@ -6,6 +6,9 @@ using static Define;
 
 public class EventManager
 {
+  //Notice
+  public Action<string> notice;
+
   //moodsystem
   public Action<Enum, FMood> moodChanged;
   public Action<Enum> moodStable;

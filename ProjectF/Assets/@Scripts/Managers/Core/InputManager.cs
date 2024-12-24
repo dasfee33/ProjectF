@@ -2,9 +2,11 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using System;
 
-public class InputManager
+public class InputManager : InitBase
 {
-  public InputSystem inputSystem;
+  private InputSystem inputSystem;
+  private PlayerInput PlayerInput;
+
   public event Action<Vector2, float> startTouch;
   public event Action<Vector2, float> endTouch;
   public event Action<BaseObject> touchObject;
@@ -15,32 +17,58 @@ public class InputManager
   public Action UIEvent;
   public Action NUIEvent;
   private bool uiFlag = false;
-  //public Vector2 OnDragging
-  //{
-  //  get { onDragging?.Invoke(inputSystem.Touch.TouchPosition.ReadValue<Vector2>()); }
-  //}
 
-  public void Init()
+
+  private InputAction touchPositionAction;
+  private InputAction touchPressAction;
+  private InputAction touchPressPoisiton;
+
+  public override bool Init()
   {
+    if (base.Init() == false) return false;
+    PlayerInput = this.GetComponent<PlayerInput>();
     inputSystem = new InputSystem();
     inputSystem.Enable();
+    PlayerInput.actions = inputSystem.asset;
 
-    inputSystem.Touch.TouchPress.started += context => StartTouch(context);
-    inputSystem.Touch.TouchPress.canceled += context => EndTouch(context);
+    touchPositionAction = PlayerInput.actions.FindAction("TouchPosition");
+    touchPressAction = PlayerInput.actions.FindAction("TouchPress");
+    touchPressPoisiton = PlayerInput.actions.FindAction("TouchPressPosition");
+
+    touchPressAction.started += StartTouch;
+    //touchPressAction.performed += OnDragging;
+    touchPressAction.canceled += EndTouch;
+
+    touchPressPoisiton.performed += OnDragging;
+    //inputSystem = new InputSystem();
+    //inputSystem.Enable();
+    //
+    //inputSystem.Touch.TouchPress.started += StartTouch;
+    //inputSystem.Touch.TouchPress.performed += OnDragging;
+    //inputSystem.Touch.TouchPress.canceled += EndTouch;
+    //
+    //inputSystem.Touch.TouchPosition.started += StartTouchPosition;
 
     UIEvent += () => { uiFlag = true; };
     NUIEvent += () => { uiFlag = false; };
+
+    return true;
+  }
+
+  private void StartTouchPosition(InputAction.CallbackContext context)
+  {
+    Debug.Log(context.ReadValue<Vector2>());
   }
 
   private void StartTouch(InputAction.CallbackContext context)
   {
     if (uiFlag) return;
 
-    Vector2 touchPos = inputSystem.Touch.TouchPosition.ReadValue<Vector2>();
+    Vector2 touchPos = touchPositionAction.ReadValue<Vector2>();
     TriggerAtTouchPos(touchPos);
 
     if (startTouch != null)
-      startTouch.Invoke(inputSystem.Touch.TouchPosition.ReadValue<Vector2>(), (float)context.startTime);
+      startTouch.Invoke(touchPos, (float)context.startTime);
   }
 
   private void TriggerAtTouchPos(Vector2 screenPos)
@@ -66,14 +94,15 @@ public class InputManager
     if (uiFlag) uiFlag = !uiFlag;
 
     if (endTouch != null)
-      endTouch.Invoke(inputSystem.Touch.TouchPosition.ReadValue<Vector2>(), (float)context.time);
+      endTouch.Invoke(touchPositionAction.ReadValue<Vector2>(), (float)context.time);
   }
 
-  public void OnDragging()
+  public void OnDragging(InputAction.CallbackContext context)
   {
+    Debug.Log(context.ReadValue<Vector2>());
     if (uiFlag) return;
 
     if (onDragging != null)
-      onDragging.Invoke(inputSystem.Touch.TouchPosition.ReadValue<Vector2>());
+      onDragging.Invoke(context.ReadValue<Vector2>());
   }
 }

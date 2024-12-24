@@ -132,6 +132,11 @@ public class BaseObject : InitBase
     }
   }
 
+  public Vector3Int GetCellPos()
+  {
+    return Managers.Map.World2Cell(this.transform.position);
+  }
+
   public void StartLerpWait()
   {
     if(lerpWait == null)
