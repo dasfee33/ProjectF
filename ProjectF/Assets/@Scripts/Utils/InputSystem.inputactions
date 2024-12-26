@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "TouchPress",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "a316928b-5100-42d3-987b-3a2f25207bbd",
-                    "expectedControlType": "Touch",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "TouchPosition",
@@ -56,17 +56,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f3368097-e978-45d7-b2a1-a65c25baae5f",
-                    "path": "<Touchscreen>/primaryTouch/press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchPress",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2d483219-5812-4f1e-a246-8aa41976198f",
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
@@ -84,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TouchPressPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e5fd07b-c5b0-4338-a96e-e3a15dd34f37",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

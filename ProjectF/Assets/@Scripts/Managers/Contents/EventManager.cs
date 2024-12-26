@@ -8,6 +8,7 @@ public class EventManager
 {
   //Notice
   public Action<string> notice;
+  public void Notice(string str) => notice?.Invoke(str);
 
   //moodsystem
   public Action<Enum, FMood> moodChanged;

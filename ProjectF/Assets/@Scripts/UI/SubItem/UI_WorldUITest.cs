@@ -36,7 +36,12 @@ public class UI_WorldUITest : UI_Base
 
   public void Cancel(PointerEventData evt)
   {
-    if (Owner != null) Managers.Object.Despawn(Owner);
+    if (Owner != null)
+    {
+      Managers.Object.Despawn(Owner);
+      var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
+      toolBase.objData = new Data.StructureData();
+    }
   }
 
   Vector3 diff;
@@ -84,13 +89,16 @@ public class UI_WorldUITest : UI_Base
 
     if(!buildIsReady)
     {
-      Managers.Event.notice.Invoke("해당 위치에 지을 수 없습니다.");
+      Managers.Event.Notice("해당 위치에 지을 수 없습니다.");
       return;
     }
 
     Owner.setFlag = true;
     Managers.Map.AddObject(Owner, Owner.GetCellPos());
     Managers.Game.OnJobAbleChanged(Owner.workableJob, true);
+
+    var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
+    toolBase.objData = new Data.StructureData();
 
     this.gameObject.SetActive(false);
   }

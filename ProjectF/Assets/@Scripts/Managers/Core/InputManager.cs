@@ -18,10 +18,10 @@ public class InputManager : InitBase
   public Action NUIEvent;
   private bool uiFlag = false;
 
-
+  private InputAction touchAction;
   private InputAction touchPositionAction;
   private InputAction touchPressAction;
-  private InputAction touchPressPoisiton;
+  private InputAction touchPressPosition;
 
   public override bool Init()
   {
@@ -31,15 +31,21 @@ public class InputManager : InitBase
     inputSystem.Enable();
     PlayerInput.actions = inputSystem.asset;
 
+    touchAction = PlayerInput.actions.FindAction("Touch");
     touchPositionAction = PlayerInput.actions.FindAction("TouchPosition");
     touchPressAction = PlayerInput.actions.FindAction("TouchPress");
-    touchPressPoisiton = PlayerInput.actions.FindAction("TouchPressPosition");
+    touchPressPosition = PlayerInput.actions.FindAction("TouchPressPosition");
 
+    //touchAction.started += StartTouch;
+    //touchAction.canceled += EndTouch;
     touchPressAction.started += StartTouch;
     //touchPressAction.performed += OnDragging;
     touchPressAction.canceled += EndTouch;
 
-    touchPressPoisiton.performed += OnDragging;
+    touchPressPosition.performed += OnDragging;
+
+    //touchPressPosition.performed += OnDragging;
+    
     //inputSystem = new InputSystem();
     //inputSystem.Enable();
     //
@@ -64,7 +70,10 @@ public class InputManager : InitBase
   {
     if (uiFlag) return;
 
-    Vector2 touchPos = touchPositionAction.ReadValue<Vector2>();
+    Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
+
+    if (!Camera.main.pixelRect.Contains(touchPos)) return;
+
     TriggerAtTouchPos(touchPos);
 
     if (startTouch != null)
@@ -76,17 +85,27 @@ public class InputManager : InitBase
     Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
     worldPos.z = 0f;
 
-    RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+    Collider2D[] hitColliders = Physics2D.OverlapPointAll(worldPos);
 
-    if(hit.collider != null && hit.collider.isTrigger)
+    if (hitColliders is null || hitColliders.Length <= 0) return;
+    foreach(var hitCollider in hitColliders)
     {
-      var scr = hit.collider.gameObject.GetComponent<BaseObject>();
-      if (scr != null)
+      if(hitCollider.isTrigger)
       {
-        touchObject.Invoke(scr);
+        var scr = hitCollider.gameObject.GetComponent<BaseObject>();
+        if (scr != null)
+        {
+          touchObject.Invoke(scr);
+          return;
+        }
       }
-      //else nonTouchObject.Invoke();
     }
+
+    //if(hitCollider != null && hitCollider.isTrigger)
+    //{
+      
+    //  //else nonTouchObject.Invoke();
+    //}
   }
 
   private void EndTouch(InputAction.CallbackContext context)
@@ -94,15 +113,21 @@ public class InputManager : InitBase
     if (uiFlag) uiFlag = !uiFlag;
 
     if (endTouch != null)
-      endTouch.Invoke(touchPositionAction.ReadValue<Vector2>(), (float)context.time);
+    {
+      Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
+      if (!Camera.main.pixelRect.Contains(touchPos)) return;
+
+      endTouch.Invoke(touchPos, (float)context.time);
+    }
   }
 
   public void OnDragging(InputAction.CallbackContext context)
   {
-    Debug.Log(context.ReadValue<Vector2>());
     if (uiFlag) return;
+    var touchPos = context.ReadValue<Vector2>();
+    if (!Camera.main.pixelRect.Contains(touchPos)) return;
 
     if (onDragging != null)
-      onDragging.Invoke(context.ReadValue<Vector2>());
+      onDragging.Invoke(touchPos);
   }
 }
