@@ -25,6 +25,8 @@ public class JobSystem : InitBase
       foreach(var job in jobDict)
       {
         if (!job.Value.IsAble) continue;
+        if (job.Key is FJob.None) continue; //FIXME
+
         targets = Owner.FindsClosestInRange(job.Key, 10f, Managers.Object.Workables, func: Owner.IsValid);
 
         //if (targets.Count <= 0 || targets == null) Owner.SetJobIsAble(Job, false);

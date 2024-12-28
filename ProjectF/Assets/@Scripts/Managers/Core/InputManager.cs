@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System;
 
 public class InputManager : InitBase
@@ -13,10 +14,6 @@ public class InputManager : InitBase
   public event Action nonTouchObject;
 
   public event Action<Vector2> onDragging;
-
-  public Action UIEvent;
-  public Action NUIEvent;
-  private bool uiFlag = false;
 
   private InputAction touchAction;
   private InputAction touchPositionAction;
@@ -55,10 +52,15 @@ public class InputManager : InitBase
     //
     //inputSystem.Touch.TouchPosition.started += StartTouchPosition;
 
-    UIEvent += () => { uiFlag = true; };
-    NUIEvent += () => { uiFlag = false; };
-
     return true;
+  }
+
+  //FIXME UI 터치 구분 필요
+  private bool IsTouchOverUI()
+  {
+    //int touchId = Touchscreen.current.primaryTouch.touchId.ReadValue();
+
+    return EventSystem.current.IsPointerOverGameObject(/*touchId*/);
   }
 
   private void StartTouchPosition(InputAction.CallbackContext context)
@@ -68,7 +70,7 @@ public class InputManager : InitBase
 
   private void StartTouch(InputAction.CallbackContext context)
   {
-    if (uiFlag) return;
+    if (IsTouchOverUI()) return;
 
     Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
 
@@ -110,7 +112,7 @@ public class InputManager : InitBase
 
   private void EndTouch(InputAction.CallbackContext context)
   {
-    if (uiFlag) uiFlag = !uiFlag;
+    if (IsTouchOverUI()) return;
 
     if (endTouch != null)
     {
@@ -123,7 +125,8 @@ public class InputManager : InitBase
 
   public void OnDragging(InputAction.CallbackContext context)
   {
-    if (uiFlag) return;
+    if (IsTouchOverUI()) return;
+
     var touchPos = context.ReadValue<Vector2>();
     if (!Camera.main.pixelRect.Contains(touchPos)) return;
 

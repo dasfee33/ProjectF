@@ -1,2 +1,5 @@
-﻿DataId,Name,Type,Before,After,BuildId,Step1,Step2,Step3
-4000,기본 건축,Basic,,,100&101&102&103,5,,
+﻿DataId,Name,Level,Type,Reward,NeedToUnlock
+4000,디폴트,0,None,100&104,
+4001,기본건축1,1,Basic1,101&102&103&105,100
+4002,기본건축2,2,Basic2,,200&100
+4003,석재가공,3,StoneProcess,,

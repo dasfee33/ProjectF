@@ -357,7 +357,7 @@ public class MapManager
 
   public void ClearObject(Vector3Int cellPos)
   {
-    if (_cells.ContainsKey(cellPos) &&_cells[cellPos] == null)
+    if (_cells.ContainsKey(cellPos) &&_cells[cellPos] != null)
       _cells.Remove(cellPos);
   }
 

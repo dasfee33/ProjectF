@@ -11,12 +11,19 @@ using System.Linq;
 
 public class GameSaveData
 {
+  public RealGameData realGameData = new RealGameData();
+
   public List<CreatureSaveData> creatureSaveData = new List<CreatureSaveData> ();
   public List<EnvSaveData> envSaveData = new List<EnvSaveData> ();
   public StructSaveData structSaveData = new StructSaveData();
   public List<ItemHoldersSaveData> itemHolderSaveData = new List<ItemHoldersSaveData> ();
   public List<BuildObjectSaveData> buildObjectSaveData = new List<BuildObjectSaveData> ();
   public List<ItemSaveData> itemSaveData = new List<ItemSaveData>();
+}
+
+public class RealGameData
+{
+  public int baseLevel;
 }
 
 public class CreatureSaveData
@@ -163,6 +170,7 @@ public class GameManager
   {
     Param param = new Param();
 
+    RealGameDataInsert(param);
     CreatureDataInsert(param);
     EnvDataInsert(param);
     StructDataInsert(param);
@@ -203,6 +211,7 @@ public class GameManager
       {
         gameDataRowInData = gameDataJson[0]["inDate"].ToString();
 
+        RealGameDataGet(gameDataJson);
         CreatureDataGet(gameDataJson);
         EnvDataGet(gameDataJson);
         StructureDataGet(gameDataJson);
@@ -223,6 +232,7 @@ public class GameManager
   {
     Param param = new Param();
 
+    RealGameDataUpdate(param);
     CreatureDataUpdate(param);
     EnvDataUpdate(param);
     StructureDataUpdate(param);
@@ -253,6 +263,11 @@ public class GameManager
   #region DataHelpers
 
   #region DataUpdate
+  public void RealGameDataUpdate(Param param)
+  {
+    param.Add("rgsavedata", SaveData.realGameData);
+  }
+
   public void CreatureDataUpdate(Param param)
   {
     var creatures = Managers.Object.Creatures;
@@ -447,6 +462,12 @@ public class GameManager
   #endregion
 
   #region DataInsert
+
+  public void RealGameDataInsert(Param param)
+  {
+    SaveData.realGameData.baseLevel = 0;
+    param.Add("rgsavedata", SaveData.realGameData);
+  }
 
   public void CreatureDataInsert(Param param)
   {
@@ -645,6 +666,31 @@ public class GameManager
   #endregion
 
   #region DataGet
+  public bool RealGameDataGet(LitJson.JsonData gameDataJson)
+  {
+    if (gameDataJson.Count <= 0)
+    {
+      Debug.LogWarning("데이터가 존재하지 않습니다.");
+      return false;
+    }
+    else
+    {
+      var rgData = gameDataJson[0]["rgsavedata"];
+
+      if (rgData == null || rgData.Count <= 0)
+      {
+        Debug.Log("게임 내부 데이터가 존재하지 않습니다.");
+        return false;
+      }
+
+      if (SaveData.realGameData is null) SaveData.realGameData = new RealGameData();
+
+      SaveData.realGameData.baseLevel = int.Parse(rgData["baseLevel"].ToString());
+
+      return true;
+    }
+  }
+
   public bool CreatureDataGet(LitJson.JsonData gameDataJson)
   {
     if (gameDataJson.Count <= 0)

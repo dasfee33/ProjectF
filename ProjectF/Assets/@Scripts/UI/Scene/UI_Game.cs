@@ -13,6 +13,7 @@ public class UI_Game : UI_Scene
   {
     UI_Info,
     UI_Option,
+    UI_BaseUnlockPopup,
   }
 
   enum Buttons
@@ -32,6 +33,8 @@ public class UI_Game : UI_Scene
     Cook,
 
     Priority,
+
+    PeriodMoon,
   }
   enum Images
   {
@@ -47,6 +50,7 @@ public class UI_Game : UI_Scene
   private TextMeshProUGUI PeriodText;
   private float rotationSpeed;
   private UI_BuildPopup build;
+  private GameObject baseUnlock;
 
   public override bool Init()
   {
@@ -75,7 +79,7 @@ public class UI_Game : UI_Scene
     GetButton((int)Buttons.Cook).gameObject.BindEvent(ClickCook, FUIEvent.Click);
 
     GetButton((int)Buttons.Priority).gameObject.BindEvent(ClickPriority, FUIEvent.Click);
-
+    GetButton((int)Buttons.PeriodMoon).gameObject.BindEvent(ClickPeriodMoon, FUIEvent.Click);
 
     PeriodMoon = GetImage((int)Images.PeriodMoon);
     PeriodText = GetText((int)Texts.PeriodText);
@@ -251,6 +255,22 @@ public class UI_Game : UI_Scene
   private void ClickPriority(PointerEventData evt)
   {
     Managers.UI.ShowPopupUI<UI_PriorityPopup>("UI_PriorityPopup");
+  }
+
+  private void ClickPeriodMoon(PointerEventData evt)
+  {
+    if (baseUnlock is null)
+    {
+      baseUnlock = GetObject((int)Objects.UI_BaseUnlockPopup);
+      baseUnlock.SetActive(true);
+      baseUnlock.GetComponent<UI_BaseUnlockPopup>().SetInfo();
+    }
+    else
+    {
+      baseUnlock.SetActive(false);
+      baseUnlock = null;
+    }
+
   }
 
   private void Update()

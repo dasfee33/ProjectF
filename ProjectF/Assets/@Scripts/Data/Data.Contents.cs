@@ -357,16 +357,12 @@ namespace Data
   {
     public int DataId;
     public string Name;
+    public int Level;
 
     public FResearchType Type;
 
-    public List<int> Before;
-    public List<int> After;
-    public List<int> BuildId;
-
-    public float Step1;
-    public float Step2;
-    public float Step3;
+    public List<int> Reward;
+    public List<int> NeedToUnlock;
   }
 
   [Serializable]

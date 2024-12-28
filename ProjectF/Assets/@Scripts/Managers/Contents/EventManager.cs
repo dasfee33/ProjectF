@@ -6,6 +6,17 @@ using static Define;
 
 public class EventManager
 {
+  //DescriptionNotice
+  public Action<FObjectType, int> description;
+  private GameObject DescriptionObj;
+  public void ShowDescription(Vector2 localPos, Transform parent, FObjectType type, int id)
+  {
+    if (DescriptionObj is null)
+        DescriptionObj = Managers.Resource.Instantiate("UI_DescriptionPopup", parent);
+    DescriptionObj.GetComponent<RectTransform>().localPosition = localPos;
+    description?.Invoke(type, id);
+  } 
+
   //Notice
   public Action<string> notice;
   public void Notice(string str) => notice?.Invoke(str);

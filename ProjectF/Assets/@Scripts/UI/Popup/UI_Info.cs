@@ -61,8 +61,8 @@ public class UI_Info : UI_Popup
 
   private void Cancel(PointerEventData evt)
   {
+    if (option != null && option.gameObject.activeSelf) option.Exit.Invoke();
     this.gameObject.SetActive(false);
-    if (option != null) option.Exit.Invoke();
   }
 
   private void ClickInfoContent(PointerEventData evt)

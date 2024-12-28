@@ -2,19 +2,48 @@
   "researches": [
     {
       "DataId": 4000,
-      "Name": "기본 건축",
-      "Type": 1,
-      "Before": null,
-      "After": null,
-      "BuildId": [
+      "Name": "디폴트",
+      "Level": 0,
+      "Type": 0,
+      "Reward": [
         100,
+        104
+      ],
+      "NeedToUnlock": null
+    },
+    {
+      "DataId": 4001,
+      "Name": "기본건축1",
+      "Level": 1,
+      "Type": 1,
+      "Reward": [
         101,
         102,
-        103
+        103,
+        105
       ],
-      "Step1": 5.0,
-      "Step2": 0.0,
-      "Step3": 0.0
+      "NeedToUnlock": [
+        100
+      ]
+    },
+    {
+      "DataId": 4002,
+      "Name": "기본건축2",
+      "Level": 2,
+      "Type": 2,
+      "Reward": null,
+      "NeedToUnlock": [
+        200,
+        100
+      ]
+    },
+    {
+      "DataId": 4003,
+      "Name": "석재가공",
+      "Level": 3,
+      "Type": 3,
+      "Reward": null,
+      "NeedToUnlock": null
     }
   ]
 }

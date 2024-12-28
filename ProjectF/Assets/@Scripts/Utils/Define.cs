@@ -22,7 +22,9 @@ public static class Define
   public enum FResearchType
   {
     None,
-    Basic,
+    Basic1,
+    Basic2,
+    StoneProcess,
     //TODO
   }
 

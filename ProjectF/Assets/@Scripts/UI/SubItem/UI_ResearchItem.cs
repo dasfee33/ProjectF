@@ -50,10 +50,10 @@ public class UI_ResearchItem : UI_Base, IPointerClickHandler, IPointerEnterHandl
 
     GetText((int)Texts.Name).text = Data.Name;
     GetText((int)Texts.Num).text = (Data.DataId - RESEARCH_START).ToString();
-    foreach (var build in _data.BuildId)
-    {
-      buildList.Add(Managers.Data.StructDic[build]);
-    }
+    //foreach (var build in _data.BuildId)
+    //{
+    //  buildList.Add(Managers.Data.StructDic[build]);
+    //}
 
     AddObject();
   }
