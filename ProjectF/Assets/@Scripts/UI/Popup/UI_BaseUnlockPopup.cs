@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Define;
 
 public class UI_BaseUnlockPopup : UI_Popup
 {
@@ -10,6 +12,7 @@ public class UI_BaseUnlockPopup : UI_Popup
   public enum Objects
   {
     UnlockItem,
+    InfoBoard,
   }
 
   public enum Buttons
@@ -42,8 +45,19 @@ public class UI_BaseUnlockPopup : UI_Popup
     BindTexts(typeof(Texts));
     BindSliders(typeof(Sliders));
 
+    GetButton((int)Buttons.UnlockButton).gameObject.BindEvent(ClickUnlockButton, FUIEvent.Click);
+
     return true;
   }
+
+  public void ClickUnlockButton(PointerEventData evt)
+  {
+    Managers.Game.SaveData.realGameData.baseLevel += 1;
+    ResetUI();
+    SetInfo();
+  }
+
+  private List<UI_BaseUnlockPopupNeedSlider> sliderList = new List<UI_BaseUnlockPopupNeedSlider>();
 
   public void SetInfo()
   {
@@ -67,10 +81,40 @@ public class UI_BaseUnlockPopup : UI_Popup
       var subItem = Managers.UI.MakeSubItem<UI_BaseUnlockPopupItemButton>(objTrans, "ItemButton");
       subItem.SetInfo(reward.Sprite, nextReward);
     }
+
+    var researchDic = Managers.Game.SaveData.realGameData.researchDic;
+    int researchLevel = 1;
+    foreach (var nextGauge in nextResearchData.NeedToUnlock)
+    {
+      var objTrans = GetObject((int)Objects.InfoBoard).transform;
+      var subSlider = Managers.UI.MakeSubItem<UI_BaseUnlockPopupNeedSlider>(objTrans, "NeedSlider");
+      sliderList.Add(subSlider);
+
+      var researchValue = 0;
+      if (researchDic.TryGetValue(researchLevel, out var v))
+        researchValue = v;
+
+      subSlider.SetInfo(researchLevel, researchValue, nextGauge);
+      researchLevel++;
+    }
+
+    bool sliderCheck = sliderList.All(obj => obj.slider.maxValue / obj.slider.value == 1);
+
+    var unlockButton = GetButton((int)Buttons.UnlockButton);
+
+    if (sliderCheck) unlockButton.gameObject.SetActive(true);
+    else unlockButton.gameObject.SetActive(false);
+
+  }
+
+  private void ResetUI()
+  {
+    GetObject((int)Objects.UnlockItem).DestroyChilds();
+    sliderList.DestroyChilds();
   }
 
   public void OnDisable()
   {
-    GetObject((int)Objects.UnlockItem).DestroyChilds();
+    ResetUI();
   }
 }

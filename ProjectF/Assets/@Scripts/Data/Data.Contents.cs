@@ -175,6 +175,7 @@ namespace Data
     public int extraCellY;
 
     public int option;
+    public int Grade;
   }
 
   [Serializable]

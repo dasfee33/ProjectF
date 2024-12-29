@@ -24,6 +24,7 @@ public class GameSaveData
 public class RealGameData
 {
   public int baseLevel;
+  public Dictionary<int, int> researchDic = new Dictionary<int, int>();
 }
 
 public class CreatureSaveData
@@ -686,6 +687,10 @@ public class GameManager
       if (SaveData.realGameData is null) SaveData.realGameData = new RealGameData();
 
       SaveData.realGameData.baseLevel = int.Parse(rgData["baseLevel"].ToString());
+      foreach(var keystring in rgData["researchDic"].Keys)
+      {
+        SaveData.realGameData.researchDic.Add(int.Parse(keystring), int.Parse(rgData["researchDic"][keystring].ToString()));
+      }
 
       return true;
     }

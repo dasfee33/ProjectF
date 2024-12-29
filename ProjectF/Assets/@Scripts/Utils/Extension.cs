@@ -120,6 +120,19 @@ public static class Extension
       Managers.Resource.Destroy(child.gameObject);
   }
 
+  public static void DestroyChilds<T>(this ICollection<T> collection) where T : UnityEngine.Object
+  {
+    foreach (var child in collection)
+    {
+      if(child is not null)
+      {
+        UnityEngine.Object.Destroy(child);
+      }
+    }
+
+    collection.Clear();
+  }
+
   public static void TranslateEx(this Transform transform, Vector3 dir)
   {
     BaseObject bo = transform.gameObject.GetComponent<BaseObject>();

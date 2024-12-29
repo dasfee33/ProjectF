@@ -26,7 +26,8 @@
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 0
+      "option": 0,
+      "Grade": 0
     },
     {
       "DataId": 101,
@@ -54,7 +55,8 @@
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 0
+      "option": 0,
+      "Grade": 0
     },
     {
       "DataId": 102,
@@ -82,7 +84,8 @@
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 0
+      "option": 0,
+      "Grade": 0
     },
     {
       "DataId": 103,
@@ -110,7 +113,8 @@
       "maxCapacity": 200.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 0
+      "option": 0,
+      "Grade": 0
     },
     {
       "DataId": 104,
@@ -138,7 +142,8 @@
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 0
+      "option": 0,
+      "Grade": 1
     },
     {
       "DataId": 105,
@@ -166,7 +171,8 @@
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,
-      "option": 1
+      "option": 1,
+      "Grade": 0
     }
   ]
 }

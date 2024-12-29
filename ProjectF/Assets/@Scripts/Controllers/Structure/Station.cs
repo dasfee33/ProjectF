@@ -51,13 +51,17 @@ public class Station : Structure
 
   protected override void UpdateWorkStart()
   {
-    onWorkSomeOne = true;
     StructureState = FStructureState.Work;
   }
 
   protected override void UpdateOnWork()
   {
-    if (onWorkSomeOne)
+    if (!onWorkSomeOne)
+    {
+      UpdateAITick = data.WorkTime;
+      onWorkSomeOne = true;
+    }
+    else
     {
       StructureState = FStructureState.WorkEnd;
     }
@@ -67,10 +71,9 @@ public class Station : Structure
 
   protected override void UpdateWorkEnd()
   {
-    Worker.jobSystem.target = null;
-    Worker.SetOrAddJobPriority(workableJob, 0, true);
-    Worker.Target = null;
-    Worker = null;
+    Managers.Event.ResearchPointPlus(data.Grade);
+
+    Worker.ResetJob();
 
     StructureState = FStructureState.Idle;
     onWorkSomeOne = false;

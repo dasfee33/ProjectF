@@ -6,6 +6,20 @@ using static Define;
 
 public class EventManager
 {
+ 
+
+  //ResearchAction
+  public Action<int, int> researchPointPlus;
+  public void ResearchPointPlus(int level, int value = 1)
+  {
+    researchPointPlus?.Invoke(level, value);
+    var saveData = Managers.Game.SaveData.realGameData;
+
+    if (saveData.researchDic.ContainsKey(level))
+      saveData.researchDic[level] += value;
+    else saveData.researchDic.Add(level, value);
+  }
+
   //DescriptionNotice
   public Action<FObjectType, int> description;
   private GameObject DescriptionObj;
