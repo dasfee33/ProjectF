@@ -41,6 +41,7 @@ public static class Define
     UnKnown,
     TitleScene,
     GameScene,
+    TitleRestScene,
   }
 
   public enum FUIEvent

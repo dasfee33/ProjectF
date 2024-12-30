@@ -159,7 +159,7 @@ public class UI_TitleScene : UI_Scene
       GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
       {
         Debug.Log("Change Scene");
-        Managers.Scene.LoadScene(FScene.GameScene);
+        Managers.Scene.LoadScene(FScene.TitleRestScene);
       }, FUIEvent.Click);
     }
   }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Object = UnityEngine.Object;
 
 public static class Extension
 {
@@ -87,7 +88,7 @@ public static class Extension
     return false;
   }
 
-  public static T GetOrAddComponent<T>(this GameObject go) where T : UnityEngine.Component
+  public static T GetOrAddComponent<T>(this GameObject go) where T : Component
   {
     return Util.GetOrAddComponent<T>(go);
   }
@@ -120,13 +121,15 @@ public static class Extension
       Managers.Resource.Destroy(child.gameObject);
   }
 
-  public static void DestroyChilds<T>(this ICollection<T> collection) where T : UnityEngine.Object
+  public static void DestroyChilds<T>(this ICollection<T> collection) where T : Object
   {
     foreach (var child in collection)
     {
       if(child is not null)
       {
-        UnityEngine.Object.Destroy(child);
+        if (child is GameObject gameObject) Object.Destroy(gameObject);
+        else if (child is Component component) Object.Destroy(component.gameObject);
+        else Object.Destroy(child);
       }
     }
 
