@@ -1,3 +1,20 @@
 {
-  "texts": []
+  "texts": [
+    {
+      "DataId": "EVENT_CREATUREACTION",
+      "KOR": "%s를 주음"
+    },
+    {
+      "DataId": "CUR_TOWNEVOLUTION",
+      "KOR": "현재 마을 발전도 : %d"
+    },
+    {
+      "DataId": "TOWNEVOLUTION",
+      "KOR": "발전도 : %d에 해금!"
+    },
+    {
+      "DataId": "PLOW_SOMETHING",
+      "KOR": "%s 심기"
+    }
+  ]
 }

@@ -88,17 +88,6 @@ public class ItemHolder : BaseObject
       stack += 1;
       mass = (defaultMass * stack);
     }
-
-
-    //currentSprite.DOFade(0, 3f).OnComplete(() =>
-    //{
-    //  //if (_data != null)
-    //  //{
-    //  //  //Acquire item
-    //  //}
-
-    //  Managers.Object.Despawn(this);
-    //});
   }
 
   public override void OnDamaged(BaseObject attacker)
@@ -106,35 +95,12 @@ public class ItemHolder : BaseObject
     var attackOwner = attacker as Creature;
     if(attackOwner.SupplyCapacity >= attackOwner.CurrentSupply + mass)
     {
+      Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.Name));
       attackOwner.AddHaveList(dataTemplateID, mass, label);
       attackOwner.ResetJob();
-      //인벤토리 할때 같이 
-      //if (attackOwner.SupplyStorage.Count > 0)
-      //{
-      //  foreach (var item in attackOwner.SupplyStorage)
-      //  {
-      //    if (item.dataTemplateID == this.dataTemplateID)
-      //    {
-      //      var itemHolder = item.GetComponent<ItemHolder>();
-      //      int availSpace = itemHolder.maxStack - itemHolder.stack;
-
-      //      if (this.stack <= availSpace)
-      //      {
-      //        itemHolder.stack += this.stack;
-      //      }
-      //      else
-      //      {
-      //        itemHolder.stack = maxStack;
-      //        itemHolder.stack = this.stack - availSpace;
-      //        attackOwner.SupplyStorage.Add(itemHolder);
-      //      }
-      //    }
-      //  }
-      //}
-      //else attackOwner.SupplyStorage.Add(this);
+      
       Managers.Object.Despawn(this);
     }
     
-
   }
 }

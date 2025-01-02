@@ -6,7 +6,14 @@ using static Define;
 
 public class EventManager
 {
- 
+  //CreatureAction
+  public void CreatureAction(BaseObject obj, string notice)
+  {
+    if (!obj.IsValid()) return;
+    var go = Managers.Resource.Instantiate("UI_CreatureActionEvent", obj.transform, false);
+    var action = go.GetComponent<UI_CreatureActionEvent>();
+    action.SetInfo(notice);
+  }
 
   //ResearchAction
   public Action<int, int> researchPointPlus;

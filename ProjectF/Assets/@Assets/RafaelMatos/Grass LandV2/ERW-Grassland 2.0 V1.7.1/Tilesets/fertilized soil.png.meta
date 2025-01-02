@@ -3,7 +3,7 @@ guid: 8935cb21d3aa457469f436c7946a6507
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -74,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -86,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -98,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -110,6 +116,33 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -2814,137 +2847,136 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      fertilized soil__6: -1342448256
-      fertilized soil__16: -1364824521
-      fertilized soil__127: 1097082370
-      fertilized soil__3: -286161828
-      fertilized soil__4: -824109570
-      fertilized soil__18: -1197372164
-      fertilized soil__13: 2134177306
-      fertilized soil__42: 1682847519
-      fertilized soil__63: -1056799617
-      fertilized soil__44: 809503635
-      fertilized soil__20: -208146857
-      fertilized soil__113: 1823748071
-      fertilized soil__75: 2034805496
-      fertilized soil__117: 937278139
-      fertilized soil__122: 180241460
-      fertilized soil__71: -1320981689
-      fertilized soil__67: -69940408
-      fertilized soil__54: -1347704247
-      fertilized soil__108: -2136371060
-      fertilized soil__120: 1759712566
-      fertilized soil__89: -1674742402
-      fertilized soil__99: 620890335
-      fertilized soil__22: -934727377
-      fertilized soil__104: 1382202971
-      fertilized soil__121: -2100054808
-      fertilized soil__45: -319652896
-      fertilized soil__7: 2058983217
-      fertilized soil__36: -730183123
-      fertilized soil__29: -1872270705
-      fertilized soil__97: 1873162312
-      fertilized soil__46: -711262855
-      fertilized soil__92: 210049662
-      fertilized soil__25: 910808180
-      fertilized soil__107: 1765031833
-      fertilized soil__47: -1848146477
-      fertilized soil__60: -1663009069
-      fertilized soil__88: 1228845569
-      fertilized soil__116: -1653637894
-      fertilized soil__90: 285861394
-      fertilized soil__39: -737586240
-      fertilized soil__98: -1720510716
-      fertilized soil__69: -371237913
-      fertilized soil__105: 121513791
-      fertilized soil__9: 144452292
-      fertilized soil__110: -157769302
-      fertilized soil__2: 171688789
-      fertilized soil__112: -631563896
-      fertilized soil__28: 1751499099
-      fertilized soil__111: 120288353
-      fertilized soil__80: -1048167288
-      fertilized soil__119: -986455785
-      fertilized soil__15: 248000376
-      fertilized soil__53: 1237498427
-      fertilized soil__38: -2118578213
-      fertilized soil__41: -8011947
-      fertilized soil__76: 1454032078
-      fertilized soil__37: 1259610195
-      fertilized soil__57: 994207708
-      fertilized soil__93: 1073958489
-      fertilized soil__125: -1088682655
-      fertilized soil__101: -176889981
-      fertilized soil__24: -73935835
-      fertilized soil__114: 1668051525
-      fertilized soil__72: -1605763133
-      fertilized soil__51: 1497562569
-      fertilized soil__59: -1680910749
-      fertilized soil__43: 1630537008
-      fertilized soil__73: 2082492889
-      fertilized soil__33: -250974915
-      fertilized soil__84: 359806099
-      fertilized soil__79: 2080982829
-      fertilized soil__124: 1957123214
-      fertilized soil__118: 1059734235
-      fertilized soil__12: -353055879
-      fertilized soil__55: -148338819
-      fertilized soil__30: -1188478308
-      fertilized soil__81: -1278883847
-      fertilized soil__68: -759199047
-      fertilized soil__83: 881811280
       fertilized soil__0: 1449270328
+      fertilized soil__1: -1950513396
+      fertilized soil__10: -1977166206
+      fertilized soil__100: 1014277716
+      fertilized soil__101: -176889981
+      fertilized soil__102: 117918793
       fertilized soil__103: 1585385656
-      fertilized soil__58: 257197566
-      fertilized soil__64: 1897715690
+      fertilized soil__104: 1382202971
+      fertilized soil__105: 121513791
+      fertilized soil__106: 870582
+      fertilized soil__107: 1765031833
+      fertilized soil__108: -2136371060
+      fertilized soil__109: -2062237051
+      fertilized soil__11: -1559879090
+      fertilized soil__110: -157769302
+      fertilized soil__111: 120288353
+      fertilized soil__112: -631563896
+      fertilized soil__113: 1823748071
+      fertilized soil__114: 1668051525
+      fertilized soil__115: -1591304552
+      fertilized soil__116: -1653637894
+      fertilized soil__117: 937278139
+      fertilized soil__118: 1059734235
+      fertilized soil__119: -986455785
+      fertilized soil__12: -353055879
+      fertilized soil__120: 1759712566
+      fertilized soil__121: -2100054808
+      fertilized soil__122: 180241460
+      fertilized soil__123: 1090025661
+      fertilized soil__124: 1957123214
+      fertilized soil__125: -1088682655
+      fertilized soil__126: -599018272
+      fertilized soil__127: 1097082370
+      fertilized soil__13: 2134177306
+      fertilized soil__14: -2061134721
+      fertilized soil__15: 248000376
+      fertilized soil__16: -1364824521
+      fertilized soil__17: 841745403
+      fertilized soil__18: -1197372164
+      fertilized soil__19: -1599673576
+      fertilized soil__2: 171688789
+      fertilized soil__20: -208146857
+      fertilized soil__21: -964195439
+      fertilized soil__22: -934727377
+      fertilized soil__23: 732087719
+      fertilized soil__24: -73935835
+      fertilized soil__25: 910808180
+      fertilized soil__26: -1484595559
+      fertilized soil__27: -1504783034
+      fertilized soil__28: 1751499099
+      fertilized soil__29: -1872270705
+      fertilized soil__3: -286161828
+      fertilized soil__30: -1188478308
       fertilized soil__31: -464691896
-      fertilized soil__62: -120578742
-      fertilized soil__5: -529769688
+      fertilized soil__32: -576871068
+      fertilized soil__33: -250974915
+      fertilized soil__34: 1372517941
+      fertilized soil__35: -121133906
+      fertilized soil__36: -730183123
+      fertilized soil__37: 1259610195
+      fertilized soil__38: -2118578213
+      fertilized soil__39: -737586240
+      fertilized soil__4: -824109570
+      fertilized soil__40: -1562971066
+      fertilized soil__41: -8011947
+      fertilized soil__42: 1682847519
+      fertilized soil__43: 1630537008
+      fertilized soil__44: 809503635
+      fertilized soil__45: -319652896
+      fertilized soil__46: -711262855
+      fertilized soil__47: -1848146477
       fertilized soil__48: -774913672
+      fertilized soil__49: -1635240965
+      fertilized soil__5: -529769688
+      fertilized soil__50: 424684175
+      fertilized soil__51: 1497562569
+      fertilized soil__52: 1820535882
+      fertilized soil__53: 1237498427
+      fertilized soil__54: -1347704247
+      fertilized soil__55: -148338819
+      fertilized soil__56: 1290994842
+      fertilized soil__57: 994207708
+      fertilized soil__58: 257197566
+      fertilized soil__59: -1680910749
+      fertilized soil__6: -1342448256
+      fertilized soil__60: -1663009069
+      fertilized soil__61: -297388795
+      fertilized soil__62: -120578742
+      fertilized soil__63: -1056799617
+      fertilized soil__64: 1897715690
       fertilized soil__65: -17624242
       fertilized soil__66: 1257348716
-      fertilized soil__109: -2062237051
-      fertilized soil__40: -1562971066
-      fertilized soil__34: 1372517941
-      fertilized soil__96: -572282086
-      fertilized soil__115: -1591304552
-      fertilized soil__50: 424684175
-      fertilized soil__102: 117918793
-      fertilized soil__94: 321132699
-      fertilized soil__87: 1669612396
-      fertilized soil__23: 732087719
-      fertilized soil__61: -297388795
-      fertilized soil__86: -217918403
-      fertilized soil__35: -121133906
-      fertilized soil__91: -358786830
-      fertilized soil__106: 870582
-      fertilized soil__10: -1977166206
-      fertilized soil__95: -1873382976
-      fertilized soil__49: -1635240965
-      fertilized soil__26: -1484595559
-      fertilized soil__19: -1599673576
-      fertilized soil__27: -1504783034
-      fertilized soil__82: 339527557
-      fertilized soil__123: 1090025661
-      fertilized soil__21: -964195439
-      fertilized soil__56: 1290994842
-      fertilized soil__8: 297448212
-      fertilized soil__52: 1820535882
-      fertilized soil__126: -599018272
-      fertilized soil__11: -1559879090
-      fertilized soil__14: -2061134721
-      fertilized soil__77: 1407371650
-      fertilized soil__74: -1553294637
-      fertilized soil__78: -959481225
-      fertilized soil__17: 841745403
-      fertilized soil__1: -1950513396
+      fertilized soil__67: -69940408
+      fertilized soil__68: -759199047
+      fertilized soil__69: -371237913
+      fertilized soil__7: 2058983217
       fertilized soil__70: -243334887
-      fertilized soil__32: -576871068
+      fertilized soil__71: -1320981689
+      fertilized soil__72: -1605763133
+      fertilized soil__73: 2082492889
+      fertilized soil__74: -1553294637
+      fertilized soil__75: 2034805496
+      fertilized soil__76: 1454032078
+      fertilized soil__77: 1407371650
+      fertilized soil__78: -959481225
+      fertilized soil__79: 2080982829
+      fertilized soil__8: 297448212
+      fertilized soil__80: -1048167288
+      fertilized soil__81: -1278883847
+      fertilized soil__82: 339527557
+      fertilized soil__83: 881811280
+      fertilized soil__84: 359806099
       fertilized soil__85: 496548648
-      fertilized soil__100: 1014277716
-  spritePackingTag: 
+      fertilized soil__86: -217918403
+      fertilized soil__87: 1669612396
+      fertilized soil__88: 1228845569
+      fertilized soil__89: -1674742402
+      fertilized soil__9: 144452292
+      fertilized soil__90: 285861394
+      fertilized soil__91: -358786830
+      fertilized soil__92: 210049662
+      fertilized soil__93: 1073958489
+      fertilized soil__94: 321132699
+      fertilized soil__95: -1873382976
+      fertilized soil__96: -572282086
+      fertilized soil__97: 1873162312
+      fertilized soil__98: -1720510716
+      fertilized soil__99: 620890335
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

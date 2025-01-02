@@ -197,6 +197,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f36915b5d6259b94185d476ed81b5d7a
+    m_Address: PlowSoil1Sprite.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 72002408cbf4e2b4bbfaabb6a1411f08, type: 2}
   m_SchemaSet:

@@ -4,4 +4,5 @@
 102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,Bed1Sprite,100,5,60,,,,,400000,10,,,,,,0,
 103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,chest_normalSprite,100,1,60,cabin chest idle,cabin chest opening,cabin chest idle,cabin chest idle,400000,10,,,200,,,0,
 104,Station1,초급 연구 스테이션,Structure,Station,Station,Station1Sprite,100,30,10,shrine buff available,shrine buff available,shrine getting buff,surine buff available,400000,250,,,,,,0,1
-105,PlowBowl,식물을 기를 수 있는 그릇,Structure,PlowBowl,PlowBowl,PlowBowlSprite,100,5,10,,,,,400000,10,,,,,,1,
+105,PlowBowl,식물을 기를 수 있는 그릇,Structure,Cook,PlowBowl,PlowBowlSprite,100,5,10,,,,,400000,10,,,,,,1,
+106,PlowSoil1,보통 토양,Structure,Cook,Soil,PlowSoil1Sprite,100,5,5,,,,,400000,10,,,,,,1,

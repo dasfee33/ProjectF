@@ -148,6 +148,9 @@ public class Structure : BaseObject
       case FStructureSubType.PlowBowl:
         workableJob = FJob.Plow;
         break;
+      case FStructureSubType.Soil:
+        workableJob = FJob.Plow;
+        break;
         //TODO;
     }
   }

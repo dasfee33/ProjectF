@@ -64,6 +64,7 @@ public class ObjectManager
   public List<Structure> Bases { get; } = new List<Structure> ();
   public List<Structure> Electronincs { get; } = new List<Structure> ();
   public List<Structure> Stations { get; } = new List<Structure> ();
+  public List<Structure> Cooks { get; } = new List<Structure> ();
 
   public List<int> PossPipes { get; } = new List<int>();
   public List<int> PossFurnitures { get; } = new List<int>();
@@ -158,6 +159,10 @@ public class ObjectManager
       else if (structure.StructureType == FStructureType.Base)
       {
         Bases.Add(structure);
+      }
+      else if(structure.StructureType == FStructureType.Cook)
+      {
+        Cooks.Add(structure);
       }
 
 

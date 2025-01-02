@@ -37,31 +37,31 @@ public class PlowTool : MonoBehaviour
 
   private void Update()
   {
-    Vector3 mousePos = Input.mousePosition;
-    Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-    worldPos.z = 0;
+    //Vector3 mousePos = Input.mousePosition;
+    //Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+    //worldPos.z = 0;
 
-    if (Input.GetMouseButtonDown(0))
-    {
-      startCellPos = grid.WorldToCell(worldPos);
-      startCellPos.z = 0;
-    }
+    //if (Input.GetMouseButtonDown(0))
+    //{
+    //  startCellPos = grid.WorldToCell(worldPos);
+    //  startCellPos.z = 0;
+    //}
 
-    showSelection = Input.GetMouseButton(0);
+    //showSelection = Input.GetMouseButton(0);
 
-    endCellPos = grid.WorldToCell(worldPos);
-    endCellPos.z = 0;
+    //endCellPos = grid.WorldToCell(worldPos);
+    //endCellPos.z = 0;
 
-    if (Input.GetMouseButtonUp(0))
-    {
-      ClearTile();
-      StartCoroutine(GenerateTile());
-    }
-    else if (showSelection)
-    {
-      // 드래그 중인 영역을 타일맵에 시각적으로 표시
-      UpdateSelectionTile();
-    }
+    //if (Input.GetMouseButtonUp(0))
+    //{
+    //  ClearTile();
+    //  StartCoroutine(GenerateTile());
+    //}
+    //else if (showSelection)
+    //{
+    //  // 드래그 중인 영역을 타일맵에 시각적으로 표시
+    //  UpdateSelectionTile();
+    //}
   }
 
   private void UpdateSelectionTile()

@@ -39,7 +39,7 @@ public class PlowBowl : Structure
   {
     if (base.Init() == false) return false;
 
-    StructureType = FStructureType.PlowBowl;
+    StructureType = FStructureType.Cook;
     StructureSubType = FStructureSubType.PlowBowl;
 
     plantSeed -= PlantSeed;

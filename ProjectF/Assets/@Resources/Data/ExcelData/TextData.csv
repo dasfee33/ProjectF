@@ -1,1 +1,5 @@
-DataId,KOR
+﻿DataId,KOR
+EVENT_CREATUREACTION,%s를 주음
+CUR_TOWNEVOLUTION,현재 마을 발전도 : %d
+TOWNEVOLUTION,발전도 : %d에 해금!
+PLOW_SOMETHING,%s 심기

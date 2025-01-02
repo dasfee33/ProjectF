@@ -62,8 +62,8 @@ public class UI_BaseUnlockPopup : UI_Popup
   public void SetInfo()
   {
     var baseLevel = Managers.Game.SaveData.realGameData.baseLevel;
-    GetText((int)Texts.BaseLevelText).text = $"현재 마을 발전도 : {baseLevel}";
-    GetText((int)Texts.BaseNextLevelUnlock).text = $"발전도  : {baseLevel + 1}에 해금!";
+    GetText((int)Texts.BaseLevelText).text = Managers.Game.GetText("CUR_TOWNEVOLUTION", baseLevel);
+    GetText((int)Texts.BaseNextLevelUnlock).text = Managers.Game.GetText("TOWNEVOLUTION", baseLevel + 1);
 
     foreach(var data in Managers.Data.ResearchDic)
     {

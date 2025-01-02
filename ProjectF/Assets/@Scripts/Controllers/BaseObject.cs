@@ -46,7 +46,7 @@ public class BaseObject : InitBase
     if (Animator == null) Animator = this.GetComponentInChildren<Animator>();
 
     //TEMP
-    SpriteRenderer.sortingOrder = 20;
+    if(SpriteRenderer.sortingOrder == 0) SpriteRenderer.sortingOrder = 20;
 
     return true;
   }

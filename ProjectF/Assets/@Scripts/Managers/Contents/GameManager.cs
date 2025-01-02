@@ -6,6 +6,7 @@ using UnityEngine;
 using BackEnd;
 using static Define;
 using System.Linq;
+using System.Text;
 
 #region SaveData
 
@@ -57,7 +58,7 @@ public class StructSaveData
   public List<StationSaveData> stationSaveData = new List<StationSaveData>();
   public List<BuildObjectFSaveData> buildObjectFSaveData = new List<BuildObjectFSaveData> ();
   public List<PlowBowlSaveData> plowBowlSaveData = new List<PlowBowlSaveData> ();
-  
+  public List<PlowSoilSaveData> plowSoilSaveData = new List<PlowSoilSaveData> ();
 }
 
 #region StructSaveDataBySubType
@@ -124,6 +125,16 @@ public class BuildObjectFSaveData
 }
 
 public class PlowBowlSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class PlowSoilSaveData
 {
   public int dataID;
   public string name;
@@ -330,6 +341,7 @@ public class GameManager
     if (SaveData.structSaveData.stationSaveData.Count > 0) SaveData.structSaveData.stationSaveData.Clear();
     if (SaveData.structSaveData.plowBowlSaveData.Count > 0) SaveData.structSaveData.plowBowlSaveData.Clear();
     if (SaveData.structSaveData.buildObjectFSaveData.Count > 0) SaveData.structSaveData.buildObjectFSaveData.Clear();
+    if (SaveData.structSaveData.plowSoilSaveData.Count > 0) SaveData.structSaveData.plowSoilSaveData.Clear();
 
     foreach (var structure in structures)
     {
@@ -414,6 +426,17 @@ public class GameManager
           plowBowl.posY = structure.transform.position.y;
 
           SaveData.structSaveData.plowBowlSaveData.Add(plowBowl);
+          break;
+        case FStructureSubType.Soil:
+          PlowSoilSaveData plowSoil = new PlowSoilSaveData();
+          plowSoil.dataID = structure.dataTemplateID;
+          plowSoil.name = structure.Name;
+          plowSoil.type = (int)structure.StructureType;
+          plowSoil.subType = (int)structure.StructureSubType;
+          plowSoil.posX = structure.transform.position.x;
+          plowSoil.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.plowSoilSaveData.Add(plowSoil);
           break;
       }
     }
@@ -614,6 +637,17 @@ public class GameManager
           plowBowl.posY = structure.transform.position.y;
 
           SaveData.structSaveData.plowBowlSaveData.Add(plowBowl);
+          break;
+        case FStructureSubType.Soil:
+          PlowSoilSaveData plowSoil = new PlowSoilSaveData();
+          plowSoil.dataID = structure.dataTemplateID;
+          plowSoil.name = structure.Name;
+          plowSoil.type = (int)structure.StructureType;
+          plowSoil.subType = (int)structure.StructureSubType;
+          plowSoil.posX = structure.transform.position.x;
+          plowSoil.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.plowSoilSaveData.Add(plowSoil);
           break;
       }
       //StructSaveData structSaveData = new StructSaveData();
@@ -886,7 +920,17 @@ public class GameManager
         SaveData.structSaveData.plowBowlSaveData.Add(plowbowl);
       }
 
+      foreach (LitJson.JsonData data in structureData["plowSoilSaveData"])
+      {
+        PlowSoilSaveData plowsoil = new PlowSoilSaveData();
+        plowsoil.dataID = int.Parse(data["dataID"].ToString());
+        plowsoil.name = data["name"].ToString();
+        plowsoil.type = int.Parse(data["type"].ToString());
+        plowsoil.posX = float.Parse(data["posX"].ToString());
+        plowsoil.posY = float.Parse(data["posY"].ToString());
 
+        SaveData.structSaveData.plowSoilSaveData.Add(plowsoil);
+      }
 
 
 
@@ -1012,15 +1056,63 @@ public class GameManager
     }
   }
 
-  public string GetText(string textId)
+  public string GetText(string textId, object[] args)
   {
+    string formatStr = "";
+
     switch(_language)
     {
       case FLanguage.Korean:
-        return Managers.Data.TextDic[textId].KOR;
-
+        formatStr = Managers.Data.TextDic[textId].KOR;
+        break;
     }
-    return "";
+
+    int argIndex = 0;
+
+    while(argIndex < args.Length)
+    {
+      if(args[argIndex] is string)
+      {
+        formatStr = formatStr.Replace("%s", args[argIndex]?.ToString() ?? "[Invalid String]");
+      }
+      else if (args[argIndex] is int)
+      {
+        formatStr = formatStr.Replace("%d", args[argIndex]?.ToString() ?? "[Invalid Int]");
+      }
+      else if (args[argIndex] is float || args[argIndex] is double)
+      {
+        formatStr = formatStr.Replace("%f", args[argIndex]?.ToString() ?? "[Invalid Float]");
+      }
+      //TODO
+      argIndex++;
+    }
+    return formatStr;
+  }
+
+  public string GetText(string textId, object args)
+  {
+    string formatStr = "";
+
+    switch (_language)
+    {
+      case FLanguage.Korean:
+        formatStr = Managers.Data.TextDic[textId].KOR;
+        break;
+    }
+
+    if (args is string)
+    {
+      formatStr = formatStr.Replace("%s", args?.ToString() ?? "[Invalid String]");
+    }
+    else if (args is int)
+    {
+      formatStr = formatStr.Replace("%d", args?.ToString() ?? "[Invalid Int]");
+    }
+    else if (args is float || args is double)
+    {
+      formatStr = formatStr.Replace("%f", args?.ToString() ?? "[Invalid Float]");
+    }
+    return formatStr;
   }
   #endregion
 

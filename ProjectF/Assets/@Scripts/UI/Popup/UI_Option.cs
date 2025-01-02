@@ -61,8 +61,9 @@ public class UI_Option : UI_Popup
           switch(structure.StructureSubType)
           {
             case FStructureSubType.PlowBowl:
+            case FStructureSubType.Soil:
               var itemDict = Managers.Object.ItemStorage;
-              foreach(var item in itemDict)
+              foreach (var item in itemDict)
               {
                 if(Managers.Data.ConsumableDic[item.Key].ItemSubType is FItemSubType.Seed)
                 {
@@ -101,7 +102,7 @@ public class UI_Option : UI_Popup
     switch(data.ItemSubType)
     {
       case FItemSubType.Seed:
-        GetText((int)Texts.ActButtonText).text = $"{data.Name} 심기";
+        GetText((int)Texts.ActButtonText).text = Managers.Game.GetText("PLOW_SOMETHING", data.Name);
         GetText((int)Texts.DescText).text = $"{data.DescirptionTextID}";
         break;
     }
