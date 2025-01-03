@@ -38,6 +38,7 @@ public class UI_BuildPopup : UI_Popup
     //FIXME TEMP
     if (Managers.Object.PossStations.Count <= 0)
     {
+      Managers.Object.PossBases.Add(STRUCTURE_WOODFACTORY);
       Managers.Object.PossStations.Add(STRUCTURE_STATION_NORMAL);
       Managers.Object.PossFurnitures.Add(STRUCTURE_BED_NORMAL);
       Managers.Object.PossFurnitures.Add(STRUCTURE_CHEST_NORMAL);

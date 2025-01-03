@@ -126,6 +126,7 @@ public static class Define
     BuildObject,
     PlowBowl,
     Soil,
+    Factory,
   }
 
   public enum FCreatureType
@@ -329,6 +330,7 @@ public static class Define
   public const int STRUCTURE_STATION_NORMAL = 104;
   public const int STRUCTURE_PLOWBOWL_NORMAL = 105;
   public const int STRUCTURE_PLOWSOIL1 = 106;
+  public const int STRUCTURE_WOODFACTORY = 107;
 
   public const string STRUCTURE_BUILD = "_build";
   public const string INFODESC = "infodesc";

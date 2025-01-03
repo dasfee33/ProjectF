@@ -2,11 +2,13 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using System.Collections.Generic;
 
 public class InputManager : InitBase
 {
   private InputSystem inputSystem;
   private PlayerInput PlayerInput;
+  private int pointerID;
 
   public event Action<Vector2, float> startTouch;
   public event Action<Vector2, float> endTouch;
@@ -42,7 +44,7 @@ public class InputManager : InitBase
     touchPressPosition.performed += OnDragging;
 
     //touchPressPosition.performed += OnDragging;
-    
+
     //inputSystem = new InputSystem();
     //inputSystem.Enable();
     //
@@ -52,15 +54,41 @@ public class InputManager : InitBase
     //
     //inputSystem.Touch.TouchPosition.started += StartTouchPosition;
 
+#if UNITY_EDITOR
+    pointerID = -1;
+#elif UNITY_ANDROID || UNITY_IOS || UNITY_IPHONE
+    pointerID = 0;
+#endif
+
     return true;
   }
+
+  private bool OverUIFlag = false;
 
   //FIXME UI 터치 구분 필요
   private bool IsTouchOverUI()
   {
     //int touchId = Touchscreen.current.primaryTouch.touchId.ReadValue();
 
-    return EventSystem.current.IsPointerOverGameObject(/*touchId*/);
+    return EventSystem.current.IsPointerOverGameObject(pointerID);
+  }
+
+  private bool IsPointerOverUIObject()
+  {
+    var touchPos = Touchscreen.current.position.ReadValue();
+
+    PointerEventData eventDataCurrentPosition
+        = new PointerEventData(EventSystem.current) { position = touchPos };
+
+    List<RaycastResult> results = new List<RaycastResult>();
+
+    EventSystem.current
+    .RaycastAll(eventDataCurrentPosition, results);
+
+    if (results.Count > 0) OverUIFlag = true;
+    else OverUIFlag = false;
+
+    return results.Count > 0;
   }
 
   private void StartTouchPosition(InputAction.CallbackContext context)
@@ -70,13 +98,11 @@ public class InputManager : InitBase
 
   private void StartTouch(InputAction.CallbackContext context)
   {
-    if (IsTouchOverUI()) return;
+    if (/*IsTouchOverUI() || */IsPointerOverUIObject()) return;
 
     Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
 
     if (!Camera.main.pixelRect.Contains(touchPos)) return;
-
-    TriggerAtTouchPos(touchPos);
 
     if (startTouch != null)
       startTouch.Invoke(touchPos, (float)context.startTime);
@@ -112,22 +138,28 @@ public class InputManager : InitBase
 
   private void EndTouch(InputAction.CallbackContext context)
   {
-    if (IsTouchOverUI()) return;
+    Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
+
+    if (!Camera.main.pixelRect.Contains(touchPos)) return;
 
     if (endTouch != null)
     {
-      Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
-      if (!Camera.main.pixelRect.Contains(touchPos)) return;
-
       endTouch.Invoke(touchPos, (float)context.time);
     }
+
+    if (/*IsTouchOverUI()*/OverUIFlag) return;
+
+    TriggerAtTouchPos(touchPos);
+
+    
   }
 
   public void OnDragging(InputAction.CallbackContext context)
   {
-    if (IsTouchOverUI()) return;
+    if (/*IsTouchOverUI()*/OverUIFlag) return;
 
     var touchPos = context.ReadValue<Vector2>();
+
     if (!Camera.main.pixelRect.Contains(touchPos)) return;
 
     if (onDragging != null)

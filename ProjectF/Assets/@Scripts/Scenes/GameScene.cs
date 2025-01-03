@@ -84,6 +84,10 @@ public class GameScene : BaseScene
     {
       Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
     }
+    foreach (var structure in structureData.factorySaveData)
+    {
+      Managers.Object.Spawn<Structure>(new Vector3(structure.posX, structure.posY), structure.dataID, structure.name);
+    }
 
     foreach (var ItemHolder in ItemHolderData)
     {

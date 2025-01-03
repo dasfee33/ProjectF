@@ -90,7 +90,7 @@ public class Env : BaseObject
         StartCoroutine(Growth(default_growth));
         break;
       case FEnvType.Trunk:
-        workableJob = FJob.None;
+        workableJob = FJob.Logging;
         StartCoroutine(Regen());
         break;
       //TODO;

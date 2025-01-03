@@ -7,6 +7,13 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Tilemaps;
 using static Define;
 
+public class CellInfo 
+{
+  private BaseObject _obj;
+
+  public BaseObject Obj { get { return _obj; } set { _obj = value; } }
+}
+
 public class MapManager
 {
   public GameObject Map { get; private set; }
@@ -15,7 +22,7 @@ public class MapManager
   public Tilemap tilemap { get; private set; }
   public Vector3 LerpObjectPos { get; private set; }
 
-  Dictionary<Vector3Int, BaseObject> _cells = new Dictionary<Vector3Int, BaseObject>();
+  Dictionary<Vector3Int, CellInfo> _cells = new Dictionary<Vector3Int, CellInfo>();
 
   private int MinX;
   private int MaxX;
@@ -216,8 +223,8 @@ public class MapManager
 
   public BaseObject GetObject(Vector3Int cellPos)
   {
-    _cells.TryGetValue(cellPos, out BaseObject value);
-    return value;
+    _cells.TryGetValue(cellPos, out CellInfo value);
+    return value is null? null : value.Obj;
   }
 
   public BaseObject GetObject(Vector3 worldPos)
@@ -294,7 +301,12 @@ public class MapManager
           return;
         }
 
-        _cells[newCellPos] = obj;
+        if(_cells.TryGetValue(newCellPos, out CellInfo value))
+        {
+          if(value is null) _cells[newCellPos] = new CellInfo() { Obj = obj };
+          else _cells[newCellPos].Obj = obj;
+        }
+        else _cells.Add(newCellPos, new CellInfo() { Obj = obj });
       }
     }
   }
@@ -348,6 +360,25 @@ public class MapManager
       return true;
 
     return false;
+  }
+
+  public bool CanBuild(Vector3 worldPos, BaseObject owner)
+  {
+    return CanBuild(World2Cell(worldPos), owner);
+  }
+
+  public bool CanBuild(Vector3Int cellPos, BaseObject owner)
+  {
+    if (cellPos.x < MinX || cellPos.x > MaxX)
+      return false;
+    if (cellPos.y < MinY || cellPos.y > MaxY)
+      return false;
+
+    BaseObject obj = GetObject(cellPos);
+    if (obj != null && obj != owner)
+      return false;
+
+    return true;
   }
 
   public void ClearObjects()

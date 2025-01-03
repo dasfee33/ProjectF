@@ -69,15 +69,18 @@ public class UI_WorldUITest : UI_Base
       for (int dy = -cellY; dy <= cellY; dy++)
       {
         Vector3Int checkCellPos = new Vector3Int(ownerCellPos.x + dx, ownerCellPos.y + dy);
-        BaseObject prev = Managers.Map.GetObject(checkCellPos);
 
-        if (prev != null && prev != Owner)
+        if(Managers.Map.CanBuild(checkCellPos, Owner))
+        {
+          buildIsReady = true; 
+          Owner.SetColor(COLOR.SMOKEWHITE); return;
+        }
+        else
         {
           buildIsReady = false;
           Owner.SetColor(COLOR.SMOKERED);
           return;
         }
-        else { buildIsReady = true; Owner.SetColor(COLOR.SMOKEWHITE); return; }
       }
     }
   }

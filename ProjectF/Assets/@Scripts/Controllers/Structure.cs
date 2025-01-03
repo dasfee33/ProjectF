@@ -151,6 +151,9 @@ public class Structure : BaseObject
       case FStructureSubType.Soil:
         workableJob = FJob.Plow;
         break;
+      case FStructureSubType.Factory: //TEMP
+        workableJob = FJob.Logging;
+        break;
         //TODO;
     }
   }

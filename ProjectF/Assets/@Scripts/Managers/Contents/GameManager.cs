@@ -59,6 +59,7 @@ public class StructSaveData
   public List<BuildObjectFSaveData> buildObjectFSaveData = new List<BuildObjectFSaveData> ();
   public List<PlowBowlSaveData> plowBowlSaveData = new List<PlowBowlSaveData> ();
   public List<PlowSoilSaveData> plowSoilSaveData = new List<PlowSoilSaveData> ();
+  public List<FactorySaveData> factorySaveData = new List<FactorySaveData> ();
 }
 
 #region StructSaveDataBySubType
@@ -135,6 +136,16 @@ public class PlowBowlSaveData
 }
 
 public class PlowSoilSaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class FactorySaveData
 {
   public int dataID;
   public string name;
@@ -438,6 +449,17 @@ public class GameManager
 
           SaveData.structSaveData.plowSoilSaveData.Add(plowSoil);
           break;
+        case FStructureSubType.Factory:
+          FactorySaveData factory = new FactorySaveData();
+          factory.dataID = structure.dataTemplateID;
+          factory.name = structure.Name;
+          factory.type = (int)structure.StructureType;
+          factory.subType = (int)structure.StructureSubType;
+          factory.posX = structure.transform.position.x;
+          factory.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.factorySaveData.Add(factory);
+          break;
       }
     }
 
@@ -649,6 +671,18 @@ public class GameManager
 
           SaveData.structSaveData.plowSoilSaveData.Add(plowSoil);
           break;
+        case FStructureSubType.Factory:
+          FactorySaveData factory = new FactorySaveData();
+          factory.dataID = structure.dataTemplateID;
+          factory.name = structure.Name;
+          factory.type = (int)structure.StructureType;
+          factory.subType = (int)structure.StructureSubType;
+          factory.posX = structure.transform.position.x;
+          factory.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.factorySaveData.Add(factory);
+          break;
+
       }
       //StructSaveData structSaveData = new StructSaveData();
       //structSaveData.dataID = structure.dataTemplateID;
@@ -930,6 +964,18 @@ public class GameManager
         plowsoil.posY = float.Parse(data["posY"].ToString());
 
         SaveData.structSaveData.plowSoilSaveData.Add(plowsoil);
+      }
+
+      foreach (LitJson.JsonData data in structureData["factorySaveData"])
+      {
+        FactorySaveData factory = new FactorySaveData();
+        factory.dataID = int.Parse(data["dataID"].ToString());
+        factory.name = data["name"].ToString();
+        factory.type = int.Parse(data["type"].ToString());
+        factory.posX = float.Parse(data["posX"].ToString());
+        factory.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.factorySaveData.Add(factory);
       }
 
 

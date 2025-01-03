@@ -202,6 +202,35 @@
       "extraCellY": 0,
       "option": 1,
       "Grade": 0
+    },
+    {
+      "DataId": 107,
+      "Name": "WoodFactory",
+      "DescriptionTextID": "기본나무 생산시설",
+      "Label": "Structure",
+      "type": "Base",
+      "subType": "Factory",
+      "Sprite": "woodFactory",
+      "maxHp": 500.0,
+      "WorkTime": 10.0,
+      "BuildTime": 60.0,
+      "Idle": null,
+      "WorkStart": null,
+      "Work": null,
+      "WorkEnd": null,
+      "buildItemId": [
+        400000
+      ],
+      "buildItemMass": [
+        500.0
+      ],
+      "supplyItemid": null,
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 2,
+      "extraCellY": 1,
+      "option": 0,
+      "Grade": 0
     }
   ]
 }
