@@ -848,6 +848,7 @@ public class Creature : BaseObject
   protected virtual void JobPlow(float distance)
   {
     var targetScr = Target as Env;
+
     if (targetScr != null)
     {
       if (!targetScr.harvestIsReady)
@@ -940,9 +941,9 @@ public class Creature : BaseObject
           else
           {
             //2. 땅에 떨어진것 찾음
-            supplyTarget = jobSystem.CurrentRootJob(FJob.Supply);
+            supplyTarget = jobSystem.CurrentRootJob(FJob.Supply, item.Key);
             var supplyTargetScr = supplyTarget as ItemHolder;
-            if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && item.Key == supplyTarget.dataTemplateID && supplyTargetScr.isDropped)
+            if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.isDropped)
             {
               ChaseOrAttackTarget(100, distance, supplyTarget);
             }

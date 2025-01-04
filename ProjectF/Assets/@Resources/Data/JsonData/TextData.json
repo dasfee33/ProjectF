@@ -15,6 +15,14 @@
     {
       "DataId": "PLOW_SOMETHING",
       "KOR": "%s 심기"
+    },
+    {
+      "DataId": "BUILD_NOTDECIDE",
+      "KOR": "다른 건축물 건설 결정이 이루어지지 않았습니다."
+    },
+    {
+      "DataId": "BUILD_INVALID",
+      "KOR": "해당 위치에 지을 수 없습니다."
     }
   ]
 }

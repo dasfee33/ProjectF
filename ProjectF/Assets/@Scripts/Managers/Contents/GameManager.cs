@@ -1135,7 +1135,7 @@ public class GameManager
     return formatStr;
   }
 
-  public string GetText(string textId, object args)
+  public string GetText(string textId, object args = null)
   {
     string formatStr = "";
 
@@ -1146,18 +1146,22 @@ public class GameManager
         break;
     }
 
-    if (args is string)
+    if(args is not null)
     {
-      formatStr = formatStr.Replace("%s", args?.ToString() ?? "[Invalid String]");
+      if (args is string)
+      {
+        formatStr = formatStr.Replace("%s", args?.ToString() ?? "[Invalid String]");
+      }
+      else if (args is int)
+      {
+        formatStr = formatStr.Replace("%d", args?.ToString() ?? "[Invalid Int]");
+      }
+      else if (args is float || args is double)
+      {
+        formatStr = formatStr.Replace("%f", args?.ToString() ?? "[Invalid Float]");
+      }
     }
-    else if (args is int)
-    {
-      formatStr = formatStr.Replace("%d", args?.ToString() ?? "[Invalid Int]");
-    }
-    else if (args is float || args is double)
-    {
-      formatStr = formatStr.Replace("%f", args?.ToString() ?? "[Invalid Float]");
-    }
+    
     return formatStr;
   }
   #endregion

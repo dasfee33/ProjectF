@@ -89,7 +89,7 @@ public class ObjectManager
   public Transform StructureRoot { get { return GetRootTransform("@Structures"); } }
   public Transform BuildObjectRoot { get { return GetRootTransform("@BuildObjects"); } }
 
-  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true, Vector3 dropPos = default(Vector3), BaseObject Owner = null, bool isFarm = false) where T : BaseObject
+  public T Spawn<T>(Vector3 position, int dataID, string prefabName = null, bool addToCell = true, Vector3 dropPos = default(Vector3), BaseObject Owner = null, bool isFarm = false, bool buildDirectly = false) where T : BaseObject
   {
     if(string.IsNullOrEmpty(prefabName)) prefabName = typeof(T).Name;
 
@@ -177,6 +177,12 @@ public class ObjectManager
       Workables.Add(obj);
 
       build.SetInfo(dataID, Managers.Data.StructDic[dataID].buildItemId, Managers.Data.StructDic[dataID].buildItemMass);
+      //ITEM
+      if (dataID >= 100000 && buildDirectly)
+      {
+        var worldUI = build.gameObject.GetComponentInChildren<UI_WorldUITest>();
+        worldUI.Confirm();
+      }
     }
     //TODO
 

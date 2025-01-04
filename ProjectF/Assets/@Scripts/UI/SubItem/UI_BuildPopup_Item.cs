@@ -49,13 +49,13 @@ public class UI_BuildPopup_Item : UI_Base
   {
     var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
     if (toolBase == null) return;
-    if (toolBase.objData.DataId != 0)
+    if (toolBase.onBuild)
     {
-      Managers.Event.Notice("다른 건축물 건설 결정이 이루어지지 않았습니다.");
+      Managers.Event.Notice(Managers.Game.GetText("BUILD_NOTDECIDE"));
       return;
     }
-    toolBase.objData = data;
-    toolBase.isBuild = true;
+
+    toolBase.SpawnBuildObject(data);
 
   }
 

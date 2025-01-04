@@ -169,7 +169,7 @@ public class BuildObject : Structure
 
   protected override void UpdateWorkEnd()
   {
-    StopCoroutine(sliderUI.coBuild);
+    if(sliderUI.coBuild is not null) StopCoroutine(sliderUI.coBuild);
     sliderUI.gameObject.SetActive(false);
     Worker.ResetJob();
     

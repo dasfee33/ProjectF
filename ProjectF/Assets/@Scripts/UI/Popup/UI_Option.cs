@@ -112,17 +112,31 @@ public class UI_Option : UI_Popup
   {
     if(curData != null)
     {
-      switch(curData.ItemSubType)
+      var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
+
+      switch(Owner)
       {
-        case FItemSubType.Seed:
-          var owner = Owner as PlowBowl;
-          if(owner != null)
-          {
-            owner.plantSeed.Invoke(curData);
-            Cancel();
-          }
+        case PlowBowl plowBowl:
+          toolBase.SpawnBuildObject(curData, plowBowl.plantPort.position, true);
+          break;
+        case PlowSoil plowSoil:
+          toolBase.SpawnBuildObject(curData, plowSoil.plantPort.position, true);
           break;
       }
+
+      Cancel();
+
+      //switch(curData.ItemSubType)
+      //{
+      //  case FItemSubType.Seed:
+      //    var owner = Owner as PlowBowl;
+      //    if(owner != null)
+      //    {
+      //      owner.plantSeed.Invoke(curData);
+      //      Cancel();
+      //    }
+      //    break;
+      //}
     }
   }
 }

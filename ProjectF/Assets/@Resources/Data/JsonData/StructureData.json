@@ -231,6 +231,35 @@
       "extraCellY": 1,
       "option": 0,
       "Grade": 0
+    },
+    {
+      "DataId": 100003,
+      "Name": "KickPlant",
+      "DescriptionTextID": "재배되는 끼익 식물",
+      "Label": null,
+      "type": null,
+      "subType": null,
+      "Sprite": "kick5",
+      "maxHp": 0.0,
+      "WorkTime": 0.0,
+      "BuildTime": 1.0,
+      "Idle": null,
+      "WorkStart": null,
+      "Work": null,
+      "WorkEnd": null,
+      "buildItemId": [
+        400003
+      ],
+      "buildItemMass": [
+        5.0
+      ],
+      "supplyItemid": null,
+      "supplyItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0,
+      "option": 0,
+      "Grade": 0
     }
   ]
 }

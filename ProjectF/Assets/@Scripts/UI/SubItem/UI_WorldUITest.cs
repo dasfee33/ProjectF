@@ -40,7 +40,7 @@ public class UI_WorldUITest : UI_Base
     {
       Managers.Object.Despawn(Owner);
       var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
-      toolBase.objData = new Data.StructureData();
+      toolBase.onBuild = false;
     }
   }
 
@@ -92,7 +92,7 @@ public class UI_WorldUITest : UI_Base
 
     if(!buildIsReady)
     {
-      Managers.Event.Notice("해당 위치에 지을 수 없습니다.");
+      Managers.Event.Notice(Managers.Game.GetText("BUILD_INVALID"));
       return;
     }
 
@@ -101,7 +101,19 @@ public class UI_WorldUITest : UI_Base
     Managers.Game.OnJobAbleChanged(Owner.workableJob, true);
 
     var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
-    toolBase.objData = new Data.StructureData();
+    toolBase.onBuild = false;
+
+    this.gameObject.SetActive(false);
+  }
+
+  public void Confirm()
+  {
+    Owner.setFlag = true;
+    //Managers.Map.AddObject(Owner, Owner.GetCellPos());
+    Managers.Game.OnJobAbleChanged(Owner.workableJob, true);
+
+    var toolBase = Managers.Map.Map.GetComponent<ToolBase>();
+    toolBase.onBuild = false;
 
     this.gameObject.SetActive(false);
   }

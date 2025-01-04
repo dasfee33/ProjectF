@@ -149,7 +149,7 @@ public class Structure : BaseObject
         workableJob = FJob.Plow;
         break;
       case FStructureSubType.Soil:
-        workableJob = FJob.Plow;
+        workableJob = FJob.None;
         break;
       case FStructureSubType.Factory: //TEMP
         workableJob = FJob.Logging;

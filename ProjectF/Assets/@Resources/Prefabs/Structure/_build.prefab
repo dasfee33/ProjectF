@@ -406,6 +406,7 @@ MonoBehaviour:
     extraCellX: 0
     extraCellY: 0
     option: 0
+    Grade: 0
   Storage: []
   selectUI: {fileID: 725199453243986085}
   sliderUI: {fileID: 2969152989237179343}

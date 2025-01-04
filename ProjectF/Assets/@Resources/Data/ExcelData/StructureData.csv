@@ -7,3 +7,4 @@
 105,PlowBowl,식물을 기를 수 있는 그릇,Structure,Cook,PlowBowl,PlowBowlSprite,100,5,10,,,,,400000,10,,,,,,1,
 106,PlowSoil1,보통 토양,Structure,Cook,Soil,PlowSoil1Sprite,100,5,5,,,,,400000,10,,,,,,1,
 107,WoodFactory,기본나무 생산시설,Structure,Base,Factory,woodFactory,500,10,60,,,,,400000,500,,,,2,1,0,
+100003,KickPlant,재배되는 끼익 식물,,,,kick5,,,1,,,,,400003,5,,,,,,,

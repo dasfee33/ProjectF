@@ -52,7 +52,7 @@ public class JobSystem : InitBase
     
   }
 
-  public BaseObject CurrentRootJob(FJob job)
+  public BaseObject CurrentRootJob(FJob job, int dataID = -1)
   {
     if (supplyTargets.All(item => item == null))
     {
@@ -66,6 +66,7 @@ public class JobSystem : InitBase
       if (t == null) continue;
       var itemHolder = t.GetComponent<ItemHolder>();
       if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
+      if (dataID != -1 && itemHolder.dataTemplateID != dataID) continue; 
       if (!itemHolder.isDropped) continue;
       if (itemHolder.stack <= 0) continue;
 
