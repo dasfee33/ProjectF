@@ -114,7 +114,7 @@ public class Managers : MonoBehaviour
   private void OnApplicationQuit()
   {
     Debug.Log("게임 종료.");
-    Managers.Game.GameDataUpdate();
+    Managers.Game.UpdateGame();
   }
 
 }

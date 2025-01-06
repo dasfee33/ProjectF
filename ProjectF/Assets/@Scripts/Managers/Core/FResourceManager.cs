@@ -27,7 +27,6 @@ public class FResourceManager
       }
       //return sprite as T;
 
-
     }
 
     if (_resources.TryGetValue(key, out Object resource))

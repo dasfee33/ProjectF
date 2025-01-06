@@ -140,6 +140,7 @@ public class BuildObject : Structure
       if (value != 0) return;
     }
     workableJob = FJob.Make;
+    Worker.SetJobIsAble(FJob.Make, true);
   }
 
   protected override void UpdateIdle()

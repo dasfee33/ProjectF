@@ -170,6 +170,9 @@ namespace Data
     public List<int> supplyItemid;
     public List<float> supplyItemMass;
 
+    public List<int> makeItemid;
+    public List<float> makeItemMass;
+
     public float maxCapacity;
     public int extraCellX;
     public int extraCellY;

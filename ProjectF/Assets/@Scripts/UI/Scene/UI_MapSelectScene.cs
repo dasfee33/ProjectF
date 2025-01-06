@@ -29,6 +29,7 @@ public class UI_MapSelectScene : UI_Scene
 
     Managers.Resource.LoadAllAsync<Object>("PreLoad", () =>
     {
+      Managers.Game.LoadGame();
       GetButton((int)Buttons.GoButton).gameObject.SetActive(true);
     });
 

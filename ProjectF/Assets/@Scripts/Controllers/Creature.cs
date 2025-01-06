@@ -106,7 +106,7 @@ public class Creature : BaseObject
     else _target = target;
 
     Vector3 dir = (_target.transform.position - transform.position);
-    float distToTarget = Math.Max(0, dir.magnitude - _target.ExtraCellsX * 1f - ExtraCellsX * 1f); // TEMP
+    float distToTarget = Math.Max(0, dir.magnitude);
     return distToTarget * distToTarget;
   }
 
@@ -856,6 +856,73 @@ public class Creature : BaseObject
         SetJobIsAble(job, false);
         ResetJob();
       }
+      else
+      {
+        ChaseOrAttackTarget(100, distance);
+      }
+    }
+    else
+    {
+      SetJobIsAble(job, false);
+      ResetJob();
+    }
+  }
+
+  protected virtual void JobMachine(float distance)
+  {
+    var targetScr = Target as Factory;
+
+    if(targetScr is not null)
+    {
+      // 만드는데에 재료가 필요할 때
+      if(targetScr.curMakeNeedList is not null)
+      {
+        foreach (var supplyItem in targetScr.curMakeNeedList)
+        {
+          // 소지품 검사
+          if (SearchHaveList(supplyItem.Key))
+          {
+            ChaseOrAttackTarget(100, distance);
+          }
+          else
+          {
+            //1. 창고에서 찾음
+            supplyTarget = FindStorageInRange(supplyItem.Key, 10, Managers.Object.Structures, IsValid);
+            if (supplyTarget != null)
+            {
+              var storage = supplyTarget as Storage;
+              // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
+              if (storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey("id"))
+              {
+                var supply = storage.storageItem.ReturnProperty("id", supplyItem.Key);
+                if (supply != null)
+                {
+                  storage.takeItem = new KeyValuePair<int, float>(supplyItem.Key, supplyItem.Value);
+                  storage.Worker = this;
+                  ChaseOrAttackTarget(100, distance, supplyTarget);
+                }
+              }
+            }
+            else
+            {
+              //2. 땅에 떨어진것 찾음
+              supplyTarget = jobSystem.CurrentRootJob(FJob.Supply, supplyItem.Key);
+              var supplyTargetScr = supplyTarget as ItemHolder;
+              if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.isDropped)
+              {
+                ChaseOrAttackTarget(100, distance, supplyTarget);
+              }
+              else
+              {
+                //아무데도 없는 경우 => 리셋
+                SetJobIsAble(job, false);
+                ResetJob();
+              }
+            }
+          }
+        }
+      }
+      // 만드는데에 재료가 필요하지 않을 때
       else
       {
         ChaseOrAttackTarget(100, distance);

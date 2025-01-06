@@ -41,7 +41,6 @@ public class ItemHolder : BaseObject
     dataTemplateID = itemDataId;
     data = Managers.Data.ItemDic[itemDataId];
     currentSprite.sprite = Managers.Resource.Load<Sprite>($"{data.Name}");
-    currentSprite.sortingOrder = 19;
     maxStack = data.maxStack;
     defaultMass = data.Mass;
     label = data.Label;

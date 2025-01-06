@@ -112,6 +112,7 @@ public static class Define
     Electronic,
     Station,
     Cook,
+    Machine,
     BuildObject,
   }
 

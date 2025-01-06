@@ -134,6 +134,7 @@ public class Warrior : Creature
           case FJob.Supply: JobSupply(MinActionDistance); break;
           case FJob.Make: JobMake(MinActionDistance); break;
           case FJob.Plow: JobPlow(MinActionDistance); break;
+          case FJob.Machine: JobMachine(MinActionDistance); break;
 
           case FPersonalJob.Sleepy: JobSleepy(MinActionDistance); break;
           case FPersonalJob.Hungry: JobHungry(MinActionDistance); break;

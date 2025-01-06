@@ -75,7 +75,7 @@ public class Structure : BaseObject
     return true;
   }
 
-  public void SetInfo(int dataID)
+  public virtual void SetInfo(int dataID)
   {
     dataTemplateID = dataID;
     data = Managers.Data.StructDic[dataID];
@@ -151,8 +151,8 @@ public class Structure : BaseObject
       case FStructureSubType.Soil:
         workableJob = FJob.None;
         break;
-      case FStructureSubType.Factory: //TEMP
-        workableJob = FJob.Logging;
+      case FStructureSubType.Factory:
+        workableJob = FJob.Machine;
         break;
         //TODO;
     }

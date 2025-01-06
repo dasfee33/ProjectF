@@ -65,6 +65,7 @@ public class ObjectManager
   public List<Structure> Electronincs { get; } = new List<Structure> ();
   public List<Structure> Stations { get; } = new List<Structure> ();
   public List<Structure> Cooks { get; } = new List<Structure> ();
+  public List<Structure> Factories { get; } = new List<Structure> ();
 
   public List<int> PossPipes { get; } = new List<int>();
   public List<int> PossFurnitures { get; } = new List<int>();
@@ -144,28 +145,12 @@ public class ObjectManager
       Structures.Add(structure);
       Workables.Add(obj);
 
-      if (structure.StructureType == FStructureType.Pipe)
-      {
-        Pipes.Add(structure);
-      }
-      else if (structure.StructureType == FStructureType.Furniture)
-      {
-        Furnitures.Add(structure);
-      }
-      else if (structure.StructureType == FStructureType.Electronic)
-      {
-        Electronincs.Add(structure);
-      }
-      else if (structure.StructureType == FStructureType.Base)
-      {
-        Bases.Add(structure);
-      }
-      else if(structure.StructureType == FStructureType.Cook)
-      {
-        Cooks.Add(structure);
-      }
-
-
+      if (structure.StructureType == FStructureType.Pipe) Pipes.Add(structure);
+      else if (structure.StructureType == FStructureType.Furniture) Furnitures.Add(structure);
+      else if (structure.StructureType == FStructureType.Electronic) Electronincs.Add(structure);
+      else if (structure.StructureType == FStructureType.Base) Bases.Add(structure);
+      else if(structure.StructureType == FStructureType.Cook) Cooks.Add(structure);
+      else if(structure.StructureType == FStructureType.Machine) Factories.Add(structure);
 
       structure.SetInfo(dataID);
     }
