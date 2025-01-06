@@ -98,6 +98,11 @@ public static class Extension
     UI_Base.BindEvent(go, action, type);
   }
 
+  public static void RemoveEvent(this GameObject go, Action<PointerEventData> action = null, Define.FUIEvent type = Define.FUIEvent.Click)
+  {
+    UI_Base.RemoveEvent(go, action, type);
+  }
+
   public static bool IsValid(this GameObject go)
   {
     return go != null && go.activeSelf;

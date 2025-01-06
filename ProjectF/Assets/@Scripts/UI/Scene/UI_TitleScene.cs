@@ -17,9 +17,9 @@ public class UI_TitleScene : UI_Scene
     AskingDownload,
     Downloading,
     DownloadFinished,
-    ResourceGenerated,
+    //ResourceGenerated,
 
-    AllFinished,
+    //AllFinished,
   }
 
   enum Objects
@@ -90,8 +90,8 @@ public class UI_TitleScene : UI_Scene
       evt.SizeDownloadedListener += OnSizeDownloaded;
       evt.DownloadProgressListener += OnDownloadProgress;
       evt.DownloadFinished += OnDownloadFinished;
-      evt.ResourceListGenerateListener += OnResourceGenerated;
-      evt.ResourceListGenerateFinished += OnResourceGeneratedFinished;
+      //evt.ResourceListGenerateListener += OnResourceGenerated;
+      //evt.ResourceListGenerateFinished += OnResourceGeneratedFinished;
     });
   }
 
@@ -106,13 +106,10 @@ public class UI_TitleScene : UI_Scene
         GetObject((int)Objects.DownloadConfirm).SetActive(true);
         break;
       case DownloadState.Downloading:
-      case DownloadState.ResourceGenerated:
+      //case DownloadState.ResourceGenerated:
         GetSlider((int)Sliders.DownloadSlider).gameObject.SetActive(true);
         break;
-      case DownloadState.AllFinished:
-        GetButton((int)Buttons.Startarea).enabled = true;
-        GetButton((int)Buttons.Startarea).interactable = true;
-        GetText((int)Texts.Gamestart).gameObject.SetActive(true);
+      case DownloadState.DownloadFinished:
         break;
       default: break;
     }
@@ -133,7 +130,7 @@ public class UI_TitleScene : UI_Scene
     else if(CurrentState == DownloadState.NothingToDownload)
     {
       descText.text = "이미 최신버전입니다.";
-      SetState(DownloadState.ResourceGenerated, true);
+      SetState(DownloadState.DownloadFinished, true);
     }
     else if(CurrentState == DownloadState.AskingDownload)
     {
@@ -141,25 +138,38 @@ public class UI_TitleScene : UI_Scene
     }
     else if(CurrentState == DownloadState.Downloading)
     {
-      descText.text = $"{progressInfo.totalProgress}% / {progressInfo.downloadedBytes} / {progressInfo.remainBytes} / {progressInfo.totalBytes}";
+      descText.text = $"{progressInfo.totalProgress * 100}% / {progressInfo.downloadedBytes} / {progressInfo.remainBytes} / {progressInfo.totalBytes}";
       GetSlider((int)Sliders.DownloadSlider).value = progressInfo.totalProgress;
     }
+    //else if(CurrentState == DownloadState.DownloadFinished)
+    //{
+    //  SetState(DownloadState.ResourceGenerated, true);
+    //}
+    //else if (CurrentState == DownloadState.ResourceGenerated)
+    //{
+    //  if (rprogressInfo.totalCount <= 0) return;
+    //  descText.text = $"{rprogressInfo.count} / {rprogressInfo.totalCount}";
+    //  GetSlider((int)Sliders.DownloadSlider).value = rprogressInfo.count / rprogressInfo.totalCount;
+    //}
     else if(CurrentState == DownloadState.DownloadFinished)
     {
-      SetState(DownloadState.ResourceGenerated, true);
-    }
-    else if (CurrentState == DownloadState.ResourceGenerated)
-    {
-      if (rprogressInfo.totalCount <= 0) return;
-      descText.text = $"{rprogressInfo.count} / {rprogressInfo.totalCount}";
-      GetSlider((int)Sliders.DownloadSlider).value = rprogressInfo.count / rprogressInfo.totalCount;
-    }
-    else if(CurrentState == DownloadState.AllFinished)
-    {
-      GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
+      GetButton((int)Buttons.Confirm).gameObject.RemoveEvent(OnClickStartDownload);
+
+      GetButton((int)Buttons.Confirm).gameObject.BindEvent((evt) =>
       {
-        Debug.Log("Change Scene");
-        Managers.Scene.LoadScene(FScene.TitleRestScene);
+        var startArea = GetButton((int)Buttons.Startarea);
+        startArea.enabled = true;
+        startArea.interactable = true;
+        GetText((int)Texts.Gamestart).gameObject.SetActive(true);
+
+        GetButton((int)Buttons.Startarea).gameObject.BindEvent((evt) =>
+        {
+          Debug.Log("Change Scene");
+          Managers.Scene.LoadScene(FScene.TitleRestScene);
+        }, FUIEvent.Click);
+
+        GetObject((int)Objects.DownloadConfirm).SetActive(false);
+
       }, FUIEvent.Click);
     }
   }
@@ -229,22 +239,22 @@ public class UI_TitleScene : UI_Scene
     Downloader.GoNext();
   }
 
-  private void OnResourceGenerated(ResourceProgrerssStatus resourceStatus)
-  {
-    rprogressInfo = resourceStatus;
+  //private void OnResourceGenerated(ResourceProgrerssStatus resourceStatus)
+  //{
+  //  rprogressInfo = resourceStatus;
 
-    UpdateUI();
-  }
+  //  UpdateUI();
+  //}
 
-  private void OnResourceGeneratedFinished()
-  {
-    Managers.Data.Init();
+  //private void OnResourceGeneratedFinished()
+  //{
+  //  Managers.Data.Init();
 
-    Managers.Game.LoadGame();
+  //  Managers.Game.LoadGame();
 
-    SetState(DownloadState.AllFinished, true);
-    Downloader.GoNext();
-  }
+  //  SetState(DownloadState.AllFinished, true);
+  //  Downloader.GoNext();
+  //}
 
 
   //private void StartLoadAssets()

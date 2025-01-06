@@ -14,20 +14,20 @@ public class FResourceManager
   public T Load<T>(string key) where T : Object
   {
     
-
     if (typeof(T) == typeof(Sprite) && key.Contains(".sprite") == false)
     {
       // 리소스가 Texture2D로 로드되었을 가능성이 있다면, 이를 Sprite로 변환
       if (_resources.TryGetValue($"{key}.sprite", out var sprite))
-        return sprite as T;
+      {
+        var texture = _resources[$"{key}.sprite"] as Texture2D;
+        if (texture != null)
+        {
+          return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f) as T;
+        }
+      }
+      //return sprite as T;
 
-      //var texture = _resources[key] as Texture2D;
-      //if (texture != null)
-      //{
-      //  texture.
 
-      //  return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f) as T;
-      //}
     }
 
     if (_resources.TryGetValue(key, out Object resource))
@@ -83,13 +83,13 @@ public class FResourceManager
     var asyncOperation = Addressables.LoadAssetAsync<T>(loadKey);
     asyncOperation.Completed += (op) =>
     {
-      _resources.Add(key, op.Result);
-      _handles.Add(key, asyncOperation);
+      if(!_resources.ContainsKey(key)) _resources.Add(key, op.Result);
+      if(!_handles.ContainsKey(key)) _handles.Add(key, asyncOperation);
       callback?.Invoke(op.Result);
     };
   }
 
-  public void LoadAllAsync<T>(string label, Action<string, int, int> callback) where T : UnityEngine.Object
+  public void LoadAllAsync<T>(string label, Action callback) where T : UnityEngine.Object
   {
     Addressables.InitializeAsync().Completed += (op) =>
     {
@@ -105,7 +105,8 @@ public class FResourceManager
           LoadAsync<T>(result.PrimaryKey, (obj) =>
           {
             loadCount++;
-            callback?.Invoke(result.PrimaryKey, loadCount, totalCount);
+            if (loadCount == totalCount)
+              callback?.Invoke();
           });
         }
       };

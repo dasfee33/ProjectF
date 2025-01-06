@@ -108,4 +108,25 @@ public class UI_Base : InitBase
         break;
     }
   }
+
+  public static void RemoveEvent(GameObject go, Action<PointerEventData> action = null, Define.FUIEvent type = Define.FUIEvent.Click)
+  {
+    UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
+
+    switch (type)
+    {
+      case Define.FUIEvent.Click:
+        evt.OnClickHandler -= action;
+        break;
+      case Define.FUIEvent.PointerDown:
+        evt.OnPointerDownHandler -= action;
+        break;
+      case Define.FUIEvent.PointerUp:
+        evt.OnPointerUpHandler -= action;
+        break;
+      case Define.FUIEvent.Drag:
+        evt.OnDragHandler -= action;
+        break;
+    }
+  }
 }

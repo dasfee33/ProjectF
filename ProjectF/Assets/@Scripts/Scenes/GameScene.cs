@@ -10,12 +10,11 @@ public class GameScene : BaseScene
     if (base.Init() == false) return false;
 
     SceneType = Define.FScene.GameScene;
+    Managers.Data.Init();
 
     Managers.Map.LoadMap("BaseMap");
-    //Managers.RandomSeedGenerate.GenerateMaps();
-
     //저장 된 데이터가 있습니다.
-    if(Managers.Game.LoadFlag)
+    if (Managers.Game.LoadFlag)
     {
       ParseSaveData();
     }
@@ -23,6 +22,7 @@ public class GameScene : BaseScene
     {
       Managers.Game.InitGame();
     }
+
 
     //CameraController camera = Camera.main.GetComponent<CameraController>();
     //if (Managers.Object.Creatures.Count > 0)

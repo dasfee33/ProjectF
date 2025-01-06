@@ -219,10 +219,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1077736451074435032, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2341775996381418052, guid: 4e52c711b60dbe64db744ac7ab0a86f5, type: 3}
       propertyPath: m_Name
       value: UI_TitleScene

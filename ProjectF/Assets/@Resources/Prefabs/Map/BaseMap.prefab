@@ -18682,38 +18682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8a566f88f73db44ba8ff7c96f4744c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToolLayerList:
-  - {fileID: 679530749471022090}
-  - {fileID: 3912260266317575552}
-  ToolList:
-  - {fileID: 7199444348138682998}
-  - {fileID: 8465701667053803685}
-  isBuild: 0
-  isPlow: 0
-  objData:
-    DataId: 0
-    Name: 
-    DescriptionTextID: 
-    Label: 
-    type: 
-    subType: 
-    Sprite: 
-    maxHp: 0
-    WorkTime: 0
-    BuildTime: 0
-    Idle: 
-    WorkStart: 
-    Work: 
-    WorkEnd: 
-    buildItemId: 
-    buildItemMass: []
-    supplyItemid: 
-    supplyItemMass: []
-    maxCapacity: 0
-    extraCellX: 0
-    extraCellY: 0
-    option: 0
-    Grade: 0
+  onBuild: 0
 --- !u!1 &2725284060997560086
 GameObject:
   m_ObjectHideFlags: 0

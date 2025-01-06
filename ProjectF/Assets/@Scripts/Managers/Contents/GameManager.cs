@@ -265,8 +265,11 @@ public class GameManager
     BackendReturnObject bro = null;
     if (string.IsNullOrEmpty(gameDataRowInData))
     {
-      Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
-      bro = Backend.GameData.Update("TEST_DATA", new Where(), param);
+      //Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
+      //bro = Backend.GameData.Update("TEST_DATA", new Where(), param);
+
+      Debug.Log("업데이트 할 게임 정보 데이터가 없습니다.");
+      return;
     }
     else
     {

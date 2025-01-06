@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine;
 using static Define;
 
 public class UI_MapSelectScene : UI_Scene
@@ -24,6 +25,14 @@ public class UI_MapSelectScene : UI_Scene
     BindTexts(typeof(Texts));
 
     GetButton((int)Buttons.GoButton).gameObject.BindEvent(ClickGoButton, FUIEvent.Click);
+
+
+    Managers.Resource.LoadAllAsync<Object>("PreLoad", () =>
+    {
+      GetButton((int)Buttons.GoButton).gameObject.SetActive(true);
+    });
+
+
 
     return true;
   }

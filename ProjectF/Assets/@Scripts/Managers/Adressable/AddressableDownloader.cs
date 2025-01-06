@@ -102,92 +102,93 @@ public class AddressableDownloader
     Debug.Log("StartDownLoad");
     DownloadHandle = Addressables.DownloadDependenciesAsync(LabelToDownload);
     DownloadHandle.Completed += OnDependenciesDownloaded;
+    Addressables.Release(DownloadHandle);
   }
 
-  public void ResourceListGenerated()
-  {
-    Debug.Log("ResourceListGenerated");
+  //public void ResourceListGenerated()
+  //{
+  //  Debug.Log("ResourceListGenerated");
 
-    //다운로드가 완료되면 리소스 로케이션을 먼저 로드
-    Addressables.LoadResourceLocationsAsync(LabelToDownload, typeof(UnityEngine.Object)).Completed += op =>
-    {
-      if (op.Status == AsyncOperationStatus.Succeeded)
-      {
-        float loadCount = 0;
-        float totalCount = op.Result.Count;
+  //  //다운로드가 완료되면 리소스 로케이션을 먼저 로드
+  //  Addressables.LoadResourceLocationsAsync(LabelToDownload, typeof(UnityEngine.Object)).Completed += op =>
+  //  {
+  //    if (op.Status == AsyncOperationStatus.Succeeded)
+  //    {
+  //      float loadCount = 0;
+  //      float totalCount = op.Result.Count;
 
-        // 로드된 리소스 위치 정보를 순회
-        foreach (var location in op.Result)
-        {
-          Debug.Log(location.PrimaryKey);
-          // 각 위치에서 에셋을 비동기적으로 로드
-          if(location.PrimaryKey.Contains(".sprite"))
-          {
-            LoadAsync<Sprite>(location.PrimaryKey, (obj) =>
-            {
-              loadCount++;
-              Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
-              if (loadCount == totalCount) OnResourceGenerateFinished();
-            });
-          }
-          else LoadAsync<UnityEngine.Object>(location.PrimaryKey, (obj) =>
-          {
-            loadCount++;
-            Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
-            if (loadCount == totalCount) OnResourceGenerateFinished();
-          });
+  //      // 로드된 리소스 위치 정보를 순회
+  //      foreach (var location in op.Result)
+  //      {
+  //        Debug.Log(location.PrimaryKey);
+  //        // 각 위치에서 에셋을 비동기적으로 로드
+  //        if (location.PrimaryKey.Contains(".sprite"))
+  //        {
+  //          LoadAsync<Sprite>(location.PrimaryKey, (obj) =>
+  //          {
+  //            loadCount++;
+  //            Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
+  //            if (loadCount == totalCount) OnResourceGenerateFinished();
+  //          });
+  //        }
+  //        else LoadAsync<UnityEngine.Object>(location.PrimaryKey, (obj) =>
+  //        {
+  //          loadCount++;
+  //          Events.NotifyResourceListGenerate(new ResourceProgrerssStatus(loadCount, totalCount));
+  //          if (loadCount == totalCount) OnResourceGenerateFinished();
+  //        });
 
-          //Addressables.LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey).Completed += op =>
-          //{
-          //  if (op.Status == AsyncOperationStatus.Succeeded)
-          //  {
-          //    var key = location.PrimaryKey;
-          //    // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
-          //    if (!Managers.Resource._resources.ContainsKey(key))
-          //      Managers.Resource._resources.Add(location.PrimaryKey, op.Result);
+  //        //Addressables.LoadAssetAsync<UnityEngine.Object>(location.PrimaryKey).Completed += op =>
+  //        //{
+  //        //  if (op.Status == AsyncOperationStatus.Succeeded)
+  //        //  {
+  //        //    var key = location.PrimaryKey;
+  //        //    // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
+  //        //    if (!Managers.Resource._resources.ContainsKey(key))
+  //        //      Managers.Resource._resources.Add(location.PrimaryKey, op.Result);
 
-          //    loadCount++;
-          //    Events.NotifyResourceListGenerate(
-          //      new ResourceProgrerssStatus(
-          //        loadCount,
-          //        totalCount
-          //        ));
-          //    if(loadCount == totalCount)
-          //    {
-          //      OnResourceGenerateFinished();
-          //    }
-          //  }
-          //  else
-          //  {
-          //    Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
-          //  }
-          //};
-        }
-      }
-      else
-      {
-        Debug.LogError("Failed to load resource locations.");
-      }
-    };
-  }
+  //        //    loadCount++;
+  //        //    Events.NotifyResourceListGenerate(
+  //        //      new ResourceProgrerssStatus(
+  //        //        loadCount,
+  //        //        totalCount
+  //        //        ));
+  //        //    if(loadCount == totalCount)
+  //        //    {
+  //        //      OnResourceGenerateFinished();
+  //        //    }
+  //        //  }
+  //        //  else
+  //        //  {
+  //        //    Debug.LogError($"Failed to load asset at {location.PrimaryKey}");
+  //        //  }
+  //        //};
+  //      }
+  //    }
+  //    else
+  //    {
+  //      Debug.LogError("Failed to load resource locations.");
+  //    }
+  //  };
+  //}
 
-  private void LoadAsync<T>(string key, Action<T> callback = null) where T : UnityEngine.Object
-  {
-    Addressables.LoadAssetAsync<T>(key).Completed += op =>
-    {
-      if (op.Status == AsyncOperationStatus.Succeeded)
-      {
-        // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
-        if (!Managers.Resource._resources.ContainsKey(key))
-          Managers.Resource._resources.Add(key, op.Result);
-        callback?.Invoke(op.Result);
-      }
-      else
-      {
-        Debug.LogError($"Failed to load asset at {key}");
-      }
-    };
-  }
+  //private void LoadAsync<T>(string key, Action<T> callback = null) where T : UnityEngine.Object
+  //{
+  //  Addressables.LoadAssetAsync<T>(key).Completed += op =>
+  //  {
+  //    if (op.Status == AsyncOperationStatus.Succeeded)
+  //    {
+  //      // 로드된 에셋을 딕셔너리에 primary key와 함께 추가
+  //      if (!Managers.Resource._resources.ContainsKey(key))
+  //        Managers.Resource._resources.Add(key, op.Result);
+  //      callback?.Invoke(op.Result);
+  //    }
+  //    else
+  //    {
+  //      Debug.LogError($"Failed to load asset at {key}");
+  //    }
+  //  };
+  //}
 
 
   //------------------------------------------------------------------------------------
@@ -218,10 +219,10 @@ public class AddressableDownloader
     Events.NotifyDownloadFinished(result.Status == AsyncOperationStatus.Succeeded);
   }
 
-  private void OnResourceGenerateFinished()
-  {
-    Events.NotifyResourceListGenerateFinished();
-  }
+  //private void OnResourceGenerateFinished()
+  //{
+  //  Events.NotifyResourceListGenerateFinished();
+  //}
 
   private void OnException(AsyncOperationHandle handle, Exception exp)
   {
