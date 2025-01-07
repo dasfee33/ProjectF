@@ -282,6 +282,43 @@
       "extraCellY": 0,
       "option": 0,
       "Grade": 0
+    },
+    {
+      "DataId": 108,
+      "Name": "WaterWell",
+      "DescriptionTextID": "우물 ",
+      "Label": "Structure",
+      "type": "Pipe",
+      "subType": "Factory",
+      "Sprite": "waterWell",
+      "maxHp": 100.0,
+      "WorkTime": 3.0,
+      "BuildTime": 30.0,
+      "Idle": "Idle",
+      "WorkStart": null,
+      "Work": "waterwell empty bucket going down",
+      "WorkEnd": null,
+      "buildItemId": [
+        400000,
+        400001
+      ],
+      "buildItemMass": [
+        50.0,
+        80.0
+      ],
+      "supplyItemid": null,
+      "supplyItemMass": null,
+      "makeItemid": [
+        400004
+      ],
+      "makeItemMass": [
+        10.0
+      ],
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0,
+      "option": 0,
+      "Grade": 0
     }
   ]
 }

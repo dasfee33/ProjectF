@@ -9,6 +9,7 @@
       "Speed": 1.0,
       "Idle": "warrior idle",
       "Move": "warrior run",
+      "GetMove": "warrior-run(get)",
       "Hurt": "warrior hurt",
       "Dead": "warrior death",
       "SkillList": [

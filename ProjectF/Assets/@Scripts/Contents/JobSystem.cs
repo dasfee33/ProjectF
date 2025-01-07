@@ -54,10 +54,12 @@ public class JobSystem : InitBase
 
   public BaseObject CurrentRootJob(FJob job, int dataID = -1)
   {
+    if (Owner.CurrentSupply >= Owner.SupplyCapacity) return null;
+
     if (supplyTargets.All(item => item == null))
     {
       if (supplyTargets.Count <= 0)
-        supplyTargets = Owner.FindsClosestInRange(job, 10f, Managers.Object.ItemHolders, func: Owner.IsValid);
+        supplyTargets = Owner.FindsClosestInRange(job, 10f, Managers.Object.ItemHolders, func: Owner.IsValid, dataID: dataID);
     }
 
 
@@ -65,14 +67,14 @@ public class JobSystem : InitBase
     {
       if (t == null) continue;
       var itemHolder = t.GetComponent<ItemHolder>();
-      if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
+      //if (Owner.CurrentSupply + itemHolder.mass > Owner.SupplyCapacity) continue;
       if (dataID != -1 && itemHolder.dataTemplateID != dataID) continue; 
       if (!itemHolder.isDropped) continue;
       if (itemHolder.stack <= 0) continue;
 
       if (supplyTargets != null)
       {
-        if (t.Worker != Owner.Target.Worker) t.Worker = null;
+        //if (t.Worker != Owner.Target.Worker) t.Worker = null;
         //작업자가 이미 있는데 그게 내가 아니라면 포기? 
         if (t.Worker != null && t.Worker != Owner) continue;
         supplyTarget = t;

@@ -21,6 +21,8 @@ public class ItemHolder : BaseObject
   public string label;
   public bool isDropped = false;
 
+  public float takeItemMass = 0f;
+
   public override bool Init()
   {
     if (base.Init() == false)
@@ -89,17 +91,29 @@ public class ItemHolder : BaseObject
     }
   }
 
+  public void ReduceCapacity(float takeMass)
+  {
+    mass -= takeMass;
+    if (mass > 0)
+    {
+      stack = (int)(mass / defaultMass);
+      takeItemMass = 0f;
+    }
+    else Managers.Object.Despawn(this);
+  }
+
   public override void OnDamaged(BaseObject attacker)
   {
     var attackOwner = attacker as Creature;
-    if(attackOwner.SupplyCapacity >= attackOwner.CurrentSupply + mass)
-    {
-      Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.Name));
-      attackOwner.AddHaveList(dataTemplateID, mass, label);
-      attackOwner.ResetJob();
-      
-      Managers.Object.Despawn(this);
-    }
-    
+
+    Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.Name));
+
+    var takeMass = Mathf.Min(takeItemMass, mass);
+    if (takeMass == 0) takeMass = mass;
+
+    takeMass = attackOwner.AddHaveList(dataTemplateID, takeMass, label);
+    attackOwner.ResetJob();
+
+    ReduceCapacity(takeMass);
   }
 }

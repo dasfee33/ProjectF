@@ -356,6 +356,7 @@ public class GameManager
     if (SaveData.structSaveData.plowBowlSaveData.Count > 0) SaveData.structSaveData.plowBowlSaveData.Clear();
     if (SaveData.structSaveData.buildObjectFSaveData.Count > 0) SaveData.structSaveData.buildObjectFSaveData.Clear();
     if (SaveData.structSaveData.plowSoilSaveData.Count > 0) SaveData.structSaveData.plowSoilSaveData.Clear();
+    if (SaveData.structSaveData.factorySaveData.Count > 0) SaveData.structSaveData.factorySaveData.Clear();
 
     foreach (var structure in structures)
     {

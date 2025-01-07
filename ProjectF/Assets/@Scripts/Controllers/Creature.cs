@@ -197,6 +197,16 @@ public class Creature : BaseObject
 
   
   #region Supply
+  public bool SomethingHaveList()
+  {
+    if (ItemHaveList is null) return false;
+    foreach(var item in ItemHaveList)
+    {
+      if (item.mass > 0f) return true;
+    }
+    return false;
+  }
+
   public float AddHaveList(int dataID, float mass, string label = null)
   {
     var value = 0f;
@@ -406,7 +416,8 @@ public class Creature : BaseObject
         PlayAnimation(CreatureData.Idle);
         break;
       case FCreatureState.Move:
-        PlayAnimation(CreatureData.Move);
+        if(SomethingHaveList()) PlayAnimation(CreatureData.GetMove);
+        else PlayAnimation(CreatureData.Move);
         break;
       case FCreatureState.Dead:
         PlayAnimation(CreatureData.Dead);
@@ -418,6 +429,7 @@ public class Creature : BaseObject
           case FJob.Store:
           case FJob.Make:
           case FJob.Research:
+          case FJob.Machine:
             PlayAnimation(CreatureData.Job); break;
           default: PlayAnimation(Skills[0].AnimName); break;
         }
@@ -709,7 +721,7 @@ public class Creature : BaseObject
     return target;
   }
 
-  public List<BaseObject> FindsClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null) where T : Enum
+  public List<BaseObject> FindsClosestInRange<T>(T job, float range, IEnumerable<BaseObject> objs, Func<BaseObject, bool> func = null, int dataID = -1) where T : Enum
   {
     List<BaseObject> target = new List<BaseObject>(); 
     Dictionary<BaseObject, float> targetdic = new Dictionary<BaseObject, float>();
@@ -718,6 +730,7 @@ public class Creature : BaseObject
     foreach (BaseObject obj in objs)
     {
       if (!obj.workableJob.Equals(job)) continue;
+      if (dataID != -1 && obj.dataTemplateID != dataID) continue;
       Vector3 dir = obj.transform.position - transform.position;
       float distToTargetSqr = dir.sqrMagnitude;
 
@@ -790,6 +803,8 @@ public class Creature : BaseObject
         //chaseTarget = null;
         //CreatureState = FCreatureState.Move;
       }
+
+      //가야 할 길이 반복되거나 갇힌 상태
       else if(result == FFindPathResults.Fail_Loop)
       {
         loopDetect.Clear();
@@ -879,6 +894,7 @@ public class Creature : BaseObject
       {
         foreach (var supplyItem in targetScr.curMakeNeedList)
         {
+          if (supplyItem.Value <= 0) continue;
           // 소지품 검사
           if (SearchHaveList(supplyItem.Key))
           {
@@ -982,9 +998,15 @@ public class Creature : BaseObject
     {
       foreach (var item in targetScr.curNeedList)
       {
+        if (item.Value <= 0)
+        {
+          jobSystem.supplyTargets.Clear();
+          continue;
+        }
         if (SearchHaveList(item.Key))
         {
           ChaseOrAttackTarget(100, distance);
+          return;
         }
         else
         {
@@ -1002,6 +1024,7 @@ public class Creature : BaseObject
                 storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
                 storage.Worker = this;
                 ChaseOrAttackTarget(100, distance, supplyTarget);
+                return;
               }
             }
           }
@@ -1010,9 +1033,11 @@ public class Creature : BaseObject
             //2. 땅에 떨어진것 찾음
             supplyTarget = jobSystem.CurrentRootJob(FJob.Supply, item.Key);
             var supplyTargetScr = supplyTarget as ItemHolder;
-            if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.isDropped)
+            if (supplyTarget != null && supplyTargetScr.isDropped)
             {
+              supplyTargetScr.takeItemMass = item.Value;
               ChaseOrAttackTarget(100, distance, supplyTarget);
+              return;
             }
             else
             {

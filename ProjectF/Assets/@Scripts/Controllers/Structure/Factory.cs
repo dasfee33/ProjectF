@@ -151,14 +151,13 @@ public class Factory : Structure
 
   private void MakeItem()
   {
-    // 이미 떨어진 아이템이 없을 때 (최초 상황)
     if (droppedItem is null)
     {
-      Vector3 rand = new Vector3(transform.position.x + Random.Range(-0.3f, -0.3f) * 0.1f, transform.position.y + Random.Range(-0.3f, -0.3f));
-      Vector3 rand2 = new Vector3(transform.position.x + Random.Range(0.3f, 0.3f) * 0.1f, transform.position.y + Random.Range(0.3f, 0.3f));
+      Vector3 rand = new Vector3(transform.position.x + Random.Range(-2f, -5f) * 0.1f, transform.position.y);
+      Vector3 rand2 = new Vector3(transform.position.x + Random.Range(2f, 5f) * 0.1f, transform.position.y);
       dropPos = Random.value < 0.5 ? rand : rand2;
     }
-
+    
     //TEMP
     var itemKey = 0;
     foreach (var t in makeList.Keys)

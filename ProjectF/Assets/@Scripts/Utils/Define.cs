@@ -255,12 +255,17 @@ public static class Define
     Architecture,
     Cook,
     Plow,
+    Supply,
   }
 
   public enum FItemSubType
   {
     None,
     Seed,
+    Wood,
+    Stone,
+    Liquid,
+    Veget,
   }
 
   public enum FFindPathResults
@@ -332,6 +337,7 @@ public static class Define
   public const int STRUCTURE_PLOWBOWL_NORMAL = 105;
   public const int STRUCTURE_PLOWSOIL1 = 106;
   public const int STRUCTURE_WOODFACTORY = 107;
+  public const int STRUCTURE_WATERWELL = 108;
 
   public const string STRUCTURE_BUILD = "_build";
   public const string INFODESC = "infodesc";

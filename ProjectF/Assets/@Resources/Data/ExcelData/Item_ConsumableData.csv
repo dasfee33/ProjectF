@@ -1,5 +1,6 @@
 ﻿DataId,Name,DescriptionTextID,Label,type,ItemGroupType,ItemType,ItemSubType,ItemGrade,maxStack,Mass,Sprite,Value,CoolTime,SupplyJob,ParentEnv,Calories
-400000,wood_normal,,Material,Wood,Consumable,Architecture,None,Normal,99,10,,,,Make,,
-400001,stone_normal,,Material,Stone,Consumable,Architecture,None,Normal,99,40,,,,Make,,
-400002,kick3,,Food,Veget,Consumable,Cook,None,Normal,99,5,,,,Cook,,200
-400003,kick_seed,,Seed,Seed,Consumable,Plow,Seed,Normal,99,5,kick5,,,Plow,100003,
+400000,wood_normal,참나무,Material,Wood,Consumable,Architecture,Wood,Normal,99,10,,,,Make,,
+400001,stone_normal,돌멩이,Material,Stone,Consumable,Architecture,Stone,Normal,99,40,,,,Make,,
+400002,kick3,끼익식물 잎,Food,Veget,Consumable,Cook,Veget,Normal,99,5,,,,Cook,,200
+400003,kick_seed,끼익식물 씨앗,Seed,Seed,Consumable,Plow,Seed,Normal,99,5,kick5,,,Plow,100003,
+400004,bottle(water),물이 담긴 병,Material,Liquid,Consumable,Supply,Liquid,Normal,99,10,,,,Plow&Machine,,

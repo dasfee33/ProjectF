@@ -3,17 +3,19 @@
     {
       "Value": 0.0,
       "CoolTIme": 0.0,
-      "SupplyJob": 11,
+      "SupplyJob": [
+        11
+      ],
       "ParentEnv": 0,
       "Calories": 0.0,
       "DataId": 400000,
       "Name": "wood_normal",
-      "DescirptionTextID": null,
+      "DescirptionTextID": "참나무",
       "Label": "Material",
       "type": "Wood",
       "ItemGroupType": 2,
       "ItemType": 1,
-      "ItemSubType": 0,
+      "ItemSubType": 2,
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 10.0,
@@ -22,17 +24,19 @@
     {
       "Value": 0.0,
       "CoolTIme": 0.0,
-      "SupplyJob": 11,
+      "SupplyJob": [
+        11
+      ],
       "ParentEnv": 0,
       "Calories": 0.0,
       "DataId": 400001,
       "Name": "stone_normal",
-      "DescirptionTextID": null,
+      "DescirptionTextID": "돌멩이",
       "Label": "Material",
       "type": "Stone",
       "ItemGroupType": 2,
       "ItemType": 1,
-      "ItemSubType": 0,
+      "ItemSubType": 3,
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 40.0,
@@ -41,17 +45,19 @@
     {
       "Value": 0.0,
       "CoolTIme": 0.0,
-      "SupplyJob": 5,
+      "SupplyJob": [
+        5
+      ],
       "ParentEnv": 0,
       "Calories": 200.0,
       "DataId": 400002,
       "Name": "kick3",
-      "DescirptionTextID": null,
+      "DescirptionTextID": "끼익식물 잎",
       "Label": "Food",
       "type": "Veget",
       "ItemGroupType": 2,
       "ItemType": 2,
-      "ItemSubType": 0,
+      "ItemSubType": 5,
       "ItemGrade": 1,
       "maxStack": 99,
       "Mass": 5.0,
@@ -60,12 +66,14 @@
     {
       "Value": 0.0,
       "CoolTIme": 0.0,
-      "SupplyJob": 9,
+      "SupplyJob": [
+        9
+      ],
       "ParentEnv": 100003,
       "Calories": 0.0,
       "DataId": 400003,
       "Name": "kick_seed",
-      "DescirptionTextID": null,
+      "DescirptionTextID": "끼익식물 씨앗",
       "Label": "Seed",
       "type": "Seed",
       "ItemGroupType": 2,
@@ -75,6 +83,28 @@
       "maxStack": 99,
       "Mass": 5.0,
       "Sprite": "kick5"
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": [
+        9,
+        8
+      ],
+      "ParentEnv": 0,
+      "Calories": 0.0,
+      "DataId": 400004,
+      "Name": "bottle(water)",
+      "DescirptionTextID": "물이 담긴 병",
+      "Label": "Material",
+      "type": "Liquid",
+      "ItemGroupType": 2,
+      "ItemType": 4,
+      "ItemSubType": 4,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 10.0,
+      "Sprite": null
     }
   ]
 }

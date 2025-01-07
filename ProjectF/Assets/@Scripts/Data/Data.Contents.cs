@@ -46,6 +46,7 @@ namespace Data
 
     public string Idle;
     public string Move;
+    public string GetMove;
     public string Hurt;
     public string Dead;
     public List<int> SkillList = new List<int>();
@@ -230,7 +231,7 @@ namespace Data
   {
     public double Value;
     public double CoolTIme;
-    public FJob SupplyJob;
+    public List<FJob> SupplyJob;
     public int ParentEnv;
     public float Calories;
   }

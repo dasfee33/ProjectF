@@ -82,7 +82,7 @@ public class Warrior : Creature
 
     //Job selection
     {
-      if (CreatureMoveState == FCreatureMoveState.Job) return;
+      //if (CreatureMoveState == FCreatureMoveState.Job) return;
       job = SelectJob();
       if (job is FJob and not FJob.None)
       {
