@@ -23,7 +23,7 @@ public class UI_CreatureActionEvent : UI_Base
   {
     GetText((int)Texts.EventText).text = notice;
     var rect = this.GetComponent<RectTransform>();
-    rect.DOAnchorPosY(0.8f, 1f).SetEase(Ease.InOutCubic).OnComplete(() =>
+    rect.DOAnchorPosY(0.8f, 1f).SetEase(Ease.OutQuint).OnComplete(() =>
     {
       Managers.Resource.Destroy(this.gameObject);
     });

@@ -210,7 +210,19 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b91559a5567829247808d4ddf58e0654
-    m_Address: bottle(water)
+    m_Address: bottle(water).sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f067490832b853c4da4f3e6f9f8e22c4
+    m_Address: waterWell.sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0eeaadf61c2c96e409c4ea2f579ad106
+    m_Address: campfire.sprite
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

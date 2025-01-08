@@ -124,6 +124,9 @@ public class Storage : Structure
         value = Mathf.Min(takeItem.Value, item.mass);
       }
       var realValue = Worker.AddHaveList(takeItem.Key, value);
+
+      Managers.Event.CreatureAction(Worker, Managers.Game.GetText("EVENT_CREATURETAKE", Managers.Data.ConsumableDic[takeItem.Key].DescirptionTextID));
+
       AddCapacity(takeItem.Key, -realValue);
 
     }
@@ -131,12 +134,25 @@ public class Storage : Structure
     {
       // 넣는 것
       var haveList = new List<StorageItem>(); // 임시 저장소. 쓰면 안됌 
+      var count = 0;
+      var saveNotice = "";
       foreach (var item in Worker.ItemHaveList)
       {
+        if (item.id <= 0) continue;
+
         var value = Mathf.Min(item.mass, MaxCapacity - CurCapacity);
+        if (value <= 0) continue;
         AddCapacity(item.id, value, item.label);
+
+        if (count == 0) saveNotice = Managers.Data.ConsumableDic[item.id].DescirptionTextID;
+        else count++;
+        
         haveList.Add(new StorageItem(item.id, value, item.label));
       }
+
+      if(count > 0)
+        Managers.Event.CreatureAction(Worker, Managers.Game.GetText("EVENT_CREATUREPUTS", new object[] { saveNotice, count }));
+      else Managers.Event.CreatureAction(Worker, Managers.Game.GetText("EVENT_CREATUREPUT", saveNotice));
 
       foreach (var list in haveList)
       {

@@ -12,6 +12,7 @@
       "WorkTime": 5.0,
       "BuildTime": 60.0,
       "Idle": "door1-closing",
+      "Idle2": null,
       "WorkStart": "door1-opening",
       "Work": "door1-closing",
       "WorkEnd": "door1-opening",
@@ -43,6 +44,7 @@
       "WorkTime": 5.0,
       "BuildTime": 60.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -74,6 +76,7 @@
       "WorkTime": 5.0,
       "BuildTime": 60.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -105,6 +108,7 @@
       "WorkTime": 1.0,
       "BuildTime": 60.0,
       "Idle": "cabin chest idle",
+      "Idle2": null,
       "WorkStart": "cabin chest opening",
       "Work": "cabin chest idle",
       "WorkEnd": "cabin chest idle",
@@ -136,6 +140,7 @@
       "WorkTime": 30.0,
       "BuildTime": 10.0,
       "Idle": "shrine buff available",
+      "Idle2": null,
       "WorkStart": "shrine buff available",
       "Work": "shrine getting buff",
       "WorkEnd": "surine buff available",
@@ -167,6 +172,7 @@
       "WorkTime": 5.0,
       "BuildTime": 10.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -198,6 +204,7 @@
       "WorkTime": 5.0,
       "BuildTime": 5.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -229,6 +236,7 @@
       "WorkTime": 10.0,
       "BuildTime": 60.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -264,6 +272,7 @@
       "WorkTime": 0.0,
       "BuildTime": 1.0,
       "Idle": null,
+      "Idle2": null,
       "WorkStart": null,
       "Work": null,
       "WorkEnd": null,
@@ -295,6 +304,7 @@
       "WorkTime": 3.0,
       "BuildTime": 30.0,
       "Idle": "Idle",
+      "Idle2": null,
       "WorkStart": null,
       "Work": "waterwell empty bucket going down",
       "WorkEnd": null,
@@ -318,6 +328,42 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
+      "Grade": 0
+    },
+    {
+      "DataId": 109,
+      "Name": "CampFire",
+      "DescriptionTextID": "캠프 파이어",
+      "Label": "Structure",
+      "type": "Cook",
+      "subType": "Factory",
+      "Sprite": "campfire",
+      "maxHp": 100.0,
+      "WorkTime": 5.0,
+      "BuildTime": 10.0,
+      "Idle": "Idle",
+      "Idle2": "campfire1-2",
+      "WorkStart": null,
+      "Work": null,
+      "WorkEnd": null,
+      "buildItemId": [
+        400001
+      ],
+      "buildItemMass": [
+        40.0
+      ],
+      "supplyItemid": [
+        400000
+      ],
+      "supplyItemMass": [
+        20.0
+      ],
+      "makeItemid": null,
+      "makeItemMass": null,
+      "maxCapacity": 0.0,
+      "extraCellX": 0,
+      "extraCellY": 0,
+      "option": 1,
       "Grade": 0
     }
   ]

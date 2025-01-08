@@ -73,7 +73,7 @@ public class UI_WorldUITest : UI_Base
         if(Managers.Map.CanBuild(checkCellPos, Owner))
         {
           buildIsReady = true; 
-          Owner.SetColor(COLOR.SMOKEWHITE); return;
+          Owner.SetColor(COLOR.SMOKEWHITE);
         }
         else
         {

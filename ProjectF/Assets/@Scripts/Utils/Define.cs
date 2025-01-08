@@ -128,6 +128,7 @@ public static class Define
     PlowBowl,
     Soil,
     Factory,
+    Kitchen,
   }
 
   public enum FCreatureType
@@ -159,6 +160,7 @@ public static class Define
   {
     None,
     Idle,
+    On,
     WorkStart,
     Work,
     WorkEnd,
@@ -338,6 +340,7 @@ public static class Define
   public const int STRUCTURE_PLOWSOIL1 = 106;
   public const int STRUCTURE_WOODFACTORY = 107;
   public const int STRUCTURE_WATERWELL = 108;
+  public const int STRUCTURE_CAMPFIRE = 109;
 
   public const string STRUCTURE_BUILD = "_build";
   public const string INFODESC = "infodesc";

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class Structure : BaseObject
 {
-  private Vector3 dropPos;
+  protected Vector3 dropPos;
   public SpriteRenderer spriteRenderer;
   public StructureData data;
 
@@ -102,6 +102,7 @@ public class Structure : BaseObject
       switch (StructureState)
       {
         case FStructureState.Idle:
+        case FStructureState.On:
           UpdateIdle();
           break;
         case FStructureState.WorkStart:
@@ -154,6 +155,9 @@ public class Structure : BaseObject
       case FStructureSubType.Factory:
         workableJob = FJob.Machine;
         break;
+      case FStructureSubType.Kitchen:
+        workableJob = FJob.Supply; // (Supply <=> Cook)
+        break;
         //TODO;
     }
   }
@@ -164,6 +168,9 @@ public class Structure : BaseObject
     {
       case FStructureState.Idle:
         PlayAnimation(data.Idle);
+        break;
+      case FStructureState.On:
+        PlayAnimation(data.Idle2);
         break;
       case FStructureState.WorkStart:
         PlayAnimation(data.WorkStart);

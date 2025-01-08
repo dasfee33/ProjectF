@@ -5,3 +5,6 @@ TOWNEVOLUTION,발전도 : %d에 해금!
 PLOW_SOMETHING,%s 심기
 BUILD_NOTDECIDE,다른 건축물 건설 결정이 이루어지지 않았습니다.
 BUILD_INVALID,해당 위치에 지을 수 없습니다.
+EVENT_CREATUREPUT,%s를 넣음
+EVENT_CREATURETAKE,%s를 가져감
+EVENT_CREATUREPUTS,%s랑 %d종의 아이템을 넣음

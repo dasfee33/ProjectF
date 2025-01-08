@@ -47,6 +47,7 @@ public class UI_BuildPopup : UI_Popup
       Managers.Object.PossCooks.Add(STRUCTURE_PLOWBOWL_NORMAL);
       Managers.Object.PossCooks.Add(STRUCTURE_COOKTABLE_NORMAL);
       Managers.Object.PossCooks.Add(STRUCTURE_PLOWSOIL1);
+      Managers.Object.PossCooks.Add(STRUCTURE_CAMPFIRE);
     }
 
     return true;

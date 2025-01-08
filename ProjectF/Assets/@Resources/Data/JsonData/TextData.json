@@ -23,6 +23,18 @@
     {
       "DataId": "BUILD_INVALID",
       "KOR": "해당 위치에 지을 수 없습니다."
+    },
+    {
+      "DataId": "EVENT_CREATUREPUT",
+      "KOR": "%s를 넣음"
+    },
+    {
+      "DataId": "EVENT_CREATURETAKE",
+      "KOR": "%s를 가져감"
+    },
+    {
+      "DataId": "EVENT_CREATUREPUTS",
+      "KOR": "%s랑 %d종의 아이템을 넣음"
     }
   ]
 }

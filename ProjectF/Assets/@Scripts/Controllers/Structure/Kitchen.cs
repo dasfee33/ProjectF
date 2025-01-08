@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Define;
-using Random = UnityEngine.Random;
 
-public class Factory : Structure
+public class Kitchen : Structure
 {
   public Dictionary<int, float> makeNeedList = new Dictionary<int, float>();
   public Dictionary<int, float> curMakeNeedList;
 
   public Dictionary<int, float> makeList = new Dictionary<int, float>();
   public Dictionary<int, float> curMakeList;
+
+  public Dictionary<int, float> needList = new Dictionary<int, float>();
+  public Dictionary<int, float> curNeedList;
 
   public override FStructureState StructureState
   {
@@ -44,8 +46,8 @@ public class Factory : Structure
   {
     if (base.Init() == false) return false;
 
-    StructureType = FStructureType.Machine;
-    StructureSubType = FStructureSubType.Factory;
+    StructureType = FStructureType.Cook;
+    StructureSubType = FStructureSubType.Kitchen;
 
     StartCoroutine(CoUpdateAI());
     return true;
@@ -58,9 +60,9 @@ public class Factory : Structure
     if (data.supplyItemid is not null)
     {
       for (int i = 0; i < data.supplyItemid.Count; i++)
-        makeNeedList.Add(data.supplyItemid[i], data.supplyItemMass[i]);
+        needList.Add(data.supplyItemid[i], data.supplyItemMass[i]);
 
-      curMakeNeedList = new Dictionary<int, float>(makeNeedList);
+      curNeedList = new Dictionary<int, float>(needList);
     }
 
     if (data.makeItemid is not null)
@@ -81,43 +83,44 @@ public class Factory : Structure
 
   protected override void UpdateWorkStart()
   {
-    if(CheckMakeIsReady())
-      StructureState = FStructureState.Work;
-    else
-    {
-      Worker.ResetJob();
-
-      StructureState = FStructureState.Idle;
-      onWorkSomeOne = false;
-    }
-  }
-
-  private bool CheckMakeIsReady()
-  {
-    if(curMakeNeedList is not null)
+    if(workableJob is FJob.Supply)
     {
       var saveList = new Dictionary<int, float>();
 
-      foreach (var item in curMakeNeedList)
+      foreach (var item in curNeedList)
       {
         if (Worker.SearchHaveList(item.Key))
         {
           float result = Worker.SupplyFromHaveList(item.Key, item.Value);
           saveList.Add(item.Key, result);
-          //attackOwner.ResetJob();
         }
       }
 
       if (saveList.Count > 0)
       {
         foreach (var save in saveList)
-          curMakeNeedList[save.Key] -= save.Value;
+          curNeedList[save.Key] -= save.Value;
       }
-      bool check = curMakeNeedList.Values.All(value => value <= 0);
-      return check;
-    }
 
-    return true;
+      CheckIsOn();
+      Worker.ResetJob();
+    }
+    else if(workableJob is FJob.Cook) 
+    {
+      StructureState = FStructureState.Work;
+    }
+  }
+
+  private void CheckIsOn()
+  {
+    var needComplete = curNeedList.Values.All(value => value <= 0);
+    if (needComplete)
+    {
+      workableJob = FJob.Cook;
+      Worker.SetJobIsAble(FJob.Cook, true);
+      StructureState = FStructureState.On;
+    }
+    else return;
   }
 
   protected override void UpdateOnWork()
@@ -155,7 +158,7 @@ public class Factory : Structure
       Vector3 rand2 = new Vector3(transform.position.x + Random.Range(2f, 5f) * 0.1f, transform.position.y);
       dropPos = Random.value < 0.5 ? rand : rand2;
     }
-    
+
     //TEMP
     var itemKey = 0;
     foreach (var t in makeList.Keys)

@@ -161,17 +161,18 @@ namespace Data
     public float BuildTime;
 
     public string Idle;
+    public string Idle2;
     public string WorkStart;
     public string Work;
     public string WorkEnd;
 
-    public List<int> buildItemId;
+    public List<int> buildItemId; // 건축 재료
     public List<float> buildItemMass;
 
-    public List<int> supplyItemid;
+    public List<int> supplyItemid; // 생산하기 위해 필요한 재료
     public List<float> supplyItemMass;
 
-    public List<int> makeItemid;
+    public List<int> makeItemid; // 생산품
     public List<float> makeItemMass;
 
     public float maxCapacity;

@@ -60,6 +60,7 @@ public class StructSaveData
   public List<PlowBowlSaveData> plowBowlSaveData = new List<PlowBowlSaveData> ();
   public List<PlowSoilSaveData> plowSoilSaveData = new List<PlowSoilSaveData> ();
   public List<FactorySaveData> factorySaveData = new List<FactorySaveData> ();
+  public List<KitchenSaveData> kitchenSaveData = new List<KitchenSaveData> ();
 }
 
 #region StructSaveDataBySubType
@@ -146,6 +147,16 @@ public class PlowSoilSaveData
 }
 
 public class FactorySaveData
+{
+  public int dataID;
+  public string name;
+  public int type;
+  public int subType;
+  public float posX;
+  public float posY;
+}
+
+public class KitchenSaveData
 {
   public int dataID;
   public string name;
@@ -357,6 +368,7 @@ public class GameManager
     if (SaveData.structSaveData.buildObjectFSaveData.Count > 0) SaveData.structSaveData.buildObjectFSaveData.Clear();
     if (SaveData.structSaveData.plowSoilSaveData.Count > 0) SaveData.structSaveData.plowSoilSaveData.Clear();
     if (SaveData.structSaveData.factorySaveData.Count > 0) SaveData.structSaveData.factorySaveData.Clear();
+    if (SaveData.structSaveData.kitchenSaveData.Count > 0) SaveData.structSaveData.kitchenSaveData.Clear();
 
     foreach (var structure in structures)
     {
@@ -463,6 +475,17 @@ public class GameManager
           factory.posY = structure.transform.position.y;
 
           SaveData.structSaveData.factorySaveData.Add(factory);
+          break;
+        case FStructureSubType.Kitchen:
+          KitchenSaveData kitchen = new KitchenSaveData();
+          kitchen.dataID = structure.dataTemplateID;
+          kitchen.name = structure.Name;
+          kitchen.type = (int)structure.StructureType;
+          kitchen.subType = (int)structure.StructureSubType;
+          kitchen.posX = structure.transform.position.x;
+          kitchen.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.kitchenSaveData.Add(kitchen);
           break;
       }
     }
@@ -685,6 +708,17 @@ public class GameManager
           factory.posY = structure.transform.position.y;
 
           SaveData.structSaveData.factorySaveData.Add(factory);
+          break;
+        case FStructureSubType.Kitchen:
+          KitchenSaveData kitchen = new KitchenSaveData();
+          kitchen.dataID = structure.dataTemplateID;
+          kitchen.name = structure.Name;
+          kitchen.type = (int)structure.StructureType;
+          kitchen.subType = (int)structure.StructureSubType;
+          kitchen.posX = structure.transform.position.x;
+          kitchen.posY = structure.transform.position.y;
+
+          SaveData.structSaveData.kitchenSaveData.Add(kitchen);
           break;
 
       }
@@ -982,6 +1016,17 @@ public class GameManager
         SaveData.structSaveData.factorySaveData.Add(factory);
       }
 
+      foreach (LitJson.JsonData data in structureData["kitchenSaveData"])
+      {
+        KitchenSaveData kitchen = new KitchenSaveData();
+        kitchen.dataID = int.Parse(data["dataID"].ToString());
+        kitchen.name = data["name"].ToString();
+        kitchen.type = int.Parse(data["type"].ToString());
+        kitchen.posX = float.Parse(data["posX"].ToString());
+        kitchen.posY = float.Parse(data["posY"].ToString());
+
+        SaveData.structSaveData.kitchenSaveData.Add(kitchen);
+      }
 
 
       //foreach (LitJson.JsonData data in structureData)

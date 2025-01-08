@@ -177,7 +177,9 @@ public class BuildObject : Structure
     Worker = null;
     Managers.Map.ClearObject(GetCellPos());
 
-    Managers.Object.Spawn<Structure>(this.transform.position/* - Managers.Map.LerpObjectPos*/, dataTemplateID, data.Name);
+    var structure = Managers.Object.Spawn<Structure>(this.transform.position/* - Managers.Map.LerpObjectPos*/, dataTemplateID, data.Name);
+    Managers.Map.LerpWorkerPosition(Worker, structure);
+
     Managers.Object.Despawn(this);
   }
 }

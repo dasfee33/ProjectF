@@ -430,6 +430,8 @@ public class Creature : BaseObject
           case FJob.Make:
           case FJob.Research:
           case FJob.Machine:
+
+          case FPersonalJob.Hungry:
             PlayAnimation(CreatureData.Job); break;
           default: PlayAnimation(Skills[0].AnimName); break;
         }
@@ -883,6 +885,13 @@ public class Creature : BaseObject
     }
   }
 
+  protected virtual void JobCook(float distance)
+  {
+    var targetScr = Target as Kitchen;
+
+    ChaseOrAttackTarget(100, distance);
+  }
+
   protected virtual void JobMachine(float distance)
   {
     var targetScr = Target as Factory;
@@ -986,16 +995,17 @@ public class Creature : BaseObject
   protected virtual void JobSupply(float distance)
   {
     var targetScr = Target as BuildObject;
-    if (!targetScr.setFlag)
-    {
-      SetJobIsAble(job, false);
-      ResetJob();
-      return;
-    }
-    else SetJobIsAble(job, true);
-    
+    var kitScr = Target as Kitchen;
     if (targetScr != null)
     {
+      if (!targetScr.setFlag)
+      {
+        SetJobIsAble(job, false);
+        ResetJob();
+        return;
+      }
+      else SetJobIsAble(job, true);
+
       foreach (var item in targetScr.curNeedList)
       {
         if (item.Value <= 0)
@@ -1049,12 +1059,66 @@ public class Creature : BaseObject
         }
       }
     }
+    else if(kitScr != null)
+    {
+      foreach (var item in kitScr.curNeedList)
+      {
+        if (item.Value <= 0)
+        {
+          jobSystem.supplyTargets.Clear();
+          continue;
+        }
+        if (SearchHaveList(item.Key))
+        {
+          ChaseOrAttackTarget(100, distance);
+          return;
+        }
+        else
+        {
+          //1. 창고에서 찾음
+          supplyTarget = FindStorageInRange(item.Key, 10, Managers.Object.Structures, IsValid);
+          if (supplyTarget != null)
+          {
+            var storage = supplyTarget as Storage;
+            // 현재 빈 공간이 있고, 상자에 내가 원하는 아이템이 있으면?
+            if (storage != null && CurrentSupply < SupplyCapacity && storage.storageItem.ContainsKey("id"))
+            {
+              var supply = storage.storageItem.ReturnProperty("id", item.Key);
+              if (supply != null)
+              {
+                storage.takeItem = new KeyValuePair<int, float>(item.Key, item.Value);
+                storage.Worker = this;
+                ChaseOrAttackTarget(100, distance, supplyTarget);
+                return;
+              }
+            }
+          }
+          else
+          {
+            //2. 땅에 떨어진것 찾음
+            supplyTarget = jobSystem.CurrentRootJob(FJob.Supply, item.Key);
+            var supplyTargetScr = supplyTarget as ItemHolder;
+            if (supplyTarget != null && supplyTargetScr.isDropped)
+            {
+              supplyTargetScr.takeItemMass = item.Value;
+              ChaseOrAttackTarget(100, distance, supplyTarget);
+              return;
+            }
+            else
+            {
+              //아무데도 없는 경우 => 리셋
+              SetJobIsAble(job, false);
+              ResetJob();
+            }
+          }
+        }
+      }
+    }
     else
     {
       SetJobIsAble(job, false);
       ResetJob();
     }
-
   }
 
   public virtual void JobSleepy(float distance)
@@ -1096,7 +1160,7 @@ public class Creature : BaseObject
       else
       {
         //2. 땅에 떨어진것 찾음
-        supplyTarget = jobSystem.CurrentRootJob(FJob.Cook);
+        supplyTarget = jobSystem.CurrentRootJob(FPersonalJob.Hungry);
         var supplyTargetScr = supplyTarget as ItemHolder;
         if (supplyTarget != null && CurrentSupply + supplyTargetScr.mass < SupplyCapacity && supplyTargetScr.label.Equals("Food") && supplyTargetScr.isDropped)
         {

@@ -52,7 +52,7 @@ public class JobSystem : InitBase
     
   }
 
-  public BaseObject CurrentRootJob(FJob job, int dataID = -1)
+  public BaseObject CurrentRootJob(Enum job, int dataID = -1)
   {
     if (Owner.CurrentSupply >= Owner.SupplyCapacity) return null;
 

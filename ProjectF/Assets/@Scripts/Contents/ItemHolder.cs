@@ -59,7 +59,7 @@ public class ItemHolder : BaseObject
       case "Seed":
         workableJob = FJob.Supply; break;
       case "Food":
-        workableJob = FJob.Cook; break;
+        workableJob = FPersonalJob.Hungry; break;
     }
   }
 
@@ -106,7 +106,7 @@ public class ItemHolder : BaseObject
   {
     var attackOwner = attacker as Creature;
 
-    Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.Name));
+    Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.DescirptionTextID));
 
     var takeMass = Mathf.Min(takeItemMass, mass);
     if (takeMass == 0) takeMass = mass;

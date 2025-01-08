@@ -276,6 +276,39 @@ public class MapManager
     }
   }
 
+  public void LerpWorkerPosition(BaseObject worker, BaseObject obj)
+  {
+    int extraCellsX = 0;
+    int extraCellsY = 0;
+    if (obj != null)
+    {
+      extraCellsX = obj.ExtraCellsX;
+      extraCellsY = obj.ExtraCellsY;
+    }
+    else return;
+
+    var cellPos = obj.GetCellPos();
+
+    for (int dx = -extraCellsX; dx <= extraCellsX; dx++)
+    {
+      for (int dy = -extraCellsY; dy <= extraCellsY; dy++)
+      {
+        Vector3Int newCellPos = new Vector3Int(cellPos.x + dx, cellPos.y + dy);
+
+        BaseObject prev = GetObject(newCellPos);
+        
+        if(prev == worker)
+        {
+          var creature = worker as Creature;
+          MoveTo(creature, new Vector3Int(cellPos.x - (extraCellsX + 1), cellPos.y), true);
+          return; 
+        }
+      }
+    }
+
+    return;
+  }
+
   public void AddObject(BaseObject obj, Vector3Int cellPos)
   {
     int extraCellsX = 0;
