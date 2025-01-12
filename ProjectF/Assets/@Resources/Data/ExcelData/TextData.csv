@@ -8,3 +8,33 @@ BUILD_INVALID,해당 위치에 지을 수 없습니다.
 EVENT_CREATUREPUT,%s를 넣음
 EVENT_CREATURETAKE,%s를 가져감
 EVENT_CREATUREPUTS,%s랑 %d종의 아이템을 넣음
+BUILD_NOTENOUGH,재료가 충분하지 않습니다.
+BUILD,건 축
+Toilet,화장실
+EatingTable,기본 식탁
+Bed1,허름한 침대
+Chest_normal,나무 상자
+Station1,기본 스테이션
+PlowBowl,화분
+PlowSoil1,경작지
+WoodFactory,나무생산소
+KickPlant,끼익 식물
+WaterWell,우물
+CampFire,캠프파이어
+Civil_Settings,주민 설정
+warrior,전사
+Attack,공격
+Rescue,생명지원
+Medic,의료
+Array,정렬
+Cook,요리
+Deco,장식
+Research,연구
+Machine,작동
+Plow,재배
+Breed,목축
+Make,만들기
+Dig,굴착
+Logging,벌목
+Supply,공급
+Store,저장

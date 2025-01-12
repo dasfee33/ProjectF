@@ -13,6 +13,7 @@ public class UI_PriorityPopup : UI_Popup
 
   public enum Texts
   {
+    TitleText,
     Name,
   }
 
@@ -61,7 +62,7 @@ public class UI_PriorityPopup : UI_Popup
   {
     
     GetImage((int)Images.Face).gameObject.SetActive(false);
-    GetText((int)Texts.Name).text = $"Civil Settings"; // TODO FIXME
+    GetText((int)Texts.Name).text = Managers.Game.GetText("Civil_Settings");
 
     var hori = GetObject((int)Objects.Hori);
     var top = GetObject((int)Objects.TopFixed);

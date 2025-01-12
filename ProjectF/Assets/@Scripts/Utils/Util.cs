@@ -11,6 +11,19 @@ public static class Util
   public static long OneMB = 1000000;
   public static long OneKB = 1000;
 
+  public static bool IsBuildAvailable(List<int> buildItemID, List<float> buildItemMass, Dictionary<int, ItemInfo> itemStorage)
+  {
+    for(int i = 0; i < buildItemID.Count; i++)
+    {
+      if (itemStorage.TryGetValue(buildItemID[i], out ItemInfo item))
+      {
+        if (item.mass < buildItemMass[i]) return false;
+      }
+      else return false;
+    }
+    return true;
+  }
+
   public static bool IsNetworkValid()
   {
     return Application.internetReachability != NetworkReachability.NotReachable;

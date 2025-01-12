@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using static Define;
+using static Util;
 
 public class UI_BuildPopup_Item : UI_Base
 {
@@ -42,7 +44,24 @@ public class UI_BuildPopup_Item : UI_Base
     objId = dataID;
     data = Managers.Data.StructDic[dataID];
     GetImage((int)Images.Face).sprite = Managers.Resource.Load<Sprite>(data.Sprite);
-    GetText((int)Texts.Name).text = data.Name;
+    GetText((int)Texts.Name).text = Managers.Game.GetText(data.Name);
+
+    BuildCheck();
+  }
+
+  public bool BuildCheck()
+  {
+    var Image = this.GetComponent<Image>();
+    if (!IsBuildAvailable(data.buildItemId, data.buildItemMass, Managers.Object.ItemStorage))
+    {
+      Image.color = COLOR.SMOKERED;
+      return false;
+    }
+    else
+    {
+      Image.color = COLOR.WHITE;
+      return true;
+    }
   }
 
   private void ClickedItem(PointerEventData evt)
@@ -52,6 +71,12 @@ public class UI_BuildPopup_Item : UI_Base
     if (toolBase.onBuild)
     {
       Managers.Event.Notice(Managers.Game.GetText("BUILD_NOTDECIDE"));
+      return;
+    }
+
+    if (!BuildCheck())
+    {
+      Managers.Event.Notice(Managers.Game.GetText("BUILD_NOTENOUGH"));
       return;
     }
 

@@ -39,6 +39,7 @@ namespace Data
   {
     public int DataId;
     public string Name;
+    public string Head;
     public string DescriptionTextID;
     public string Label;
     public float maxHp;

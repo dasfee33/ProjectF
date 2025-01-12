@@ -35,6 +35,126 @@
     {
       "DataId": "EVENT_CREATUREPUTS",
       "KOR": "%s랑 %d종의 아이템을 넣음"
+    },
+    {
+      "DataId": "BUILD_NOTENOUGH",
+      "KOR": "재료가 충분하지 않습니다."
+    },
+    {
+      "DataId": "BUILD",
+      "KOR": "건 축"
+    },
+    {
+      "DataId": "Toilet",
+      "KOR": "화장실"
+    },
+    {
+      "DataId": "EatingTable",
+      "KOR": "기본 식탁"
+    },
+    {
+      "DataId": "Bed1",
+      "KOR": "허름한 침대"
+    },
+    {
+      "DataId": "Chest_normal",
+      "KOR": "나무 상자"
+    },
+    {
+      "DataId": "Station1",
+      "KOR": "기본 스테이션"
+    },
+    {
+      "DataId": "PlowBowl",
+      "KOR": "화분"
+    },
+    {
+      "DataId": "PlowSoil1",
+      "KOR": "경작지"
+    },
+    {
+      "DataId": "WoodFactory",
+      "KOR": "나무생산소"
+    },
+    {
+      "DataId": "KickPlant",
+      "KOR": "끼익 식물"
+    },
+    {
+      "DataId": "WaterWell",
+      "KOR": "우물"
+    },
+    {
+      "DataId": "CampFire",
+      "KOR": "캠프파이어"
+    },
+    {
+      "DataId": "Civil_Settings",
+      "KOR": "주민 설정"
+    },
+    {
+      "DataId": "warrior",
+      "KOR": "전사"
+    },
+    {
+      "DataId": "Attack",
+      "KOR": "공격"
+    },
+    {
+      "DataId": "Rescue",
+      "KOR": "생명지원"
+    },
+    {
+      "DataId": "Medic",
+      "KOR": "의료"
+    },
+    {
+      "DataId": "Array",
+      "KOR": "정렬"
+    },
+    {
+      "DataId": "Cook",
+      "KOR": "요리"
+    },
+    {
+      "DataId": "Deco",
+      "KOR": "장식"
+    },
+    {
+      "DataId": "Research",
+      "KOR": "연구"
+    },
+    {
+      "DataId": "Machine",
+      "KOR": "작동"
+    },
+    {
+      "DataId": "Plow",
+      "KOR": "재배"
+    },
+    {
+      "DataId": "Breed",
+      "KOR": "목축"
+    },
+    {
+      "DataId": "Make",
+      "KOR": "만들기"
+    },
+    {
+      "DataId": "Dig",
+      "KOR": "굴착"
+    },
+    {
+      "DataId": "Logging",
+      "KOR": "벌목"
+    },
+    {
+      "DataId": "Supply",
+      "KOR": "공급"
+    },
+    {
+      "DataId": "Store",
+      "KOR": "저장"
     }
   ]
 }

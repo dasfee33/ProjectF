@@ -3,6 +3,7 @@
     {
       "DataId": 1,
       "Name": "warrior",
+      "Head": "warriorHead",
       "DescriptionTextID": "something",
       "Label": "player",
       "maxHp": 100.0,

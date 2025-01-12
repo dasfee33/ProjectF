@@ -8,6 +8,11 @@ public class UI_PriorityPopupTop : UI_Base
   public Data.CreatureData data;
   public Creature Owner;
 
+  public enum Images
+  {
+    Face,
+  }
+
   public enum Objects
   {
     Hori,
@@ -26,6 +31,7 @@ public class UI_PriorityPopupTop : UI_Base
   {
     if (base.Init() == false) return false;
 
+    BindImages(typeof(Images));
     BindObjects(typeof(Objects));
     BindTexts(typeof(Texts));
 
@@ -39,7 +45,8 @@ public class UI_PriorityPopupTop : UI_Base
   //사진 / 이름 설정
   public void SetInfo()
   {
-    GetText((int)Texts.Name).text = data.Name;
+    GetImage((int)Images.Face).sprite = Managers.Resource.Load<Sprite>(data.Head);
+    GetText((int)Texts.Name).text = Managers.Game.GetText(data.Name);
 
     for (int i = 1; i < jobLength; i++)
     {

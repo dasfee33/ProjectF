@@ -6,6 +6,9 @@ using static Define;
 
 public class EventManager
 {
+  //JobPriorityDropDownChanged
+  public Action<FJob, int> jobPriorityChanged;
+
   //CreatureAction
   public void CreatureAction(BaseObject obj, string notice)
   {

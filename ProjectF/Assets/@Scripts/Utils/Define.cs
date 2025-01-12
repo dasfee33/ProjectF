@@ -54,7 +54,7 @@ public static class Define
 
   public enum FJobSelectEvent
   {
-    Never,
+    //Never,
     DownDown,
     Down,
     None,
@@ -393,6 +393,8 @@ public static class COLOR
   public static Vector4 DAY = new Vector4(1, 1, 1, 1);
   public static Vector4 BEFORESUNSET = new Vector4(0.9f, 0.6f, 0.1f, 1);
   public static Vector4 NIGHT = new Vector4(0.5f, 0.4f, 0.4f);
+
+  public static Vector4 WHITE = new Vector4(1, 1, 1, 1);
 
   public static Vector4 SMOKERED = new Vector4(1, 0, 0, 0.5f);
   public static Vector4 SMOKEWHITE = new Vector4(1, 1, 1, 0.5f);

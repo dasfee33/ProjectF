@@ -336,7 +336,7 @@
       "DescriptionTextID": "캠프 파이어",
       "Label": "Structure",
       "type": "Cook",
-      "subType": "Factory",
+      "subType": "Kitchen",
       "Sprite": "campfire",
       "maxHp": 100.0,
       "WorkTime": 5.0,

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using static Define;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class UI_PriorityPopupSelectJobButton : UI_Base
 {
@@ -25,7 +26,7 @@ public class UI_PriorityPopupSelectJobButton : UI_Base
     {
       selectEvent = value;
       jobPriority = (int)value * 10;
-      GetImage((int)Images.ButtonImage).sprite = SpritePool[(int)selectEvent];
+      buttonImage.sprite = SpritePool[(int)selectEvent];
     }
   }
 
@@ -36,6 +37,7 @@ public class UI_PriorityPopupSelectJobButton : UI_Base
   public FJob job;
 
   public FJobSelectEvent selectEvent = FJobSelectEvent.None;
+  private Image buttonImage;
 
   public override bool Init()
   {
@@ -45,8 +47,19 @@ public class UI_PriorityPopupSelectJobButton : UI_Base
     BindImages(typeof(Images));
 
     GetButton((int)Buttons.SelectButton).gameObject.BindEvent(ClickButton, FUIEvent.Click);
+    buttonImage = GetImage((int)Images.ButtonImage);
+
+    Managers.Event.jobPriorityChanged -= JobPriorityChanged;
+    Managers.Event.jobPriorityChanged += JobPriorityChanged;
 
     return true;
+  }
+
+  public void JobPriorityChanged(FJob job, int priority)
+  {
+    if (this.job != job) return;
+
+    SetPriority(priority, true);
   }
 
   public void ClickButton(PointerEventData evt)
@@ -54,9 +67,14 @@ public class UI_PriorityPopupSelectJobButton : UI_Base
     SetPriority(1);
   }
 
-  public void SetPriority(int count, bool init = false)
+  public void OnDestroy()
   {
-    _ = init == false ? poolPoint += count : poolPoint = count;
+    Managers.Event.jobPriorityChanged -= JobPriorityChanged; //fake null
+  }
+
+  public void SetPriority(int count, bool set = false)
+  {
+    _ = set == false ? poolPoint += count : poolPoint = count;
 
     SelectEvent = (FJobSelectEvent)(poolPoint % SpritePool.Count);
     _owner.SetOrAddJobPriority(job, jobPriority, true);

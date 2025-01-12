@@ -8,6 +8,11 @@ using static Util;
 
 public class UI_BuildPopup : UI_Popup
 {
+  enum Texts
+  {
+    TitleText,
+  }
+
   enum Objects
   {
     Content,
@@ -27,9 +32,11 @@ public class UI_BuildPopup : UI_Popup
   {
     if (base.Init() == false) return false;
 
+    BindTexts(typeof(Texts));
     BindObjects(typeof(Objects));
     BindButtons(typeof(Buttons));
 
+    GetText((int)Texts.TitleText).text = Managers.Game.GetText("BUILD");
     GetButton((int)Buttons.Exit).gameObject.BindEvent(Exit);
 
     //Managers.FInput.OnTouch -= SelectAnother;
