@@ -1,12 +1,12 @@
-﻿DataId,Name,DescriptionTextID,Label,type,subType,Sprite,maxHp,WorkTime,BuildTime,Idle,Idle2,WorkStart,Work,WorkEnd,buildItemId,buildIteMass,supplyItemid,supplyItemMass,makeItemid,makeItemMass,maxCapacity,extraCellX,extraCellY,Option,Grade
-100,Toilet,위생적이지 않은 화장실,Structure,Pipe,Toilet,toiletSprite,100,5,60,door1-closing,,door1-opening,door1-closing,door1-opening,400000,10,,,,,,,,0,
-101,EatingTable,끼니를 해결 할 수 있는 식탁,Structure,Furniture,EatingTable,eatingTableSprite,100,5,60,,,,,,400000,10,,,,,,,,0,
-102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,Bed1Sprite,100,5,60,,,,,,400000,10,,,,,,,,0,
-103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,chest_normalSprite,100,1,60,cabin chest idle,,cabin chest opening,cabin chest idle,cabin chest idle,400000,10,,,,,200,,,0,
-104,Station1,초급 연구 스테이션,Structure,Station,Station,Station1Sprite,100,30,10,shrine buff available,,shrine buff available,shrine getting buff,surine buff available,400000,250,,,,,,,,0,1
-105,PlowBowl,식물을 기를 수 있는 그릇,Structure,Cook,PlowBowl,PlowBowlSprite,100,5,10,,,,,,400000,10,,,,,,,,1,
-106,PlowSoil1,보통 토양,Structure,Cook,Soil,PlowSoil1Sprite,100,5,5,,,,,,400000,10,,,,,,,,1,
-107,WoodFactory,기본나무 생산시설,Structure,Base,Factory,woodFactory,500,10,60,,,,,,400000,500,,,400000,10,,2,1,0,
-100003,KickPlant,재배되는 끼익 식물,,,,kick5,,,1,,,,,,400003,5,,,,,,,,,
-108,WaterWell,우물 ,Structure,Pipe,Factory,waterWell,100,3,30,Idle,,,waterwell empty bucket going down,,400000&400001,50&80,,,400004,10,,,,0,
-109,CampFire,캠프 파이어,Structure,Cook,Kitchen,campfire,100,5,10,Idle,campfire1-2,,,,400001,40,400000,20,,,,,,1,
+﻿DataId,Name,DescriptionTextID,Label,type,subType,Sprite,maxHp,WorkTime,BuildTime,Idle,Idle2,WorkStart,Work,WorkEnd,buildItemId,buildIteMass,supplyItemid,supplyItemMass,makeItemid,makeItemMass,maxCapacity,extraCellX,extraCellY,Option,Grade,DontAddToCell
+100,Toilet,위생적이지 않은 화장실,Structure,Pipe,Toilet,toiletSprite,100,5,60,door1-closing,,door1-opening,door1-closing,door1-opening,400000,10,,,,,,,,0,,
+101,EatingTable,끼니를 해결 할 수 있는 식탁,Structure,Furniture,EatingTable,eatingTableSprite,100,5,60,,,,,,400000,10,,,,,,,,0,,
+102,Bed1,잠을 떼울 수 있는 침대,Structure,Furniture,Bed,Bed1Sprite,100,5,60,,,,,,400000,10,,,,,,,,0,,
+103,Chest_normal,나무로 만든 상자,Structure,Furniture,Chest,chest_normalSprite,100,1,60,cabin chest idle,,cabin chest opening,cabin chest idle,cabin chest idle,400000,10,,,,,200,,,0,,
+104,Station1,초급 연구 스테이션,Structure,Station,Station,Station1Sprite,100,30,10,shrine buff available,,shrine buff available,shrine getting buff,surine buff available,400000,250,,,,,,,,0,1,
+105,PlowBowl,식물을 기를 수 있는 그릇,Structure,Cook,PlowBowl,PlowBowlSprite,100,5,10,,,,,,400000,10,,,,,,,,1,,
+106,PlowSoil1,보통 토양,Structure,Cook,Soil,PlowSoil1Sprite,100,5,5,,,,,,400000,10,,,,,,,,1,,
+107,WoodFactory,기본나무 생산시설,Structure,Base,Factory,woodFactory,500,10,60,,,,,,400000,500,,,400000,10,,2,1,0,,
+100003,KickPlant,재배되는 끼익 식물,,,,kick5,,,1,,,,,,400003,5,,,,,,,,,,1
+108,WaterWell,우물 ,Structure,Pipe,Factory,waterWell,100,3,30,Idle,,,waterwell empty bucket going down,,400000&400001,50&80,,,400004,10,,,,0,,
+109,CampFire,캠프 파이어,Structure,Cook,Kitchen,campfire,100,5,10,Idle,campfire1-2,,,,400001,40,400000,20,,,,,,1,,

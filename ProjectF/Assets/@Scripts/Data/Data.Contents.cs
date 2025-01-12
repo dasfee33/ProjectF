@@ -182,6 +182,7 @@ namespace Data
 
     public int option;
     public int Grade;
+    public int DontAddToCell;
   }
 
   [Serializable]

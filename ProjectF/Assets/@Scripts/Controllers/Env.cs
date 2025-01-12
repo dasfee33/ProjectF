@@ -65,6 +65,8 @@ public class Env : BaseObject
     RegenEnv = data.RegenEnv;
 
     this.isFarm = isFarm;
+    if (isFarm) SpriteRenderer.sortingOrder = 21;
+
     if (Enum.TryParse(data.type, out FEnvType result))
       EnvType = result;
     

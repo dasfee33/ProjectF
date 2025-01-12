@@ -30,7 +30,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 101,
@@ -62,7 +63,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 102,
@@ -94,7 +96,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 103,
@@ -126,7 +129,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 104,
@@ -158,7 +162,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 1
+      "Grade": 1,
+      "DontAddToCell": 0
     },
     {
       "DataId": 105,
@@ -190,7 +195,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 1,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 106,
@@ -222,7 +228,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 1,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 107,
@@ -258,7 +265,8 @@
       "extraCellX": 2,
       "extraCellY": 1,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 100003,
@@ -290,7 +298,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 1
     },
     {
       "DataId": 108,
@@ -328,7 +337,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 0,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     },
     {
       "DataId": 109,
@@ -364,7 +374,8 @@
       "extraCellX": 0,
       "extraCellY": 0,
       "option": 1,
-      "Grade": 0
+      "Grade": 0,
+      "DontAddToCell": 0
     }
   ]
 }

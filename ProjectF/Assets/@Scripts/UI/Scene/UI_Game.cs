@@ -141,13 +141,30 @@ public class UI_Game : UI_Scene
   public void CallbackSomething(BaseObject obj)
   {
     var info = GetObject((int)Objects.UI_Info).gameObject.GetComponent<UI_Info>();
-    var option = GetObject((int)Objects.UI_Option).gameObject.GetComponent<UI_Option>();
+    info.gameObject.SetActive(true);
 
-    if (obj.Option && !option.gameObject.activeSelf) option.gameObject.SetActive(true);
-    if (!info.gameObject.activeSelf) info.gameObject.SetActive(true);
+    if (obj.Option)
+    {
+      switch(obj.ObjectType)
+      {
+        case FObjectType.Structure:
+          var structure = obj as Structure;
+          switch(structure.StructureSubType)
+          {
+            case FStructureSubType.PlowBowl:
+              var option = GetObject((int)Objects.UI_Option).gameObject.GetComponent<UI_PlowOption>();
+              option.gameObject.SetActive(true);
+              option.SetInfo(obj);
+              info.SetInfo(obj, option);
+              break;
+          }
+          break;
+      }
 
-    option.SetInfo(obj);
-    info.SetInfo(obj, option);
+
+
+    }
+
   }
 
   public void Test(PointerEventData evt)

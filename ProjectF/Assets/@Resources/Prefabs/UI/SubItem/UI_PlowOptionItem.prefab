@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6674348792386707598}
   - component: {fileID: 4545253197942418471}
   m_Layer: 5
-  m_Name: UI_OptionItem
+  m_Name: UI_PlowOptionItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using static Define;
 
-public class UI_Option : UI_Popup
+public class UI_PlowOption : UI_Popup
 {
   public BaseObject Owner;
 
@@ -70,7 +70,7 @@ public class UI_Option : UI_Popup
                   var data = Managers.Data.ConsumableDic[item.Key];
                   var trans = GetObject((int)Objects.ItemContent).transform;
                   var seed = Managers.Resource.Instantiate("UI_OptionItem", trans);
-                  var seedScr = seed.GetComponent<UI_OptionItem>();
+                  var seedScr = seed.GetComponent<UI_PlowOptionItem>();
                   if (seedScr != null)
                   {
                     seedScr.SetInfo(data);

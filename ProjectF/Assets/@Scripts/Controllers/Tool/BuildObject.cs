@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -177,7 +178,9 @@ public class BuildObject : Structure
     Worker = null;
     Managers.Map.ClearObject(GetCellPos());
 
-    var structure = Managers.Object.Spawn<Structure>(this.transform.position/* - Managers.Map.LerpObjectPos*/, dataTemplateID, data.Name);
+    var dontAddToCell = !Convert.ToBoolean(data.DontAddToCell);
+    var isFarm = dontAddToCell == false ? true : false;
+    var structure = Managers.Object.Spawn<Structure>(this.transform.position/* - Managers.Map.LerpObjectPos*/, dataTemplateID, data.Name, addToCell: dontAddToCell, isFarm: isFarm);
     Managers.Map.LerpWorkerPosition(Worker, structure);
 
     Managers.Object.Despawn(this);

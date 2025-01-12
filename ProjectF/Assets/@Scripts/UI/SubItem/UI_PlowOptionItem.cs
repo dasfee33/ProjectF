@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using static Define;
 
-public class UI_OptionItem : UI_Base
+public class UI_PlowOptionItem : UI_Base
 {
   public enum Images
   {
@@ -15,7 +15,7 @@ public class UI_OptionItem : UI_Base
     Name,
   }
 
-  public UI_Option parent;
+  public UI_PlowOption parent;
   private Data.ConsumableItemData data;
 
   public override bool Init()
