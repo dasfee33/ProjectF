@@ -368,8 +368,14 @@
       "supplyItemMass": [
         20.0
       ],
-      "makeItemid": null,
-      "makeItemMass": null,
+      "makeItemid": [
+        400005,
+        400006
+      ],
+      "makeItemMass": [
+        10.0,
+        15.0
+      ],
       "maxCapacity": 0.0,
       "extraCellX": 0,
       "extraCellY": 0,

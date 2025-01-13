@@ -106,7 +106,7 @@ public class ItemHolder : BaseObject
   {
     var attackOwner = attacker as Creature;
 
-    Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", data.DescirptionTextID));
+    Managers.Event.CreatureAction(attackOwner, Managers.Game.GetText("EVENT_CREATUREACTION", Managers.Game.GetText(data.Name)));
 
     var takeMass = Mathf.Min(takeItemMass, mass);
     if (takeMass == 0) takeMass = mass;

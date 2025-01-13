@@ -152,7 +152,8 @@ public class UI_Game : UI_Scene
           switch(structure.StructureSubType)
           {
             case FStructureSubType.PlowBowl:
-              var option = GetObject((int)Objects.UI_Option).gameObject.GetComponent<UI_PlowOption>();
+            case FStructureSubType.Kitchen:
+              var option = GetObject((int)Objects.UI_Option).gameObject.GetComponent<UI_Option>();
               option.gameObject.SetActive(true);
               option.SetInfo(obj);
               info.SetInfo(obj, option);

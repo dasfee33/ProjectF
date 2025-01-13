@@ -268,6 +268,7 @@ public static class Define
     Stone,
     Liquid,
     Veget,
+    Food,
   }
 
   public enum FFindPathResults

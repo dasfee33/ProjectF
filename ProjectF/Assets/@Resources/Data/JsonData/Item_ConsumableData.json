@@ -8,6 +8,8 @@
       ],
       "ParentEnv": 0,
       "Calories": 0.0,
+      "MakeItemId": null,
+      "MakeItemMass": null,
       "DataId": 400000,
       "Name": "wood_normal",
       "DescirptionTextID": "참나무",
@@ -29,6 +31,8 @@
       ],
       "ParentEnv": 0,
       "Calories": 0.0,
+      "MakeItemId": null,
+      "MakeItemMass": null,
       "DataId": 400001,
       "Name": "stone_normal",
       "DescirptionTextID": "돌멩이",
@@ -50,6 +54,8 @@
       ],
       "ParentEnv": 0,
       "Calories": 200.0,
+      "MakeItemId": null,
+      "MakeItemMass": null,
       "DataId": 400002,
       "Name": "kick3",
       "DescirptionTextID": "끼익식물 잎",
@@ -71,6 +77,8 @@
       ],
       "ParentEnv": 100003,
       "Calories": 0.0,
+      "MakeItemId": null,
+      "MakeItemMass": null,
       "DataId": 400003,
       "Name": "kick_seed",
       "DescirptionTextID": "끼익식물 씨앗",
@@ -93,6 +101,8 @@
       ],
       "ParentEnv": 0,
       "Calories": 0.0,
+      "MakeItemId": null,
+      "MakeItemMass": null,
       "DataId": 400004,
       "Name": "bottle(water)",
       "DescirptionTextID": "물이 담긴 병",
@@ -105,6 +115,62 @@
       "maxStack": 99,
       "Mass": 10.0,
       "Sprite": null
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": [
+        5
+      ],
+      "ParentEnv": 0,
+      "Calories": 500.0,
+      "MakeItemId": [
+        400002
+      ],
+      "MakeItemMass": [
+        10.0
+      ],
+      "DataId": 400005,
+      "Name": "kickSoup",
+      "DescirptionTextID": "끼익죽",
+      "Label": "Food",
+      "type": "Food",
+      "ItemGroupType": 2,
+      "ItemType": 2,
+      "ItemSubType": 6,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 10.0,
+      "Sprite": "kickSoup"
+    },
+    {
+      "Value": 0.0,
+      "CoolTIme": 0.0,
+      "SupplyJob": [
+        5
+      ],
+      "ParentEnv": 0,
+      "Calories": 600.0,
+      "MakeItemId": [
+        400002,
+        400003
+      ],
+      "MakeItemMass": [
+        10.0,
+        5.0
+      ],
+      "DataId": 400006,
+      "Name": "kickSalad",
+      "DescirptionTextID": "끼익샐러드",
+      "Label": "Food",
+      "type": "Food",
+      "ItemGroupType": 2,
+      "ItemType": 2,
+      "ItemSubType": 6,
+      "ItemGrade": 1,
+      "maxStack": 99,
+      "Mass": 15.0,
+      "Sprite": "kickSalad"
     }
   ]
 }

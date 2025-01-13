@@ -237,6 +237,9 @@ namespace Data
     public List<FJob> SupplyJob;
     public int ParentEnv;
     public float Calories;
+
+    public List<int> MakeItemId;
+    public List<float> MakeItemMass;
   }
 
   [Serializable]

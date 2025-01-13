@@ -155,6 +155,34 @@
     {
       "DataId": "Store",
       "KOR": "저장"
+    },
+    {
+      "DataId": "wood_normal",
+      "KOR": "참나무"
+    },
+    {
+      "DataId": "stone_normal",
+      "KOR": "돌멩이"
+    },
+    {
+      "DataId": "kick3",
+      "KOR": "끼익식물 잎"
+    },
+    {
+      "DataId": "kick_seed",
+      "KOR": "끼익식물 씨앗"
+    },
+    {
+      "DataId": "bottle(water)",
+      "KOR": "물이 담긴 병"
+    },
+    {
+      "DataId": "kickSoup",
+      "KOR": "끼익죽"
+    },
+    {
+      "DataId": "kickSalad",
+      "KOR": "끼익샐러드"
     }
   ]
 }

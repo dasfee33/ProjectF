@@ -33,7 +33,7 @@ public class UI_Info : UI_Popup
   private GameObject descContentDesc;
   private TextMeshProUGUI descContentText;
 
-  private UI_PlowOption option;
+  private UI_Option option;
 
   public override bool Init()
   {
@@ -65,7 +65,7 @@ public class UI_Info : UI_Popup
     this.gameObject.SetActive(false);
   }
 
-  public void SetInfo(BaseObject obj, UI_PlowOption option)
+  public void SetInfo(BaseObject obj, UI_Option option)
   {
     Structure structure = obj as Structure;
     if(structure != null)

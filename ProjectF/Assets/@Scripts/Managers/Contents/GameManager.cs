@@ -189,6 +189,7 @@ public class ItemSaveData
 {
   public int dataID;
   public float mass;
+  public int makeItemNumber;
 }
 #endregion
 public class GameManager
@@ -525,6 +526,7 @@ public class GameManager
       ItemSaveData itemSaveData = new ItemSaveData();
       itemSaveData.dataID = item.Key;
       itemSaveData.mass = item.Value.mass;
+      itemSaveData.makeItemNumber = item.Value.makeItemNumber;
 
       SaveData.itemSaveData.Add(itemSaveData);
     }
@@ -763,6 +765,7 @@ public class GameManager
       ItemSaveData itemSaveData = new ItemSaveData();
       itemSaveData.dataID = item.Key;
       itemSaveData.mass = item.Value.mass;
+      itemSaveData.makeItemNumber = item.Value.makeItemNumber;
 
       SaveData.itemSaveData.Add(itemSaveData);
     }
@@ -1106,6 +1109,7 @@ public class GameManager
         ItemSaveData itemLoadData = new ItemSaveData();
         itemLoadData.dataID = int.Parse(data["dataID"].ToString());
         itemLoadData.mass = float.Parse(data["mass"].ToString());
+        itemLoadData.makeItemNumber = int.Parse(data["makeItemNumber"].ToString());
 
         SaveData.itemSaveData.Add(itemLoadData);
       }
@@ -1222,6 +1226,7 @@ public class GameManager
   {
     Managers.Object.Spawn<Creature>(Vector3.zero, CREATURE_WARRIOR_DATAID, "Warrior");
     Managers.RandomSeedGenerate.GenerateMaps(); //랜덤 시드 생성
+    Managers.Object.ItemStorageInit();
     GameDataInsert();
 
   }

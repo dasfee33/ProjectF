@@ -6,11 +6,11 @@ public class ItemInfo
 {
   // 전체 아이템 질량 => 상자에 있든 땅에있든 상관없음
   public float mass;
+  public int makeItemNumber;
 
   public ItemInfo(float mass)
   {
     this.mass = mass;
-    
   }
 }
 
@@ -46,6 +46,20 @@ public class ObjectManager
     if (!ItemStorage.ContainsKey(dataID)) return;
     ItemStorage[dataID].mass -= mass;
     if (ItemStorage[dataID].mass <= 0) ItemStorage.Remove(dataID);
+  }
+
+  public void ItemStorageInit()
+  {
+    if (ItemStorage.Count > 0) ItemStorage.Clear();
+    foreach(var item in Managers.Data.ItemDic)
+    {
+      ItemStorage.Add(item.Key, new ItemInfo(0));
+    }
+  }
+
+  public void MakeItemNumberSet(int id, int number)
+  {
+    ItemStorage[id].makeItemNumber = number;
   }
 
   #endregion

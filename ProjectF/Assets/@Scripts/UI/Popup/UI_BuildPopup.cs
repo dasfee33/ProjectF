@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using static Define;
 using static Util;
 
-public class UI_BuildPopup : UI_Popup
+public class UI_BuildPopup : UI_Base
 {
   enum Texts
   {
@@ -152,6 +152,8 @@ public class UI_BuildPopup : UI_Popup
 
   private void Exit(PointerEventData evt = null)
   {
+    current = null;
     this.gameObject.SetActive(false);
+    
   }
 }
