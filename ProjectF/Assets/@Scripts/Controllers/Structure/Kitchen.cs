@@ -15,6 +15,8 @@ public class Kitchen : Structure
   public Dictionary<int, float> needList = new Dictionary<int, float>();
   public Dictionary<int, float> curNeedList;
 
+  public int makeOrder = 0;
+
   public override FStructureState StructureState
   {
     get { return base.StructureState; }

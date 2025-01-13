@@ -34,6 +34,14 @@ public class ObjectManager
     else ItemStorage.Add(dataID, new ItemInfo(mass));
   }
 
+  public void AddItemMakeItemNumber(int dataID, int makeItemNumber)
+  {
+    if (ItemStorage.ContainsKey(dataID))
+    {
+      ItemStorage[dataID].makeItemNumber = makeItemNumber;
+    }
+  }
+
   public void RemoveItem(ItemHolder item)
   {
     if (!ItemStorage.ContainsKey(item.dataTemplateID)) return;
@@ -60,6 +68,11 @@ public class ObjectManager
   public void MakeItemNumberSet(int id, int number)
   {
     ItemStorage[id].makeItemNumber = number;
+  }
+
+  public int MakeItemNumberGet(int id)
+  {
+    return ItemStorage[id].makeItemNumber;
   }
 
   #endregion

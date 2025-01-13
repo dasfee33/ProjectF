@@ -104,6 +104,7 @@ public class GameScene : BaseScene
     foreach (var item in ItemData)
     {
       Managers.Object.AddItem(item.dataID, item.mass);
+      Managers.Object.AddItemMakeItemNumber(item.dataID, item.makeItemNumber);
     }
 
     foreach (var creatureData in creatureSaveData)

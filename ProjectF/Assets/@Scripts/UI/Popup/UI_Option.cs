@@ -129,6 +129,7 @@ public class UI_Option : UI_Popup
     this.gameObject.SetActive(false);
     GetObject((int)Objects.ItemContent).DestroyChilds();
     GetButton((int)Buttons.ActButton).gameObject.SetActive(false);
+    GetObject((int)Objects.JobButton).gameObject.SetActive(false);
 
     curData = null;
   }
@@ -137,7 +138,8 @@ public class UI_Option : UI_Popup
   {
     curData = data;
     var itemDict = Managers.Object.ItemStorage;
-    jobNumber = itemDict[data.DataId].makeItemNumber;
+    jobNumber = Managers.Object.MakeItemNumberGet(curData.DataId);
+    GetText((int)Texts.JobNumberText).text = jobNumber.ToString();
     ResetButton();
 
     switch (data.ItemSubType)
